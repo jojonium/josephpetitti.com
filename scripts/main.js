@@ -9,6 +9,7 @@ myImage.onclick = function() {
 	}
 }
 
+/*
 var myButton = document.querySelector('button');
 var myHeading = document.querySelector('h1');
 
@@ -28,3 +29,4 @@ if(!localStorage.getItem('name')) {
 myButton.onclick = function() {
 	setUserName();
 }
+*/
