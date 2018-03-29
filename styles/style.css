@@ -1,15 +1,62 @@
 html {
 	font-size: 10px;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	background-color: #F1F1F1;
+	background-color: #935d8c;
+	background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+}
+
+header {
+	color: #ffffff;
+	font-weight: 200;
+}
+
+/* Nav */
+	nav ul {
+		list-style-type: none;
+		padding: 0;
+		width: 100%;
+		background-color: #f1f1f1;
+		overflow: hidden;
+		text-align: center;
+		margin: 12px auto 0 auto;
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+		font-size: 36px;
+	}
+	
+	nav li {
+		display: inline;
+	}
+
+	nav li a {
+		color: #000;
+		padding: 8px 5%;
+		text-decoration: none;
+		margin: 10px auto;
+	}
+
+	nav li a:hover {
+		background-color: #555;
+		color: white;
+	}
+
+.sticky {
+	position: -webkit-sticky; /* safari */
+	position: sticky;
+	top: 0;
 }
 
 body {
 	width: 1200px;
-	margin: 10px auto;
+	margin: 0 auto;
+}
+	
+main {
+	margin: 0 auto;
 	background: #FFFFFF;
-	padding: 0 40px 40px 40px;
-	border: 2px solid #d3d3d3;
+	padding: 12px 40px 40px 40px;
 }
 
 h1 {
@@ -34,7 +81,7 @@ h3 {
 	border-bottom: 2px solid black;
 }
 
-p, li, dt, dd {
+main p, main li, main dt, main dd {
 	font-family: "Times New Roman", serif, serif;
 	font-size: 22px;
 	padding: 0;
@@ -52,3 +99,63 @@ img {
 	display: block;
 	margin: 0 auto;
 }
+
+/* Footer */
+	#footer {
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		-moz-flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		padding: 0 5em 2em 5em ;
+		width: calc(100% + 2em);
+		margin: 0 0 3em -2em;
+		color: white;
+		font-size: 1.5em;
+	}
+
+	#footer > * {
+		width: calc(50% - 2em);
+		margin-left: 2em;
+	}
+	
+	footer dt {
+		color: #FFFFFF;
+		font-size: 1.3em;
+		display: block;
+		width: 3em;
+		margin: 0;
+		clear: left;
+		float: left;
+	}
+	
+	footer dd {
+		margin: 0 0 0.85em 5.5em;
+	}
+	
+	footer p, footer dd {
+		color: #d3d3d3;
+		font-size: 1.3em;
+		padding: 0 5em 0 0;
+	}
+	
+	footer a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	footer ul {
+		font-family: FontAwesome;
+		font-size: 2.5em;
+		list-style: none;
+	}
+	
+	footer ul li {
+		display: inline;
+		padding: 0 14px;
+	}
+
+	
