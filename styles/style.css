@@ -5,26 +5,48 @@ html {
 }
 
 body {
-	width: 1300px;
-	margin: 0 auto;
+	width: 1200px;
+	margin: 10px auto;
 	background: #FFFFFF;
 	padding: 0 40px 40px 40px;
 	border: 2px solid #d3d3d3;
 }
 
 h1 {
-	margin: 0;
-	padding: 20px, 0;
+	margin: 20px;
+	padding: 20px 0 10px 0;
 	font-size: 60px;
-	text-shadow: 3px, 3px, 2px red;
 	text-align: center;
 }
 
-p, li {
-	font-size: 16px;
-	line-height: 2;
-	letter-spacing: 1px;
+h2 {
+	text-align: left;
+	font-size: 30px;
+	padding: 30px 0 0;
+	line-height: 15px;
 }
+
+h3 {
+	padding: 4px;
+	text-align: center;
+	font-size: 22px;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+p, li, dt, dd {
+	font-family: "Times New Roman", serif, serif;
+	font-size: 22px;
+	padding: 0;
+	margin: 0;
+	line-height: 30px;
+}
+
+dd {
+	padding: 0 0 10px;
+	margin: 0 20px 0 40px;
+}
+
 
 img {
 	display: block;

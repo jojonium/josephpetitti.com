@@ -1,3 +1,4 @@
+/*
 var myImage = document.querySelector('img');
 
 myImage.onclick = function() {
@@ -9,7 +10,7 @@ myImage.onclick = function() {
 	}
 }
 
-/*
+
 var myButton = document.querySelector('button');
 var myHeading = document.querySelector('h1');
 
@@ -30,3 +31,4 @@ myButton.onclick = function() {
 	setUserName();
 }
 */
+
