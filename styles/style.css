@@ -6,7 +6,7 @@ html {
 	background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-    padding: 0;
+
 }
 
 header {
@@ -39,8 +39,7 @@ header {
 	}
 
 	nav li a:hover {
-		background-color: #555;
-		color: white;
+		background-color: #d3d3d3;
 	}
 
 .sticky {
@@ -58,6 +57,8 @@ main {
 	margin: 0 auto;
 	background: #FFFFFF;
 	padding: 12px 40px 40px 40px;
+	border-radius: 0 0 4px 4px;
+
 }
 
 h1 {
@@ -85,13 +86,10 @@ h3 {
 main p, main li, main dt, main dd {
 	font-family: "Times New Roman", serif, serif;
 	font-size: 22px;
-	padding: 0;
-	margin: 0;
 	line-height: 30px;
 }
 
 dd {
-	padding: 0 0 10px;
 	margin: 0 20px 0 40px;
 }
 
@@ -159,4 +157,22 @@ img {
 		padding: 0 14px;
 	}
 
-	
+/* Download Button */
+p.dl-button {
+	text-align: center;
+	margin: 40px auto 0;
+	background-color: #5f4d93;
+	color: #fff;
+	padding: 10px;
+	width: 200px;
+	font-family: Helvetica;
+	border-radius: 4px;
+}
+
+p.dl-button a {
+	text-decoration: none;
+	color: inherit;
+}
+
+
+
