@@ -6,6 +6,7 @@ html {
 	background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+    padding: 0;
 }
 
 header {
@@ -16,7 +17,7 @@ header {
 /* Nav */
 	nav ul {
 		list-style-type: none;
-		padding: 0;
+		padding: 10px 0;
 		width: 100%;
 		background-color: #f1f1f1;
 		overflow: hidden;
@@ -32,9 +33,9 @@ header {
 
 	nav li a {
 		color: #000;
-		padding: 16px 10%;
+		padding: 0 5%;
 		text-decoration: none;
-		margin: 10px auto;
+		margin: 0 auto;
 	}
 
 	nav li a:hover {
