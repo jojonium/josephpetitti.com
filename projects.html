@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en-US">
 	<head>
+		<title>Projects</title>
 		<meta charset="utf-8">
 		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Projects</title>
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
 	</head>
@@ -15,15 +15,21 @@
 		</header>
 	
 	<!-- Nav -->
-		<nav id="navbar">
-			<ul class="nav">
-				<li class="lv1"><a href="index.html">Home</a></li>
-				<li class="lv1"><a href="resume.html">Resume</a></li>
-				<li class="lv1"><a href="projects.html">Projects</a></li>
-				<li class="lv1"><a href="#">Other</a>
-					<ul>
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="resume.html">Resume</a></li>
+				<li class="parent"><a href="projects.html">Projects</a>
+					<ul class="child">
+						<li><a href="#">This Website</a></li>
+						<li><a href="#">Something Else</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="#">Other</a>
+					<ul class="child">
 						<li><a href="film-stats.html">Film Stats</a></li>
 						<li><a href="four.html">Four</a></li>
+						<li><a href="hci-project2.html">HCI Project 2</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -34,10 +40,8 @@
 		<main>
 		
 		<style>
-            div.parallax1 {
-                background-image: url("images/landscape-2.jpg");
-                
-                height: 800px;
+            div.parallax {
+                height: 500px;
 
                 background-attachment: fixed;
                 background-position: center;
@@ -45,31 +49,35 @@
                 background-size: cover;
                 margin: 0 auto 0 auto;
             }
+			
+			div.p1 {background-image: url("images/landscape-2.jpg");}
+			
+			div.p2 {background-image: url("images/landscape-3.jpg");}
 
-            div.parallax-header1 {
-                background-color: #5f4d93;
+            div.parallax-header {
                 width: 30%;
                 text-align: center;
                 color: #fff;
                 font-family: Lato;
                 font-weight: lighter;
-                position: absolute;
-                left: 40%;
-                top: 55%;
-                height: 48px;
-                width: 20%;
+				position: relative;
+				top: 45%;
+                height: 10%;
+                width: 35%;
                 font-size: 24px;
                 letter-spacing: 10px;
                 line-height: 48px;
                 vertical-align: middle;
                 margin: 0 auto 0 auto;
+				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             }
+			
 		</style>
 		
 		
 		
-		<div class="parallax1">
-            <div class="parallax-header1">THIS WEBSITE</div>
+		<div class="parallax p1">
+            <div class="parallax-header" style="background-color: #5f4d93;">THIS WEBSITE</div>
         </div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et pulvinar ex. Phasellus risus
             neque, ullamcorper a lorem vitae, vestibulum vehicula ipsum. Integer imperdiet arcu ullamcorper
@@ -78,8 +86,11 @@
             justo eget urna lacinia, ut tempus ligula rutrum. Aenean vitae finibus velit. Cras dignissim nisi
             sem, id mattis mi vestibulum a.<p>
             
-        <div class="parallax2">
-            <div class="parallax-header2">SOMETHING ELSE</div>
+		<hr>
+			
+			
+        <div class="parallax p2">
+            <div class="parallax-header" style="background-color: #e37682;">SOMETHING ELSE</div>
         </div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et pulvinar ex. Phasellus risus
             neque, ullamcorper a lorem vitae, vestibulum vehicula ipsum. Integer imperdiet arcu ullamcorper

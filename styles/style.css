@@ -3,17 +3,6 @@
     src: url(lato-regular.ttf);
 }
 
-body {
-	font-size: 10px;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	background-color: #935d8c;
-	background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-
-}
-
 header {
 	color: #ffffff;
 	font-weight: 200;
@@ -23,94 +12,99 @@ header img {
 	margin: 40px auto -10px;
 }
 
-/* Nav */
-	.nav {
-		list-style-type: none;
-		margin: 0 auto 30px 0;
-		padding: 0;
-		float: left;
-		width: 100%;
-		text-align: left;
-		font-family: "Trebuchet MS", Helvetica, sans-serif;
-		font-size: 36px;
+
+
+/*===================================*\
+                Nav
+\*===================================*/
+nav.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	width: 1200px;
+	z-index: 1;
+}
+
+ul.top-level {
+	display: table;
+	list-style: none;
+	width: 100%;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+nav li {
+	display: table-cell;
+	font-size: 36px;
+	text-align: center;
+	float: none;
+	width: 25%
+}
+
+nav a {
+	display: block;
+	text-decoration: none;
+	height: 100%;
+	color: black;
+	padding: 12px;
+	background-color: #f1f1f1;
+}
+
+nav a:hover {
+	background-color: #d3d3d3;
+}
+
+nav ul ul {
+	position: absolute;
+	left: -9999px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	padding: 0;
+	width: 25%;
+}
+
+nav ul ul li {
+	display: block;
+	width: 100%;
+	border-top: solid #bababa 1px;
+}
+
+	/* dropdown */
+	.parent:first-child:hover .child {left: 0;}
+	.parent:nth-child(2):hover .child {left: 25%;}
+	.parent:nth-child(3):hover .child {left: 50%;}
+	.parent:last-child:hover .child {left: 75%;}
+
+	
+	nav ul ul li:hover li.lv1 {
 		background-color: #f1f1f1;
 	}
 	
-	ul.nav {
-		background-color: #f1f1f1;
-	}
-
-	
-	.nav li {
-		float: left;
-		position: relative;
-		background-color: #f1f1f1;
-
-	}
-
-	.nav a {
-		display: block;
-		padding: 5px;
-		color: #000;
-		padding: 10px 60px;
+	nav li:hover ul a {
 		text-decoration: none;
 	}
 	
-	li.lv1:hover {
+	nav li:hover ul li a:hover {
 		background-color: #d3d3d3;
 	}
 	
-
-	.sticky {
-		position: -webkit-sticky; /* safari */
-		position: sticky;
-		top: 0;
-	}
 	
-	/* Dropdown */
 	
-		.nav ul li {
-			float: none;
-		}
-		
-		.nav ul {
-			background-color: #fff;
-			background: rgba(255,255,255,0);
-			list-style: none;
-			position: absolute;
-			left: -9999px;		/* hidden offscreen when not needed */
-			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		}
-		
-		.nav ul a {
-			text-align: left;
-			white-space: nowrap;
-		}
-		
-		.nav li:hover ul {
-			left: 0;
-			padding: 0;
-		}
-		
-		.nav ul ul li:hover li.lv1 {
-			background-color: #f1f1f1;
-		}
-		
-		.nav li:hover ul a {
-			text-decoration: none;
-		}
-		
-		.nav li:hover ul li a:hover {
-			background-color: #d3d3d3;
-		}
-		
-		
 	
+/*===================================*\
+                Body
+\*===================================*/
 body {
+	font-size: 10px;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	background-color: #935d8c;
+	background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	width: 1200px;
 	margin: 0 auto;
 }
-	
+
 main {
 	margin: 0 auto;
 	background: #FFFFFF;
@@ -157,7 +151,13 @@ img {
 	margin: 0 auto;
 }
 
-/* Footer */
+
+
+
+
+/*===================================*\
+               Footer
+\*===================================*/
 	#footer {
 		display: -moz-flex;
 		display: -webkit-flex;
@@ -215,7 +215,14 @@ img {
 		padding: 0 14px;
 	}
 
-/* Download Button */
+	
+	
+	
+	
+	
+/*===================================*\
+               DL Button
+\*===================================*/
 p.dl-button {
 	text-align: center;
 	margin: 40px auto 0;
@@ -233,7 +240,11 @@ p.dl-button a {
 	color: inherit;
 }
 
-
-/* Parallax Scrolling Page */
-
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+	margin: 24px;
+}
 
