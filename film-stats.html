@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<head>
+  <title>Film Stats</title>
+  <meta charset="utf-8">
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@3.2.1/build/vega.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3.1/build/vega-lite.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.2.0/build/vega-embed.js"></script>
+  <link href="styles/style.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+
+
+  <style media="screen">
+    /* Add space between Vega-Embed links  */
+    .vega-actions a {
+      margin-right: 5px;
+      font-size: 10px;
+    }
+    
+    /* Center the Vega div */
+    #vis {
+        text-align: center;
+    }
+  </style>
+  
+</head>
+<body>
+	<!-- Header -->
+		<header>
+			<h1>Film Stats</h1>
+		</header>
+	
+	<!-- Nav -->
+		<nav id="navbar" class="sticky">
+			<ul class="nav">
+				<li class="lv1"><a href="index.html">Home</a></li>
+				<li class="lv1"><a href="resume.html">Resume</a></li>
+				<li class="lv1"><a href="projects.html">Projects</a></li>
+				<li class="lv1"><a href="#">Other</a>
+					<ul>
+						<li><a href="film-stats.html">Film Stats</a></li>
+						<li><a href="four.html">Four</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+  
+	<main style="text-align: center">
+	  <h2 style="text-align: center">Films watched per month</h2>
+	  
+	  <!-- Container for the visualization -->
+	  <div id="vis1"></div>
+
+	  <script>
+	  // Assign the specification to a local variable vlSpec.
+	  var monthly = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+		"data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
+		"width": 500, "height": 500,
+		"mark": "bar",
+		"encoding": {
+		  "x": {
+			"field": "Date",
+			"type": "temporal",
+			"timeUnit": "yearmonth"
+		  },
+		  "y": {
+			"aggregate": "count",
+			"field": "*",
+			"type": "quantitative"
+		  },
+		}
+	  };
+	  // Embed the visualization in the container with id `vis`
+	  vegaEmbed("#vis1", monthly);
+	  </script>
+	  
+	  
+	  <h2 style="text-align: center">Normalized ratings over time</h2>
+
+	  <!-- Container for the visualization -->
+	  <div id="vis2"></div>
+
+	  <script>
+	  // Assign the specification to a local variable vlSpec.
+	  var monthlyNormalized = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+		"data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
+		"width": 500, "height": 500,
+		"mark": "area",
+		"encoding": {
+		  "x": {
+			"field": "Date",
+			"type": "temporal",
+			"timeUnit": "yearmonth"
+		  },
+		  "y": {
+			"aggregate": "count",
+			"field": "*",
+			"type": "quantitative",
+			"stack": "normalize",
+			"axis": "null"
+		  },
+		  "color": {
+			"field": "Rating",
+			"type": "nominal"
+		  }
+		}
+	  };
+	  // Embed the visualization in the container with id `vis`
+	  vegaEmbed("#vis2", monthlyNormalized);
+	  </script>
+	  
+	  
+	  <h2 style="text-align: center">Review length over time</h2>
+	  
+	  <!-- Container for the visualization -->
+	  <div id="vis3"></div>
+
+	  <script>
+	  // Assign the specification to a local variable vlSpec.
+	  var reviewlen = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+		"data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/reviews.csv"},
+		"width": 500, "height": 500,
+		"mark": "point",
+		"encoding": {
+		  "x": {
+			"field": "Date",
+			"type": "temporal",
+			"timeUnit": "yearmonthdate"
+		  },
+		  "y": {
+			"field": "ReviewLength",
+			"type": "quantitative",
+			"axis": {"title": "Reivew Length (characters)"}
+		  }
+		}
+	  };
+	  // Embed the visualization in the container with id `vis`
+	  vegaEmbed("#vis3", reviewlen);
+	  </script>
+	  
+	</main>
+
+
+	<!-- Footer -->
+	<footer id="footer">
+		<section class="about">
+			<h2>About this page</h2>
+			<p>This page is just a fun experiment with visualization on my personal film data.</p>
+			<p>The data is from my <a href="https://letterboxd.com/jojonium/">Letterboxd account</a> and the graphs were made with
+			   <a href=https://vega.github.io/vega-lite/">Vega-Lite</a>.</p>
+		</section>
+		<section class="contact">
+			<h2>Contact Information</h2>
+			<dl>
+				<dt>Address</dt>
+					<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+				<dt>Phone</dt>
+					<dd>(518) 545-1984</dd>
+				<dt>Email</dt>
+					<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+			</dl>
+			<ul class="icons">
+				<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+				<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+				<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+				<li><a href="http://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+			</ul>
+		</section>
+	</footer>
+</body>
+</html>
