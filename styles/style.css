@@ -97,12 +97,22 @@ body {
 	font-size: 10px;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	background-color: #935d8c;
-	background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background-image: url("overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	width: 1200px;
 	margin: 0 auto;
+}
+
+body a {
+	text-decoration-color: gray;
+	color: gray;
+}
+
+body a:hover {
+	text-decoration-color: -webkit-link;
+	color: -webkit-link;
 }
 
 main {
@@ -169,7 +179,7 @@ img {
 		flex-wrap: wrap;
 		padding: 0 5em 2em 5em ;
 		width: calc(100% + 2em);
-		margin: 0 0 3em -2em;
+		margin: 0 0 0 -2em;
 		color: white;
 		font-size: 1.5em;
 	}
@@ -218,6 +228,41 @@ img {
 	
 	
 	
+/*===================================*\
+               Parallax
+\*===================================*/
+            div.parallax {
+                height: 500px;
+
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                margin: 0 auto 0 auto;
+            }
+			
+			div.p1 {background-image: url("../images/landscape-2.jpg");}
+			
+			div.p2 {background-image: url("../images/landscape-3.jpg");}
+
+            div.parallax-header {
+                width: 30%;
+                text-align: center;
+                color: #fff;
+                font-family: Lato;
+                font-weight: lighter;
+				position: relative;
+				top: 45%;
+                height: 10%;
+                width: 35%;
+                font-size: 24px;
+                letter-spacing: 10px;
+                line-height: 48px;
+                vertical-align: middle;
+                margin: 0 auto 0 auto;
+				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            }
+	
 	
 	
 /*===================================*\
@@ -235,10 +280,15 @@ p.dl-button {
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+
 p.dl-button a {
 	text-decoration: none;
 	color: inherit;
 }
+
+
+
+
 
 hr {
     border: 0;
