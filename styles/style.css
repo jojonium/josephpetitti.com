@@ -105,16 +105,6 @@ body {
 	margin: 0 auto;
 }
 
-body main a {
-	text-decoration-color: gray;
-	color: gray;
-}
-
-body a:hover {
-	text-decoration-color: -webkit-link;
-	color: -webkit-link;
-}
-
 main {
 	margin: 0 auto;
 	background: #FFFFFF;
