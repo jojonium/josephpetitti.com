@@ -105,7 +105,7 @@ body {
 	margin: 0 auto;
 }
 
-body a {
+body main a {
 	text-decoration-color: gray;
 	color: gray;
 }
