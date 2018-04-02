@@ -151,6 +151,10 @@ img {
 	margin: 0 auto;
 }
 
+img.fr {
+    float: right;
+}
+
 
 
 
@@ -231,9 +235,11 @@ img {
                 margin: 0 auto 0 auto;
             }
 			
-			div.p1 {background-image: url("../images/landscape-2.jpg");}
+			div.p1 {background-image: url("../images/landscape-3.jpg");}
+
+			div.p2 {background-image: url("../images/landscape-2.jpg");}
 			
-			div.p2 {background-image: url("../images/landscape-3.jpg");}
+			div.p3 {background-image: url("../images/landscape-6.jpg");}
 
             div.parallax-header {
                 width: 30%;
@@ -252,7 +258,11 @@ img {
                 margin: 0 auto 0 auto;
 				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             }
-	
+            
+            div.parallax-header a {
+                text-decoration: none;
+                color: inherit;
+            }
 	
 	
 /*===================================*\
