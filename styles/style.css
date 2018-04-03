@@ -151,12 +151,19 @@ img {
 	margin: 0 auto;
 }
 
-
-canvas#seen-canvas {
+canvas.seen-main {
 	margin: -12px 0 0 -40px;
 	background-image: url("../images/banner.jpg");
 }
 
+div.code {
+    font-family: monospace;
+    white-space: pre;
+    border: 1px solid gray;
+    background-color: white;
+    border-radius: 6px;
+    font-size: 18px;
+}
 
 
 

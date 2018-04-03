@@ -9,7 +9,8 @@
 		<script src="https://cdn.jsdelivr.net/npm/vega@3.2.1/build/vega.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3.1/build/vega-lite.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vega-embed@3.2.0/build/vega-embed.js"></script>
-		
+		<script src="scripts/seen.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.7.1/coffee-script.min.js"></script>
 		<style media="screen">
 			/* Add space between Vega-Embed links  */
 			.vega-actions a {
@@ -41,7 +42,7 @@
 						<li><a href="#">Something Else</a></li>
 					</ul>
 				</li>
-				<li class="parent"><a href="#">Other</a>
+				<li class="parent"><a href="other.html">Other</a>
 					<ul class="child">
 						<li><a href="film-stats.html">Film Stats</a></li>
 						<li><a href="four.html">Four</a></li>
@@ -86,28 +87,53 @@
 			
 			<h2>Vega-Lite</h2>
 			
-			<p>However, it's not all HTML and CSS. I used some JavaScript to make the cool visualizations across
-			   the site. The graphs on the <a href="film-stats.html">Film Stats</a> page were made using <a href=
-			   "https://vega.github.io/vega-lite/">Vega-Lite</a>, a JSON schema for creating beautiful graphs
-			   quickly and easily.</p>
+			<p>However, it's not all HTML and CSS. I used some JavaScript to make the cool visualizations
+			   across the site. The graphs on the <a href="film-stats.html">Film Stats</a> page were made using
+			   <a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, a JSON schema for creating beautiful
+			   graphs quickly and easily.</p>
 			
-			<p>I learned Vega-Lite for a class (CS 3041, Human Computer Interactions), and thought it would be cool
-			   to apply what I learned to my own film data and see what I could make.</p>
+			<p>I learned Vega-Lite for a class (CS 3041, Human Computer Interactions), and thought it would be 
+               cool to apply what I learned to my own film data and see what I could make.</p>
 			   
-			<p>To the left is another Vega-Lite graph, this one showing the films I've watched each month by release
-			   date. I'm not sure why there are two different categories for "null" and "undefined," but I blame 
-			   <a href="https://www.themoviedb.org">TMDb</a>.</p>
+			<p>To the left is another Vega-Lite graph, this one showing the films I've watched each month by 
+               release date. I'm not sure why there are two different categories for "null" and "undefined,"
+               but I blame <a href="https://www.themoviedb.org">TMDb</a>.</p>
 			   
 			<hr>
 			
+            <canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>
+
 			<h2>seen.js</h2>
 			 
 			<p>The visualization on the <a href="index.html">front page</a> was created using <a href=
-			   "http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D scenes into an SVG or HTML5
-			   canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and
-			   simpler language that compiles into JavaScript.</p>
+			   "http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D scenes into an SVG or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and simpler language that compiles into JavaScript.</p>
 			   
-			<p>
+            <p>It was quite simple to just link the minified CoffeeScript and seen.js scripts and copy the 
+               examples from the seen.js website. However, almost all of their examples (like the sphere to the
+               right), were set to generate random colors for each surface. I wanted the colors of the main page visualization to match the color scheme of the site.</p>
+               
+            <p>I wanted the color of the surfaces to range smoothly between the two colors of the background,
+               #e37682 and #5f4d93. I couldn't find a built-in function to do this, so I wrote one myself.
+               First, seen.js applies colors to surfaces not with hex values, and not even with RGB, but with
+               HSL values. It uses three numbers between 0 and 1, representing the hue, saturation, and 
+               lightness of the color. Converted into hues, the two theme colors are 0.70833 and 0.980555. I
+               wrote this snippet of CoffeeScript code to loop over each surface in the shape and apply a
+               color:</p>
+            
+            <div class="code">
+    hue = 0.70833
+    for surface in shape.surfaces
+        hue += (.272225) * (1 / shape.surfaces.length)
+        surface.fill seen.Colors.hsl(hue, 0.5, 0.4)
+            </div>
+            
+            
+            <p>It applies the 0.70833 color to the
+               first surface, then increments the hue by the difference between the two colors (.272225)
+               multiplied by the inverse of the number of surfaces. This makes a smooth transition over the
+               surface of the entire shape.</p>
+            
+			
 
 		
 		</main>
@@ -141,33 +167,64 @@
 			</section>
 		</footer>
 		
+		
+		
 		<script>
-	  var monthlyByYear = {
-		"$schema": "https://vega.github.io/schema/vega-lite/v2.json",
-		"data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
-		"width": 300, "height": 300,
-		"mark": "area",
-		"encoding": {
-		  "x": {
-			"field": "Date",
-			"type": "temporal",
-			"timeUnit": "yearmonth"
-		  },
-		  "y": {
-			"aggregate": "count",
-			"field": "*",
-			"type": "quantitative",
-			"axis": "null"
-		  },
-		  "color": {
-			"bin": {"maxbins": 10},
-			"field": "Year",
-			"type": "ordinal"
-		  }
-		}
-	  };
-		  // Embed the visualization in the container with id `vis`
-		  vegaEmbed("#vis", monthlyByYear);
+            var monthlyByYear = {
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+                "data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
+                "width": 300, "height": 300,
+                "mark": "area",
+                "encoding": {
+                "x": {
+                    "field": "Date",
+                    "type": "temporal",
+                    "timeUnit": "yearmonth"
+                },
+                "y": {
+                    "aggregate": "count",
+                    "field": "*",
+                    "type": "quantitative",
+                    "axis": "null"
+                },
+                "color": {
+                    "bin": {"maxbins": 10},
+                    "field": "Year",
+                    "type": "ordinal"
+                }
+                }
+            };
+            // Embed the visualization in the container with id `vis`
+            vegaEmbed("#vis", monthlyByYear);
+	  </script>
+	  <script type="text/coffeescript" id="code">
+        width  = 500
+        height = 500
+
+        # Create sphere shape with randomly colored surfaces
+        shape = seen.Shapes.sphere(2).scale(height * 0.4)
+        seen.Colors.randomSurfaces2(shape)
+
+        # Create scene and add shape to model
+        scene = new seen.Scene
+            model    : seen.Models.default().add(shape)
+            viewport : seen.Viewports.center(width, height)
+
+        # Create render context from canvas
+        context = seen.Context('seen-canvas', scene).render()
+
+        # Slowly rotate sphere
+        context.animate()
+            .onBefore((t, dt) -> shape.rotx(dt*1e-4).roty(0.7*dt*1e-4))
+            .start()
+
+        # Enable drag-to-rotate on the canvas
+        dragger = new seen.Drag('seen-canvas', {inertia : true})
+        dragger.on('drag.rotate', (e) ->
+            xform = seen.Quaternion.xyToTransform(e.offsetRelative...)
+            shape.transform(xform)
+            context.render()
+        )
 	  </script>
 	</body>
 </html>
