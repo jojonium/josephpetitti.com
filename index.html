@@ -95,7 +95,11 @@
 			.scale(triangleScale)
 			.translate(-patch_width/2, -patch_height/2 + 80)
 			.rotx(-0.3)
-			seen.Colors.randomSurfaces2(shape)
+			
+			hue = 0.70833
+			for surface in shape.surfaces
+			  hue += (.272225) * (1 / shape.surfaces.length)
+			  surface.fill seen.Colors.hsl(hue, 0.5, 0.4)
 
 			# Create scene and render context
 			scene = new seen.Scene
