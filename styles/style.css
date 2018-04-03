@@ -151,10 +151,11 @@ img {
 	margin: 0 auto;
 }
 
-img.fr {
-    float: right;
-}
 
+canvas#seen-canvas {
+	margin: -12px 0 0 -40px;
+	background-image: url("../images/banner.jpg");
+}
 
 
 
