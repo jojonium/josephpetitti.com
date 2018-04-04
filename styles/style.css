@@ -156,13 +156,14 @@ canvas.seen-main {
 	background-image: url("../images/banner.jpg");
 }
 
-div.code {
+.code {
     font-family: monospace;
     white-space: pre;
     border: 1px solid gray;
     background-color: white;
     border-radius: 6px;
     font-size: 18px;
+	padding: 1px;
 }
 
 
