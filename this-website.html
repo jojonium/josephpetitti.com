@@ -34,19 +34,20 @@
 	<!-- Nav -->
 		<nav class="sticky">
 			<ul class="top-level sticky">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="resume.html">Resume</a></li>
-				<li class="parent"><a href="projects.html">Projects</a>
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
 					<ul class="child">
-						<li><a href="this-website.html">This Website</a></li>
+						<li><a href="this-website">This Website</a></li>
 						<li><a href="#">Something Else</a></li>
 					</ul>
 				</li>
-				<li class="parent"><a href="other.html">Other</a>
+				<li class="parent"><a href="other">Other</a>
 					<ul class="child">
-						<li><a href="film-stats.html">Film Stats</a></li>
-						<li><a href="four.html">Four</a></li>
-						<li><a href="hci-project2.html">HCI Project 2</a></li>
+						<li><a href="film-stats">Film Stats</a></li>
+						<li><a href="four">Four</a></li>
+						<li><a href="hci-project2">HCI Project 2</a></li>
+						<li><a href="ook">Ook!</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -68,6 +69,11 @@
 			   to do things and thought of more elements that would look cool. I also sometimes use the site to host
 			   pieces of projects for classes. To see the history of changes I've made to the site, check out my
 			   <a href="https://github.com/jojonium/jojonium.github.io">GitHub</a> page.</p>
+			   
+			<p>The HTML and CSS was written entirely from scratch by myself, without any website-building tool or
+			   service. The only program I used was the excellent <a href="https://notepad-plus-plus.org">Notepad++
+			   </a>. The site is currently hosted using <a href="https://pages.github.com">Github Pages</a>, 
+			   connected to a custom domain from <a href="https://www.bluehost.com">Bluehost</a>.</p>
 
 			<p>Unfortunately, one of the issues I've run into is that I don't know what to actually write!
 			   It turns out that creating good-looking pages is a lot easier than coming up with interesting
@@ -88,7 +94,7 @@
 			<h2>Vega-Lite</h2>
 			
 			<p>However, it's not all HTML and CSS. I used some JavaScript to make the cool visualizations
-			   across the site. The graphs on the <a href="film-stats.html">Film Stats</a> page were made using
+			   across the site. The graphs on the <a href="film-stats">Film Stats</a> page were made using
 			   <a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, a JSON schema for creating beautiful
 			   graphs quickly and easily.</p>
 			
@@ -101,17 +107,16 @@
 			   
 			<hr>
 			
-            <canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>               
+            <canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>
 
 			<h2>seen.js</h2>
 			 
-			<p>The visualization on the <a href="index.html">front page</a> was created using <a href=
+			<p>The visualization on the <a href="index">front page</a> was created using <a href=
 			   "http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D scenes into an SVG or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and simpler language that compiles into JavaScript.</p>
 			   
             <p>It was quite simple to just link the minified CoffeeScript and seen.js scripts and copy the 
-               examples from the seen.js website. However, almost all of their examples (like the icosahedron
-               to the right), were set to generate random colors for each surface. I wanted the colors of the
-               main page visualization to match the color scheme of the site.</p>
+               examples from the seen.js website. However, almost all of their examples (like the sphere to the
+               right), were set to generate random colors for each surface. I wanted the colors of the main page visualization to match the color scheme of the site.</p>
                
             <p>I wanted the color of the surfaces to range smoothly between the two colors of the background,
                #e37682 and #5f4d93. I couldn't find a built-in function to do this, so I wrote one myself.
@@ -203,7 +208,7 @@
         height = 500
 
         # Create sphere shape with randomly colored surfaces
-        shape = seen.Shapes.icosahedron(2).scale(height * 0.4)
+        shape = seen.Shapes.sphere(2).scale(height * 0.4)
         seen.Colors.randomSurfaces2(shape)
 
         # Create scene and add shape to model
