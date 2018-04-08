@@ -95,7 +95,7 @@ nav ul ul li {
 \*===================================*/
 body {
 	font-size: 10px;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-family: Helvetica, sans-serif;
 	background-color: #935d8c;
 	background-image: url("overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-image: url("overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
@@ -136,7 +136,6 @@ h3 {
 }
 
 main p, main li, main dt, main dd {
-	font-family: "Times New Roman", serif, serif;
 	font-size: 22px;
 	line-height: 30px;
 }
@@ -167,29 +166,18 @@ canvas.seen-main {
 }
 
 
-
 /*===================================*\
                Footer
 \*===================================*/
-	#footer {
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
-		display: flex;
-		-moz-flex-wrap: wrap;
-		-webkit-flex-wrap: wrap;
-		-ms-flex-wrap: wrap;
-		flex-wrap: wrap;
-		padding: 0 5em 2em 5em ;
-		width: calc(100% + 2em);
-		margin: 0 0 0 -2em;
+	footer {
+		width: 100%;
 		color: white;
 		font-size: 1.5em;
 	}
 
-	#footer > * {
-		width: calc(50% - 2em);
-		margin-left: 2em;
+	footer > * {
+		width: calc(50% - 5em);
+		margin-left: 5em;
 	}
 	
 	footer dt {
@@ -200,6 +188,14 @@ canvas.seen-main {
 		margin: 0;
 		clear: left;
 		float: left;
+	}
+	
+	footer section.about {
+		float: left;
+	}
+	
+	footer section.contact {
+		float: right;
 	}
 	
 	footer dd {
