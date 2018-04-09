@@ -96,11 +96,10 @@ nav ul ul li {
 body {
 	font-size: 10px;
 	font-family: Helvetica, sans-serif;
-	background-color: #935d8c;
-	background-image: url("overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background-image: url("overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background: -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background: -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background: -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+	background: linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-size: 100%;
 	width: 1200px;
 	margin: 0 auto;
