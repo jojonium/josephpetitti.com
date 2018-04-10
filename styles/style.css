@@ -165,6 +165,20 @@ canvas.seen-main {
 	padding: 1px;
 }
 
+.circular-portrait {
+	float: right;
+	background: url("../images/portrait.jpg") center;
+	height: 200px;
+	width: 200px;
+	border-radius: 100px;
+	margin: 8em 1em 1em;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
+main img {
+	width: 100%;
+}
+
 
 /*===================================*\
                Footer
@@ -245,7 +259,7 @@ canvas.seen-main {
 			div.p2 {background-image: url("../images/landscape-2.jpg");}
 			
 			div.p3 {background-image: url("../images/landscape-6.jpg");}
-
+			
             div.parallax-header {
                 width: 30%;
                 text-align: center;
@@ -302,4 +316,3 @@ hr {
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
 	margin: 24px;
 }
-
