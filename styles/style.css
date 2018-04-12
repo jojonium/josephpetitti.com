@@ -10,6 +10,7 @@ header {
 
 header img {
 	margin: 40px auto -10px;
+    display: block;
 } 
 
 
@@ -145,11 +146,6 @@ dd {
 }
 
 
-img {
-	display: block;
-	margin: 0 auto;
-}
-
 canvas.seen-main {
 	margin: -12px 0 0 -40px;
 	background-image: url("../images/banner.jpg");
@@ -175,7 +171,7 @@ canvas.seen-main {
 	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 }
 
-main img {
+main img.full-width {
 	width: 100%;
 }
 
