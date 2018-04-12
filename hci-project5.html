@@ -45,6 +45,27 @@
 </nav>
 
 <main id="main">
+
+<div id="notification">
+    You look happy!
+</div>
+
+<style>
+    #notification {
+        background-color: #00ff00;
+        border: solid 1px black;
+        padding: 20px;
+        font-family: sans-serif;
+        font-size: 24px;
+        position: fixed;
+        left: -9999px;
+        top: 10px;
+    }
+</style>
+
+<button id="start" onclick="onStart()">Start</button>
+<button id="stop" onclick="onStop()">Stop</button>
+<button id="reset" onclick="onReset()">Reset</button>
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-8" id="affdex_elements" style="width:680px;height:480px;"></div>
@@ -60,9 +81,6 @@
       </div>
     </div>
     <div>
-      <button id="start" onclick="onStart()">Start</button>
-      <button id="stop" onclick="onStop()">Stop</button>
-      <button id="reset" onclick="onReset()">Reset</button>
       <p>
         <strong>Instructions</strong>
         </br>
@@ -198,11 +216,14 @@
         log('#results', "Timestamp: " + timestamp.toFixed(2));
         log('#results', "Number of faces found: " + faces.length);
         var m = document.getElementById("main");
+        var n = document.getElementById("notification");
         if (faces.length > 0) {
           if (faces[0].emotions.joy > 50) {
             m.style.backgroundColor = "#00ff00";
+            n.style.left = "10px";
           } else {
             m.style.backgroundColor = "#FFFFFF";
+            n.style.left = "-9999px";
           }
           
           log('#results', "Appearance: " + JSON.stringify(faces[0].appearance));
