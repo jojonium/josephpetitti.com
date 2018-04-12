@@ -24,7 +24,6 @@
 </head>
 
 <body>
-  <body>
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-8" id="affdex_elements" style="width:680px;height:480px;"></div>
@@ -53,7 +52,7 @@
       </p>
     </div>
   </div>
-</body>
+
 
   
 
@@ -152,6 +151,10 @@
         log('#results', "Timestamp: " + timestamp.toFixed(2));
         log('#results', "Number of faces found: " + faces.length);
         if (faces.length > 0) {
+          if (faces[0].emotions.anger > 50) {
+            console.log("You are angry!");
+          }
+          
           log('#results', "Appearance: " + JSON.stringify(faces[0].appearance));
           log('#results', "Emotions: " + JSON.stringify(faces[0].emotions, function(key, val) {
             return val.toFixed ? Number(val.toFixed(0)) : val;
@@ -181,13 +184,6 @@
 
         }
       }
-
-
-
-
-
-
-
 </script>
 
   <script>
