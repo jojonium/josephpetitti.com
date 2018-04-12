@@ -7,23 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
     <script type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js"></script>
     <script type="text/javascript" src="https://download.affectiva.com/js/3.2/adapter-1.4.0.js"></script>
-
-  
-
-  <style type="text/css">
-    
-  </style>
-
-  <title>Emotion from Camera Sample App by affectiva</title>
+    <title>HCI Project 5</title>
 
   
 </head>
 
 <body>
+
+<header>
+    <h1>HCI Project 5</h1>
+</header>
+
+<nav class="sticky">
+    <ul class="top-level sticky">
+        <li><a href="index">Home</a></li>
+        <li><a href="resume">Resume</a></li>
+        <li class="parent"><a href="projects">Projects</a>
+            <ul class="child">
+                <li><a href="this-website">This Website</a></li>
+                <li><a href="#">Something Else</a></li>
+            </ul>
+        </li>
+        <li class="parent"><a href="other">Other</a>
+            <ul class="child">
+                <li><a href="film-stats">Film Stats</a></li>
+                <li><a href="four">Four</a></li>
+                <li><a href="hci-project2">HCI Project 2</a></li>
+                <li><a href="ook">Ook!</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<main id="main">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-8" id="affdex_elements" style="width:680px;height:480px;"></div>
@@ -42,19 +63,43 @@
       <button id="start" onclick="onStart()">Start</button>
       <button id="stop" onclick="onStop()">Stop</button>
       <button id="reset" onclick="onReset()">Reset</button>
-      <h3>Affectiva JS SDK CameraDetector to track different emotions.</h3>
       <p>
         <strong>Instructions</strong>
         </br>
         Press the start button to start the detector.
         <br/> When a face is detected, the probabilities of the different emotions are written to the DOM.
         <br/> Press the stop button to end the detector.
+        <br/> The background should turn green when you look happy.
       </p>
     </div>
   </div>
-
-
-  
+</main>
+<footer id="footer">
+    <section class="about">
+        <h2>About this website</h2>
+        <p>I created this website as a personal project in my free time to learn more about web design,
+            CSS, HTML, and JavaScript.</p>
+        <p>Right now there isn't much on here, but I hope to include more in the future as I learn more
+            about web design.</p>
+    </section>
+    <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+            <dt>Address</dt>
+                <dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+            <dt>Phone</dt>
+                <dd>(518) 545-1984</dd>
+            <dt>Email</dt>
+                <dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+        </dl>
+        <ul class="icons">
+            <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+            <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+            <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+            <li><a href="http://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+    </section>
+</footer>	
 
 
 
@@ -150,11 +195,12 @@
         $('#results').html("");
         log('#results', "Timestamp: " + timestamp.toFixed(2));
         log('#results', "Number of faces found: " + faces.length);
+        var m = document.getElementById("main");
         if (faces.length > 0) {
-          if (faces[0].emotions.anger > 50) {
-            document.body.style.backgroundColor = "#FF0000";
+          if (faces[0].emotions.joy > 50) {
+            m.style.backgroundColor = "#00ff00";
           } else {
-            document.body.style.backgroundColor = "#FFFFFF";
+            m.style.backgroundColor = "#FFFFFF";
           }
           
           log('#results', "Appearance: " + JSON.stringify(faces[0].appearance));
