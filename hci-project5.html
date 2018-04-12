@@ -152,7 +152,9 @@
         log('#results', "Number of faces found: " + faces.length);
         if (faces.length > 0) {
           if (faces[0].emotions.anger > 50) {
-            console.log("You are angry!");
+            document.body.style.backgroundColor = "#FF0000";
+          } else {
+            document.body.style.backgroundColor = "#FFFFFF";
           }
           
           log('#results', "Appearance: " + JSON.stringify(faces[0].appearance));
