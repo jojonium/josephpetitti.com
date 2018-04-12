@@ -215,14 +215,11 @@
         $('#results').html("");
         log('#results', "Timestamp: " + timestamp.toFixed(2));
         log('#results', "Number of faces found: " + faces.length);
-        var m = document.getElementById("main");
         var n = document.getElementById("notification");
         if (faces.length > 0) {
           if (faces[0].emotions.joy > 50) {
-            m.style.backgroundColor = "#00ff00";
             n.style.left = "10px";
           } else {
-            m.style.backgroundColor = "#FFFFFF";
             n.style.left = "-9999px";
           }
           
