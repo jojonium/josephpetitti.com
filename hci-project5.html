@@ -13,8 +13,6 @@
     <script type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js"></script>
     <script type="text/javascript" src="https://download.affectiva.com/js/3.2/adapter-1.4.0.js"></script>
     <title>HCI Project 5</title>
-
-  
 </head>
 
 <body>
@@ -74,6 +72,9 @@ div.col {
     flex-direction: column;
 }
 </style>
+
+<h2>Average happiness in the past 30 frames: </h2>
+<h2 id="h-reporter"></h2>
 
 <button id="start" onclick="onStart()">Start</button>
 <button id="stop" onclick="onStop()">Stop</button>
@@ -209,6 +210,11 @@ div.col {
         log('#logs', "The detector reports stopped");
         $("#results").html("");
       });
+      
+        var n = document.getElementById("notification");
+        var h = document.getElementById("h-reporter");
+        var aHappiness = new Array();
+        var total = 0;
 
       //Add a callback to receive the results from processing an image.
       //The faces object contains the list of the faces detected in an image.
@@ -217,8 +223,19 @@ div.col {
         $('#results').html("");
         log('#results', "Timestamp: " + timestamp.toFixed(2));
         log('#results', "Number of faces found: " + faces.length);
-        var n = document.getElementById("notification");
         if (faces.length > 0) {
+          if (aHappiness.length < 30) {
+            aHappiness.push(faces[0].emotions.joy);
+          }
+          else {
+            for (var i = 0; i < aHappiness.length; i++) {
+                total += aHappiness[i];
+            }
+            var avg = total / aHappiness.length;
+            h.innerHTML = avg;
+            aHappiness = [];
+            total = 0;
+          }
           if (faces[0].emotions.joy > 50) {
             n.style.left = "10px";
           } else {
