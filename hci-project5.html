@@ -184,6 +184,7 @@ div.col {
           detector.start();
         }
         log('#logs', "Clicked the start button");
+        p.style.backgroundImage = "url('images/question.jpg')";
       }
 
       //function executes when the Stop button is pushed.
@@ -193,6 +194,7 @@ div.col {
           detector.removeEventListener();
           detector.stop();
         }
+        c = 0;
       };
 
       //function executes when the Reset button is pushed.
@@ -269,30 +271,6 @@ div.col {
             }
 
             c++;
-            
-            
-            /*
-            if (c == 0) {
-                p.style.backgroundImage = "url('images/dog.jpg')";
-                c++;
-            } else if (c == 1) {
-                var dl = avg;
-                p.style.backgroundImage = "url('images/cat.jpg')";
-                avg = 0;
-                c++;
-            } else if (c > 1) {
-                var cl = avg;
-                console.log("dl = " + dl);
-                console.log("cl = " + cl);
-                p.style.backgroundImage = "none";
-                if (dl > cl) {
-                    alert("You like dogs more!");
-                }
-                else if (cl > dl) {
-                    alert("You like cats more!");
-                }
-                onStop();
-            } */
           }
           if (faces[0].emotions.joy > 50) {
             n.style.left = "10px";
