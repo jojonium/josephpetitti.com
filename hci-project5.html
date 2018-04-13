@@ -65,12 +65,21 @@ div.row {
     display:flex;
     flex-direction:row;
     justify-content: space-around;
+    height: 500px;
 }
 
 div.col {
     display: flex;
     flex-direction: column;
 }
+
+div#picture-frame {
+    width: 66%;
+    background-size: 100% 100%;
+    margin: 20px;
+}
+
+
 </style>
 
 <h2>Average happiness in the past 50 frames: </h2>
@@ -80,9 +89,10 @@ div.col {
 <button id="stop" onclick="onStop()">Stop</button>
 <button id="reset" onclick="onReset()">Reset</button>
   <div class="container-fluid">
-  <div id="picture-frame" style="height: 500px; width: 500px; background-size: 500px 500px;"></div>
     <div class="row">
-      <div class="col" id="affdex_elements" style="width:136px;height:96px;"></div>
+          <div id="picture-frame" class="col">
+            <div id="affdex_elements" style="width:136px;height:96px;"></div>
+          </div>
       <div class="col">
         <div>
           <strong style="font-size: 1.2em">DETECTOR LOG MSGS</strong>
@@ -127,18 +137,7 @@ div.col {
 
 
 
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
-
 
       // SDK Needs to create video and canvas nodes in the DOM in order to function
       // Here we are adding those nodes a predefined div.
