@@ -143,11 +143,21 @@ div.col {
       // SDK Needs to create video and canvas nodes in the DOM in order to function
       // Here we are adding those nodes a predefined div.
       var divRoot = $("#affdex_elements")[0];
-      var width = 640;
-      var height = 480;
+      var width = 136;
+      var height = 96;
       var faceMode = affdex.FaceDetectorMode.LARGE_FACES;
       //Construct a CameraDetector and specify the image width / height and face detector mode.
       var detector = new affdex.CameraDetector(divRoot, width, height, faceMode);
+      
+        var n = document.getElementById("notification");
+        var h = document.getElementById("h-reporter");
+        var p = document.getElementById("picture-frame");
+        var aHappiness = new Array();
+        var total = 0;
+        var avg = 0;
+        var dl = 0;
+        var cl = 0;
+        var c = 0;
 
       //Enable detection of all Expressions, Emotions and Emojis classifiers.
       detector.detectAllEmotions();
@@ -193,6 +203,7 @@ div.col {
 
           $('#results').html("");
         }
+        c = 0;
       };
 
       //Add a callback to notify when camera access is allowed
@@ -212,12 +223,7 @@ div.col {
         $("#results").html("");
       });
       
-        var n = document.getElementById("notification");
-        var h = document.getElementById("h-reporter");
-        var p = document.getElementById("picture-frame");
-        var c = 0;
-        var aHappiness = new Array();
-        var total = 0;
+
 
       //Add a callback to receive the results from processing an image.
       //The faces object contains the list of the faces detected in an image.
@@ -230,31 +236,63 @@ div.col {
           if (aHappiness.length < 50) {
             aHappiness.push(faces[0].emotions.joy);
           }
-          else {
+          else {    /* End of a chunk of time */
             for (var i = 0; i < aHappiness.length; i++) {
                 total += aHappiness[i];
             }
-            var avg = total / aHappiness.length;
+            avg = total / aHappiness.length;
             h.innerHTML = avg;
             aHappiness = [];
             total = 0;
+            
+            console.log("c = " + c);
+            if (c == 0) { /* Start: show dog picture */
+                p.style.backgroundImage = "url('images/dog.jpg')";
+            }
+            else if (c == 1) {   /* done seeing dog */
+                dl = avg;
+                console.log("dl = " + dl);
+                avg = 0;
+                p.style.backgroundImage = "url('images/cat.jpg')";
+            }
+            else if (c == 2) {   /* done seeing cat */
+                cl = avg;
+                console.log("cl = " + cl);
+                avg = 0;
+                p.style.backgroundImage = "none";
+                if (dl > cl) {
+                    alert("You like dogs more!");
+                } else {
+                    alert("You like cats more!");
+                }
+                onStop();
+            }
+
+            c++;
+            
+            
+            /*
             if (c == 0) {
                 p.style.backgroundImage = "url('images/dog.jpg')";
-                var dl = avg;
                 c++;
             } else if (c == 1) {
+                var dl = avg;
                 p.style.backgroundImage = "url('images/cat.jpg')";
-                var cl = avg;
+                avg = 0;
                 c++;
             } else if (c > 1) {
+                var cl = avg;
+                console.log("dl = " + dl);
+                console.log("cl = " + cl);
                 p.style.backgroundImage = "none";
                 if (dl > cl) {
                     alert("You like dogs more!");
                 }
-                else {
+                else if (cl > dl) {
                     alert("You like cats more!");
                 }
-            }
+                onStop();
+            } */
           }
           if (faces[0].emotions.joy > 50) {
             n.style.left = "10px";
