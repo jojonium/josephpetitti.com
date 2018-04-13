@@ -78,12 +78,14 @@ div#picture-frame {
     background-size: 100% 100%;
     margin: 20px;
 }
-
-
 </style>
 
-<h2>Average happiness in the past 50 frames: </h2>
-<h2 id="h-reporter"></h2>
+<h2>Are you a cat person, or a dog person?</h2>
+<p>Instructions: Click "Start" to begin. Just watch the images as they appear. You may have to wait a few seconds for
+   the program to recognize your face.</p>
+
+<p>Average happiness in the past 50 frames: </p>
+<p id="h-reporter"></p>
 
 <button id="start" onclick="onStart()">Start</button>
 <button id="stop" onclick="onStop()">Stop</button>
@@ -105,6 +107,13 @@ div#picture-frame {
         <strong style="font-size: 2em">EMOTION TRACKING RESULTS</strong>
         <div id="results" style="word-wrap:break-word; font-family: monospace; font-size: 1.5em;"></div>
     </div>
+
+<hr/>
+<h2>How does it work?</h2>
+<p>This page uses <a href="https://developer.affectiva.com">Affectiva</a>'s emotion-detecting technology to recognize
+   your face, and keep track of what emotions you display. If you display more joy on average during the 50 frames in
+   which the dog picture is displayed, you obviously like dogs more. If you display more joy in the 50 frames of the 
+   cat, you must be a cat person.</p>
 </main>
 
 
@@ -194,6 +203,8 @@ div#picture-frame {
           detector.stop();
         }
         c = 0;
+		p.style.backgroundImage = "none";
+		aHappiness = [];
       };
 
       //function executes when the Reset button is pushed.
@@ -205,6 +216,8 @@ div#picture-frame {
           $('#results').html("");
         }
         c = 0;
+		p.style.backgroundImage = "none";
+		aHappiness = [];
       };
 
       //Add a callback to notify when camera access is allowed
