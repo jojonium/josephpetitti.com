@@ -80,8 +80,9 @@ div.col {
 <button id="stop" onclick="onStop()">Stop</button>
 <button id="reset" onclick="onReset()">Reset</button>
   <div class="container-fluid">
+  <div id="picture-frame" style="height: 500px; width: 500px; background-size: 500px 500px;"></div>
     <div class="row">
-      <div class="col" id="affdex_elements" style="width:680px;height:480px;"></div>
+      <div class="col" id="affdex_elements" style="width:136px;height:96px;"></div>
       <div class="col">
         <div>
           <strong style="font-size: 1.2em">DETECTOR LOG MSGS</strong>
@@ -213,6 +214,8 @@ div.col {
       
         var n = document.getElementById("notification");
         var h = document.getElementById("h-reporter");
+        var p = document.getElementById("picture-frame");
+        var c = 0;
         var aHappiness = new Array();
         var total = 0;
 
@@ -224,7 +227,7 @@ div.col {
         log('#results', "Timestamp: " + timestamp.toFixed(2));
         log('#results', "Number of faces found: " + faces.length);
         if (faces.length > 0) {
-          if (aHappiness.length < 30) {
+          if (aHappiness.length < 50) {
             aHappiness.push(faces[0].emotions.joy);
           }
           else {
@@ -235,6 +238,23 @@ div.col {
             h.innerHTML = avg;
             aHappiness = [];
             total = 0;
+            if (c == 0) {
+                p.style.backgroundImage = "url('images/dog.jpg')";
+                var dl = avg;
+                c++;
+            } else if (c == 1) {
+                p.style.backgroundImage = "url('images/cat.jpg')";
+                var cl = avg;
+                c++;
+            } else if (c > 1) {
+                p.style.backgroundImage = "none";
+                if (dl > cl) {
+                    alert("You like dogs more!");
+                }
+                else {
+                    alert("You like cats more!");
+                }
+            }
           }
           if (faces[0].emotions.joy > 50) {
             n.style.left = "10px";
