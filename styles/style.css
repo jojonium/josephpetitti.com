@@ -260,7 +260,7 @@ main img.full-width {
                 width: 30%;
                 text-align: center;
                 color: #fff;
-                font-family: Lato;
+                font-family: Lato, sans-serif;
                 font-weight: lighter;
 				position: relative;
 				top: 45%;
@@ -280,6 +280,7 @@ main img.full-width {
             }
 	
 	
+	
 /*===================================*\
                DL Button
 \*===================================*/
@@ -290,7 +291,7 @@ p.dl-button {
 	color: #fff;
 	padding: 10px;
 	width: 200px;
-	font-family: Helvetica;
+	font-family: Helvetica, sans-serif;
 	border-radius: 4px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
@@ -312,3 +313,24 @@ hr {
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
 	margin: 24px;
 }
+
+
+
+
+/*===================================*\
+              Other Button
+\*===================================*/
+main button {
+    background-color: #a89cc8;
+    color: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100px;
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
+    border: 1px solid black;
+}
+
+
+
+
