@@ -200,6 +200,7 @@ div#picture-frame {
         }
         log('#logs', "Clicked the start button");
         p.style.backgroundImage = "url('images/please-wait.jpg')";
+        c = 0;
       }
 
       //function executes when the Stop button is pushed.
@@ -294,15 +295,15 @@ div#picture-frame {
             total = 0;
             
             console.log("c = " + c);
-            if (c == 0) { /* Start: show dog picture */
+            if (c == 0) { /* Start: show first picture */
                 p.style.backgroundImage = picture1;
             }
-            else if (c == 1) {   /* done seeing dog */
+            else if (c == 1) {   /* done seeing first picture */
                 dl = avg;
                 avg = 0;
                 p.style.backgroundImage = picture2;
             }
-            else if (c == 2) {   /* done seeing cat */
+            else if (c == 2) {   /* done seeing second picture */
                 cl = avg;
                 avg = 0;
                 p.style.backgroundImage = "none";
@@ -313,7 +314,6 @@ div#picture-frame {
                 }
                 onStop();
             }
-
             c++;
           }
           if (faces[0].emotions.joy > 50) {
