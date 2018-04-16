@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+    <script type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js"></script>
+    <script type="text/javascript" src="https://download.affectiva.com/js/3.2/adapter-1.4.0.js"></script>
+    <title>HCI Project 5a</title>
+</head>
+
+<body>
+
+<header>
+    <h1>HCI Project 5a</h1>
+</header>
+
+<nav class="sticky">
+    <ul class="top-level sticky">
+        <li><a href="index">Home</a></li>
+        <li><a href="resume">Resume</a></li>
+        <li class="parent"><a href="projects">Projects</a>
+            <ul class="child">
+                <li><a href="this-website">This Website</a></li>
+                <li><a href="#">HCI Project 5</a></li>
+            </ul>
+        </li>
+        <li class="parent"><a href="other">Other</a>
+            <ul class="child">
+                <li><a href="film-stats">Film Stats</a></li>
+                <li><a href="hci-project2">HCI Project 2</a></li>
+                <li><a href="ook">Ook!</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<main id="main">
+
+<div id="notification">
+    You look happy!
+</div>
+
+<style>
+#notification {
+    background-color: #00ff00;
+    border: solid 1px black;
+    padding: 20px;
+    font-family: sans-serif;
+    font-size: 24px;
+    position: fixed;
+    left: -9999px;
+    top: 10px;
+    z-index: 11;
+}
+
+div.row {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    height: 500px;
+}
+
+div.col {
+    display: flex;
+    flex-direction: column;
+}
+
+div#picture-frame {
+    width: 66%;
+    background-size: 100% 100%;
+    margin: 20px;
+}
+</style>
+
+<h2>Which do you like more?</h2>
+<p>Instructions: Click one of the dark blue buttons to begin. Just watch the images as they appear. You 
+   may have to wait a few seconds for the program to recognize your face.</p>
+
+<p>Average happiness in the past 50 frames: </p>
+<p id="h-reporter"></p>
+
+<button id="start" onclick="onStart()">Start</button>
+<button id="stop" onclick="onStop()">Stop</button>
+<button id="reset" onclick="onReset()">Reset</button>
+  <div class="container-fluid">
+    <div class="row">
+          <div id="picture-frame" class="col">
+            <div id="affdex_elements" style="width:136px;height:96px;"></div>
+          </div>
+      <div class="col">
+        <div>
+          <strong style="font-size: 1.2em">DETECTOR LOG MSGS</strong>
+        </div>
+        <div id="logs"></div>
+      </div>
+    </div>
+  </div>
+    <div style="height:25em;">
+        <strong style="font-size: 2em">EMOTION TRACKING RESULTS</strong>
+        <div id="results" style="word-wrap:break-word; font-family: monospace; font-size: 1.5em;"></div>
+    </div>
+
+<hr/>
+<h2>How does it work?</h2>
+<p>This page uses <a href="https://developer.affectiva.com">Affectiva</a>'s emotion-detecting technology to recognize
+   your face, and keep track of what emotions you display. If you display more joy on average during the 50 frames in
+   which the dog picture is displayed, you obviously like dogs more. If you display more joy in the 50 frames of the 
+   cat, you must be a cat person.</p>
+</main>
+
+
+<footer id="footer">
+    <section class="about">
+        <h2>About this website</h2>
+        <p>I created this website as a personal project in my free time to learn more about web design,
+            CSS, HTML, and JavaScript.</p>
+        <p>Right now there isn't much on here, but I hope to include more in the future as I learn more
+            about web design.</p>
+    </section>
+    <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+            <dt>Address</dt>
+                <dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+            <dt>Phone</dt>
+                <dd>(518) 545-1984</dd>
+            <dt>Email</dt>
+                <dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+        </dl>
+        <ul class="icons">
+            <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+            <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+            <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+            <li><a href="http://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+    </section>
+</footer>	
+
+
+
+<script type="text/javascript">
+
+      // SDK Needs to create video and canvas nodes in the DOM in order to function
+      // Here we are adding those nodes a predefined div.
+      var divRoot = $("#affdex_elements")[0];
+      var width = 136;
+      var height = 96;
+      var faceMode = affdex.FaceDetectorMode.LARGE_FACES;
+      //Construct a CameraDetector and specify the image width / height and face detector mode.
+      var detector = new affdex.CameraDetector(divRoot, width, height, faceMode);
+      
+        var n = document.getElementById("notification");
+        var h = document.getElementById("h-reporter");
+        var p = document.getElementById("picture-frame");
+        var aHappiness = new Array();
+        var savedH = new Array();
+        var total = 0;
+        var avg = 0;
+        var dl = 0;
+        var cl = 0;
+        var c = 0;
+        var picture1 = "images/dog.jpg";
+        var picture2 = "images/cat.jpg";
+        var option1 = "dogs";
+        var option2 = "cats";
+
+      //Enable detection of all Expressions, Emotions and Emojis classifiers.
+      detector.detectAllEmotions();
+      detector.detectAllExpressions();
+      detector.detectAllEmojis();
+      detector.detectAllAppearance();
+
+      //Add a callback to notify when the detector is initialized and ready for runing.
+      detector.addEventListener("onInitializeSuccess", function() {
+        log('#logs', "The detector reports initialized");
+        //Display canvas instead of video feed because we want to draw the feature points on it
+        $("#face_video_canvas").css("display", "block");
+        $("#face_video").css("display", "none");
+      });
+
+      function log(node_name, msg) {
+        $(node_name).append("<span>" + msg + "</span><br />")
+      }
+
+      //function executes when Start button is pushed.
+      function onStart() {
+        if (detector && !detector.isRunning) {
+          $("#logs").html("");
+          detector.start();
+        }
+        log('#logs', "Clicked the start button");
+        p.style.backgroundImage = "url('images/please-wait.jpg')";
+        c = 0;
+      }
+
+      //function executes when the Stop button is pushed.
+      function onStop() {
+        log('#logs', "Clicked the stop button");
+        if (detector && detector.isRunning) {
+          detector.removeEventListener();
+          detector.stop();
+        }
+        c = 0;
+		p.style.backgroundImage = "none";
+		aHappiness = [];
+      };
+
+      //function executes when the Reset button is pushed.
+      function onReset() {
+        log('#logs', "Clicked the reset button");
+        if (detector && detector.isRunning) {
+          detector.reset();
+
+          $('#results').html("");
+        }
+        c = 0;
+		p.style.backgroundImage = "none";
+		aHappiness = [];
+      };
+      
+      //Add a callback to notify when camera access is allowed
+      detector.addEventListener("onWebcamConnectSuccess", function() {
+        log('#logs', "Webcam access allowed");
+      });
+
+      //Add a callback to notify when camera access is denied
+      detector.addEventListener("onWebcamConnectFailure", function() {
+        log('#logs', "webcam denied");
+        console.log("Webcam access denied");
+      });
+
+      //Add a callback to notify when detector is stopped
+      detector.addEventListener("onStopSuccess", function() {
+        log('#logs', "The detector reports stopped");
+        $("#results").html("");
+      });
+      
+      //redirect based on favorite dog 
+      function dogResult(dogNum) {
+        if(dogNum == 1) {
+            window.open ('dogs/labrador-retriever','_self',false)
+        }
+      }
+
+
+      //Add a callback to receive the results from processing an image.
+      //The faces object contains the list of the faces detected in an image.
+      //Faces object contains probabilities for all the different expressions, emotions and appearance metrics
+      detector.addEventListener("onImageResultsSuccess", function(faces, image, timestamp) {
+        $('#results').html("");
+        log('#results', "Timestamp: " + timestamp.toFixed(2));
+        log('#results', "Number of faces found: " + faces.length);
+        if (faces.length > 0) {
+          if (aHappiness.length < 50) {
+            aHappiness.push(faces[0].emotions.joy);
+          }
+          else {    /* End of a chunk of time */
+            for (var i = 0; i < aHappiness.length; i++) {
+                total += aHappiness[i];
+            }
+            avg = total / aHappiness.length;
+            h.innerHTML = avg;
+            aHappiness = [];
+            total = 0;
+            
+            if(c < 10) {
+                p.style.backgroundImage = "url('dogs/" + c + ".jpg')";
+                savedH[c] = avg;
+            } else {
+                p.style.backgroundImage = "none";
+                var favDog = 0;
+                var temp = savedH[0];
+                var arrayLen = savedH.length;
+                console.log("arrayLen: " + arrayLen);
+                for (var j = 0; j < arrayLen; j++) {
+                    if (savedH[j] > temp) {
+                        temp = savedH[j]
+                        favDog = j;
+                    }
+                }
+                favDog++;
+                dogResult(favDog);
+                onStop();
+            }
+            
+            c++;
+            
+          }
+          if (faces[0].emotions.joy > 50) {
+            n.style.left = "10px";
+          } else {
+            n.style.left = "-9999px";
+          }
+          
+          log('#results', "Appearance: " + JSON.stringify(faces[0].appearance));
+          log('#results', "Emotions: " + JSON.stringify(faces[0].emotions, function(key, val) {
+            return val.toFixed ? Number(val.toFixed(0)) : val;
+          }));
+          log('#results', "Expressions: " + JSON.stringify(faces[0].expressions, function(key, val) {
+            return val.toFixed ? Number(val.toFixed(0)) : val;
+          }));
+          log('#results', "Emoji: " + faces[0].emojis.dominantEmoji);
+          drawFeaturePoints(image, faces[0].featurePoints);
+        }
+      });
+
+      //Draw the detected facial feature points on the image
+      function drawFeaturePoints(img, featurePoints) {
+        var contxt = $('#face_video_canvas')[0].getContext('2d');
+
+        var hRatio = contxt.canvas.width / img.width;
+        var vRatio = contxt.canvas.height / img.height;
+        var ratio = Math.min(hRatio, vRatio);
+
+        contxt.strokeStyle = "#FFFFFF";
+        for (var id in featurePoints) {
+          contxt.beginPath();
+          contxt.arc(featurePoints[id].x,
+            featurePoints[id].y, 2, 0, 2 * Math.PI);
+          contxt.stroke();
+
+        }
+      }
+</script>
+
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "opyh5e8d"
+    }], "*")
+  }
+</script>
+
+</body>
+
+</html>
+
