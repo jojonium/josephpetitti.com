@@ -2,8 +2,6 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="googlebot" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -88,7 +86,8 @@ div#picture-frame {
 
 <div style="margin: 10px 0;">
     <button class="button-a" id="coffeeTea" onclick="coffeeTea()">Coffee/Tea</button>
-    <button class="button-a" id="dogCat" onclick="dogCat()">Dog/Cat</button>
+    <button class="button-a" id="dogCat" onclick="dogCat()">Dogs/Cats</button>
+    <button class="burron-a" id="summerWinter" onclick="summerWinter()">Summer/Winter</button>
 </div>
 
 <!-- <button id="start" onclick="onStart()">Start</button> -->
@@ -244,6 +243,14 @@ div#picture-frame {
         picture1 = "url('images/dog.jpg')";
         picture2 = "url('images/cat.jpg')";
         onStart();
+      }
+      
+      //function for summer/winter
+      function summerWinter() {
+        option1 = "summer";
+        option2 = "winter";
+        picture1 = "url('images/summer.jpg')";
+        picture2 = "url('images/winter.jpg')";
       }
 
       //Add a callback to notify when camera access is allowed
