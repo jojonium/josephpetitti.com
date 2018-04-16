@@ -79,14 +79,19 @@ div#picture-frame {
 }
 </style>
 
-<h2>Are you a cat person, or a dog person?</h2>
-<p>Instructions: Click "Start" to begin. Just watch the images as they appear. You may have to wait a few seconds for
-   the program to recognize your face.</p>
+<h2>Which do you like more?</h2>
+<p>Instructions: Click one of the dark blue buttons to begin. Just watch the images as they appear. You 
+   may have to wait a few seconds for the program to recognize your face.</p>
 
 <p>Average happiness in the past 50 frames: </p>
 <p id="h-reporter"></p>
 
-<button id="start" onclick="onStart()">Start</button>
+<div style="margin: 10px 0;">
+    <button class="button-a" id="coffeeTea" onclick="coffeeTea()">Coffee/Tea</button>
+    <button class="button-a" id="dogCat" onclick="dogCat()">Dog/Cat</button>
+</div>
+
+<!-- <button id="start" onclick="onStart()">Start</button> -->
 <button id="stop" onclick="onStop()">Stop</button>
 <button id="reset" onclick="onReset()">Reset</button>
   <div class="container-fluid">
@@ -165,6 +170,10 @@ div#picture-frame {
         var dl = 0;
         var cl = 0;
         var c = 0;
+        var picture1 = "images/dog.jpg";
+        var picture2 = "images/cat.jpg";
+        var option1 = "dogs";
+        var option2 = "cats";
 
       //Enable detection of all Expressions, Emotions and Emojis classifiers.
       detector.detectAllEmotions();
@@ -191,7 +200,7 @@ div#picture-frame {
           detector.start();
         }
         log('#logs', "Clicked the start button");
-        p.style.backgroundImage = "url('images/question.jpg')";
+        p.style.backgroundImage = "url('images/please-wait.jpg')";
       }
 
       //function executes when the Stop button is pushed.
@@ -218,6 +227,24 @@ div#picture-frame {
 		p.style.backgroundImage = "none";
 		aHappiness = [];
       };
+      
+      //function for coffee/tea
+      function coffeeTea() {
+        option1 = "coffee";
+        option2 = "tea";
+        picture1 = "url('images/coffee.jpg')";
+        picture2 = "url('images/tea.jpg')";
+        onStart();
+      }
+      
+      //function for dog/cats
+      function dogCat() {
+        option1 = "dogs";
+        option2 = "cats";
+        picture1 = "url('images/dog.jpg')";
+        picture2 = "url('images/cat.jpg')";
+        onStart();
+      }
 
       //Add a callback to notify when camera access is allowed
       detector.addEventListener("onWebcamConnectSuccess", function() {
@@ -260,23 +287,21 @@ div#picture-frame {
             
             console.log("c = " + c);
             if (c == 0) { /* Start: show dog picture */
-                p.style.backgroundImage = "url('images/dog.jpg')";
+                p.style.backgroundImage = picture1;
             }
             else if (c == 1) {   /* done seeing dog */
                 dl = avg;
-                console.log("dl = " + dl);
                 avg = 0;
-                p.style.backgroundImage = "url('images/cat.jpg')";
+                p.style.backgroundImage = picture2;
             }
             else if (c == 2) {   /* done seeing cat */
                 cl = avg;
-                console.log("cl = " + cl);
                 avg = 0;
                 p.style.backgroundImage = "none";
                 if (dl > cl) {
-                    alert("You like dogs more!");
+                    alert("You like " + option1 + " more!");
                 } else {
-                    alert("You like cats more!");
+                    alert("You like " + option2 + " more!");
                 }
                 onStop();
             }

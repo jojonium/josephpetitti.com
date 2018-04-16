@@ -306,6 +306,8 @@ p.dl-button a {
 
 
 
+
+
 hr {
     border: 0;
     height: 1px;
@@ -329,6 +331,11 @@ main button {
     font-family: Helvetica, sans-serif;
     font-size: 20px;
     border: 1px solid black;
+}
+
+main button.button-a {
+    background-color: #5f4d93;
+    width: 200px;
 }
 
 
