@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>Joseph Petitti</title>
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+		<script src="scripts/seen.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.7.1/coffee-script.min.js"></script>
+	</head>
+	<body>
+	
+	<!-- Header -->
+		<header>
+			<img src="images/logo.png">
+			<h1>Joseph Petitti</h1>
+		</header>
+		
+	<!-- Nav -->
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="film-stats">Film Stats</a></li>
+						<li><a href="hci-project2">HCI Project 2</a></li>
+						<li><a href="ook">Ook!</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		
+	<!-- Main -->
+		<main style="padding: 0 40px 40px 40px;">
+			<div style="height: 500px">
+				<div class="parallax-header" style="background-color: #a89cc8; z-index: 1;">WELCOME</div>
+				<canvas width="1200" height="500" id="seen-canvas" class="seen-main"
+						style="position: relative; top: -38px"></canvas>
+			</div>
+		
+			<div class="circular-portrait"></div>
+			<h2>Welcome to my personal website</h2>
+			<p>I'm Joseph Petitti, a sophomore computer science student at Worcester Polytechnic Institute. I'm 
+			   interested in cybersecurity, software engineering, and data science.</p>
+			<p>Check out my <a href="resume">resume</a> for an overview of my accomplishments, and see the
+			   <a href="projects">projects</a> page for a detailed description of the projects I've been working
+			   on.</p>
+			   
+			<h2>About Me</h2>
+			<p>I have a wide range of interests. I love learning about technology, hiking and camping, watching
+			   and reviewing movies, and playing roleplaying and video games.</p>
+			
+
+			<p>Technology fascinates me. I am always excited to learn more about computer science, and 
+			   information-technology. In both my academic and personal life, I try to teach myself as much as
+			   I can about it. <a href="this-website">This website</a> is a perfect example of that.</p>
+			<p>As an Eagle Scout, I've been an avid outdoorsman for years. Despite going to school in Massachusetts,
+			   perhaps the worst state for outdoor activities, I continue to go backpacking, hiking, and camping
+			   whenever I can. The picture below is a friend and me on top of Mount Colden in New York.</p>
+			   
+   			<img class="full-width" src="images/colden.jpg">
+
+			<p>My other passion is film. Check out my <a href="https://letterboxd.com/jojonium/">Letterboxd</a> page
+			   to see what I've been watching. I've reviewed every film I've watched since April 21, 2017, for a
+			   total of 433 films reviewed. I love discussing movies, and hope to start a film club at WPI.</p>
+			<p>Finally, I enjoy games of all kinds. Video games, board games, card games, roleplaying games, you
+			   name it. Check out my <a href="https://steamcommunity.com/id/thedungeonmaster/">Steam</a> page
+			   for what I'm playing on PC. I'm also currently running a campaign of the modern-day
+			   horror/conspiracy roleplaying game Delta Green.</p>
+			
+		</main>
+		
+	<!-- Footer -->
+		<footer id="footer">
+			<section class="about">
+				<h2>About this website</h2>
+				<p>I created this website as a personal project in my free time to learn more about web design,
+				   CSS, HTML, and JavaScript.</p>
+				<p>Right now there isn't much on here, but I hope to include more in the future as I learn more
+				   about web design.</p>
+			</section>
+			<section class="contact">
+				<h2>Contact Information</h2>
+				<dl>
+					<dt>Address</dt>
+						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+					<dt>Phone</dt>
+						<dd>(518) 545-1984</dd>
+					<dt>Email</dt>
+						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+				</dl>
+				<ul class="icons">
+					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+					<li><a href="http://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+				</ul>
+			</section>
+		</footer>
+		
+		
+		<script type="text/coffeescript" id="code">
+			width               = 1200
+			height              = 500
+			equilateralAltitude = Math.sqrt(3.0) / 2.0
+			triangleScale       = 70
+			patch_width         = width * 1.5
+			patch_height        = height * 1.5
+
+			# Create patch of triangles that spans the view
+			shape = seen.Shapes.patch(
+				patch_width / triangleScale / equilateralAltitude
+				patch_height / triangleScale
+			)
+			.scale(triangleScale)
+			.translate(-patch_width/2, -patch_height/2 + 80)
+			.rotx(-0.3)
+			
+			hue = 0.70833
+			for surface in shape.surfaces
+			  hue += (.272225) * (1 / shape.surfaces.length)
+			  surface.fill seen.Colors.hsl(hue, 0.5, 0.4)
+
+			# Create scene and render context
+			scene = new seen.Scene
+				model    : seen.Models.default().add(shape)
+				viewport : seen.Viewports.center(width, height)
+
+			context = seen.Context('seen-canvas', scene).render()
+
+			# Apply animated 3D simplex noise to patch vertices
+			t = 0
+			noiser = new seen.Simplex3D(shape)
+			context.animate()
+				.onBefore((t)->
+					for surf in shape.surfaces
+						for p in surf.points
+							p.z = 4*noiser.noise(p.x/8, p.y/8, t*1e-4)
+						# Since we're modifying the point directly, we need to mark the surface dirty
+						# to make sure the cache doesn't ignore the change
+						surf.dirty = true
+				)
+				.start()
+		</script>
+	</body>
+</html>
