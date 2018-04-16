@@ -242,8 +242,10 @@ div#picture-frame {
       
       //redirect based on favorite dog 
       function dogResult(dogNum) {
-        if(dogNum == 1) {
-            window.open ('dogs/labrador-retriever','_self',false)
+        if(dogNum == 0) {
+            window.open('dogs/labrador-retriever', '_self', false);
+        } else if(dogNum == 1) {
+            window.open('dogs/yorkshire-terrier', '_self', false);
         }
       }
 
@@ -268,7 +270,7 @@ div#picture-frame {
             aHappiness = [];
             total = 0;
             
-            if(c < 10) {
+            if(c < 3) {
                 p.style.backgroundImage = "url('dogs/" + c + ".jpg')";
                 savedH[c] = avg;
             } else {
@@ -283,7 +285,7 @@ div#picture-frame {
                         favDog = j;
                     }
                 }
-                favDog++;
+                console.log("favorite dog number: " + favDog);
                 dogResult(favDog);
                 onStop();
             }
