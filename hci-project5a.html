@@ -83,8 +83,7 @@ div#picture-frame {
 <p>Instructions: Click the "start" button to begin. Just watch the images as they appear. You 
    may have to wait a few seconds for the program to recognize your face.</p>
 
-<p>Average happiness in the past 50 frames: </p>
-<p id="h-reporter"></p>
+<p>Average happiness in the past 50 frames: <span id="h-reporter"></span> </p>
 
 <button id="start" onclick="onStart()">Start</button>
 <button id="stop" onclick="onStop()">Stop</button>
@@ -102,9 +101,9 @@ div#picture-frame {
       </div>
     </div>
   </div>
-    <div style="height:25em;">
+    <div style="height:15em;">
         <strong style="font-size: 2em">EMOTION TRACKING RESULTS</strong>
-        <div id="results" style="word-wrap:break-word; font-family: monospace; font-size: 1.5em;"></div>
+        <div id="results" style="word-wrap:break-word; font-family: monospace;"></div>
     </div>
 
 <hr/>
@@ -156,7 +155,6 @@ div#picture-frame {
       var detector = new affdex.CameraDetector(divRoot, width, height, faceMode);
       
         var n = document.getElementById("notification");
-        var h = document.getElementById("h-reporter");
         var p = document.getElementById("picture-frame");
         var aHappiness = new Array();
         var savedH = new Array();
@@ -277,7 +275,7 @@ div#picture-frame {
                 total += aHappiness[i];
             }
             avg = total / aHappiness.length;
-            h.innerHTML = avg;
+            $("#h-reporter").html(avg);
             aHappiness = [];
             total = 0;
             
