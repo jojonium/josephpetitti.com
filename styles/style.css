@@ -234,6 +234,10 @@ main img.full-width {
 		display: inline;
 		padding: 0 14px;
 	}
+	
+	footer ul li span:hover {
+        color: #d3d3d3;
+    }
 
 	
 	
