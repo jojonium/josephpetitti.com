@@ -8,11 +8,6 @@
     src: url(helvetica.otf);
 }
 
-header {
-	color: #ffffff;
-	font-weight: 200;
-}
-
 header img {
 	margin: 40px auto -10px;
     display: block;
@@ -124,9 +119,9 @@ main {
 h1 {
 	margin: 20px;
 	padding: 20px 0 10px 0;
-	font-size: 4.5em;
+	font-size: 3.75em;
 	text-align: center;
-    font-weight: lighter;
+    color: #ffffff;
 }
 
 h2 {
