@@ -3,6 +3,11 @@
     src: url(lato-regular.ttf);
 }
 
+@font-face {
+    font-family: Helvetica;
+    src: url(helvetica.otf);
+}
+
 header {
 	color: #ffffff;
 	font-weight: 200;
@@ -119,8 +124,9 @@ main {
 h1 {
 	margin: 20px;
 	padding: 20px 0 10px 0;
-	font-size: 3.75em;
+	font-size: 4.5em;
 	text-align: center;
+    font-weight: lighter;
 }
 
 h2 {
