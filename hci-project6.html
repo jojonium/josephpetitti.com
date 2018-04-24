@@ -1,26 +1,45 @@
- <!doctype html>
-<html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="http://josephpetitti.com/styles/style.css" rel="stylesheet" type="text/css">
-		<title>HCI Project 6</title>
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
-		<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-	</head>
-	<body>
-	
-	<!-- Main -->
-		<main>
-            <a-scene>
-                <a-box position="-3 3 -3" width="2" height=".5" depth=".25" color="#d3d3d3" shadow></a-box>
-                <a-box position="0 3 -3" width="2" height=".5" depth=".25" color="#d3d3d3" shadow></a-box>
-                <a-box position="3 3 -3" width="2" height=".5" depth=".25" color="#d3d3d3" shadow></a-box>
-                <a-entity scale="2 2 2" geometry="primitive: torusKnot" position="0 6 -10" material="color: magenta; metalness:1; roughness: 0.1; sphericalEnvMap: #sky;">
-                    <a-animation easing="linear" attribute="rotation" dur="10000" to="0 0 360" repeat="indefinite"></a-animation>
-                </a-entity>
-                <a-sky src="http://josephpetitti.com/images/background.jpg" radius="30"></a-sky>            
-            </a-scene>		
-		</main>
-	</body>
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/0.2.0/aframe.js"></script>
+        <title>HCI Project 6</title>
+    </head>
+    
+    <body>
+        <a-scene>
+            <a-assets>
+                <img id="texture" src="img/texture.jpg">
+            </a-assets>   
+            
+            <a-box color="#d3d3d3" width="3" height="1" depth="0.25"
+                   position="0 3 -2"
+                   scale="1 1 1">
+                <a-animation begin="click" easing="linear" attribute="rotation" dur="10000" to="0 0 360" repeat="indefinite"></a-animation>
+                
+                <a-event name="mouseenter" scale="1.25 1.25 1.25"></a-event>
+                <a-event name="mouseleave" scale="1 1 1"></a-event>
+            </a-box>
+            
+            <a-camera position="0 2 2">
+                <a-cursor color="#FF0000">
+            </a-camera>
+            
+            <a-sky src="http://josephpetitti.com/images/background.jpg" radius="30"></a-sky>            
+        </a-scene>
+        
+        <!-- interact using vanilla JavaScript when cursor is over the object -->
+        <!-- instead of using <a-event name="mouseenter" scale="4 1 6"></a-event> -->
+        <script>
+            /*var box = document.querySelector( 'a-box' );
+            box.addEventListener( 'mouseenter', function ( )
+            {
+                box.setAttribute( 'scale',
+                {
+                    x: 4,
+                    y: 1,
+                    z: 6
+                } );
+            } );*/
+        </script>
+    </body>
 </html>
