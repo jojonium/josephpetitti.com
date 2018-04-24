@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://aframe.io/releases/0.2.0/aframe.js"></script>
+        <script src="https://aframe.io/releases/0.8.0/aframe.js"></script>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <title>HCI Project 6</title>
     </head>
     
@@ -14,11 +15,14 @@
             <a-box color="#d3d3d3" width="3" height="1" depth="0.25"
                    position="0 3 -2"
                    scale="1 1 1">
-                <a-animation begin="click" easing="linear" attribute="rotation" dur="10000" to="0 0 360" repeat="indefinite"></a-animation>
-                
-                <a-event name="mouseenter" scale="1.25 1.25 1.25"></a-event>
-                <a-event name="mouseleave" scale="1 1 1"></a-event>
+                <a-animation begin="click" easing="linear" attribute="rotation" dur="1000" to="0 0 360"></a-animation>
             </a-box>
+            
+            <a-plane color="#CCC" height="3" width="3" rotation="-90 0 0" scale="0.25 0.25 0.25" position="-5 -2 0">
+                <a-text id="hintText" value="This is a hint" align="center" color="#000"></a-text>
+                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 0" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>                                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to="1 1 1" direction="alternate"></a-animation>
+            </a-plane>
             
             <a-camera position="0 2 2">
                 <a-cursor color="#FF0000">
