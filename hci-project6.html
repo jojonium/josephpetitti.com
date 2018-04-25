@@ -8,10 +8,6 @@
     
     <body>
         <a-scene>
-            <a-assets>
-                <img id="texture" src="img/texture.jpg">
-            </a-assets>   
-            
             <a-box color="#d3d3d3" width="3" height="1" depth="0.25"
                    position="0 3 -2"
                    scale="1 1 1">
@@ -21,14 +17,34 @@
             <a-plane color="#CCC" height="3" width="3" rotation="-90 0 0" scale="0.25 0.25 0.25" position="-5 -2 0">
                 <a-text id="hintText" value="This is a hint" align="center" color="#000"></a-text>
                 <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 0" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>                                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to="1 1 1" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to="1 1 1" direction="alternate"></a-animation>
             </a-plane>
+            
+            <a-plane color="#a1b592" height="3" width="3" rotation="-90 0 0" scale="0.25 0.25 0.25" position="5 -2 -3">
+                <a-text id="hintText" value="This is something else" align="center" color="#000"></a-text>
+                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 0" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to="1 1 1" direction="alternate"></a-animation>
+            </a-plane>
+            
+            <a-assets>
+                <a-asset-item id="key-obj" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/Key_B_02.obj"></a-asset-item>
+                <a-asset-item id="key-mtl" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/Key_B_02.mtl"></a-asset-item>
+            </a-assets>
+            
+            <a-entity 
+                obj-model="obj: #key-obj; mtl: #key-mtl"
+                scale="0.1 0.1 0.1"
+                rotation="0 0 0"
+                position="1 1 1">
+            </a-entity>
             
             <a-camera position="0 2 2">
                 <a-cursor color="#FF0000">
             </a-camera>
             
-            <a-sky src="http://josephpetitti.com/images/background.jpg" radius="30"></a-sky>            
+            <a-sky src="http://josephpetitti.com/images/background.jpg"></a-sky>            
         </a-scene>
         
         <!-- interact using vanilla JavaScript when cursor is over the object -->
