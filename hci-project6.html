@@ -37,7 +37,10 @@
                 obj-model="obj: #key-obj; mtl: #key-mtl"
                 scale="0.1 0.1 0.1"
                 rotation="0 0 0"
-                position="1 1 1">
+                position="3 0 -2">
+                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 90" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to=".2 .2 .2" direction="alternate"></a-animation>
             </a-entity>
             
             <a-camera position="0 2 2">
