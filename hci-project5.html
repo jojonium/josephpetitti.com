@@ -10,35 +10,34 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
     <script type="text/javascript" src="https://download.affectiva.com/js/3.2/affdex.js"></script>
     <script type="text/javascript" src="https://download.affectiva.com/js/3.2/adapter-1.4.0.js"></script>
-    <title>HCI Project 5</title>
+    <title>HCI Project 5b</title>
 </head>
 
 <body>
 
 <header>
-    <h1>HCI Project 5</h1>
+    <h1>HCI Project 5b</h1>
 </header>
 
-<nav class="sticky">
-    <ul class="top-level sticky">
-        <li><a href="index">Home</a></li>
-        <li><a href="resume">Resume</a></li>
-        <li class="parent"><a href="projects">Projects</a>
-            <ul class="child">
-                <li><a href="this-website">This Website</a></li>
-                <li><a href="#">HCI Project 5</a></li>
-                <li><a href="hci-project5a">HCI Project 5a</a></li>
-                <li><a href="hci-project5b">HCI Project 5b</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="other">Other</a>
-            <ul class="child">
-                <li><a href="film-stats">Film Stats</a></li>
-                <li><a href="ook">Ook!</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+						<li><a href="hci-project6">HCI Project 6</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="film-stats">Film Stats</a></li>
+						<li><a href="ook">Ook!</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
 
 <main id="main">
 
@@ -63,7 +62,7 @@ div.row {
     display:flex;
     flex-direction:row;
     justify-content: space-around;
-    height: 500px;
+    height: 700px;
 }
 
 div.col {
@@ -73,24 +72,22 @@ div.col {
 
 div#picture-frame {
     width: 66%;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
     margin: 20px;
+    height: 90%;
 }
 </style>
 
-<h2>Which do you like more?</h2>
-<p>Instructions: Click one of the dark blue buttons to begin. Just watch the images as they appear. You 
+<h2>What should you make for dinner?</h2>
+<p>Instructions: Click the "start" button to begin. Just watch the images as they appear. You 
    may have to wait a few seconds for the program to recognize your face.</p>
+<p>Note: This page currently only works in Firefox.</p>
 
 <p>Average happiness in the past 50 frames: <span id="h-reporter"></span> </p>
 
-<div style="margin: 10px 0;">
-    <button class="button-a" id="coffeeTea" onclick="coffeeTea()">Coffee/Tea</button>
-    <button class="button-a" id="dogCat" onclick="dogCat()">Dogs/Cats</button>
-    <button class="button-a" id="summerWinter" onclick="summerWinter()">Summer/Winter</button>
-</div>
-
-<!-- <button id="start" onclick="onStart()">Start</button> -->
+<button id="start" onclick="onStart()">Start</button>
 <button id="stop" onclick="onStop()">Stop</button>
 <button id="reset" onclick="onReset()">Reset</button>
   <div class="container-fluid">
@@ -113,10 +110,9 @@ div#picture-frame {
 
 <hr/>
 <h2>How does it work?</h2>
-<p>This page uses <a href="https://developer.affectiva.com">Affectiva</a>'s emotion-detecting technology to recognize
-   your face, and keep track of what emotions you display. If you display more joy on average during the 50 frames in
-   which the dog picture is displayed, you obviously like dogs more. If you display more joy in the 50 frames of the 
-   cat, you must be a cat person.</p>
+<p>This page uses <a href="https://developer.affectiva.com">Affectiva</a>'s emotion-detecting technology to 
+   recognize your face, and keep track of what emotions you display. Whichever dish you display more joy on
+   average while viewing must be your favorite.</p>
 </main>
 
 
@@ -163,16 +159,11 @@ div#picture-frame {
         var n = document.getElementById("notification");
         var p = document.getElementById("picture-frame");
         var aHappiness = new Array();
+        var savedH = new Array();
         var total = 0;
         var avg = 0;
-        var dl = 0;
-        var cl = 0;
         var c = 0;
-        var picture1 = "images/dog.jpg";
-        var picture2 = "images/cat.jpg";
-        var option1 = "dogs";
-        var option2 = "cats";
-
+        
       //Enable detection of all Expressions, Emotions and Emojis classifiers.
       detector.detectAllEmotions();
       detector.detectAllExpressions();
@@ -227,33 +218,6 @@ div#picture-frame {
 		aHappiness = [];
       };
       
-      //function for coffee/tea
-      function coffeeTea() {
-        option1 = "coffee";
-        option2 = "tea";
-        picture1 = "url('images/coffee.jpg')";
-        picture2 = "url('images/tea.jpg')";
-        onStart();
-      }
-      
-      //function for dog/cats
-      function dogCat() {
-        option1 = "dogs";
-        option2 = "cats";
-        picture1 = "url('images/dog.jpg')";
-        picture2 = "url('images/cat.jpg')";
-        onStart();
-      }
-      
-      //function for summer/winter
-      function summerWinter() {
-        option1 = "summer";
-        option2 = "winter";
-        picture1 = "url('images/summer.jpg')";
-        picture2 = "url('images/winter.jpg')";
-        onStart();
-      }
-
       //Add a callback to notify when camera access is allowed
       detector.addEventListener("onWebcamConnectSuccess", function() {
         log('#logs', "Webcam access allowed");
@@ -271,6 +235,20 @@ div#picture-frame {
         $("#results").html("");
       });
       
+      //redirect based on favorite dog 
+      function dogResult(dogNum) {
+        if(dogNum == 1) {
+            window.open('food/ravioli-lasagna', '_self', false);
+        } else if(dogNum == 2) {
+            window.open('food/fried-rice', '_self', false);
+        } else if(dogNum == 3) {
+            window.open('food/macaroni-and-cheese', '_self', false);
+        } else if(dogNum == 4) {
+            window.open('food/burritos', '_self', false);
+        } else if(dogNum == 5) {
+            window.open('food/poppers', '_self', false);
+        }
+      }
 
 
       //Add a callback to receive the results from processing an image.
@@ -293,27 +271,30 @@ div#picture-frame {
             aHappiness = [];
             total = 0;
             
-            console.log("c = " + c);
-            if (c == 0) { /* Start: show first picture */
-                p.style.backgroundImage = picture1;
-            }
-            else if (c == 1) {   /* done seeing first picture */
-                dl = avg;
-                avg = 0;
-                p.style.backgroundImage = picture2;
-            }
-            else if (c == 2) {   /* done seeing second picture */
-                cl = avg;
-                avg = 0;
+            if(c < 5) {
+                p.style.backgroundImage = "url('food/" + c + ".jpg')";
+                savedH[c] = avg;
+
+            } else {
                 p.style.backgroundImage = "none";
-                if (dl > cl) {
-                    alert("You like " + option1 + " more!");
-                } else {
-                    alert("You like " + option2 + " more!");
+                savedH[0] = 0;
+                var favDog = 0;
+                var temp = 0;
+                var arrayLen = savedH.length;
+                console.log("arrayLen: " + arrayLen);
+                for (var j = 0; j < arrayLen; j++) {
+                    if (savedH[j] > temp) {
+                        temp = savedH[j]
+                        favDog = j;
+                    }
                 }
+                console.log("favorite dog number: " + favDog);
+                dogResult(favDog);
                 onStop();
             }
+            
             c++;
+            
           }
           if (faces[0].emotions.joy > 50) {
             n.style.left = "10px";
