@@ -44,7 +44,7 @@
 			</a-plane>
 			
 			<a-plane id="curtain3" height="4" width="2" position="2 8 -8" color="#d3d3d3">
-				<a-text id="hintText" value="4" align="center" color="#000" wrap-count="10"></a-text>
+				<a-text id="hintText" value="8" align="center" color="#000" wrap-count="10"></a-text>
 				<a-animation begin="button-depress" attribute="position" easing="linear" to="2 3 -8" duration="1000" direction="alternate"></a-animation>
 			</a-plane>
 			
@@ -114,7 +114,7 @@
 			
             
             
-            <a-camera position="0 2 2">
+            <a-camera position=".5 2 2">
                 <a-cursor color="#FF0000">
             </a-camera>
             
@@ -137,7 +137,7 @@
 			var input = "";
 			
 			function checkSuccess(input) {
-				if(input === "3042") {
+				if(input === "3082") {
 					console.log("you win");
 					door.emit("correct-code");
 				}
