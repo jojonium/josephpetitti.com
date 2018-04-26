@@ -8,20 +8,6 @@
     
     <body>
         <a-scene>
-            <a-plane color="#CCC" height="3" width="3" rotation="-90 0 0" scale="0.25 0.25 0.25" position="-5 -2 0">
-                <a-text id="hintText" value="This is a hint" align="center" color="#000"></a-text>
-                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 0" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to="1 1 1" direction="alternate"></a-animation>
-            </a-plane>
-            
-            <a-plane color="#a1b592" height="3" width="3" rotation="-90 0 0" scale="0.25 0.25 0.25" position="5 -2 -3">
-                <a-text id="hintText" value="This is something else" align="center" color="#000"></a-text>
-                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 0" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to="1 1 1" direction="alternate"></a-animation>
-            </a-plane>
-            
             <a-assets>
                 <a-asset-item id="key-obj" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/Key_B_02.obj"></a-asset-item>
                 <a-asset-item id="key-mtl" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/Key_B_02.mtl"></a-asset-item>
@@ -29,25 +15,103 @@
             
             <a-entity 
                 obj-model="obj: #key-obj; mtl: #key-mtl"
-                scale="0.1 0.1 0.1"
-                rotation="0 0 0"
-                position="3 0 -2">
+                scale="0.05 0.05 0.05"
+                rotation="0 90 90"
+                position="-1 1.5 1.5">
                 <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 90" direction="alternate"></a-animation>
                 <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation> 
                 <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to=".2 .2 .2" direction="alternate"></a-animation>
             </a-entity>
             
-            <a-box id="pillar" height="4" width=".7" depth=".7" color="#1c5668" position="0 -2 -1">
-				<a-cylinder id="button" height=".2" radius=".23" color="green" position="0 2 0">
-					<a-animation begin="click" attribute="position" to="0 1.9 0" easing="linear" duration="500"></a-animation>
-					<a-animation begin="button-depress" attribute="position" to="0 2 0" easing="linear" duration="500"></a-animation>
+            <a-box id="pillar" height="5" width=".7" depth=".7" color="#1c5668" position="0 -2 -1">
+				<a-cylinder id="button" height=".2" radius=".23" color="green" position="0 2.5 0">
+					<a-animation begin="click" attribute="position" to="0 2.4 0" easing="linear" duration="500"></a-animation>
+					<a-animation begin="button-depress" attribute="position" to="0 2.5 0" easing="linear" duration="500"></a-animation>
 				</a-cylinder>
             </a-box>
             
-			<a-plane id="curtain" height="4" width="2" position="-1 6 -3" color="blue">
-				<a-animation begin="button-depress" attribute="position" easing="linear" to="-1 3 -3" duration="1000" direction="alternate"></a-animation>
+            <a-plane id="ceiling" height="40" width="40" position="0 6 0" rotation="90 0 0" color="gray"></a-plane>
+            <a-plane id="floor" height="40" width="40" position="0 -3 0" rotation="-90 0 0" color="gray"></a-plane>
+            
+			<a-plane id="curtain1" height="4" width="2" position="-5 8 -8" color="#d3d3d3">
+				<a-text id="hintText" value="3" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="-5 3 -8" duration="1000" direction="alternate"></a-animation>
 			</a-plane>
+			
+			<a-plane id="curtain2" height="4" width="2" position="-2 8 -8" color="#d3d3d3">
+				<a-text id="hintText" value="0" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="-2 3 -8" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+			
+			<a-plane id="curtain3" height="4" width="2" position="2 8 -8" color="#d3d3d3">
+				<a-text id="hintText" value="4" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="2 3 -8" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+			
+			<a-plane id="curtain4" height="4" width="2" position="5 8 -8" color="#d3d3d3">
+				<a-text id="hintText" value="2" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="5 3 -8" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+			
+			<a-box id="tabletop" height=".25" width="2" depth="4" position="-1.5 1 2" color="brown">
+				<!-- Numpad -->
+				<a-box height="1" width=".1" depth=".5" position=".7 .38 0" color="#0ddbdb">
+					<a-box id="num1" height=".1" width=".1" depth=".1" position=".01 .4 .15" color="yellow">
+						<a-text value="1" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					<a-box id="num2" height=".1" width=".1" depth=".1" position=".01 .4 0" color="yellow">
+						<a-text value="2" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					<a-box id="num3" height=".1" width=".1" depth=".1" position=".01 .4 -.15" color="yellow">
+						<a-text value="3" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					
+					<a-box id="num4" height=".1" width=".1" depth=".1" position=".01 .25 .15" color="yellow">
+						<a-text value="4" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					<a-box id="num5" height=".1" width=".1" depth=".1" position=".01 .25 0" color="yellow">
+						<a-text value="5" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					<a-box id="num6" height=".1" width=".1" depth=".1" position=".01 .25 -.15" color="yellow">
+						<a-text value="6" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					
+					<a-box id="num7" height=".1" width=".1" depth=".1" position=".01 0.1 .15" color="yellow">
+						<a-text value="7" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					<a-box id="num8" height=".1" width=".1" depth=".1" position=".01 .1 0" color="yellow">
+						<a-text value="8" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					<a-box id="num9" height=".1" width=".1" depth=".1" position=".01 .1 -.15" color="yellow">
+						<a-text value="9" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+					
+					<a-box id="num0" height=".1" width=".1" depth=".1" position=".01 -.05 0" color="yellow">
+						<a-text value="0" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+					</a-box>
+				</a-box>
+				
+				<a-box height="1" width=".1" depth=".5" position=".5 .38 0.2" rotation="0 90 0" color="#0ddbdb"></a-box>
+				
+				<a-box height="1" width=".1" depth="1" position=".25 .38 -.25" color="#0ddbdb"></a-box>
+				
+				<a-box height="1" width=".1" depth=".5" position=".5 .38 -0.7" rotation="0 90 0" color="#0ddbdb"></a-box>
+				
+				<a-box depth=".9" width= ".35" height=".1" position=".475 .83 -0.25" color="#0ddbdb"></a-box>
+				
+				<a-box id="door" height=".76" width=".1" depth=".4" position=".7 .5 -.45" color="#a3a3a3">
+					<a-animation begin="correct-code" attribute="rotation" easing="linear" to="0 90 0" duration="1000"></a-animation>
+					<a-animation begin="correct-code" attribute="position" easing="linear" to=".95 .5 -.7" duration="1000"></a-animation>
+				</a-box>
+				
+				<!-- Display -->
+				<a-box height=".2" width=".1" depth=".5" position=".7 .98 0" color="#fff">
+					<a-text id="display" value="0000" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
+				</a-box>
 
+			</a-box>
+
+			
             
             
             <a-camera position="0 2 2">
@@ -62,13 +126,143 @@
         <script>
             
             var button = document.getElementById("button");
-            var curtain = document.getElementById("curtain");
+            var curtain1 = document.getElementById("curtain1");
+			var curtain2 = document.getElementById("curtain2");
+			var curtain3 = document.getElementById("curtain3");
+			var curtain4 = document.getElementById("curtain4");
+			var door = document.getElementById("door");
+			var display = document.getElementById("display");
+			var num1 = document.getElementById("num1");
+			
+			var input = "";
+			
+			function checkSuccess(input) {
+				if(input === "3042") {
+					console.log("you win");
+					door.emit("correct-code");
+				}
+			}
+			
+			num1.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "1";
+					checkSuccess(input);
+				} else {
+					input = "1";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num2.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "2";
+					checkSuccess(input);
+				} else {
+					input = "2";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num3.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "3";
+					checkSuccess(input);
+				} else {
+					input = "3";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num4.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "4";
+					checkSuccess(input);
+				} else {
+					input = "4";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num5.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "5";
+					checkSuccess(input);
+				} else {
+					input = "5";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num6.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "6";
+					checkSuccess(input);
+				} else {
+					input = "6";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num7.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "7";
+					checkSuccess(input);
+				} else {
+					input = "7";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num8.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "8";
+					checkSuccess(input);
+				} else {
+					input = "8";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num9.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "9";
+					checkSuccess(input);
+				} else {
+					input = "9";
+				}
+				display.setAttribute('value', input);	
+			});
+			
+			num0.addEventListener('click', function()
+			{
+				if(input === "" || input.length < 4) {
+					input += "0";
+					checkSuccess(input);
+				} else {
+					input = "0";
+				}
+				display.setAttribute('value', input);	
+			});
+
+
+
             button.addEventListener('click', function()
             {
-				//code before the pause
+				curtain1.emit("button-depress");
+				curtain2.emit("button-depress");
+				curtain3.emit("button-depress");
+				curtain4.emit("button-depress");
 				setTimeout(function(){
 					button.emit("button-depress");
-					curtain.emit("button-depress");
 				}, 500);
             });
             /*
