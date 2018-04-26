@@ -8,12 +8,6 @@
     
     <body>
         <a-scene>
-            <a-box color="#d3d3d3" width="3" height="1" depth="0.25"
-                   position="0 3 -2"
-                   scale="1 1 1">
-                <a-animation begin="click" easing="linear" attribute="rotation" dur="1000" to="0 0 360"></a-animation>
-            </a-box>
-            
             <a-plane color="#CCC" height="3" width="3" rotation="-90 0 0" scale="0.25 0.25 0.25" position="-5 -2 0">
                 <a-text id="hintText" value="This is a hint" align="center" color="#000"></a-text>
                 <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 0" direction="alternate"></a-animation>
@@ -39,21 +33,46 @@
                 rotation="0 0 0"
                 position="3 0 -2">
                 <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 90" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation> 
                 <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to=".2 .2 .2" direction="alternate"></a-animation>
             </a-entity>
+            
+            <a-box id="pillar" height="4" width=".7" depth=".7" color="#1c5668" position="0 -2 -1">
+				<a-cylinder id="button" height=".2" radius=".23" color="green" position="0 2 0">
+					<a-animation begin="click" attribute="position" to="0 1.9 0" easing="linear" duration="500"></a-animation>
+					<a-animation begin="button-depress" attribute="position" to="0 2 0" easing="linear" duration="500"></a-animation>
+				</a-cylinder>
+            </a-box>
+            
+			<a-plane id="curtain" height="4" width="2" position="-1 6 -3" color="blue">
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="-1 3 -3" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+
+            
             
             <a-camera position="0 2 2">
                 <a-cursor color="#FF0000">
             </a-camera>
             
-            <a-sky src="http://josephpetitti.com/images/background.jpg"></a-sky>            
+            <!-- <a-sky src="http://josephpetitti.com/images/background.jpg"></a-sky> -->
         </a-scene>
         
         <!-- interact using vanilla JavaScript when cursor is over the object -->
         <!-- instead of using <a-event name="mouseenter" scale="4 1 6"></a-event> -->
         <script>
-            /*var box = document.querySelector( 'a-box' );
+            
+            var button = document.getElementById("button");
+            var curtain = document.getElementById("curtain");
+            button.addEventListener('click', function()
+            {
+				//code before the pause
+				setTimeout(function(){
+					button.emit("button-depress");
+					curtain.emit("button-depress");
+				}, 500);
+            });
+            /*
+            var box = document.querySelector( 'a-box' );
             box.addEventListener( 'mouseenter', function ( )
             {
                 box.setAttribute( 'scale',
