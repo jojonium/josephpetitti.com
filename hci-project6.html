@@ -32,10 +32,10 @@
             <!-- building -->
             <a-plane id="ceiling" height="40" width="40" position="0 6 0" rotation="90 0 0" color="gray"></a-plane>
             <a-plane id="floor" height="40" width="40" position="0 -3 0" rotation="-90 0 0" color="gray"></a-plane>
-            <a-plane id=n-wall" height="9" width="40" position="0 1.5 -20" rotation="0 0 0" color="#098cb5"></a-plane>
-            <a-plane id=s-wall" height="9" width="40" position="0 1.5 20" rotation="0 180 0" color="#098cb5"></a-plane>
-            <a-plane id=e-wall" height="9" width="40" position="-20 1.5 0" rotation="0 90 0" color="#098cb5"></a-plane>
-            <a-plane id=e-wall" height="9" width="40" position="20 1.5 0" rotation="0 -90 0" color="#098cb5"></a-plane>
+            <a-plane id="n-wall" height="9" width="40" position="0 1.5 -20" rotation="0 0 0" color="#098cb5"></a-plane>
+            <a-plane id="s-wall" height="9" width="40" position="0 1.5 20" rotation="0 180 0" color="#098cb5"></a-plane>
+            <a-plane id="w-wall" height="9" width="40" position="-20 1.5 0" rotation="0 90 0" color="#098cb5"></a-plane>
+            <a-plane id="e-wall" height="9" width="40" position="20 1.5 0" rotation="0 -90 0" color="#098cb5"></a-plane>
 
             
 			<a-plane id="curtain1" height="4" width="2" position="-5 8 -8" color="#d3d3d3">
@@ -145,7 +145,6 @@
 			var curtain4 = document.getElementById("curtain4");
 			var door = document.getElementById("door");
 			var display = document.getElementById("display");
-			var num1 = document.getElementById("num1");
 			
 			var input = "";
 			
@@ -157,7 +156,7 @@
 			}
 			
 			
-			num1.addEventListener('click', function()
+			document.getElementById("num1").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "1";
@@ -168,7 +167,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num2.addEventListener('click', function()
+			document.getElementById("num2").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "2";
@@ -179,7 +178,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num3.addEventListener('click', function()
+			document.getElementById("num3").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "3";
@@ -190,7 +189,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num4.addEventListener('click', function()
+			document.getElementById("num4").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "4";
@@ -201,7 +200,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num5.addEventListener('click', function()
+			document.getElementById("num5").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "5";
@@ -212,7 +211,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num6.addEventListener('click', function()
+			document.getElementById("num6").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "6";
@@ -223,7 +222,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num7.addEventListener('click', function()
+			document.getElementById("num7").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "7";
@@ -234,7 +233,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num8.addEventListener('click', function()
+			document.getElementById("num8").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "8";
@@ -245,7 +244,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num9.addEventListener('click', function()
+			document.getElementById("num9").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "9";
@@ -256,7 +255,7 @@
 				display.setAttribute('value', input);	
 			});
 			
-			num0.addEventListener('click', function()
+			document.getElementById("num0").addEventListener('click', function()
 			{
 				if(input === "" || input.length < 4) {
 					input += "0";
