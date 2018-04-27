@@ -11,15 +11,16 @@
             <a-assets>
                 <a-asset-item id="key-obj" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/Key_B_02.obj"></a-asset-item>
                 <a-asset-item id="key-mtl" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/Key_B_02.mtl"></a-asset-item>
+                <a-asset-item id="gold-key" src="https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/the-golden-key.dae"></a-asset-item>
             </a-assets>
             
             <a-entity 
-                obj-model="obj: #key-obj; mtl: #key-mtl"
+                collada-model="#gold-key"
                 scale="0.05 0.05 0.05"
-                rotation="0 90 90"
-                position="-1 1.5 1.5">
-                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="0 0 90" direction="alternate"></a-animation>
-                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to="0 2 -1" direction="alternate"></a-animation> 
+                rotation="90 0 90"
+                position="-1 1.5 1.6">
+                <a-animation begin="click" easing="linear" attribut="rotation" dur="1000" to="90 90 90" direction="alternate"></a-animation>
+                <a-animation begin="click" easing="linear" attribute="position" dur="1000" to=".5 2 1" direction="alternate"></a-animation> 
                 <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to=".2 .2 .2" direction="alternate"></a-animation>
             </a-entity>
             
@@ -108,6 +109,7 @@
 				<a-box height=".2" width=".1" depth=".5" position=".7 .98 0" color="#fff">
 					<a-text id="display" value="0000" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
 				</a-box>
+				
 
 			</a-box>
 
