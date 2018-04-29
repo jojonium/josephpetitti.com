@@ -353,5 +353,33 @@ main button.button-a {
 }
 
 
+/*===================================*\
+                 Figures
+\*===================================*/
+figure {
+	padding: 0;
+	margin: 0;
+}
 
+figure.full-width {
+	width: 100%;
+}
+
+figure.full-width img {
+	width: 100%;
+}
+
+figure.float-right {
+	float: right;
+	width: 40%;
+}
+
+figure.float-right img {
+	width: 100%;
+}
+
+figcaption {
+	font-style: italic;
+	text-align: center;
+}
 
