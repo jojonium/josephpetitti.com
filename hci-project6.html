@@ -22,10 +22,15 @@
                 <a-animation begin="click" easing="linear" attribute="scale" dur="1000" to=".2 .2 .2" direction="alternate"></a-animation>
             </a-entity>
             
-            <a-box id="pillar" height="5" width=".7" depth=".7" color="#1c5668" position="0 -2 -1">
-				<a-cylinder id="button" height=".2" radius=".23" color="green" position="0 2.5 0">
-					<a-animation begin="click" attribute="position" to="0 2.4 0" easing="linear" duration="500"></a-animation>
-					<a-animation begin="button-depress" attribute="position" to="0 2.5 0" easing="linear" duration="500"></a-animation>
+            <a-box id="pillar" height="5" width="1.5" depth=".7" color="#1c5668" position="1 -2 0">
+				<a-cylinder id="green-button" height=".2" radius=".23" color="green" position="-0.35 2.5 0">
+					<a-animation begin="click" attribute="position" to="-0.35 2.4 0" easing="linear" duration="500"></a-animation>
+					<a-animation begin="button-depress" attribute="position" to="-0.35 2.5 0" easing="linear" duration="500"></a-animation>
+				</a-cylinder>
+				
+				<a-cylinder id="red-button" height=".2" radius=".23" color="red" position="0.35 2.5 0">
+					<a-animation begin="click" attribute="position" to="0.35 2.4 0" easing="linear" duration="500"></a-animation>
+					<a-animation begin="button-depress" attribute="position" to="0.35 2.5 0" easing="linear" duration="500"></a-animation>
 				</a-cylinder>
             </a-box>
             
@@ -120,12 +125,11 @@
 				<a-box height=".2" width=".1" depth=".5" position=".7 .98 0" color="#fff">
 					<a-text id="display" value="0000" color="#000" align="center" position=".05 0 0" rotation="0 90 0" wrap-count="100"></a-text>
 				</a-box>
-				
+            </a-box>
 
-			</a-box>
+            <a-entity light="type: ambient; color: #BBB"></a-entity>
+            <a-entity id="light-change" light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
 
-			
-            
             
             <a-camera position=".5 2 2">
                 <a-cursor color="#FF0000">
@@ -138,13 +142,16 @@
         <!-- instead of using <a-event name="mouseenter" scale="4 1 6"></a-event> -->
         <script>
             
-            var button = document.getElementById("button");
+            var greenButton = document.getElementById("green-button");
+            var redButton = document.getElementById("red-button");
             var curtain1 = document.getElementById("curtain1");
 			var curtain2 = document.getElementById("curtain2");
 			var curtain3 = document.getElementById("curtain3");
 			var curtain4 = document.getElementById("curtain4");
 			var door = document.getElementById("door");
 			var display = document.getElementById("display");
+            var flag = 0; //flag that indicates if the light is on or off
+            var light = document.getElementById("light-change");
 			
 			var input = "";
 			
@@ -268,16 +275,31 @@
 
 
 
-            button.addEventListener('click', function()
+            greenButton.addEventListener('click', function()
             {
 				curtain1.emit("button-depress");
 				curtain2.emit("button-depress");
 				curtain3.emit("button-depress");
 				curtain4.emit("button-depress");
 				setTimeout(function(){
-					button.emit("button-depress");
+					greenButton.emit("button-depress");
 				}, 500);
             });
+            
+            redButton.addEventListener('click', function()
+            {
+                if (flag == 0) {
+                    light.setAttribute('light', "type: directional; color: #FFF; intensity: 0");
+                    flag = 1;
+                } else {
+                    light.setAttribute('light', "type: directional; color: #FFF; intensity: 1");
+                    flag = 0;
+                }
+				setTimeout(function(){
+					redButton.emit("button-depress");
+				}, 500);
+            });
+
         </script>
     </body>
 </html>
