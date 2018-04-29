@@ -124,6 +124,11 @@ h1 {
     color: #ffffff;
 }
 
+main h1 {
+	font-size: 3.125em;
+	color: #000000;
+}
+
 h2 {
 	text-align: left;
 	font-size: 1.875em;
