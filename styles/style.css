@@ -352,6 +352,11 @@ main button.button-a {
     width: 200px;
 }
 
+main button a {
+    text-decoration: none;
+    color: #FFF;
+}
+
 
 /*===================================*\
                  Figures
