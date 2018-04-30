@@ -370,17 +370,20 @@ figure.full-width {
 	width: 100%;
 }
 
-figure.full-width img {
+figure img {
 	width: 100%;
 }
 
-figure.float-right {
-	float: right;
+figure.float {
 	width: 40%;
 }
 
-figure.float-right img {
-	width: 100%;
+figure.right {
+    float: right;
+}
+
+figure.left {
+    float: left;
 }
 
 figcaption {
