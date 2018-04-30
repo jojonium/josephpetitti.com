@@ -43,24 +43,24 @@
             <a-plane id="e-wall" height="9" width="40" position="20 1.5 0" rotation="0 -90 0" color="#098cb5"></a-plane>
 
             
-			<a-plane id="curtain1" height="4" width="2" position="-5 8 -8" color="#d3d3d3">
-				<a-text id="hintText" value="3" align="center" color="#000" wrap-count="10"></a-text>
-				<a-animation begin="button-depress" attribute="position" easing="linear" to="-5 3 -8" duration="1000" direction="alternate"></a-animation>
-			</a-plane>
-			
-			<a-plane id="curtain2" height="4" width="2" position="-2 8 -8" color="#d3d3d3">
-				<a-text id="hintText" value="0" align="center" color="#000" wrap-count="10"></a-text>
-				<a-animation begin="button-depress" attribute="position" easing="linear" to="-2 3 -8" duration="1000" direction="alternate"></a-animation>
-			</a-plane>
-			
-			<a-plane id="curtain3" height="4" width="2" position="2 8 -8" color="#d3d3d3">
-				<a-text id="hintText" value="8" align="center" color="#000" wrap-count="10"></a-text>
-				<a-animation begin="button-depress" attribute="position" easing="linear" to="2 3 -8" duration="1000" direction="alternate"></a-animation>
-			</a-plane>
-			
-			<a-plane id="curtain4" height="4" width="2" position="5 8 -8" color="#d3d3d3">
+			<a-plane id="curtain1" height="4" width="2" position="-5 8 8" color="#d3d3d3" rotation="0 180 0">
 				<a-text id="hintText" value="2" align="center" color="#000" wrap-count="10"></a-text>
-				<a-animation begin="button-depress" attribute="position" easing="linear" to="5 3 -8" duration="1000" direction="alternate"></a-animation>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="-5 3 8" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+			
+			<a-plane id="curtain2" height="4" width="2" position="-2 8 8" color="#d3d3d3" rotation="0 180 0">
+				<a-text id="hintText" value="8" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="-2 3 8" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+			
+			<a-plane id="curtain3" height="4" width="2" position="2 8 8" color="#d3d3d3" rotation="0 180 0">
+				<a-text id="hintText" value="0" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="2 3 8" duration="1000" direction="alternate"></a-animation>
+			</a-plane>
+			
+			<a-plane id="curtain4" height="4" width="2" position="5 8 8" color="#d3d3d3" rotation="0 180 0">
+				<a-text id="hintText" value="3" align="center" color="#000" wrap-count="10"></a-text>
+				<a-animation begin="button-depress" attribute="position" easing="linear" to="5 3 8" duration="1000" direction="alternate"></a-animation>
 			</a-plane>
 			
 			<a-box id="tabletop" height=".25" width="2" depth="4" position="-1.5 1 2" color="brown">
