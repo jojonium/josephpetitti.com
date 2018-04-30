@@ -363,7 +363,7 @@ main button a {
 \*===================================*/
 figure {
 	padding: 0;
-	margin: 0;
+	margin: 10px 10px 10px 10px;
 }
 
 figure.full-width {
