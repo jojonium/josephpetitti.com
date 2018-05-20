@@ -470,3 +470,51 @@ figcaption {
 					font-size: 2.75rem;
 					line-height: 1.3;
 				}
+				
+				
+				
+/*===================================*\
+				Boxes 
+\*===================================*/
+.two-boxes  {
+	height: 500px;
+}
+
+	.box {
+		float: left;
+		width: 500px;
+		border: 1px solid #aaa;
+		padding: 10px;
+		margin: 10px 10px 20px 10px;
+		display: inline-block;
+	}
+	
+	.after-box {
+		clear: left;
+	}
+	
+	.box img {
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 5px;
+		margin: 10px 35px;
+		width: 420px;
+	}
+	
+	.box img:hover {
+		box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+	}
+	
+	.box a {
+		text-decoration: none;
+	}
+	
+	.box strong {
+		margin: 0 35px;
+		font-size: 2em;
+		font-weight: normal;
+	}
+	
+	.box p {
+		margin: 10px 35px 0;
+	}
