@@ -31,6 +31,7 @@
 					<ul class="child">
 						<li><a href="film-stats">Film Stats</a></li>
 						<li><a href="ook">Ook!</a></li>
+						<li><a href="dice">Dice</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -68,7 +69,7 @@
 			</style>
 
 			<script>
-				$("#go").click(function() {
+				function go() {
 					var numDice = $("#num-dice").val();
 					var label = $("#label").val();
 					if (isNaN(parseInt(numDice, 10)) || isNaN(parseInt(label, 10))) {
@@ -88,7 +89,17 @@
 					result += "<br>Total: " + total + "</p>";
 					console.log(result);
 					$("#result").html(result);
+				};
+				
+				$("#go").click(function() {
+					go();
 				});
+				$(document).keypress(function(e) {
+					if(e.which == 13) {
+						go();
+					}
+				});
+				
 			</script>
 		</main>
 		
