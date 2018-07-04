@@ -63,7 +63,7 @@ nav a:hover {
 
 nav ul ul {
 	position: absolute;
-	left: -9999px;
+	display: none;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	padding: 0;
 	width: 25%;
@@ -77,10 +77,10 @@ nav ul ul li {
 }
 
 	/* dropdown */
-	.parent:first-child:hover .child {left: 0;}
-	.parent:nth-child(2):hover .child {left: 25%;}
-	.parent:nth-child(3):hover .child {left: 50%;}
-	.parent:last-child:hover .child {left: 75%;}
+	.parent:first-child:hover .child {display: block; left: 0;}
+	.parent:nth-child(2):hover .child {display: block; left: 25%;}
+	.parent:nth-child(3):hover .child {display: block; left: 50%;}
+	.parent:last-child:hover .child {display: block; left: 75%;}
 
 	
 	nav ul ul li:hover li.lv1 {
@@ -104,9 +104,6 @@ nav ul ul li {
 body {
 	font-size: 16px;
 	font-family: sans-serif;
-	background: -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background: -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-	background: -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background: linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 	background-size: 100%;
 	width: 1200px;
@@ -166,11 +163,19 @@ canvas.seen-main {
 .code {
     font-family: monospace;
     white-space: pre;
-    border: 1px solid gray;
-    background-color: white;
+    background-color: #f3f3f3;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 1em;
 	padding: 1px;
+}
+
+div.code {
+	overflow: auto;
+	font-size: 1.375em;
+	padding: 5px;
+	border-left: 6px solid blue;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
 }
 
 .circular-portrait {
