@@ -61,19 +61,19 @@
 				 style="padding: 4em .5em 0 .5em; float: right"
 				 title="Well you'd better go catch it!">
 
-			<h2>About</h2>
+			<h2 id="about">About</h2>
 			
-			<p>This website is written almost entirely in HTML and CSS. The point of this website was to help
+			<p>This website is written almost entirely in HTML and CSS. The point of this website is to help
 			   teach myself web design, and make a personal website that looks good enough to show off to 
-			   employers and friends. The design of the site has evolved over several weeks as I learned of new ways
+			   employers and friends. The design of the site has evolved over several months as I learned of new ways
 			   to do things and thought of more elements that would look cool. I also sometimes use the site to host
 			   pieces of projects for classes. To see the history of changes I've made to the site, check out my
-			   <a href="https://github.com/jojonium/jojonium.github.io">GitHub</a> page.</p>
+			   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a> page.</p>
 			   
-			<p>The HTML and CSS was written entirely from scratch by myself, without any website-building tool or
-			   service. The only program I used was the excellent <a href="https://notepad-plus-plus.org">Notepad++
-			   </a>. The site is currently hosted using <a href="https://pages.github.com">Github Pages</a>, 
-			   connected to a custom domain from <a href="https://www.bluehost.com">Bluehost</a>.</p>
+			<p>The HTML and CSS is written entirely from scratch by myself, without any website-building tool or
+			   service. The only program I use is the excellent <a href="https://notepad-plus-plus.org">Notepad++
+			   </a>. The site was originally hosted using <a href="https://pages.github.com">Github Pages</a>, 
+			   but in July 2018 I switched to self hosting it on a server I built and set up (see <a href="#self-hosting">below</a>).</p>
 
 			<p>Unfortunately, one of the issues I've run into is that I don't know what to actually write!
 			   It turns out that creating good-looking pages is a lot easier than coming up with interesting
@@ -91,15 +91,15 @@
 			
 			<div id="vis" style="padding: 4em 3em .5em 0; float: left;"></div>
 			
-			<h2>Vega-Lite</h2>
+			<h2 id="vega-lite">Vega-Lite</h2>
 			
 			<p>However, it's not all HTML and CSS. I used some JavaScript to make the cool visualizations
 			   across the site. The graphs on the <a href="film-stats">Film Stats</a> page were made using
 			   <a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, a JSON schema for creating beautiful
 			   graphs quickly and easily.</p>
 			
-			<p>I learned Vega-Lite for a class (CS 3041, Human Computer Interactions), and thought it would be 
-               cool to apply what I learned to my own film data and see what I could make.</p>
+			<p>I learned Vega-Lite for a class (CS 3041, Human Computer Interactions), and realized I could 
+               apply what I learned to my own film data to make gather some interesting insights.</p>
 			   
 			<p>To the left is another Vega-Lite graph, this one showing the films I've watched each month by 
                release date. I'm not sure why there are two different categories for "null" and "undefined,"
@@ -109,14 +109,17 @@
 			
             <canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>
 
-			<h2>seen.js</h2>
+			<h2 id="seen.js">seen.js</h2>
 			 
 			<p>The visualization on the <a href="index">front page</a> was created using <a href=
-			   "http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D scenes into an SVG or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and simpler language that compiles into JavaScript.</p>
+			   "http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D scenes into an SVG 
+			   or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>,
+			   a cleaner and simpler language that compiles into JavaScript.</p>
 			   
             <p>It was quite simple to just link the minified CoffeeScript and seen.js scripts and copy the 
                examples from the seen.js website. However, almost all of their examples (like the sphere to the
-               right), were set to generate random colors for each surface. I wanted the colors of the main page visualization to match the color scheme of the site.</p>
+               right), were set to generate random colors for each surface. I wanted the colors of the main page
+			   visualization to match the color scheme of the site.</p>
                
             <p>I wanted the color of the surfaces to range smoothly between the two colors of the background,
                #e37682 and #5f4d93. I couldn't find a built-in function to do this, so I wrote one myself.
@@ -126,18 +129,65 @@
                wrote this snippet of CoffeeScript code to loop over each surface in the shape and apply a
                color:</p>
             
-            <div class="code">
-    hue = 0.70833
-    for surface in shape.surfaces
-        hue += (.272225) * (1 / shape.surfaces.length)
-        surface.fill seen.Colors.hsl(hue, 0.5, 0.4)
-            </div>
-            
-            
+            <div class="code">hue = <span style="color: orange">0.70833</span>
+    <span style="color: blue">for</span> surface <span style="color: blue">in</span> shape.surfaces
+        hue += (<span style="color: orange">.272225</span>) * (<span style="color: orange">1</span> / shape.surfaces.length)
+        surface.fill seen.Colors.hsl(hue, <span style="color: orange">0.5</span>, <span style="color: orange">0.4<span>)</div>
+
             <p>It applies the 0.70833 color to the
                first surface, then increments the hue by the difference between the two colors (.272225)
                multiplied by the inverse of the number of surfaces. This makes a smooth transition over the
                surface of the entire shape.</p>
+			
+			<h2 id="logo">Logo</h2>
+			
+			<svg height="160" width="160" style="float: left;">
+				<circle cx="80" cy="80" r="60" fill="#e37682" />
+				<!--<polygon points="80,25 140,35 140,115 80,145 20,115 20,35" fill="#e37682" />-->
+				<path id="top-line" d="M 40 50 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
+				<path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" style="fill:none;stroke:yellow;stroke-width:9" />
+				<path id="vertical-center" d="M 85 50 V 105" style="fill:none;stroke:yellow;stroke-width:9" />
+				<path id="p-lower" d="M 85 85 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
+				<path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" style="fill:none;stroke:yellow;stroke-width:9" />
+				Your browser does not support inline SVG
+			</svg>
+			
+			<p>My personal logo, shown on the left, is a design I came up with as a kid. The color scheme is completely
+			   arbitrary (being color blind and knowing nothing about graphic design makes it better to just pick
+			   colors out of a hat than try to figure out what matches what).</p>
+			
+			<p>I made the original digital version of the logo years ago in Microsoft PowerPoint and exported it as
+			   a .png. However, at some point I lost the original file. Because the .png was small and didn't scale
+			   very well I decided to remake the logo as an <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>.</p>
+			   
+			<p>Still knowing nothing about graphic design, I painstakingly wrote the code for the SVG by hand, and it
+			   is reproduced in all its glory below:</p>
+			   
+			<div class="code"><span style="color:blue;">&lt;svg</span> <span style="color:red;">height</span>=<span style="color:purple">"160"</span> <span style="color:red">width</span>=<span style="color:purple">"160"</span> <span style="color:red">"style"</span>=<span style="color:purple">"float: left;"</span><span style="color:blue">&gt;</span>
+	<span style="color:blue;">&lt;circle</span> <span style="color:red">cx</span>=<span style="color:purple">"80"</span> <span style="color:red">cy</span>=<span style="color:purple">"80"</span> <span style="color:red">r</span>=<span style="color:purple">"60"</span> <span style="color:red">fill</span>=<span style="color:purple">"#e37682"</span> <span style="color:blue">/&gt;</span>
+	<span style="color:blue;">&lt;path</span> <span style="color:red">id</span>=<span style="color:purple">"top-line"</span> <span style="color:red">d</span>=<span style="color:purple">"M 40 50 H 100"</span> <span style="color:red">style</span>=<span style="color:purple">"fill:none;stroke:yellow;stroke-width:9"</span> <span style="color:blue">/&gt;</span>
+	<span style="color:blue;">&lt;path</span> <span style="color:red">id</span>=<span style="color:purple">"p-curve"</span> <span style="color:red">d</span>=<span style="color:purple">"M 100 50 C 130 50, 130 85, 100 85"</span> <span style="color:red">style</span>=<span style="color:purple">"fill:none;stroke:yellow;stroke-width:9"</span> <span style="color:blue">/&gt;</span>
+	<span style="color:blue;">&lt;path</span> <span style="color:red">id</span>=<span style="color:purple">"vertical-center"</span> <span style="color:red">d</span>=<span style="color:purple">"M 85 50 V 105"</span> <span style="color:red">style</span>=<span style="color:purple">"fill:none;stroke:yellow;stroke-width:9"</span> <span style="color:blue">/&gt;</span>
+	<span style="color:blue;">&lt;path</span> <span style="color:red">id</span>=<span style="color:purple">"p-lower"</span> <span style="color:red">d</span>=<span style="color:purple">"M 85 85 H 100"</span> <span style="color:red">style</span>=<span style="color:purple">"fill:none;stroke:yellow;stroke-width:9"</span> <span style="color:blue">/&gt;</span>
+	<span style="color:blue;">&lt;path</span> <span style="color:red">id</span>=<span style="color:purple">"j-curve"</span> <span style="color:red">d</span>=<span style="color:purple">"M 85 105 C 85 130, 45 130, 45 98"</span> <span style="color:red">style</span>=<span style="color:purple">"fill:none;stroke:yellow;stroke-width:9"</span> <span style="color:blue">/&gt;</span>
+	Your browser does not support inline SVG
+<span style="color:blue;">&lt;/svg&gt;</span></div>
+
+			<h2 id="self-hosting">Self Hosting</h2>
+			
+			<p>In July of 2018 I decided to stop relying on Github Pages and host the website on my own server.
+			   This decision came for several reasons. GitHub Pages was a nice service, but it doesn't have good
+			   support for HTTPS. Also, if I ever want my website to be anything but static HTML pages and
+			   client-side scripts GitHub pages won't work for my needs any more. Plus, I had an old computer
+			   lying around and a strong desire to learn about servers and networking.</p>
+			   
+			<p>First, I installed <a href="https://www.ubuntu.com/server">Ubuntu Server</a> 18.04 LTS on the server,
+			   and set up an SSH connection from my main desktop. From there, I installed <a href="https://nginx.org">nginx</a>
+			   and used it to configure a reverse proxy so I could have multiple servers running on the same machine. I
+			   acquired an SSL certificate from <a href="https://letsencrypt.org">Let's Encrypt</a>, and set an nginx
+			   rule to rewrite all HTTP requests to HTTPS. With this and other security measures in place, I cloned
+			   the website from GitHub and changed the A records in my domain name registrar to point to the server, and
+			   now my little server is broadcasting to the whole world.</p>
             
 			
 
