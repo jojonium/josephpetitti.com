@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<h2>Langton's Ant</h2>
+
+	<button id="add-ant" type="button">Add Ant</button>
+
+	<form id="input-ants">
+		<div class="an-ant" id="original-ant">
+			<h3>Ant 1</h3>
+			Start X Position: <input type="text" id="start-x-1" value="50"><br>
+			Start Y Position: <input type="text" id="start-y-1" value="50"><br>
+			Direction (0-3): <input type="text" id="direction-1" value="0"><br>
+		</div>
+		
+	</form>
+	
+	<form id="inputs">
+		Grid Size: <input type="text" id="grid-size" name="grid-size" value="100"><br>
+		Pixel Size: <input type="text" id="pixel-size" name="pixel-size" value="4"><br>
+		Interval: <input type="text" id="interval" name="interval" value="4"></br>
+	</form>
+	
+	<form id="buttons">
+		<button id="go" type="button">Go!</button>
+		<button id="pause" type="button">Pause</button>
+		<button id="clear" type="button">Clear</button>
+		<button id="bonus" type="button">I'm feeling lucky</button>
+	</form>
+	
+	<p>Iteration: <span id="counter"></span></p>
+	
+	<script src="scripts/ant.js"></script>
+	<style>
+		.an-ant {
+			border: 1px solid gray;
+			display: inline-block;
+		}
+		
+		#globalCanvas {
+			border: 1px solid black;
+			overflow: scroll;
+		}
+	</style>
+</html>
