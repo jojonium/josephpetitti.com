@@ -202,7 +202,7 @@ document.getElementById("go").addEventListener("click", function() {
 	
 	// clean and set input interval
 	var inputInterval = parseInt(document.getElementById('interval').value);
-	if (isNaN(inputInterval) || inputInterval < 1) {
+	if (isNaN(inputInterval) || inputInterval < 0) {
 		document.getElementById('interval').value = 4;
 		inputInterval = 4;
 	}
