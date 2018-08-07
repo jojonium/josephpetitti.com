@@ -10,7 +10,7 @@ var iterationCount = 0;
 var paused = false;
 
 
-function langtonant(antx, optx) {
+function langtonant(antx, optx, rulex) {
 	'use strict';
 	var x, y, i;
 	
@@ -35,12 +35,21 @@ function langtonant(antx, optx) {
 		ants[i] = antx[i];
 	}
 	
+	// extend default rules
+	var rules = [
+		{cr: 255, cg: 255, cb: 255, r: 'l'},
+		{cr: 0, cg: 0, cb: 0, r: 'r'}
+	];
+	for (i in rulex) {
+		rules[i] = rulex[i];
+	}
+	
 	// initialize grid
 	var grid = [];
 	for (x = 0; x < opts.gridsize; x++) {
 		grid[x] = [];
 		for (y = 0; y < opts.gridsize; y++) {
-			grid[x][y] = true;
+			grid[x][y] = 0;
 		}
 	}
 	
@@ -58,7 +67,7 @@ function langtonant(antx, optx) {
 	canv.width = opts.gridsize * opts.pixlsize;
 	canv.height = opts.gridsize * opts.pixlsize;
 	
-	// initialize pixels
+	/*// initialize pixels
 	var pixlblac = cont.createImageData(opts.pixlsize, opts.pixlsize);
 	for (i = 0; i < (opts.pixlsize * opts.pixlsize * 4); i += 4) {
 		pixlblac.data[i + 3] = 255;
@@ -66,31 +75,58 @@ function langtonant(antx, optx) {
 	var pixlwhit = cont.createImageData(opts.pixlsize, opts.pixlsize);
 	for (i = 0; i < (opts.pixlsize * opts.pixlsize * 4); i += 4) {
 		pixlwhit.data[i + 3] = 0;
+	}*/
+	// Initialize pixels
+	var pixelArray = [];
+	var temp;
+	for (r in rules) {
+		temp = cont.createImageData(opts.pixlsize, opts.pixlsize);
+		for (i = 0; i < temp.data.length; i +=4) {
+			temp.data[i] = rules[r].cr;
+			temp.data[i+1] = rules[r].cg;
+			temp.data[i+2] = rules[r].cb;
+			temp.data[i+3] = 255;
+		}
+		pixelArray.push(temp);
 	}
 	
+	var squareColor;
 	// run simulation
 	function simulate() {
 		// iterate over ants
 		for (i = 0; i < ants.length; i++) {
 			var n = ants[i];
 			
-			// invert, draw, turn
+			//follow rule on location
+			squareColor = grid[n.x][n.y];
+			if (rules[squareColor].r === "R") {
+				n.d--; //subtract to turn right
+			} else {
+				n.d++; //add to turn left
+			}
+			
+			squareColor++;
+			squareColor %= rules.length;
+			grid[n.x][n.y] = squareColor;
+			cont.putImageData(pixelArray[squareColor], n.x * opts.pixlsize, n.y * opts.pixlsize);
+			
+			/*// invert, draw, turn
 			if (grid[n.x][n.y]) {
 				grid[n.x][n.y] = false;
-				cont.putImageData(pixlblac, n.x * opts.pixlsize, n.y * opts.pixlsize);
+				cont.putImageData(pixelArray[0], n.x * opts.pixlsize, n.y * opts.pixlsize);
 				n.d--;
 			} else {
 				grid[n.x][n.y] = true;
-				cont.putImageData(pixlwhit, n.x * opts.pixlsize, n.y * opts.pixlsize);
+				cont.putImageData(pixelArray[1], n.x * opts.pixlsize, n.y * opts.pixlsize);
 				n.d++;
-			}
+			}*/
 
 			
 			// modulus wraparound
 			n.d += dirs.length;
 			n.d %= dirs.length;
 			
-			// position + directions
+			// move forward
 			n.x += dirs[n.d].x;
 			n.y += dirs[n.d].y;
 			
@@ -171,9 +207,9 @@ document.getElementById("go").addEventListener("click", function() {
 		inputInterval = 4;
 	}
 	
+	// Parse input ants
 	var antArray = [];
 	var antElements = document.getElementsByClassName('an-ant');
-	// for each input ant
 	for (a = 1; a <= antElements.length; a++) {
 		// clean and set start x
 		ix = parseInt(document.getElementById("start-x-" + a).value);
@@ -214,19 +250,97 @@ document.getElementById("go").addEventListener("click", function() {
 		});
 	}
 	
+	// Parse the input rules
+	var ruleArray = [];
+	var ruleElements = document.getElementById('color-rules').children;
+	for (r = 1; r < ruleElements.length; r += 3) {
+		rgbStrings = ruleElements[r].style.backgroundColor.match(/\d+/g); //return something like ["200", "12", "53"]
+		icr = rgbStrings[0];
+		icg = rgbStrings[1];
+		icb = rgbStrings[2];
+		
+		// clean rule input
+		if (ruleElements[r + 1].value === 'l' || ruleElements[r + 1].value === 'L') {
+			ruleElements[r + 1].value = 'L';
+			ir = 'L';
+		} else if (ruleElements[r + 1].value === 'r' || ruleElements[r + 1].value === 'R') {
+			ruleElements[r + 1].value = 'R';
+			ir = 'R';
+		} else {
+			// if input is invalid make it random
+			if (Math.random() > .5) {
+				ruleElements[r + 1].value = 'R';
+				ir = 'R';
+			} else {
+				ruleElements[r + 1].value = 'L';
+				ir = 'L';
+			}
+		}
+		
+		// add this rule to the array
+		ruleArray.push({
+			cr: icr,
+			cg: icg,
+			cb: icb,
+			r: ir
+		});
+	}
+	
 	// finally run it
 	langtonant(antArray, {
 		gridsize: inputGridSize,
 		pixlsize: inputPixelSize,
 		interval: inputInterval
-	});
+	}, ruleArray);
 });
 
 // Clear button (just refreshes the page)
 document.getElementById('clear').addEventListener("click", function() {
 	location.reload();
 });
+
+// Add Rule button
+document.getElementById('add-rule').addEventListener("click", function() {
+	var rulePanel = document.getElementById('color-rules');
+	var ruleNum = (rulePanel.children.length - 1) / 3;
+	var swatch = document.createElement('div');
+	swatch.className = 'swatch';
 	
+	// generate a random color
+	var r = Math.floor(Math.random() * 255);
+	var g = Math.floor(Math.random() * 255);
+	var b = Math.floor(Math.random() * 255);
+	
+	rulePanel.appendChild(swatch);
+	swatch.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+	swatch.id = "color-" + ruleNum;
+	
+	var newInput = document.createElement('input');
+	newInput.type = "text";
+	newInput.id = "rule-" + ruleNum;
+	
+	// make inital value essentially random
+	if (r % 2 == 0) {
+		newInput.value = "R";
+	} else {
+		newInput.value = "L";
+	}
+	rulePanel.appendChild(newInput);
+	rulePanel.appendChild(document.createElement('br'));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Cool bonus
 document.getElementById('bonus').addEventListener("click", function() {
 	// make sure there are exactly 4 ants

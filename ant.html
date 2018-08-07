@@ -14,10 +14,19 @@
 		
 	</form>
 	
+	<form style="float: right; border: 1px solid black;">
+		<div id="color-rules">
+			<h3>Rules</h3>
+			<div class="swatch" id="color-1" style="background-color: rgb(255, 255, 255)"></div><input type="text" id="rule-1" value="R"><br>
+			<div class="swatch" id="color-2" style="background-color: rgb(0, 0, 0)"></div><input type="text" id="rule-2" value="L"><br>
+		</div>
+		<button id="add-rule" type="button" style="display: block; margin: 0 auto;">Add Rule</button>
+	</form>
+	
 	<form id="inputs">
 		Grid Size: <input type="text" id="grid-size" name="grid-size" value="100"><br>
 		Pixel Size: <input type="text" id="pixel-size" name="pixel-size" value="4"><br>
-		Interval: <input type="text" id="interval" name="interval" value="4"></br>
+		Interval: <input type="text" id="interval" name="interval" value="4"><br>
 	</form>
 	
 	<form id="buttons">
@@ -39,6 +48,20 @@
 		#globalCanvas {
 			border: 1px solid black;
 			overflow: scroll;
+		}
+		
+		.swatch {
+			width: 16px;
+			height: 16px;
+			display: inline-block;
+			position: relative;
+			top: 6px;
+			margin: 2px;
+			border: 1px solid black;
+		}
+		
+		h3 {
+			text-align: center;
 		}
 	</style>
 </html>
