@@ -1,67 +1,147 @@
 <!doctype html>
-<html>
-	<h2>Langton's Ant</h2>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>Langton's Ant</title>
+		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+	</head>
+	
+	<body>
+	<!-- Header -->
+		<header>
+			<h1>Langton's Ant</h1>
+		</header>
+	
+	<!-- Nav -->
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+						<li><a href="hci-project6">HCI Project 6</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="film-stats">Film Stats</a></li>
+						<li><a href="ook">Ook!</a></li>
+						<li><a href="dice">Dice</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		
+	<!-- Main -->
+		<main id="main">
+			<form style="float: right; border: 1px solid black;">
+				<div id="color-rules">
+					<h2>Rules</h2>
+					<div class="swatch" id="color-1" style="background-color: rgb(255, 255, 255)"></div><input type="text" id="rule-1" value="R"><br>
+					<div class="swatch" id="color-2" style="background-color: rgb(0, 0, 0)"></div><input type="text" id="rule-2" value="L"><br>
+				</div>
+				<button id="add-rule" type="button" style="display: block;">Add Rule</button>
+			</form>
+			
+			<form id="inputs">
+				Grid Size: <input type="text" id="grid-size" name="grid-size" value="100">
+				Pixel Size: <input type="text" id="pixel-size" name="pixel-size" value="4">
+				Interval: <input type="text" id="interval" name="interval" value="4">
+			</form>
 
-	<button id="add-ant" type="button">Add Ant</button>
-
-	<form id="input-ants">
-		<div class="an-ant" id="original-ant">
-			<h3>Ant 1</h3>
-			Start X Position: <input type="text" id="start-x-1" value="50"><br>
-			Start Y Position: <input type="text" id="start-y-1" value="50"><br>
-			Direction (0-3): <input type="text" id="direction-1" value="0"><br>
-		</div>
-		
-	</form>
-	
-	<form style="float: right; border: 1px solid black;">
-		<div id="color-rules">
-			<h3>Rules</h3>
-			<div class="swatch" id="color-1" style="background-color: rgb(255, 255, 255)"></div><input type="text" id="rule-1" value="R"><br>
-			<div class="swatch" id="color-2" style="background-color: rgb(0, 0, 0)"></div><input type="text" id="rule-2" value="L"><br>
-		</div>
-		<button id="add-rule" type="button" style="display: block; margin: 0 auto;">Add Rule</button>
-	</form>
-	
-	<form id="inputs">
-		Grid Size: <input type="text" id="grid-size" name="grid-size" value="100"><br>
-		Pixel Size: <input type="text" id="pixel-size" name="pixel-size" value="4"><br>
-		Interval: <input type="text" id="interval" name="interval" value="4"><br>
-	</form>
-	
-	<form id="buttons">
-		<button id="go" type="button">Go!</button>
-		<button id="pause" type="button">Pause</button>
-		<button id="clear" type="button">Clear</button>
-		<button id="bonus" type="button">I'm feeling lucky</button>
-	</form>
-	
-	<p>Iteration: <span id="counter"></span></p>
-	
-	<script src="scripts/ant.js"></script>
-	<style>
-		.an-ant {
-			border: 1px solid gray;
-			display: inline-block;
-		}
-		
-		#globalCanvas {
-			border: 1px solid black;
-			overflow: scroll;
-		}
-		
-		.swatch {
-			width: 16px;
-			height: 16px;
-			display: inline-block;
-			position: relative;
-			top: 6px;
-			margin: 2px;
-			border: 1px solid black;
-		}
-		
-		h3 {
-			text-align: center;
-		}
-	</style>
+			<form id="input-ants">
+				<div class="an-ant" id="original-ant">
+					<h2>Ant 1</h2>
+					Start X Position: <input type="text" id="start-x-1" value="50"><br>
+					Start Y Position: <input type="text" id="start-y-1" value="50"><br>
+					Direction (0-3): <input type="text" id="direction-1" value="0"><br>
+				</div>
+			</form>
+			
+			<button id="add-ant" type="button">Add Ant</button>
+			
+			<form id="buttons">
+				<button id="go" type="button">Go!</button>
+				<button id="pause" type="button">Pause</button>
+				<button id="clear" type="button">Clear</button>
+				<button id="bonus" type="button">I'm feeling lucky</button>
+			</form>
+			
+			<p>Iteration: <span id="counter"></span></p>
+			
+			<div id="canvas-holder" width="100%"></div>
+			
+			<script src="scripts/ant.js"></script>
+			<style>
+				.an-ant {
+					border: 1px solid gray;
+					display: inline-block;
+				}
+				
+				#canvas-holder {	overflow: auto;	}
+				
+				#globalCanvas {	border: 1px solid black;	}
+				
+				.swatch {
+					width: 16px;
+					height: 16px;
+					display: inline-block;
+					position: relative;
+					top: 6px;
+					margin: 2px;
+					border: 1px solid black;
+				}
+				
+				main h2 {
+					text-align: center;
+					margin: 0;
+					padding: 14px 0;
+				}
+				
+				body button {
+					width: auto;
+					margin: 2px 0;
+				}
+				
+				form { margin: 10px 0; }
+				
+				.an-ant { margin: 4px; }
+				
+				input { width: 100px; }
+				
+				#add-rule { margin: 6px auto; }
+			</style>
+		</main>
+	<!-- Footer -->
+		<footer id="footer">
+			<section class="about">
+				<h2>About this website</h2>
+				<p>I created this website as a personal project in my free time to learn more about web design,
+				   CSS, HTML, and JavaScript.</p>
+				<p>Right now there isn't much on here, but I hope to include more in the future as I learn more
+				   about web design.</p>
+			</section>
+			<section class="contact">
+				<h2>Contact Information</h2>
+				<dl>
+					<dt>Address</dt>
+						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+					<dt>Phone</dt>
+						<dd>(518) 545-1984</dd>
+					<dt>Email</dt>
+						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+				</dl>
+				<ul class="icons">
+					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+				</ul>
+			</section>
+		</footer>
+	</body>
 </html>

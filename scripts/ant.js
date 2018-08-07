@@ -3,7 +3,7 @@ var canvas = document.createElement('canvas');
 canvas.id = 'globalCanvas';
 canvas.width = 400;
 canvas.height = 400;
-document.body.appendChild(canvas);
+document.getElementById('canvas-holder').appendChild(canvas);
 
 // global iteration counter and pause button
 var iterationCount = 0;
@@ -101,8 +101,10 @@ function langtonant(antx, optx, rulex) {
 			squareColor = grid[n.x][n.y];
 			if (rules[squareColor].r === "R") {
 				n.d--; //subtract to turn right
-			} else {
+			} else if (rules[squareColor].r === "L") {
 				n.d++; //add to turn left
+			} else if (rules[squareColor].r === "U") {
+				n.d += 2; //add two to U-turn
 			}
 			
 			squareColor++;
@@ -120,7 +122,6 @@ function langtonant(antx, optx, rulex) {
 				cont.putImageData(pixelArray[1], n.x * opts.pixlsize, n.y * opts.pixlsize);
 				n.d++;
 			}*/
-
 			
 			// modulus wraparound
 			n.d += dirs.length;
@@ -168,15 +169,14 @@ function langtonant(antx, optx, rulex) {
 document.getElementById("add-ant").addEventListener("click", function() {
 	var antNum = document.getElementById("input-ants").children.length + 1;
 	var inputAnts = document.getElementById("input-ants");
-	console.log("antNum: " + antNum);
 	
 	var newInput = document.createElement('div');
 	newInput.className = "an-ant";
 	
-	var htmlString = "<h3>Ant " + antNum + "</h3>" +
-		"Start X Position: <input type=\"text\" id=\"start-x-" + antNum + "\" value=\"50\"><br>" +
-		"Start Y Position: <input type=\"text\" id=\"start-y-" + antNum + "\" value=\"50\"><br>" +
-		"Direction (0-3): <input type=\"text\" id=\"direction-" + antNum + "\" value=\"0\"><br>";
+	var htmlString = "<h2>Ant " + antNum + "</h2>" +
+		"Start X Position: <input type=\"text\" id=\"start-x-" + antNum + "\" value=\"" + Math.floor(Math.random() * document.getElementById('grid-size').value) + "\"><br>" +
+		"Start Y Position: <input type=\"text\" id=\"start-y-" + antNum + "\" value=\"" + Math.floor(Math.random() * document.getElementById('grid-size').value) + "\"><br>" +
+		"Direction (0-3): <input type=\"text\" id=\"direction-" + antNum + "\" value=\"" + Math.floor(Math.random() * 4) + "\"><br>";
 
 	newInput.innerHTML = htmlString;
 	
@@ -253,6 +253,7 @@ document.getElementById("go").addEventListener("click", function() {
 	// Parse the input rules
 	var ruleArray = [];
 	var ruleElements = document.getElementById('color-rules').children;
+	var ruleLetter;
 	for (r = 1; r < ruleElements.length; r += 3) {
 		rgbStrings = ruleElements[r].style.backgroundColor.match(/\d+/g); //return something like ["200", "12", "53"]
 		icr = rgbStrings[0];
@@ -260,22 +261,23 @@ document.getElementById("go").addEventListener("click", function() {
 		icb = rgbStrings[2];
 		
 		// clean rule input
-		if (ruleElements[r + 1].value === 'l' || ruleElements[r + 1].value === 'L') {
-			ruleElements[r + 1].value = 'L';
-			ir = 'L';
-		} else if (ruleElements[r + 1].value === 'r' || ruleElements[r + 1].value === 'R') {
-			ruleElements[r + 1].value = 'R';
-			ir = 'R';
-		} else {
+		ruleLetter = ruleElements[r + 1].value.toUpperCase();
+		if (!(ruleLetter.length == 1 && "RLUC".indexOf(ruleLetter) > -1)) {
 			// if input is invalid make it random
-			if (Math.random() > .5) {
-				ruleElements[r + 1].value = 'R';
-				ir = 'R';
+			var x = Math.random();
+			if (x < .25) {
+				ruleLetter = 'R';
+			} else if (x < .5) {
+				ruleLetter = 'L';
+			} else if (x < .75) {
+				ruleLetter = 'U';
 			} else {
-				ruleElements[r + 1].value = 'L';
-				ir = 'L';
+				ruleLetter = 'C';
 			}
 		}
+		
+		ruleElements[r + 1].value = ruleLetter;
+		ir = ruleLetter;
 		
 		// add this rule to the array
 		ruleArray.push({
@@ -320,10 +322,15 @@ document.getElementById('add-rule').addEventListener("click", function() {
 	newInput.id = "rule-" + ruleNum;
 	
 	// make inital value essentially random
-	if (r % 2 == 0) {
+	var z = r % 4;
+	if (z == 0) {
 		newInput.value = "R";
-	} else {
+	} else if (z == 1) {
 		newInput.value = "L";
+	} else if (z == 2) {
+		newInput.value = "U";
+	} else {
+		newInput.value = "C";
 	}
 	rulePanel.appendChild(newInput);
 	rulePanel.appendChild(document.createElement('br'));
