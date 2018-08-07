@@ -361,6 +361,10 @@ main button.button-a {
     width: 200px;
 }
 
+main button.green {
+	background-color: #34d058;
+}
+
 main button a {
     text-decoration: none;
     color: #FFF;
