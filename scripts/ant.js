@@ -9,7 +9,6 @@ document.getElementById('canvas-holder').appendChild(canvas);
 var iterationCount = 0;
 var paused = false;
 
-
 function langtonant(antx, optx, rulex) {
 	'use strict';
 	var x, y, i;
@@ -18,7 +17,8 @@ function langtonant(antx, optx, rulex) {
 	var opts = {
 		gridsize: 100,
 		pixlsize: 4,
-		interval: 4
+		interval: 4,
+		wrap: false
 	};
 	for (i in optx) {
 		opts[i] = optx[i];
@@ -66,16 +66,7 @@ function langtonant(antx, optx, rulex) {
 	var cont = canv.getContext('2d');
 	canv.width = opts.gridsize * opts.pixlsize;
 	canv.height = opts.gridsize * opts.pixlsize;
-	
-	/*// initialize pixels
-	var pixlblac = cont.createImageData(opts.pixlsize, opts.pixlsize);
-	for (i = 0; i < (opts.pixlsize * opts.pixlsize * 4); i += 4) {
-		pixlblac.data[i + 3] = 255;
-	}
-	var pixlwhit = cont.createImageData(opts.pixlsize, opts.pixlsize);
-	for (i = 0; i < (opts.pixlsize * opts.pixlsize * 4); i += 4) {
-		pixlwhit.data[i + 3] = 0;
-	}*/
+
 	// Initialize pixels
 	var pixelArray = [];
 	var temp;
@@ -112,17 +103,6 @@ function langtonant(antx, optx, rulex) {
 			grid[n.x][n.y] = squareColor;
 			cont.putImageData(pixelArray[squareColor], n.x * opts.pixlsize, n.y * opts.pixlsize);
 			
-			/*// invert, draw, turn
-			if (grid[n.x][n.y]) {
-				grid[n.x][n.y] = false;
-				cont.putImageData(pixelArray[0], n.x * opts.pixlsize, n.y * opts.pixlsize);
-				n.d--;
-			} else {
-				grid[n.x][n.y] = true;
-				cont.putImageData(pixelArray[1], n.x * opts.pixlsize, n.y * opts.pixlsize);
-				n.d++;
-			}*/
-			
 			// modulus wraparound
 			n.d += dirs.length;
 			n.d %= dirs.length;
@@ -130,6 +110,14 @@ function langtonant(antx, optx, rulex) {
 			// move forward
 			n.x += dirs[n.d].x;
 			n.y += dirs[n.d].y;
+			
+			// if wraparound on, wrap ant positions
+			if (opts.wrap) {
+				if (n.x < 0) n.x = opts.gridsize - 1;
+				else if (n.x >= opts.gridsize) n.x = 0;
+				if (n.y < 0) n.y = opts.gridsize - 1;
+				else if (n.y >= opts.gridsize) n.y = 0;
+			}
 			
 			// sanity checked
 			n.s = !(n.x < 0 || n.x >= opts.gridsize || n.y < 0 || n.y >= opts.gridsize);
@@ -292,7 +280,8 @@ document.getElementById("go").addEventListener("click", function() {
 	langtonant(antArray, {
 		gridsize: inputGridSize,
 		pixlsize: inputPixelSize,
-		interval: inputInterval
+		interval: inputInterval,
+		wrap: document.getElementById('wrap').checked
 	}, ruleArray);
 });
 
@@ -336,17 +325,11 @@ document.getElementById('add-rule').addEventListener("click", function() {
 	rulePanel.appendChild(document.createElement('br'));
 });
 
-
-
-
-
-
-
-
-
-
-
-
+// Make wrap button affect check box
+document.getElementById('wrap-button').addEventListener("click", function() {
+	var state = document.getElementById('wrap').checked;
+	document.getElementById('wrap').checked = !state;
+});
 
 // Cool bonus
 document.getElementById('bonus').addEventListener("click", function() {
