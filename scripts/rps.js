@@ -1,3 +1,24 @@
+class Point {
+	constructor(c, p) {
+		this.color = c;  // 0=white, 1=red, 2=green, 3=blue
+		this.power = p;
+	}
+	
+	setClr(clr, x, y, p) {
+		if (clr === 'white' || clr === 0) {
+			this.color = 0;
+		} else if (clr === 'red' || clr === 1) {
+			this.color = 1;
+		} else if (clr === 'lime' || clr === 2) {
+			this.color = 2;
+		} else if (clr === 'blue' || clr === 3) {
+			this.color = 3;
+		}
+		this.power = p;
+		ctx.putImageData(pixels[this.color], x, y);
+	}
+}
+
 var h = 800;
 var w = 1600;
 var prevX = 0;
@@ -5,10 +26,9 @@ var currX = 0;
 var prevY = 0;
 var currY = 0;
 var flag = false;
-var dotFlag = false;
 var clr = 'red';
-var canvas, ctx, c, cnext, x, y, d, level, r, x1, x2, y1, y2, cloc, p, power;
-var running = false;
+var count = 0;
+var canvas, ctx, p, np, i, j, slope, pixels, temp, neighbor;
 
 function start() {
 	// initialize canvas
@@ -16,30 +36,59 @@ function start() {
 	ctx = canvas.getContext('2d');
 	ctx.fillStyle="#ffffff";
 	ctx.fillRect(0, 0, w, h);	// fill canvas with white
+	var counter = document.getElementById('counter');
 	
-	// initialize power	
-	power = new Array(w);
-	for (x = 0; x < w; x++) {
-		power[x] = new Array(h);
-		for (y = 0; y < h; y++) {
-			power[x][y] = 0;
+	// initialize array of points
+	p = new Array(w);
+	for (i = 0; i < w; i++) {
+		p[i] = new Array(h);
+		for (j = 0; j < h; j++) {
+			p[i][j] = new Point(0, 0);
 		}
 	}
 	
-	cnext = ctx.getImageData(0, 0, w, h);
-	c = ctx.getImageData(0, 0, w, h);
+	// initialize np
+	np = p.slice();
+	
+	// initialize pixels
+	pixels = [];
+	
+	// white
+	temp = ctx.createImageData(1, 1);
+	temp.data[0] = 255;
+	temp.data[1] = 255;
+	temp.data[2] = 255;
+	temp.data[3] = 255;
+	pixels.push(temp);
+	
+	// red
+	temp = ctx.createImageData(1, 1);
+	temp.data[0] = 255;
+	temp.data[1] = 0;
+	temp.data[2] = 0;
+	temp.data[3] = 255;
+	pixels.push(temp);
+	
+	// green
+	temp = ctx.createImageData(1, 1);
+	temp.data[0] = 0;
+	temp.data[1] = 255;
+	temp.data[2] = 0;
+	temp.data[3] = 255;
+	pixels.push(temp);
+	
+	// blue
+	temp = ctx.createImageData(1, 1);
+	temp.data[0] = 0;
+	temp.data[1] = 0;
+	temp.data[2] = 255;
+	temp.data[3] = 255;
+	pixels.push(temp);
 	
 	initDraw();
 	
-	document.getElementById("start").addEventListener("click", function() {
-		if (!running) {
-			document.getElementById("start").innerHTML = "Stop";
-			running = true;
-			run();
-		} else {
-			document.getElementById("start").innerHTML = "Start";
-			running = false;
-		}
+	document.getElementById('start').addEventListener("click", function() {
+		run();
 	});
 }
 
@@ -58,7 +107,7 @@ function initDraw() {
 		findxy('out', e);
 	}, false);
 }
-
+	
 // helper function for drawing
 function findxy(res, e) {
 	if (res == 'down') {
@@ -72,10 +121,10 @@ function findxy(res, e) {
 		
 		// make dots 2x2 so they look better
 		if (dotFlag) {
-			ctx.beginPath();
-			ctx.fillStyle = clr;
-			ctx.fillRect(currX, currY, 2, 2);
-			ctx.closePath();
+			np[currX][currY].setClr(clr, currX, currY, 10);
+			np[wrapRight(currX)][currY].setClr(clr, wrapRight(currX), currY, 10);
+			np[currX][wrapDown(currY)].setClr(clr, currX, wrapDown(currY), 10);
+			np[wrapRight(currX)][wrapDown(currY)].setClr(clr, wrapRight(currX), wrapDown(currY), 10);
 			dotFlag = false;
 		}
 	}
@@ -94,164 +143,97 @@ function findxy(res, e) {
 }
 
 function draw() {
-	ctx.beginPath();
-	ctx.moveTo(prevX, prevY);
-	ctx.lineTo(currX, currY);
-	ctx.strokeStyle = clr;
-	ctx.lineWidth = 2;
-	ctx.stroke();
-	ctx.closePath();
-	sharpenColors();
+	np[prevX][prevY].setClr(clr, prevX, prevY, 10)
+	slope = (currY - prevY) / (currX - prevX);
+	i = prevX;
+	j = prevY;
+	while (i != currX) {
+		if (currX > prevX) j += Math.round(slope); // moving right
+		else j -= Math.round(slope); // moving left
+		//console.log(i + ", " + j);
+		np[i][j].setClr(clr, i, j, 10);
+		i = (i < currX) ? i + 1 : i - 1;
+	}
+	np[currX][currY].setClr(clr, currX, currY, 10);
 }
 
 function pickColor(obj) {
 	clr = obj.style.backgroundColor;
 }
 
+function wrapRight(x) {
+	return (x < w - 1) ? x + 1 : 0;
+}
+
+function wrapDown(y) {
+	return (y < h - 1) ? y + 1 : 0;
+}
+
+function wrapLeft(x) {
+	return (x > 0) ? x - 1 : w - 1;
+}
+
+function wrapUp(y) {
+	return (y > 0) ? y - 1 : h - 1;
+}
+
+// run one frame of the simulation
 function run() {
-	//cnext = ctx.getImageData(0, 0, w, h);
-	c = ctx.getImageData(0, 0, w, h);
-	
-	for (x = 0; x < w; x++) {
-		for(y = 0; y < h; y++) {
-			p = pickRandomNeighbor();
-			if (c.data[(x+y*w)*4+1] > 128) { // if white or green
-				if (p.r > 128 && p.g < 128 && p.b < 128 && p.p > 0) { // if neighbor is red and power > 0
-					cnext.data[(x+y*w)*4+0] = 255;
-					cnext.data[(x+y*w)*4+1] = 0;
-					cnext.data[(x+y*w)*4+2] = 0;
-					cnext.data[(x+y*w)*4+3] = 255;
-					if (c.data[(x+y*w)*4+3] < 128) {	// gain power for eating green, lose it for eating white
-						power[x][y] = p.p + 1;
-					} else {
-						power[x][y] = p.p - 1;
-					}
+	p = np.slice();
+	for (i = 0; i < w; i++) {
+		for (j = 0; j < h; j++) {
+			neighbor = pickRandomNeighbor();
+			if (p[i][j].color === 0) { // if white
+				if (neighbor.power > 0) {
+					np[i][j].setClr(neighbor.color, i, j, neighbor.power - 1);
 				}
-			} if (c.data[(x+y*w)*4+2] > 128) { // if white or blue
-				if (p.r < 128 && p.g > 128 && p.b < 128 && p.p > 0) { // if neighbor is green and power > 0
-					cnext.data[(x+y*w)*4+0] = 0;
-					cnext.data[(x+y*w)*4+1] = 255;
-					cnext.data[(x+y*w)*4+2] = 0;
-					cnext.data[(x+y*w)*4+3] = 255;
-					if (c.data[(x+y*w)*4+0] < 128) {	// gain power for eating blue, lose it for eating white
-						power[x][y] = p.p + 1;
-					} else {
-						power[x][y] = p.p - 1;
-					}
+			} else if (p[i][j].color === 1) { // if red
+				if (neighbor.color === 2 /*&& neighbor.power > p[i][j].power*/) {
+					np[i][j].setClr(2, i, j, (neighbor.power < 10) ? neighbor.power + 1 : 10);
 				}
-			} if (c.data[(x+y*w)*4+0] > 128) { // if white or red
-				if (p.r < 128 && p.g < 128 && p.b > 128 && p.p > 0) { // if neighbor is blue and power > 0
-					cnext.data[(x+y*w)*4+0] = 0;
-					cnext.data[(x+y*w)*4+1] = 0;
-					cnext.data[(x+y*w)*4+2] = 255;
-					cnext.data[(x+y*w)*4+3] = 255;
-					if (c.data[(x+y*w)*4+1] < 128) {	// gain power for eating red, lose it for eating white
-						power[x][y] = p.p + 1;
-					} else {
-						power[x][y] = p.p - 1;
-					}
+			} else if (p[i][j].color === 2) { // if green
+				if (neighbor.color === 3 /*&& neighbor.power > p[i][j].power*/) {
+					np[i][j].setClr(3, i, j, (neighbor.power < 10) ? neighbor.power + 1 : 10);
+				}
+			} else if (p[i][j].color === 3) { // if blue
+				if (neighbor.color === 1 /*&& neighbor.power > p[i][j].power*/) {
+					np[i][j].setClr(1, i, j, (neighbor.power < 10) ? neighbor.power + 1 : 10);
 				}
 			}
 		}
 	}
 	
-	// write cnext into c
-	for (i = 0; i < cnext.data.length; i++) {
-		c.data[i] = cnext.data[i];
-	}
-	
-	ctx.putImageData(c, 0, 0);
-	
-	if (running) {
-		setTimeout(run, 1);
-	}
+	count++;
+	counter.innerHTML = count;
+	setTimeout(run, 1);
 }
 
 function pickRandomNeighbor() {
 	r = Math.floor(Math.random() * 8);
-
-	// set offsets and check for wrap around
-	y1 = (y - 1 >= 0) ? y - 1 : h - 1; // above
-	y2 = (y + 1 <= h - 1) ? y + 1 : 0; // below
-	x1 = (x + 1 <= w - 1) ? x + 1 : 0; // right
-	x2 = (x - 1 >= 0) ? x - 1 : w - 1; // left
-	
 	switch(r) {
 		case 0:
-			cloc = (x+y1*w)*4; // top
-			r = power[x][y1];
-			break;
+			// top
+			return p[i][wrapUp(j)];
 		case 1:
-			cloc = (x1+y1*w)*4; // top right
-			r = power[x1][y1];
-			break;
+			// top right
+			return p[wrapRight(i)][wrapUp(j)];
 		case 2:
-			cloc = (x1+y*w)*4; // right
-			r = power[x1][y];
-			break;
+			// right
+			return p[wrapRight(i)][j];
 		case 3:
-			cloc = (x1+y2*w)*4; // bottom right
-			r = power[x1][y2];
-			break;
+			// bottom right
+			return p[wrapRight(i)][wrapDown(j)];
 		case 4:
-			cloc = (x+y2*w)*4; // bottom
-			r = power[x][y2];
-			break;
+			// bottom
+			return p[i][wrapDown(j)];
 		case 5:
-			cloc = (x2+y2*w)*4; // bottom left
-			r = power[x2][y2];
-			break;
+			// bottom left
+			return p[wrapLeft(i)][wrapDown(j)];
 		case 6:
-			cloc = (x2+y*w)*4; // left
-			r = power[x2][y];
-			break;
+			// left
+			return p[wrapLeft(i)][j];
 		case 7:
-			cloc = (x2+y1*w)*4; // top left
-			r = power[x2][y1];
-			break;
+			// top left
+			return p[wrapLeft(i)][wrapUp(j)];
 	}
-	
-	return {r: c.data[cloc],
-			g: c.data[cloc+1],
-			b: c.data[cloc+2],
-			a: c.data[cloc+3],
-			p: r}
-}
-
-function sharpenColors() {
-	c = ctx.getImageData(0, 0, w, h);
-	
-	for (x = 0; x < w; x++) {
-		for(y = 0; y < h; y++) {
-			if (c.data[(x+y*w)*4+0] > 128 && c.data[(x+y*w)*4+1] > 128 && c.data[(x+y*w)*4+2] > 128) {
-				cnext.data[(x+y*w)*4+0] = 255;
-				cnext.data[(x+y*w)*4+1] = 255;
-				cnext.data[(x+y*w)*4+2] = 255;
-				cnext.data[(x+y*w)*4+3] = 255;
-			} else {
-				cloc = (x+y*w)*4;
-				if (c.data[cloc+0] > 128) {
-					cnext.data[cloc+0] = 255;
-					power[x][y] = 10;
-				} else {
-					cnext.data[cloc+0] = 0;
-				}
-				if (c.data[cloc+1] > 128) {
-					cnext.data[cloc+1] = 255;
-					power[x][y] = 10;
-				} else {
-					cnext.data[cloc+1] = 0;
-				}
-				if (c.data[cloc+2] > 128) {
-					cnext.data[cloc+2] = 255;
-					power[x][y] = 10;
-				} else {
-					cnext.data[cloc+2] = 0;
-				}
-			}
-		}
-	}
-	
-	ctx.putImageData(cnext, 0, 0);
-	
 }
