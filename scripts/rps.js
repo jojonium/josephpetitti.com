@@ -160,7 +160,7 @@ function findxy(res, e) {
 }
 
 function draw() {
-	np[prevX][prevY].setClr(clr, prevX, prevY, 25)
+	np[prevX][prevY].setClr(clr, prevX, prevY, 10)
 	slope = (currY - prevY) / (currX - prevX);
 	i = prevX;
 	j = prevY;
@@ -168,10 +168,10 @@ function draw() {
 		if (currX > prevX) j += Math.round(slope); // moving right
 		else j -= Math.round(slope); // moving left
 		//console.log(i + ", " + j);
-		np[i][j].setClr(clr, i, j, 25);
+		np[i][j].setClr(clr, i, j, 10);
 		i = (i < currX) ? i + 1 : i - 1;
 	}
-	np[currX][currY].setClr(clr, currX, currY, 25);
+	np[currX][currY].setClr(clr, currX, currY, 10);
 	rcounter.innerHTML = prettify(cnt[1]);
 	gcounter.innerHTML = prettify(cnt[2]);
 	bcounter.innerHTML = prettify(cnt[3]);
@@ -206,31 +206,25 @@ function run() {
 		for (j = 0; j < h; j++) {
 			neighbor = pickRandomNeighbor();
 			if (p[i][j].color === 0) { // if white
-				if (neighbor.power > 0 && neighbor.power < 50) {
-					np[i][j].setClr(neighbor.color, i, j, neighbor.power + 1);
+				if (neighbor.power > 0) {
+					np[i][j].setClr(neighbor.color, i, j, neighbor.power - 1);
 				}
-			} else if (p[i][j].color === 1 && neighbor.power > 0) { // if red
-				if (neighbor.color === 2 /*&& Math.random() * oldCount[neighbor.color] < neighbor.power*/) {
-					np[i][j].setClr(2, i, j, Math.max(neighbor.power - 1, 0));
+			} else if (p[i][j].color === 1) { // if red
+				if (neighbor.color === 2) {
+					temp = (neighbor.power < 10) ? neighbor.power + 1 : 10;
+					np[i][j].setClr(2, i, j, temp);
 				}
-			} else if (p[i][j].color === 2 && neighbor.power > 0) { // if green
-				if (neighbor.color === 3 /*&& Math.random() * oldCount[neighbor.color] < neighbor.power*/) {
-					np[i][j].setClr(3, i, j, Math.max(neighbor.power - 1, 0));
+			} else if (p[i][j].color === 2) { // if green
+				if (neighbor.color === 3) {
+					temp = (neighbor.power < 10) ? neighbor.power + 1 : 10;
+					np[i][j].setClr(3, i, j, temp);
 				}
-			} else if (p[i][j].color === 3 && neighbor.power > 0) { // if blue
-				if (neighbor.color === 1 /*&& Math.random() * oldCount[neighbor.color] < neighbor.power*/) {
-					np[i][j].setClr(1, i, j, Math.max(neighbor.power - 1, 0));
+			} else if (p[i][j].color === 3) { // if blue
+				if (neighbor.color === 1) {
+					temp = (neighbor.power < 10) ? neighbor.power + 1 : 10;
+					np[i][j].setClr(1, i, j, temp);
 				}
 			}
-			/*if (count % 100 == 0) {
-				if (np[i][j].color == 1) {
-					np[i][j].power += parseInt(rcounter.innerHTML) / 10;
-				} else if (np[i][j].color == 2) {
-					np[i][j].power += parseInt(gcounter.innerHTML) / 10;
-				} else if (np[i][j].color == 2) {
-					np[i][j].power += parseInt(bcounter.innerHTML) / 10;
-				}
-			}*/
 		}
 	}
 	
