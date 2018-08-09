@@ -1,7 +1,12 @@
 <!doctype html>
-<html><body style="background-color: #bbbbbb;" onload="start();">
+<html>
+<head>
+	<title>Rock Paper Scissors Automata</title>
+</head>
+<body style="background-color: #bbbbbb; margin: 0;" onload="start();">
 
 <h1 style="text-align: center">Rock Paper Scissors Cellular Automata</h1>
+<p style = "text-align: center">Iteration: <span id="counter"></span></p>
 
 <center><canvas id="canvas" width="1600" height="800" style="border: 1px solid black"></canvas></center>
 
@@ -13,22 +18,16 @@
 
 <center><button id="start">Start</button></center>
 
-This almost works. Known bugs: 
-<ul>
-	<li>Colors can "escape" from incoming predators sometimes, and continue expanding onto white when they shouldn't be able to.</li>
-	<li>Red doesn't gain power from eating green, even though it should.</li>
-	<li>Black dots sometimes appear in the center of big chunks of a single color</li>
-	<li>Drawing is offset if you're not scrolled to the top of the page</li>
-	<li>Drawing while the simulation is running gives all cells 10 power. I don't know how to fix this</li>
-</ul>
-
 
 <script src="scripts/rps.js"></script>
 
 <style>
+	h1, p {
+		margin: 6px;
+	}
 	.color {
-		height: 60px;
-		width: 60px;
+		height: 40px;
+		width: 40px;
 		border: 1px solid black;
 		display: inline-block;
 		margin: 0 60px;
