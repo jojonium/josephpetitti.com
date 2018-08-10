@@ -155,15 +155,27 @@ $(document).ready(function() {
 	m = new MiniMax();
 	
 	// initialize click functions
-	initializeBoard();
+	$('#me-first').show().click(function() {
+		$('#me-first').hide();
+		$('#computer-first').hide();
+		initializeBoard();
+		computerSay("Go ahead");
+	});
 	
-	computerSay("I'll be X");
+	$('#computer-first').show().click(function() {
+		$('#me-first').hide();
+		$('#computer-first').hide();
+		initializeBoard();
+		computerSay("Okay, I'll go first");
+		go();
+	});
 	
-	go();
+	
+	computerSay("Who should go first?");
 });
 
 function go() {
-	setTimeout(computerMove, 500);
+	setTimeout(computerMove, 1);
 }
 
 function computerMove() {
@@ -174,21 +186,33 @@ function computerMove() {
 
 function checkGameEnd(prevPlayer) {
 	var winner = b.getWinner();
-	if (winner == b.X) {
-		computerSay("I win!");
-	} else if (winner == b.O) {
-		computerSay("Whoa, you won!");
+	if (winner) {
+		if (winner == b.X) {
+			computerSay("I win!");
+			$('#board').children().off("click");
+			$('#play-again').show();
+			return b.X;
+		} else if (winner == b.O) {
+			computerSay("Whoa, you won!");
+			$('#board').children().off("click");
+			$('#play-again').show();
+			return b.O;
+		}
 	} else if (b.isFull()) {
 		computerSay("The game's a draw, too bad");
+		$('#board').children().off("click");
+		$('#play-again').show();
+		return 3;
 	} else if (prevPlayer == b.X) {
 		computerSay("Your move");
 	}
+	return 0;
 }
 
 function realMove(player, pos) {
 	b.move(player, pos);
 	updateDisplay();
-	checkGameEnd(player);
+	return checkGameEnd(player);
 }
 
 function updateDisplay() {
@@ -202,11 +226,11 @@ function updateDisplay() {
 }
 
 function computerSay(string) {
-	$('#output').append("<p>" + string + "</p>");
-	$('#output').scrollTop($('#output')[0].scrollHeight);
+	$('#log').append("<p>" + string + "</p>");
+	$('#log').scrollTop($('#log')[0].scrollHeight);
 }
 
-// set all click functions
+// set all click functions and hide buttons
 function initializeBoard() {
 	$('#top-left').click(function() {
 		squareClick(0);
@@ -243,6 +267,11 @@ function initializeBoard() {
 	$('#bottom-right').click(function() {
 		squareClick(8);
 	});
+	
+	$('#play-again').click(function() {
+		location.reload();
+	});
+	
 }
 
 // human player makes a move
@@ -251,7 +280,7 @@ function squareClick(n) {
 		computerSay("Hey, that's an illegal move!");
 	}
 	else {
-		realMove(b.O, n);
-		go();
+		var over = realMove(b.O, n);
+		if (!over) go();
 	}
 }
