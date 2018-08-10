@@ -1,0 +1,85 @@
+#board {
+	width: 308px;
+	height: 308px;
+}
+
+#output {
+	float: right;
+	width: 300px;
+	height: 300px;
+	overflow: auto;
+	margin-top: 20px;
+}
+
+#computer-says {
+	font-size: 1.375em;
+}
+
+#output p {
+	font-size: 1.125em;
+	margin: 10px 0;
+	padding-left: 20px;
+}
+
+.square {
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	font-size: 80px;
+	text-align: center;
+	line-height: 100px;
+	color: white;
+	cursor: default;
+	user-select: none;
+}
+
+#top-left {
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+#top {
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+
+#top-right {
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+#left {
+	border-top: 2px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+#center {
+	border: 2px solid black;
+}
+
+#right {
+	border-top: 2px solid black;
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+#bottom-left {
+	border-right: 2px solid black;
+	border-top: 2px solid black;
+}
+
+#bottom {
+	border-left: 2px solid black;
+	border-top: 2px solid black;
+	border-right: 2px solid black;
+}
+
+#bottom-right {
+	border-left: 2px solid black;
+	border-top: 2px solid black;
+}
