@@ -2,11 +2,17 @@
 var HERO_SIZE = 10;
 var CANVAS_WIDTH = 500;
 var CANVAS_HEIGHT = 500;
-var ctx, canvas, bg;
-var platforms = [];
+var FASTEST_PROJECTILE = 5;
 
-canvas = document.createElement("canvas");
-ctx = canvas.getContext("2d");
+// global variables
+var platforms = [];
+var projectiles = [];
+var fireButtonDown = false;
+var then;
+var fps = [];
+
+var canvas = document.createElement("canvas");
+var ctx = canvas.getContext("2d");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
@@ -28,15 +34,19 @@ for (var i = 0; i < bg.data.length; i+=4) {
 }
 
 // game objects
+
+// hero
 var hero = {
 	pic: heroImg,
 	xSpeed: 0, // movement speed in pixels per frame
 	ySpeed: 0,
 	x: 50,
 	y: 450,
-	grounded: false
+	grounded: false,
+	direction: 1
 };
 
+// basic platform
 var Platform = function(x, y, width, height) {
 	this.x = x;
 	this.y = y;
@@ -52,11 +62,12 @@ var Platform = function(x, y, width, height) {
 };
 
 Platform.prototype = {
-	checkHeroCollide: function() {
-		var heroTop = hero.y;
-		var heroBottom = hero.y + HERO_SIZE;
-		var heroLeft = hero.x;
-		var heroRight = hero.x + HERO_SIZE;
+	// returns string telling what side of the platform the thing collided with, otherwise returns ""
+	checkCollide: function(otherX, otherY, otherWidth, otherHeight) {
+		var otherTop = otherY;
+		var otherBottom = otherY + otherHeight;
+		var otherLeft = otherX;
+		var otherRight = otherX + otherWidth;
 		
 		var pfTop = this.y;
 		var pfBottom = this.y + this.height;
@@ -64,46 +75,67 @@ Platform.prototype = {
 		var pfRight = this.x + this.width;
 		
 		// top collision
-		if (heroBottom == pfTop && heroRight > pfLeft && heroLeft < pfRight) {
-			hero.ySpeed = 0;
-			return 2;
+		if (otherBottom == pfTop && otherRight > pfLeft && otherLeft < pfRight) {
+			return "top";
 		}
 		
 		// bottom collision
-		if (heroTop == pfBottom && heroRight > pfLeft && heroLeft < pfRight) {
-			hero.ySpeed *= -.5
-			return 1;
+		if (otherTop == pfBottom && otherRight > pfLeft && otherLeft < pfRight) {
+			return "bottom";
 		}
 		
 		// left collision
-		if (heroRight == pfLeft && ((heroTop < pfBottom && heroTop > pfTop) || (heroBottom > pfTop && heroBottom < pfBottom))) {
-			hero.xSpeed = 0;
-			return 1;
+		if (otherRight == pfLeft && ((otherTop < pfBottom && otherTop > pfTop) || (otherBottom > pfTop && otherBottom < pfBottom))) {
+			return "left";
 		}
 		
 		// right collision
-		if (heroLeft == pfRight && ((heroTop < pfBottom && heroTop > pfTop) || (heroBottom > pfTop && heroBottom < pfBottom))) {
-			hero.xSpeed = 0;
-			return 1;
+		if (otherLeft == pfRight && ((otherTop < pfBottom && otherTop > pfTop) || (otherBottom > pfTop && otherBottom < pfBottom))) {
+			return "right";
 		}
-
-		return 0;
+		
+		return "";
 	}
 };
 
+var Gun = function(bulletSize, bulletSpeed)  {
+	this.pic = ctx.createImageData(bulletSize, bulletSize);
+	for (var i = 0; i < this.pic.data.length; i+=4) {
+		this.pic.data[i+0] = 0;
+		this.pic.data[i+1] = 0;
+		this.pic.data[i+2] = 255;
+		this.pic.data[i+3] = 255;
+	}
+	this.bulletSpeed = bulletSpeed;
+	this.bulletSize = bulletSize;
+};
+
+Gun.prototype = {
+	shoot: function() {
+		projectiles.push({
+			pic: this.pic,
+			speed: hero.direction * this.bulletSpeed,
+			x: (hero.x + HERO_SIZE / 2) - this.bulletSize / 2,
+			y: (hero.y + HERO_SIZE / 2) - this.bulletSize / 2,
+			size: this.bulletSize
+		});
+	}
+};
 
 // make platforms
-platforms.push(new Platform(100, 350, 100, 100));
-platforms.push(new Platform(230, 300, 30, 10));
+platforms.push(new Platform(100, 150, 100, 300));
+platforms.push(new Platform(230, 340, 70, 10));
 platforms.push(new Platform(300, 450, 100, 10));
-platforms.push(new Platform(300, 150, 100, 10));
+platforms.push(new Platform(300, 250, 100, 10));
+
+var pistol = new Gun(4, 5);
 
 // Handle keyboard controls
 var keysDown = {};
 
 addEventListener("keydown", function(e) {
 	keysDown[e.keyCode] = true;
-	if ([38, 40, 37, 39, 32].indexOf(e.keyCode) > -1) {
+	if ([38, 40, 37, 39, 32, 90].indexOf(e.keyCode) > -1) {
 		e.preventDefault();
 	}
 }, false);
@@ -125,87 +157,107 @@ var update = function() {
 	
 	// gravity
 	hero.ySpeed += !hero.grounded;
-	
 
 	if (37 in keysDown) { // player holding left
-		hero.xSpeed-= 2;
+		hero.xSpeed = Math.max(hero.xSpeed - 2, -10);
+		hero.direction = -1;
+	} else if (39 in keysDown) { // player holding right
+		hero.xSpeed = Math.min(hero.xSpeed + 2, 10);
+		hero.direction = 1;
 	}
 	
-	if (39 in keysDown) { // player holding right
-		hero.xSpeed+=2;
-	}
-	
-	if (38 in keysDown || 32 in keysDown) { // player holding up or space
+	if (38 in keysDown || 32 in keysDown || 90 in keysDown) { // player holding up or space or Z
 		if (hero.grounded) {
 			hero.grounded = false;
-			hero.ySpeed -= 20;
+			hero.ySpeed -= 15;
 		}
 	}
 	
-	/*if (40 in keysDown) { // player holding down
-		hero.ySpeed++;
-	}*/
-	
-	// MOVE Y
-	for (var j = 0; j < Math.abs(hero.ySpeed); j++) {
-		hero.y+= Math.sign(hero.ySpeed);
-		
-		// platform collision
-		var gFlag = false;
-		for (var p = 0; p < platforms.length; p++) {
-			if (platforms[p].checkHeroCollide() == 2) {
-				gFlag = true;
-			}
+	if (88 in keysDown) { // shoot button down
+		if (!fireButtonDown) { // prevents full auto
+			pistol.shoot();
+			fireButtonDown = true;
 		}
-		hero.grounded = gFlag;
-		
-		// bounce off ceiling
-		if (hero.y < 0) {
-			hero.y = 0;
-			hero.ySpeed *= -.5;
-		}
-	
-		// hit ground
-		if (hero.y > (CANVAS_HEIGHT - HERO_SIZE)) {
-			hero.y = (CANVAS_HEIGHT - HERO_SIZE);
-			hero.ySpeed = 0;
-			hero.grounded = true;
-		}
-		
-		if (38 in keysDown || 32 in keysDown) { // player holding up or space
-			if (hero.grounded) {
-				hero.grounded = false;
-				hero.ySpeed -= 20;
-			}
-		}
-		
-		/*if (40 in keysDown) { // player holding down
-			hero.ySpeed++;
-		}*/
-		
+	} else {
+		fireButtonDown = false;
 	}
 	
-	// MOVE X
-	for (var i = 0; i < Math.abs(hero.xSpeed); i++) {
-		hero.x+= Math.sign(hero.xSpeed);
+	for (var i = 0; i < Math.max(Math.abs(hero.ySpeed), Math.abs(hero.xSpeed), FASTEST_PROJECTILE); i++) {
+		var heroMoved = false;
+		if (Math.abs(hero.xSpeed) > i) {
+			hero.x += Math.sign(hero.xSpeed);
+			heroMoved = true;
+		}
+		if (Math.abs(hero.ySpeed) > i) {
+			hero.y += Math.sign(hero.ySpeed);
+			heroMoved = true;
+		}
 		
-		// platform collision
-		var gFlag = false;
-		for (var p = 0; p < platforms.length; p++) {
-			if (platforms[p].checkHeroCollide() == 2) {
-				gFlag = true;
+		// if the hero moved we need to check if he collided with anything
+		if (heroMoved) {
+			var gFlag = false;
+			for (var p = 0; p < platforms.length; p++) {
+				// check platform collisions
+				var collision = platforms[p].checkCollide(hero.x, hero.y, HERO_SIZE, HERO_SIZE);
+				if (collision == "top") {
+					hero.ySpeed = 0;
+					gFlag = true;
+				} else if (collision == "bottom") {
+					hero.ySpeed = 0;
+				} else if (collision == "left" || collision == "right") {
+					hero.x-= Math.sign(hero.xSpeed);
+					hero.xSpeed = 0;
+				}
+			}
+			
+			// check ceiling collision
+			if (hero.y < 0) {
+				hero.y = 0;
+				hero.ySpeed = 0;
+			}
+			
+			// check ground collision
+			if (hero.y > (CANVAS_HEIGHT - HERO_SIZE)) {
+				hero.y = (CANVAS_HEIGHT - HERO_SIZE);
+				hero.ySpeed = 0;
+			}
+			
+			// check wall collisions
+			if (hero.x < 0) {
+				hero.x = 0;
+				hero.xSpeed = 0;
+			}
+			if (hero.x > (CANVAS_WIDTH - HERO_SIZE)) {
+				hero.x = (CANVAS_WIDTH - HERO_SIZE);
+				hero.xSpeed = 0;
+			}
+			// set grounded
+			hero.grounded = gFlag || (hero.y == CANVAS_HEIGHT - HERO_SIZE);
+		}		
+		
+		// now for the projectiles
+		var toRemove = [];
+		for (var j = 0; j < projectiles.length; j++) {
+			if (Math.abs(projectiles[j].speed) > i) {
+				projectiles[j].x += Math.sign(projectiles[j].speed);
+				
+				// check if the projectile hit anything
+				for (var p = 0; p < platforms.length; p++) {
+					if (platforms[p].checkCollide(projectiles[j].x, projectiles[j].y, projectiles[j].size, projectiles[j].size)
+						|| projectiles[j].x <= 0 || projectiles[j].x >= (CANVAS_WIDTH - projectiles[j].size)
+						|| projectiles[j].y <= 0 || projectiles[j].y >= (CANVAS_HEIGHT - projectiles[j].size)) {
+						if (!toRemove.includes(j)) {
+							toRemove.push(j);
+						}
+					}
+				}
 			}
 		}
-		hero.grounded = gFlag;
 		
-		// bounce off edges
-		if (hero.x < 0) {
-			hero.x = 0;
-			hero.xSpeed *= -.5;
-		}
-		if (hero.x > (CANVAS_WIDTH - 1 - HERO_SIZE)) {
-			hero.x = (CANVAS_WIDTH - 1 - HERO_SIZE);
-			hero.xSpeed *= -.5;
+		// remove any projectiles that collided
+		// we have to do this in reverse order so the array doesn't get messed up
+		for (var r = toRemove.length - 1; r >= 0; r--) {
+			projectiles.splice(toRemove[r], 1);
 		}
 	}
 };
@@ -216,16 +268,35 @@ var render = function() {
 	for (var p = 0; p < platforms.length; p++) {
 		ctx.putImageData(platforms[p].pic, platforms[p].x, platforms[p].y);
 	}
+	for (var p = 0; p < projectiles.length; p++) {
+		ctx.putImageData(projectiles[p].pic, projectiles[p].x, projectiles[p].y);
+	}
 };
 
 var main = function() {
+	var now = Date.now();
+	var delta = now - then;
+	fps.push((1 / delta) * 1000);
+	var sum = 0;
+	if (fps.length > 25) {
+		for (var i = 0; i < fps.length; i++) {
+			sum+= fps[i];
+		}
+		$("#fps-counter").html(Math.round(sum / fps.length));
+		fps = [];
+	}
+	
 	update();
 	render();
+	
+	then = now;
 	
 	requestAnimationFrame(main);
 };
 
 $("document").ready(function() {
+	then = Date.now();
 	document.getElementById("canvas-holder").appendChild(canvas);
+	$('main').append("<p><span id='fps-counter'></span> frames per second</p>");
 	main();
 });
