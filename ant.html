@@ -68,7 +68,7 @@
 			<button id="add-ant" type="button">Add Ant</button>
 			
 			<form id="buttons">
-				<button id="go" type="button" class="green" style="width: 80px">Go!</button>
+				<button id="go" type="button" style="width: 80px; background-color: #34d058">Go!</button>
 				<button id="pause" type="button">Pause</button>
 				<button id="clear" type="button">Clear</button>
 				<button id="bonus" type="button">I'm feeling lucky</button>
@@ -82,6 +82,93 @@
 			<p>Iteration: <span id="counter"></span></p>
 			
 			<div id="canvas-holder" width="100%"></div>
+			
+			<h2>How does it work?</h2>
+			
+			<p>This page is a customizable implementation of <a href="https://en.wikipedia.org/wiki/Langton's_ant">Langton's
+			   Ant</a>, a cellular automaton invented by Chris Langton in 1986. Langton's Ant is interesting because its very
+			   simple set of rules can lead to very complex emergent behavior. The simulation deals with computerized "ants"
+			   whose movements are controlled by a set of rules decided by the user. In its most basic form the simulation
+			   creates a single ant, which follows these rules:</p>
+			   
+			<ul>
+				<li>At a white square, turn 90° right, change the color of the square to black, then move forward one square</li>
+				<li>At a black square, turn 90° left, change the color of the square to white, then move forward one square</li>
+			</ul>
+			
+			<figure class="float right">
+				<img src="images/basic-ant.png" alt="Image of a single ant after 11,669 iterations" style="border: 1px solid black;"></img>
+				<figcaption>The ant will always eventually get caught in a loop, making a "highway" off the board</figcaption>
+			</figure>
+			
+			<p>You can try this basic configuration now by pressing "Go!"</p>
+			
+			<p>At first, the ant's movement appears to be essentially random, retracing its steps many times and turning in 
+			   unpredictable ways. However, after about 10,000 iterations the ant begins moving in a pattern. It constructs a 
+			   repeating "highway" in one direction, eventually reaching the edge of the grid. This is the really fascinating
+			   aspect of Langton's Ant: order arising out of chaos.</p>
+			
+			<h2>Extensions</h2>
+			
+			<p>The basic implementation of Langton's Ant is cool, but it does the same thing every time, which gets boring. Several
+			   ways to extend the functionality of the ant have been suggested over the years. For example, multiple ants can be
+			   simulated by pressing the "Add Ant" button, each with a unique starting position and direction. This can how how 
+			   multiple ants interact with each other and give rise to different ordered patterns.</p>
+			
+			<figure class="float left">
+				<img src="images/advanced-ant.png" alt="Image of a 4 ants with advanced rules after 3,973 iterations" style="border: 1px solid black;"></img>
+				<figcaption>This image is the result of four ants following 20 different rules for 3,973 iterations</figcaption>
+			</figure>
+			
+			<p>Another way to extend Langton's Ant is to add more colors, and more rules. By clicking the "Add Rule" button you
+			   can define any number of rules for the ants to obey. In addition to the basic "turn right" (R) and "turn left" (L),
+			   ants can also continue straight ahead (C) or turn 180° around (U).</p>
+			
+			<p>The combination of these extensions can lead to some very interesting and unpredictable outcomes. Sometimes ordered
+			   patterns arise out of chaos, and sometimes symmetry and repetition degenerates into randomness. Unpredictable patterns
+			   often emerge from these simple rules.</p>
+			
+			<p>The point of this page is to make it easy to experiment and play with different combinations of rules and ants. The
+			   next section explains how to use the provided options to do just that.</p>
+			
+			<h2>How to use this page</h2>
+			
+			<p>The first three options (Grid Size, Pixel Size, and Interval) are global variables that affect how the simulation is
+			   displayed. Grid size is the size of the length and width of the simulation board (it's square, so one input sets both).
+			   Pixel size is the size of the simulation squares in pixels. The Interval is the amount of time between each iteration,
+			   in milliseconds. Any invalid inputs in these fields will be replaced by the default values.</p>
+			
+			<p>To add more ants, click the "Add Ant" button. Each ant has three attributes you can set: its starting X position,
+			   measued in number of squares to the right of the left side of the board; starting Y position, measured in number
+			   of squares below the top of the board, and starting direction. Direction is a number from 0 to 3, representing which
+			   the ant is facing when the simulation begins:</p>
+			<ul>
+				<li>0: facing right</li>
+				<li>1: facing up</li>
+				<li>2: facing left</li>
+				<li>3: facing right</li>
+			</ul>
+			<p>Any invalid input in these fields will be replaced by a random value within the confines of the simulation board.</p>
+			
+			<p>The box on the right allows you to define any number of custom rules. Each entry in the rules box has a color and a
+			   letter, representing what an ant does on a square of that color. There are four valid rule letters:</p>
+			<ul>
+				<li>R: turn 90° <b>R</b>ight</li>
+				<li>L: turn 90° <b>L</b>eft</li>
+				<li>C: don't turn (<b>C</b>ontinue straight)</li>
+				<li>U: turn 180° (make a <b>U</b>-turn)</li>
+			</ul>
+			<p>At the start of each iteration the ant will follow the rule for the color of the square it's on, the cycle the color of
+			   the square it's on to the next color in the list of rules, then move one unit in whichever direction it's facing. Any 
+			   invalid input will be replaced by a random valid rule.</p>
+			
+			<p>If "Wrap Around" is checked, when ants reach one of the borders of the board they wrap around to the other side. If this
+			   option is turned off ants simply stop moving once they reach the edge of the board. The "Clear" button clears all input
+			   options and reloads the page. The "Pause" button can be used to pause the simulation and observe a single iteration.</p>
+			
+			<p>Finally, the "Go!" button starts the simulation. Please note that none of the options can be changed after the simulation
+			   has started. Pressing "Go!" multiple times without clearing the inputs will likely result in unexpected behavior.</p>
+			
 			<script src="scripts/ant.js"></script>
 			<style>
 				.an-ant {
@@ -106,7 +193,7 @@
 					border: 1px solid black;
 				}
 				
-				main h2 {
+				#color-rules h2, .an-ant h2 {
 					text-align: center;
 					margin: 0;
 					padding: 14px 0;
@@ -134,6 +221,10 @@
 				.an-ant input {
 					position: absolute;
 					right: 0;
+				}
+				
+				figure.float {
+					width: 30%;
 				}
 			</style>
 		</main>
