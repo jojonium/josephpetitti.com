@@ -41,7 +41,7 @@
 		</nav>
 		
 	<!-- Main -->
-		<main>
+		<main id="main">
             <h2>A section for everything else</h2>
             
             <p>The "Other" section holds everything that doesn't belong anywhere else on my site. Here's a
@@ -55,7 +55,7 @@
 				<li><a href="tic-tac-toe">Tic-Tac-Toe</a> &mdash; An implementation of the MiniMax algorithm to play Tic-Tac-Toe, written in JavaScript</li>
             </ul>
 		
-            <canvas width="1120" height="600" id="seen-canvas"></canvas>
+            <canvas height="600" id="seen-canvas"></canvas>
 		
 		</main>
 		
@@ -89,9 +89,12 @@
 		
 		
 <script type="text/coffeescript" id="code">
-  width  = 1120
+  document.getElementById("seen-canvas").width = document.getElementById("main").offsetWidth - 80
+  width  = document.getElementById("seen-canvas").offsetWidth
   height = 600
-
+  
+  console.log(width)
+  
   # Create a simple sphere
   shape = seen.Shapes.sphere(2).scale(250)
   seen.Colors.randomSurfaces2(shape)

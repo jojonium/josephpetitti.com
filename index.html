@@ -51,11 +51,11 @@
 		</nav>
 		
 	<!-- Main -->
-		<main style="padding: 0 40px 40px 40px;">
+		<main style="padding: 0 40px 40px 40px;" id="main">
 			<div style="height: 500px">
 				<div class="parallax-header" style="background-color: #a89cc8; z-index: 1;">WELCOME</div>
-				<canvas width="1200" height="500" id="seen-canvas" class="seen-main"
-						style="position: relative; top: -38px; width: 100% height: 500px"></canvas>
+				<canvas height="500" id="seen-canvas" class="seen-main"
+						style="position: relative; top: -38px;"></canvas>
 			</div>
 		
 			<div class="circular-portrait"></div>
@@ -115,11 +115,11 @@
 					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
 				</ul>
 			</section>
-		</footer>
-		
+		</footer>		
 		
 		<script type="text/coffeescript" id="code">
-			width               = 1200
+			document.getElementById("seen-canvas").width = document.getElementById("main").offsetWidth
+			width               = document.getElementById("seen-canvas").offsetWidth
 			height              = 500
 			equilateralAltitude = Math.sqrt(3.0) / 2.0
 			triangleScale       = 70
