@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>Checkers</title>
+		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+		<script src="scripts/jquery-3.3.1.min.js"></script>
+		<script src="scripts/checkers.js"></script>
+	</head>
+	<body>
+	
+	<!-- Header -->
+		<header>
+			<h1>Checkers</h1>
+		</header>
+		
+	<!-- Nav -->
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+						<li><a href="hci-project6">HCI Project 6</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="film-stats">Film Stats</a></li>
+						<li><a href="dice">Dice</a></li>
+						<li><a href="ant">Langton's Ant</a></li>
+						<li><a href="rps">RPS Automaton</a></li>
+						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		
+	<!-- Main -->
+		<main>
+			<div id="output">
+				<span id="computer-says">Computer says:</span>
+					<div id="log"></div>
+				<button id="2-players">Two Players</button>
+			</div>
+			
+			<br>
+			
+			<div id="canvas-holder"></div>
+			
+			<h2>Rules</h2>
+			<p>(From <a href="https://en.wikipedia.org/wiki/English_draughts#Rules">Wikipedia</a>) Each player starts with 12 men on the dark squares of the three rows closest to that player's side. The row closest to each player is called the <i>king's row</i> The player with the darker-colored pieces moves first.</p>
+			<p>There are two different ways to move:</p>
+			<ol>
+				<li><i>Simple move:</i> A simple move consists of moving a piece one square diagonally to an adjacent unoccupied dark square. Men can move diagonally forward only; kings can move in any diagonal direction.</li>
+				<li><i>Jump:</i> A jump consists of moving a piece that is diagonally adjacent an opponent's piece, to an empty square immediately beyond it in the same direction. (Thus "jumping over" the opponent's piece.) Men can jump diagonally forward only; kings can jump in any diagonal direction. A jumped piece is considered "captured" and removed from the game. Any piece, king or man, can jump a king.</li>
+			</ol>
+			<p><i>Multiple jumps</i> are possible, if after one jump another piece is immediately eligible to be jumped—even if that jump is in a different diagonal direction. If more than one multi-jump is available, the player can choose which piece to jump with, and which sequence of jumps to make. The sequence chosen is not required to be the one that maximizes the number of jumps in the turn; however, a player must make all available jumps in the sequence chosen.</p>
+			<p>Jumping is always mandatory: if a player has the option to jump, he must take it, even if doing so results in disadvantage for the jumping player. For example, a mandated single jump might set up the player such that the opponent has a multi-jump in reply.</p>
+			<p>If a man moves into the kings row on the opponent's side of the board, it is crowned as a king and gains the ability to move both forward and backward.</p>
+			<p>A player wins by capturing all of the opponent's pieces.</p>
+		</main>
+		
+		<style>
+		button {
+			display: none;
+		}
+		
+		.square {
+			height: 60px;
+			width: 60px;
+			display: inline-block;
+		}
+		
+		.black {
+			background-color: grey
+		}
+		
+		.row {
+			height: 60px;
+			
+		}
+		
+		#board {
+			width: 480px;
+			border: 1px solid black;
+		}
+		
+		#output {
+			float: right;
+			width: 500px;
+			height: 500px;
+			margin-top: 20px;
+		}
+
+		#log {
+			overflow: auto;
+			width: 100%;
+			height: 400px;
+		}
+
+		#computer-says {
+			font-size: 1.375em;
+		}
+
+		#log p {
+			font-size: 1.125em;
+			margin: 10px 0;
+			padding-left: 20px;
+		}
+		</style>
+		
+	<!-- Footer -->
+		<footer id="footer">
+			<section class="about">
+				<h2>About this website</h2>
+				<p>I created this website as a personal project in my free time to learn more about web design,
+				   CSS, HTML, and JavaScript.</p>
+				<p>Right now there isn't much on here, but I hope to include more in the future as I learn more
+				   about web design.</p>
+			</section>
+			<section class="contact">
+				<h2>Contact Information</h2>
+				<dl>
+					<dt>Address</dt>
+						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+					<dt>Phone</dt>
+						<dd>(518) 545-1984</dd>
+					<dt>Email</dt>
+						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+				</dl>
+				<ul class="icons">
+					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+				</ul>
+			</section>
+		</footer>
+	</body>
+</html>
