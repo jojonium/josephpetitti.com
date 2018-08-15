@@ -46,14 +46,17 @@
 				<span id="computer-says">Computer says:</span>
 					<div id="log"></div>
 				<button id="2-players">Two Players</button>
+				<button id="1-player-red" style="width: 130px">One Player (Red)</button>
+				<button id="1-player-white" style="width: 130px">One Player (White)</button>
+				<button id="play-again">Play again?</button>
 			</div>
 			
-			<br>
+			<p>AI Difficulty: <input type="text" id="difficulty" value="6"></input><span style="font-size: .5em"> Note: increasing difficulty will exponentially increase the length of the AI's turns</span></p>
 			
 			<div id="canvas-holder"></div>
 			
 			<h2>Rules</h2>
-			<p>(From <a href="https://en.wikipedia.org/wiki/English_draughts#Rules">Wikipedia</a>) Each player starts with 12 men on the dark squares of the three rows closest to that player's side. The row closest to each player is called the <i>king's row</i> The player with the darker-colored pieces moves first.</p>
+			<p>(From <a href="https://en.wikipedia.org/wiki/English_draughts#Rules">Wikipedia</a>) Each player starts with 12 men on the dark squares of the three rows closest to that player's side. The row closest to each player is called the <i>king's row</i>. The player with the darker-colored pieces moves first.</p>
 			<p>There are two different ways to move:</p>
 			<ol>
 				<li><i>Simple move:</i> A simple move consists of moving a piece one square diagonally to an adjacent unoccupied dark square. Men can move diagonally forward only; kings can move in any diagonal direction.</li>
@@ -66,10 +69,14 @@
 		</main>
 		
 		<style>
-		button {
+		input {
+			font-size: 1.125em;
+			width: 50px;
+		}
+		#play-again {
 			display: none;
 		}
-		
+
 		.square {
 			height: 60px;
 			width: 60px;
@@ -101,6 +108,7 @@
 			overflow: auto;
 			width: 100%;
 			height: 400px;
+			padding-top: 12px;
 		}
 
 		#computer-says {

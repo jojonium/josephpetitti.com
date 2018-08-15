@@ -1,6 +1,6 @@
 // create global canvas
 var canvas = document.createElement('canvas');
-var ctx, currentPlayer, b;
+var ctx, currentPlayer, b, whiteCPU, redCPU, m;
 canvas.id = 'canvas';
 canvas.width = 480;
 canvas.height = 480;
@@ -12,10 +12,35 @@ $('document').ready(function() {
 	ctx = canvas.getContext('2d');
 	initUI();
 	b = new Board();
-	update(b);
+	m = new MiniMax();
+	update();
+	
+	$("#play-again").click(function() {
+		location.reload();
+	});
 	
 	$("#2-players").click(function() {
-		$("#2-players").hide();
+		$("button").hide();
+		whiteCPU = false;
+		redCPU = false;
+		redTurn();
+	});
+	
+	$("#1-player-red").click(function() {
+		$("button").hide();
+		computerSay("Okay, I'll be white");
+		m = new MiniMax($("#difficulty").val());
+		redCPU = false;
+		whiteCPU = true;
+		redTurn();
+	});
+	
+	$("#1-player-white").click(function() {
+		$("button").hide();
+		computerSay("Okay, I'll be red");
+		m = new MiniMax($("#difficulty").val());
+		redCPU = true;
+		whiteCPU = false;
 		redTurn();
 	});
 	
@@ -40,6 +65,7 @@ $('document').ready(function() {
 		if (Math.sign(b.gamestate[squareX][squareY]) == currentPlayer) {
 			selected.x = squareX;
 			selected.y = squareY;
+			update();
 		}
 		
 		// move
@@ -48,21 +74,20 @@ $('document').ready(function() {
 			if (m) {
 				selected.x = undefined;
 				selected.y = undefined;
+				update();
 				if (m == 2) {
 					computerSay("Nice capture! Go again");
 					b.multiturn = true;
 				} else if (m == 1) {
-					if (currentPlayer == b.red) whiteTurn();
-					else redTurn();
+					if (currentPlayer == b.red) setTimeout(whiteTurn, 200);
+					else setTimeout(redTurn, 200);
 				}
 				
 			}
 		}
-		update();
 	});
 	
 	computerSay("How many human players?");
-	$("#2-players").show();
 });
 
 
@@ -72,16 +97,47 @@ var computerSay = function(string) {
 };
 
 var redTurn = function() {
-	if (!b.checkWin()) {
+	var w = b.checkWin();
+	if (!w) {
 		computerSay("It's Red's turn");
-		currentPlayer = b.red;
+		if (redCPU) {
+			m.buildTree(b, b.red, function(bestMove) {
+				b.move(b.red, bestMove.fromX, bestMove.fromY, bestMove.toX, bestMove.toY);
+				update();
+				whiteTurn();
+			});
+		} else {
+			currentPlayer = b.red;
+		}
+	} else {
+		if (w == b.white)
+			computerSay("White wins!");
+		else if (w == b.red)
+			computerSay("Red wins!");
+		$("#canvas").off();
+		$("#play-again").show();
 	}
 };
 
 var whiteTurn = function() {
-	if (!b.checkWin()) {
+	var w = b.checkWin()
+	if (!w) {
 		computerSay("It's White's turn");
-		currentPlayer = b.white;
+		if (whiteCPU) {
+			m.buildTree(b, b.white, function(bestMove) {
+				b.move(b.white, bestMove.fromX, bestMove.fromY, bestMove.toX, bestMove.toY);
+				update();
+				redTurn();
+			});
+		} else {
+			currentPlayer = b.white;
+		}
+	} else {
+		if (w == b.white)
+			computerSay("White wins!");
+		else if (w == b.red)
+			computerSay("Red wins!");
+		$("#canvas").off();
 	}
 };
 
@@ -131,16 +187,16 @@ Board.prototype = {
 	},
 	
 	// returns 0 if invalid, 1 if valid hop, 2 if valid capture
-	validateMove: function(player, fromX, fromY, toX, toY) {
+	validateMove: function(player, fromX, fromY, toX, toY, s) { // s supresses messages (if computer called it)
 		// is the source controlled by the player?
 		if (Math.sign(this.gamestate[fromX][fromY]) != player) {
-			computerSay("The player doesn't control that piece");
+			if (!s) computerSay("The player doesn't control that piece");
 			return 0;
 		}
 		
 		// destination cannot contain a piece
 		if (this.gamestate[toX][toY]) {
-			computerSay("You can't move to an occupied space");
+			if (!s) computerSay("You can't move to an occupied space");
 			return 0;
 		}
 		
@@ -148,30 +204,30 @@ Board.prototype = {
 		var rowDelta = Math.abs(fromY - toY);
 		var colDelta = Math.abs(fromX - toX);
 		if (rowDelta != colDelta) {
-			computerSay("Movement must be diagonal");
+			if (!s) computerSay("Movement must be diagonal");
 			return 0;
 		}
 		
 		// men can't move backwards
 		if (Math.abs(this.gamestate[fromX][fromY]) != 2) {
 			if (player == this.red && toY < fromY) {
-				computerSay("Non-kings can't move backwards");
+				if (!s) computerSay("Non-kings can't move backwards");
 				return 0;
 			}
 			if (player == this.white && toY > fromY) {
-				computerSay("Non-kings can't move backwards");
+				if (!s) computerSay("Non-kings can't move backwards");
 				return 0;
 			}
 		}
 		
-		// validate a non-hop
+		// validate a jump
 		if (rowDelta > 1) {
 			if (rowDelta > 2) {
-				computerSay("You can't move more than 2 spaces");
+				if (!s) computerSay("You can't move more than 2 spaces");
 				return 0;
 			}
 			if (!this.isValidCapture(player, fromX, fromY, toX, toY)) {
-				computerSay("You can only move 2 spaces by capturing an opponent's piece");
+				if (!s) computerSay("You can only move 2 spaces by capturing an opponent's piece");
 				return 0;
 			}
 			return 2;
@@ -181,12 +237,11 @@ Board.prototype = {
 		for (var i = 0; i < 8; i++) {
 			for (var j = 0; j < 8; j++) {
 				if (Math.sign(this.gamestate[i][j]) == player && this.canCapture(player, i, j)) {
-					computerSay("If you can capture a piece you must");
+					if (!s) computerSay("If you can capture a piece you must");
 					return 0;
 				}
 			}
 		}
-		
 		return 1;
 	},
 	
@@ -210,10 +265,8 @@ Board.prototype = {
 		if (v == 1) {
 			// king me
 			if (player == this.white && toY == 0) {
-				computerSay("King me!");
 				this.gamestate[toX][toY] = this.whiteKing;
 			} else if (player == this.red && toY == 7) {
-				computerSay("King me!");
 				this.gamestate[toX][toY] = this.redKing;
 			} else {
 				this.gamestate[toX][toY] = this.gamestate[fromX][fromY];
@@ -224,10 +277,8 @@ Board.prototype = {
 		if (v == 2) {
 			// king me
 			if (player == this.white && toY == 0) {
-				computerSay("King me!");
 				this.gamestate[toX][toY] = this.whiteKing;
 			} else if (player == this.red && toY == 7) {
-				computerSay("King me!");
 				this.gamestate[toX][toY] = this.redKing;
 			} else {
 				this.gamestate[toX][toY] = this.gamestate[fromX][fromY];
@@ -258,22 +309,137 @@ Board.prototype = {
 			return 0;
 		}
 		if (noRed) {
-			computerSay("White wins!");
-			$("#canvas").off();
 			return this.white;
 		}
 		if (noWhite) {
-			computerSay("Red wins!");
-			$("#canvas").off();
 			return this.red;
 		}
 		return 0;
+	},
+	
+	// return every possible move for a player
+	getMoves: function(player) {
+		var moves = [];
+		for (var i = 0; i < 8; i++) {
+			for (var j = 0; j < 8; j++) {
+				if (Math.sign(this.gamestate[i][j]) == player) {
+					// add the hops
+					if (i > 0 && j > 0 && this.validateMove(player, i, j, i - 1, j - 1, true)) { // up left hop
+						moves.push({fromX: i, fromY: j, toX: i - 1, toY: j - 1});
+					}
+					if (i < 7 && j > 0 && this.validateMove(player, i, j, i + 1, j - 1, true)) { // up right hop
+						moves.push({fromX: i, fromY: j, toX: i + 1, toY: j - 1});
+					}
+					if (i > 0 && j < 7 && this.validateMove(player, i, j, i - 1, j + 1, true)) { // down left hop
+						moves.push({fromX: i, fromY: j, toX: i - 1, toY: j + 1});
+					}
+					if (i < 7 && j < 7 && this.validateMove(player, i, j, i + 1, j + 1, true)) { // down right hop
+						moves.push({fromX: i, fromY: j, toX: i + 1, toY: j + 1});
+					}
+					
+					// add the jumps
+					if (i > 1 && j > 1 && this.validateMove(player, i, j, i - 2, j - 2, true)) { // up left jump
+						moves.push({fromX: i, fromY: j, toX: i - 2, toY: j - 2});
+					}
+					if (i < 6 && j > 1 && this.validateMove(player, i, j, i + 2, j - 2, true)){ // up right
+						moves.push({fromX: i, fromY: j, toX: i + 2, toY: j - 2});
+					}
+					if (i > 1 && j < 6 && this.validateMove(player, i, j, i - 2, j + 2, true)) { // down left
+						moves.push({fromX: i, fromY: j, toX: i - 2, toY: j + 2});
+					}
+					if (i < 6 && j < 6 && this.validateMove(player, i, j, i + 2, j + 2, true)) { // down right
+						moves.push({fromX: i, fromY: j, toX: i + 2, toY: j + 2});
+					}
+				}
+			}
+		}
+		return moves;
 	}
-}
+};
 
 
 
 
+
+
+
+
+
+/*=====================================*\
+				MiniMax
+\*=====================================*/
+var MiniMax = function(difficulty) {
+	this.bestMove = {fromX: undefined, fromY: undefined, toX: undefined, toY: undefined};
+	this.MAX_DEPTH = difficulty;
+};
+
+MiniMax.prototype = {
+	// called from the game, returns the best move
+	buildTree: function(board, player, cb) {
+		this.bestMove = {fromX: undefined, fromY: undefined, toX: undefined, toY: undefined};
+		var alpha = this.buildTree_r(board, player, 0);
+		cb(this.bestMove);
+	},
+	
+	// recursive function to build the MiniMax tree and rate the value of the board
+	buildTree_r: function(board, currPlayer, depth) {
+		if (depth > this.MAX_DEPTH) {
+			// return the number of pieces the current player has if you reach max depth before a win
+			var pieces = 0;
+			for (var i = 0; i < 8; i++) {
+				for (var j = 0; j < 8; j++) {
+					if (Math.sign(board.gamestate[i][j]) == currPlayer) {
+						pieces++
+					}
+				}
+			}
+			return pieces;
+		}
+		
+		// set the other player 
+		var otherPlayer;
+		if (currPlayer == board.white) otherPlayer = board.red;
+		else otherPlayer = board.white;
+		
+		// check for a winner. If currPlayer we win, otherwise we lose in this tree
+		var winner = board.checkWin();
+		if (winner == currPlayer) {
+			return 1000;
+		} else if (winner == otherPlayer) {
+			return -1000;
+		}
+		
+		// this is where we begin to rank moves, get an array of moves, set alpha low, instantiate parallel
+		var moveList = board.getMoves(currPlayer);
+		var alpha = -1000;
+		var subAlphaList = [];
+		for (var i = 0; i < moveList.length; i++) {
+			var boardCopy = board.copy(); // copy current gamestate
+			boardCopy.move(currPlayer, moveList[i].fromX, moveList[i].fromY, moveList[i].toX, moveList[i].toY); // try each possible move
+			
+			var subAlpha = -this.buildTree_r(boardCopy, otherPlayer, depth + 1); // pass new gamestate into recursion
+			if (alpha < subAlpha) { // if this move is better than alpha increase alpha
+				alpha = subAlpha;
+			}
+			
+			if (depth == 0) { // if we're looking at the real gamestate add subAlpha to the listStyleType
+				subAlphaList.push(subAlpha);
+			}
+		}
+		
+		if (depth == 0) {
+			var posMoves = [];
+			for (var n = 0; n < subAlphaList.length; n++) {
+				if (subAlphaList[n] == alpha) {
+					posMoves.push(moveList[n]);
+				}
+			}
+			this.bestMove = posMoves[Math.floor(Math.random() * posMoves.length)]; // pick a random best move
+		}
+		
+		return alpha;
+	}
+};
 
 
 
