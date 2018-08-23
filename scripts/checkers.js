@@ -151,7 +151,7 @@ var whiteTurn = function() {
 
 
 /*=================================*\
-				Board
+		Board
 \*=================================*/
 var Board = function() {
 	this.empty = 0;
@@ -166,13 +166,13 @@ var Board = function() {
 	// 1 means a red man is on that square, 2 means a red king is on that square
 	// -1 means a white man is on that square, -2 means a white king is on that square
 	this.gamestate = [[0, 1, 0, 0, 0, -1, 0, -1], // this needs to be sideways
-					  [1, 0, 1, 0, 0, 0, -1, 0],  // because we want x (the column)
-					  [0, 1, 0, 0, 0, -1, 0, -1], // to be first
-					  [1, 0, 1, 0, 0, 0, -1, 0],
-					  [0, 1, 0, 0, 0, -1, 0, -1],
-					  [1, 0, 1, 0, 0, 0, -1, 0],
-					  [0, 1, 0, 0, 0, -1, 0, -1],
-					  [1, 0, 1, 0, 0, 0, -1, 0]];
+	                  [1, 0, 1, 0, 0, 0, -1, 0],  // because we want x (the column)
+	                  [0, 1, 0, 0, 0, -1, 0, -1], // to be first
+	                  [1, 0, 1, 0, 0, 0, -1, 0],
+	                  [0, 1, 0, 0, 0, -1, 0, -1],
+	                  [1, 0, 1, 0, 0, 0, -1, 0],
+		          [0, 1, 0, 0, 0, -1, 0, -1],
+                          [1, 0, 1, 0, 0, 0, -1, 0]];
 };
 
 Board.prototype = {

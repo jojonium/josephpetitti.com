@@ -275,7 +275,19 @@ document.getElementById("go").addEventListener("click", function() {
 			r: ir
 		});
 	}
-	
+
+	// remove the "go" button so it can't be pressed again
+	document.getElementById("go").disabled = true;
+	document.getElementById("add-ant").disabled = true;
+	document.getElementById("wrap").disabled = true;
+	document.getElementById("bonus").disabled = true;
+	document.getElementById("add-rule").disabled = true;
+	var inputs = document.getElementsByTagName("input");
+	for (var i = 0; i < inputs.length; i++) {
+		inputs[i].disabled = true;
+	}
+	document.getElementById("wrap-button").classList.add("disabled");
+
 	// finally run it
 	langtonant(antArray, {
 		gridsize: inputGridSize,
