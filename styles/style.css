@@ -1,9 +1,4 @@
 @font-face {
-    font-family: Lato;
-    src: url(lato-regular.ttf);
-}
-
-@font-face {
     font-family: Helvetica;
     src: url(helvetica.otf);
 }
@@ -290,7 +285,7 @@ main img.full-width {
                 width: 30%;
                 text-align: center;
                 color: #fff;
-                font-family: Lato, sans-serif;
+                font-family: sans-serif;
                 font-weight: lighter;
 				position: relative;
 				top: 45%;
