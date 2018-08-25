@@ -243,10 +243,10 @@ document.getElementById("go").addEventListener("click", function() {
 	var ruleElements = document.getElementById('color-rules').children;
 	var ruleLetter;
 	for (r = 1; r < ruleElements.length; r += 3) {
-		rgbStrings = ruleElements[r].style.backgroundColor.match(/\d+/g); //return something like ["200", "12", "53"]
-		icr = rgbStrings[0];
-		icg = rgbStrings[1];
-		icb = rgbStrings[2];
+		rgbString = ruleElements[r].children[0].value;
+		icr = parseInt(rgbString.slice(1, 3), 16);
+		icg = parseInt(rgbString.slice(3, 5), 16);
+		icb = parseInt(rgbString.slice(5), 16);
 		
 		// clean rule input
 		ruleLetter = ruleElements[r + 1].value.toUpperCase();
@@ -305,30 +305,39 @@ document.getElementById('clear').addEventListener("click", function() {
 // Add Rule button
 document.getElementById('add-rule').addEventListener("click", function() {
 	var rulePanel = document.getElementById('color-rules');
-	var ruleNum = (rulePanel.children.length - 1) / 3;
-	var swatch = document.createElement('div');
+	var ruleNum = (rulePanel.children.length - 1) / 3 + 1;
+	var swatch = document.createElement('input');
+    swatch.type = 'color';
 	swatch.className = 'swatch';
 	
 	// generate a random color
-	var r = Math.floor(Math.random() * 255);
-	var g = Math.floor(Math.random() * 255);
-	var b = Math.floor(Math.random() * 255);
+	var r = Math.floor(Math.random() * 255).toString(16);
+	var g = Math.floor(Math.random() * 255).toString(16);
+	var b = Math.floor(Math.random() * 255).toString(16);
 	
-	rulePanel.appendChild(swatch);
-	swatch.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+    // make the swatch wrapper
+    var swatchWrapper = document.createElement('div');
+    swatchWrapper.className = 'swatch-wrapper';
+    swatchWrapper.style.backgroundColor = '#' + r + g + b;
+    swatchWrapper.id = "color-wrapper-" + ruleNum;
+	swatch.value = '#' + r + g  + b;
 	swatch.id = "color-" + ruleNum;
+    swatch.onchange = function(){swatchChange(this.id)};
+    
+    rulePanel.appendChild(swatchWrapper);
+    swatchWrapper.appendChild(swatch);
 	
 	var newInput = document.createElement('input');
 	newInput.type = "text";
 	newInput.id = "rule-" + ruleNum;
 	
 	// make inital value essentially random
-	var z = r % 4;
-	if (z == 0) {
+	var z = Math.random();
+	if (z < 0.25) {
 		newInput.value = "R";
-	} else if (z == 1) {
+	} else if (z < 0.5) {
 		newInput.value = "L";
-	} else if (z == 2) {
+	} else if (z < 0.75) {
 		newInput.value = "U";
 	} else {
 		newInput.value = "C";
@@ -342,6 +351,13 @@ document.getElementById('wrap-button').addEventListener("click", function() {
 	var state = document.getElementById('wrap').checked;
 	document.getElementById('wrap').checked = !state;
 });
+
+var swatchChange = function(wrapId) {
+    var number = wrapId.slice(6);
+    console.log(number);
+    document.getElementById("color-wrapper-" + number).style.backgroundColor = document.getElementById("color-" + number).value;
+};
+
 
 // Cool bonus
 document.getElementById('bonus').addEventListener("click", function() {
