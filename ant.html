@@ -44,8 +44,8 @@
 			<form style="float: right; border: 1px solid black;">
 				<div id="color-rules">
 					<h2>Rules</h2>
-					<div class="swatch" id="color-1" style="background-color: rgb(255, 255, 255)"></div><input type="text" id="rule-1" value="R"><br>
-					<div class="swatch" id="color-2" style="background-color: rgb(0, 0, 0)"></div><input type="text" id="rule-2" value="L"><br>
+					<div class="swatch-wrapper" id="color-wrapper-1" style="background-color: #ffffff"><input class="swatch" id="color-1" value="#ffffff" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-1" value="R"><br>
+					<div class="swatch-wrapper" id="color-wrapper-2" style="background-color: #000000"><input class="swatch" id="color-2" value="#000000" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-2" value="L"><br>
 				</div>
 				<button id="add-rule" type="button" style="display: block;">Add Rule</button>
 			</form>
@@ -158,6 +158,8 @@
 				<li>C: don't turn (<b>C</b>ontinue straight)</li>
 				<li>U: turn 180° (make a <b>U</b>-turn)</li>
 			</ul>
+			<p>You can also customize the colors by clicking on the colored box to the left of the rule letter.</p>
+			
 			<p>At the start of each iteration the ant will follow the rule for the color of the square it's on, the cycle the color of
 			   the square it's on to the next color in the list of rules, then move one unit in whichever direction it's facing. Any 
 			   invalid input will be replaced by a random valid rule.</p>
@@ -167,7 +169,7 @@
 			   options and reloads the page. The "Pause" button can be used to pause the simulation and observe a single iteration.</p>
 			
 			<p>Finally, the "Go!" button starts the simulation. Please note that none of the options can be changed after the simulation
-			   has started. Pressing "Go!" multiple times without clearing the inputs will likely result in unexpected behavior.</p>
+			   has started.</p>
 			
 			<script src="scripts/ant.js"></script>
 			<style>
@@ -190,13 +192,19 @@
 				#globalCanvas {	border: 1px solid black;	}
 				
 				.swatch {
-					width: 16px;
-					height: 16px;
+					width: 19px;
+					height: 19px;
 					display: inline-block;
 					position: relative;
-					top: 6px;
-					margin: 2px;
-					border: 1px solid black;
+					margin: 0;
+					padding: 0;
+					border: none;
+					opacity: 0;
+				}
+				
+				.swatch-wrapper {
+                    float: left;
+                    border: 1px solid black;
 				}
 				
 				#color-rules h2, .an-ant h2 {
