@@ -13,6 +13,7 @@ var globActive = undefined; // true if in the middle of typing a word
 var score = 0;
 var multiplier = 1;
 var combo = 0;
+var speedFactor = 1;
 
 var Enemy = function(text) {
 	this.text = text;
@@ -50,6 +51,7 @@ document.getElementById('start').onclick = function() {
 		type(e);
 	});
 	
+	document.getElementById('start').disabled = "true";
 	main();
 };
 
@@ -58,21 +60,27 @@ var main = function() {
 	var delta = now - then;
 
 	if (delta > 1000) {
-		var newWord = getWord(3, 9);
+		var newWord = getWord(3, 12);
 		enemies.push(new Enemy(newWord));
+		speedFactor += .02;
 		then = now;
 	}
 	update();
 	render();
 
-
+	// check for lose
+	for (var i = 0; i < enemies.length; i++) {
+		if (enemies[i].y > (800 - 24)) {
+			return 1;
+		}
+	}
 	requestAnimationFrame(main);
 };
 
 var update = function() {
 	// move enemies down
 	for (var i = 0; i < enemies.length; i++) {
-		enemies[i].y += 1;
+		enemies[i].y += speedFactor;
 	}
 
 	// calculate multiplier
@@ -114,6 +122,7 @@ var getWord = function(low, high) {
 var type = function(e) {
 	if (globActive) { // if in a word
 		if (e.key == globActive.remaining.charAt(0)) { // if hit
+			score += multiplier;
 			combo++;
 			if (globActive.remaining.length > 1) { // word still has more letters
 				globActive.remaining = globActive.remaining.slice(1);
@@ -131,6 +140,7 @@ var type = function(e) {
 			if (e.key == enemies[i].remaining.charAt(0)) {
 				enemies[i].remaining = enemies[i].remaining.slice(1);
 				globActive = enemies[i];
+				score += multiplier;
 				combo++;
 				return 1;
 			}
