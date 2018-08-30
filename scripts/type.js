@@ -4,11 +4,15 @@ canvas.id = 'globalCanvas';
 canvas.width = 400;
 canvas.height = 800;
 var ctx = canvas.getContext("2d");
+document.getElementById('canvas-holder').appendChild(canvas);
 
 // other global variables
-var then;
+var then, scoreSpan, multiplierSpan, comboSpan;
 var enemies = [];
 var globActive = undefined; // true if in the middle of typing a word
+var score = 0;
+var multiplier = 1;
+var combo = 0;
 
 var Enemy = function(text) {
 	this.text = text;
@@ -34,14 +38,18 @@ Enemy.prototype = {
 	}
 };
 
-window.onload = function() { 
+document.getElementById('start').onclick = function() { 
 	then = Date.now();
-	document.getElementById('canvas-holder').appendChild(canvas);
+
+	scoreSpan = document.getElementById("score-span");
+	multiplierSpan = document.getElementById("multiplier-span");
+	comboSpan = document.getElementById("combo-span");
 
 	document.addEventListener('keypress', function(e) {
 		e.preventDefault();
 		type(e);
 	});
+	
 	main();
 };
 
@@ -62,8 +70,22 @@ var main = function() {
 };
 
 var update = function() {
+	// move enemies down
 	for (var i = 0; i < enemies.length; i++) {
 		enemies[i].y += 1;
+	}
+
+	// calculate multiplier
+	if (combo > 64) {
+		multiplier = 5;
+	} else if (combo > 32) {
+		multiplier = 4;
+	} else if (combo > 16) {
+		multiplier = 3;
+	} else if (combo > 8) {
+		multiplier = 2;
+	} else {
+		multiplier = 1;
 	}
 };
 
@@ -72,10 +94,15 @@ var render = function() {
 	ctx.fillStyle = "#FFFFFF";
 	ctx.fillRect(0, 0, 400, 800);
 
+	// draw enemies
 	for (var i = 0; i < enemies.length; i++) {
 		enemies[i].draw();
 	};
 	
+	// show stats
+	scoreSpan.innerHTML = score;
+	comboSpan.innerHTML = combo;
+	multiplierSpan.innerHTML = multiplier;
 };
 
 var getWord = function(low, high) {
@@ -85,24 +112,29 @@ var getWord = function(low, high) {
 
 /* typing engine */
 var type = function(e) {
-	if (globActive) { 
-		if (e.key == globActive.remaining.charAt(0)) {
-			if (globActive.remaining.length > 1) {
+	if (globActive) { // if in a word
+		if (e.key == globActive.remaining.charAt(0)) { // if hit
+			combo++;
+			if (globActive.remaining.length > 1) { // word still has more letters
 				globActive.remaining = globActive.remaining.slice(1);
 			} else { // word finished
 				var index = enemies.indexOf(globActive);
 				enemies.splice(index, 1);
 				globActive = undefined;
 			}
+		} else { // miss
+			combo = 0;
 		}
-	} else {
+	} else { // not in a word
 		// search for the first applicable word
 		for (var i = 0; i < enemies.length; i++) {
 			if (e.key == enemies[i].remaining.charAt(0)) {
 				enemies[i].remaining = enemies[i].remaining.slice(1);
 				globActive = enemies[i];
+				combo++;
 				return 1;
 			}
 		}
+		combo = 0;
 	}
 };
