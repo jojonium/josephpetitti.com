@@ -15,6 +15,7 @@ var score = 0;
 var multiplier = 1;
 var combo = 0;
 var speedFactor = 1;
+var maxWordLen = 5;
 
 var Enemy = function(text) {
 	this.text = text;
@@ -81,9 +82,10 @@ var main = function() {
 	var delta = now - then;
 
 	if (delta > 1000) {
-		var newWord = getWord(3, 12);
+		var newWord = getWord(3, maxWordLen);
 		enemies.push(new Enemy(newWord));
 		speedFactor += .02;
+		maxWordLen += .08;
 		then = now;
 	}
 	update();
