@@ -14,6 +14,7 @@ var score = 0;
 var multiplier = 1;
 var combo = 0;
 var speedFactor = 1;
+var maxWordLen = 5;
 
 var Enemy = function(text) {
 	this.text = text;
@@ -60,19 +61,18 @@ var main = function() {
 	var delta = now - then;
 
 	if (delta > 1000) {
-		var newWord = getWord(3, 12);
+		var newWord = getWord(3, maxWordLen);
 		enemies.push(new Enemy(newWord));
 		speedFactor += .02;
+		maxWordLen += .08;
 		then = now;
 	}
 	update();
 	render();
 
 	// check for lose
-	for (var i = 0; i < enemies.length; i++) {
-		if (enemies[i].y > (800 - 24)) {
-			return 1;
-		}
+	if (enemies.length && enemies[0].y > (800 - 24)) {
+		return 1;
 	}
 	requestAnimationFrame(main);
 };
