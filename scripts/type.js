@@ -86,6 +86,7 @@ var main = function() {
 		enemies.push(new Enemy(newWord));
 		speedFactor += .02;
 		maxWordLen += .08;
+		if (maxWordLen > 12) maxWordLen = 12;
 		then = now;
 	}
 	update();
