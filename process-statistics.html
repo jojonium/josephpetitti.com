@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>Process Statistics</title>
+		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+	</head>
+	<body>
+	
+	<!-- Header -->
+		<header>
+			<h1>Process Statistics</h1>
+		</header>
+		
+	<!-- Nav -->
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+						<li><a href="hci-project6">HCI Project 6</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="film-stats">Film Stats</a></li>
+						<li><a href="dice">Dice</a></li>
+						<li><a href="ant">Langton's Ant</a></li>
+						<li><a href="rps">RPS Automaton</a></li>
+						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+						<li><a href="type">Typing Game</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		
+	<!-- Main -->
+		<main id="main">
+            <p class="dl-button"><a href="https://github.com/jojonium/CS3013-Operating-Systems/tree/master/project1" target="_blank"><span class="fab fa-github"></span> View on Github</a></p>
+            
+            <h2 id="about">About</h2>
+            
+            <p>This project was done for CS 3013: Operating Systems. The goal of this project is to introduce
+               students to the process manipulation facilities in Linux operating systems.</p>
+               
+            <p>For the project I wrote a C program called <span class="code">doit</span>, which takes another
+               command as an argument and executes that command. For example, executing:</p>
+            
+            <div class="code">./doit wc foo.txt</div>
+            
+            <p>would invoke the <span class="code">wc</span> ("word count") command with an argument of 
+               <span class="code">foo.txt</span>, which will output the number of lines, words, and bytes in
+               the file <span class="code">foo.txt</span>. After execution of the specified command has
+               completed, <span class="code">doit</span> displays statistics that show some of the system
+               resources the command used. In particular it shows:
+            
+            <ol>
+                <li>the amount of CPU time used (both user and system time) in milliseconds,</li>
+                <li>the elapsed "wall-clock" time for the command to execute in milliseconds,</li>
+                <li>the number of times the process was preempted involuntarily (e.g. the time slice expired,
+                    preemption by higher priority process),</li>
+                <li>the number of times the process gave up the CPU voluntarily (e.g. waiting for a resource),
+                    </li>
+                <li>the number of major page faults, which require disk I/O,</li>
+                <li>the number of minor page faults, which could be satisfied by reclaiming memory,</li>
+                <li>the maximum resident set size used, in kilobytes.</li>
+            </ol>
+            
+            <p>Every time <span class="code">doit</span> is called, it forks off a child process to run the
+               input command, with the parent process collecting statistics while it waits for the child to
+               finish execution. When the child exits the parent prints out the above statistics to the command
+               line.</p>
+            
+            <h2 it="shell-mode">Shell Mode</h2>
+            
+            <p><span class="code">doit</span> also has the ability to act as a shell. Calling
+               <span class="code">doit</span> with no command line arguments will engage shell mode, and prompt
+               the user with the default prompt string of <span class="code">==></span>. You can enter commands
+               into this shell just as you would with a regular Linux shell, with the exception that the 
+               <span class="code">doit</span> shell will also print the same usage statistics for every command
+               executed on it.</p>
+            
+            <p>Shell mode has four built-in commands. These are:</p>
+            
+            <ul>
+                <li><span class="code">exit</span> - causes the shell to terminate.</li>
+                <li><span class="code">cd dir</span> - changes the active directory to
+                    <span class="code">dir<span>.</li>
+                <li><span class="code">set prompt = newprompt</span> - changes the prompt to
+                    <span class="code">newprompt</span>.</li>
+                <li><span class="code">jobs</span> - lists all background tasks.</li>
+            </ul>
+            
+            <p>Each line of input may not contain more than 128 characters or more than 32 distinct arguments.
+               </p>
+            
+            <p>Shell mode also supports background tasks, indicated by putting an ampersand ('&') character at
+               the end of an input line. When a task runs in the background the shell does not wait for the
+               task to complete, but instead immediately prompts the user for a new command. Note that any
+               output from the background command will intermingle with output from the shell and other
+               commands.</p>
+               
+            <p>When the shell receives an <span class="code">exit</span> command, it waits for each running
+               background process to complete, then exits gracefully.</p>
+            
+		</main>
+		
+    <!-- Footer -->
+		<footer id="footer">
+			<section class="about">
+				<h2>About this website</h2>
+				<p>I created this website as a personal project in my free time to learn more about web design,
+				   CSS, HTML, and JavaScript.</p>
+				<p>Right now there isn't much on here, but I hope to include more in the future as I learn more
+				   about web design.</p>
+			</section>
+			<section class="contact">
+				<h2>Contact Information</h2>
+				<dl>
+					<dt>Address</dt>
+						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+					<dt>Phone</dt>
+						<dd>(518) 545-1984</dd>
+					<dt>Email</dt>
+						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+				</dl>
+				<ul class="icons">
+					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+				</ul>
+			</section>
+		</footer>
+
+		
+    </body>
+</html>
