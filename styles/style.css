@@ -165,13 +165,13 @@ canvas.seen-main {
     white-space: pre;
     background-color: #f3f3f3;
     border-radius: 6px;
-    font-size: 1em;
-	padding: 1px;
+    font-size: .875em;
+	padding: 3px;
 }
 
 div.code {
 	overflow: auto;
-	font-size: 1.375em;
+	font-size: 1.125em;
 	padding: 5px;
 	border-left: 6px solid blue;
 	border-top-left-radius: 0px;
