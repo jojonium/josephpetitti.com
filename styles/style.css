@@ -269,20 +269,23 @@ main img.full-width {
                 background-repeat: no-repeat;
                 background-size: cover;
                 margin: 0 auto 0 auto;
+                
             }
 			
-			div.p1 {background-image: url("../images/landscape-3.jpg");}
+			div.parallax.p1 {background-image: url("../images/landscape-1.jpg");}
 
-			div.p2 {background-image: url("../images/landscape-2.jpg");}
+			div.parallax.p2 {background-image: url("../images/landscape-2.jpg");}
 			
-			div.p3 {background-image: url("../images/landscape-6.jpg");}
+			div.parallax.p3 {background-image: url("../images/landscape-3.jpg");}
 			
-			div.p4 {background-image: url("../images/landscape-5.jpg");}
+			div.parallax.p4 {background-image: url("../images/landscape-4.jpg");}
 			
-			div.p5 {background-image: url("../images/landscape-1.jpg");} 
+			div.parallax.p5 {background-image: url("../images/landscape-5.jpg");}
+			
+			div.parallax.p6 {background-image: url("../images/landscape-6.jpg");}
 			
             div.parallax-header {
-                width: 30%;
+                max-width: 55%;
                 text-align: center;
                 color: #fff;
                 font-family: sans-serif;
@@ -290,7 +293,7 @@ main img.full-width {
 				position: relative;
 				top: 45%;
                 height: 10%;
-                width: 35%;
+                min-width: 35%;
                 font-size: 1.5em;
                 letter-spacing: 10px;
                 line-height: 48px;
