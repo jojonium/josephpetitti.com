@@ -5,24 +5,10 @@
 		<meta charset="utf-8">
 		<link href="styles/style.css" rel="stylesheet" type="text/css">
 		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
-		<script src="https://cdn.jsdelivr.net/npm/vega@3.2.1/build/vega.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3.1/build/vega-lite.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vega-embed@3.2.0/build/vega-embed.js"></script>
+		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+		<link rel="stylesheet" href="styles/brands.css" type="text/css">
 		<script src="scripts/seen.min.js"></script>
 		<script src="scripts/coffee-script.min.js"></script>
-		<style media="screen">
-			/* Add space between Vega-Embed links  */
-			.vega-actions a {
-			  margin-right: 5px;
-			  font-size: 10px;
-			}
-			
-			/* Center the Vega div */
-			#vis {
-				text-align: center;
-			}
-		</style>
 	</head>
 	
 	<body>
@@ -98,31 +84,13 @@
 			
 			<hr>
 			
-			<div id="vis" style="padding: 4em 3em .5em 0; float: left;"></div>
-			
-			<h2 id="vega-lite">Vega-Lite</h2>
-			
-			<p>However, it's not all HTML and CSS. I used some JavaScript to make the cool visualizations
-			   across the site. The graphs on the <a href="film-stats">Film Stats</a> page were made using
-			   <a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, a JSON schema for creating beautiful
-			   graphs quickly and easily.</p>
-			
-			<p>I learned Vega-Lite for a class (CS 3041, Human Computer Interactions), and realized I could 
-               apply what I learned to my own film data to make gather some interesting insights.</p>
-			   
-			<p>To the left is another Vega-Lite graph, this one showing the films I've watched each month by 
-               release date. I'm not sure why there are two different categories for "null" and "undefined,"
-               but I blame <a href="https://www.themoviedb.org">TMDb</a>.</p>
-			   
-			<hr>
-			
             <canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>
 
 			<h2 id="seen.js">seen.js</h2>
 			 
-			<p>The visualization on the <a href="index">front page</a> was created using <a href=
-			   "http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D scenes into an SVG 
-			   or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>,
+			<p>However, it's not all HTML and CSS. The visualization on the <a href="index">front page</a> was
+			   created using <a href="http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D
+			   scenes into an SVG or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>,
 			   a cleaner and simpler language that compiles into JavaScript.</p>
 			   
             <p>It was quite simple to just link the minified CoffeeScript and seen.js scripts and copy the 

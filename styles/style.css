@@ -100,7 +100,7 @@ html {
 
 body {
 	font-size: 16px;
-	font-family: sans-serif;
+	font-family: Lato, "noto sans", sans-serif;
 	max-width: 1200px;
 	margin: 0 auto;
 }
@@ -156,7 +156,7 @@ canvas.seen-main {
 }
 
 .code {
-    font-family: monospace;
+    font-family: "liberation mono", monospace;
     white-space: pre;
     background-color: #f3f3f3;
     border-radius: 6px;
@@ -167,7 +167,8 @@ canvas.seen-main {
 div.code {
 	overflow: auto;
 	font-size: 1.125em;
-	padding: 5px;
+	line-height: 1.125em;
+	padding: 10px 5px 5px 5px;
 	border-left: 6px solid blue;
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
@@ -291,8 +292,8 @@ main img.full-width {
             div.parallax-header {
                 text-align: center;
                 color: #fff;
-                font-family: sans-serif;
-                font-weight: lighter;
+                font-family: Lato, sans-serif;
+                font-weight: 400;
                 font-size: 1.5em;
                 letter-spacing: 10px;
                 line-height: 48px;
