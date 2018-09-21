@@ -279,22 +279,31 @@ main img.full-width {
 			
 			div.parallax.p6 {background-image: url("../images/landscape-6.jpg");}
 			
+			div.parallax-center {
+                position: relative;
+                top: 45%;
+                height: 10%;
+                width: 100%;
+                display: inline-flex;
+                flex-direction: row;
+            }
+			
             div.parallax-header {
-                max-width: 55%;
                 text-align: center;
                 color: #fff;
                 font-family: sans-serif;
                 font-weight: lighter;
-				position: relative;
-				top: 45%;
-                height: 10%;
-                min-width: 35%;
                 font-size: 1.5em;
                 letter-spacing: 10px;
                 line-height: 48px;
                 vertical-align: middle;
-                margin: 0 auto 0 auto;
+                margin: 0;
 				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                flex-grow: .5;
+            }
+            
+            div.parallax-spacer {
+                flex-grow: 1;
             }
             
             div.parallax-header a {
