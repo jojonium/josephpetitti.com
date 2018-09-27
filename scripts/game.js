@@ -1,3 +1,5 @@
+/* (C) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
+
 // CONSTANTS
 var HERO_SIZE = 10;
 var CANVAS_WIDTH = 500;

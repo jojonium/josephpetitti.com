@@ -1,4 +1,4 @@
-
+/* (C) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
 
 /*
 var myImage = document.querySelector('img');

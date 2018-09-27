@@ -1,3 +1,5 @@
+/* (C) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
+
 var canvas, ctx;
 
 (function() {

@@ -1,3 +1,5 @@
+/* (C) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
+
 class Point {
 	constructor(c, p) {
 		this.color = c;  // 0=white, 1=red, 2=green, 3=blue
