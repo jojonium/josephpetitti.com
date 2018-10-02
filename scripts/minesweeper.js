@@ -148,10 +148,17 @@ var clickCell = function(x, y, button) {
 
 	// right click
 	else if (button == 2 && !board[x][y].clicked) {
-		board[x][y].flag = 1;
-		colorSquare(x, y, "#0000AA");
-		markedMines++;
-		updateScore();
+		if (!board[x][y].flag) { // if no flag already there
+			board[x][y].flag = 1;
+			colorSquare(x, y, "#0000AA");
+			markedMines++;
+			updateScore();
+		} else {
+			board[x][y].flag = 0;
+			colorSquare(x, y, "#bbbbbb");
+			markedMines--;
+			updateScore();
+		}
 		if (markedMines == maxMines && checkWin()) {
 			revealBoard();
 			alert("You win!");
