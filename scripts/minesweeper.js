@@ -108,10 +108,17 @@ var clickCell = function(x, y, button) {
 	// left click
 	if (button == 0 && !board[x][y].clicked) {
 		board[x][y].clicked = 1;
+		if (board[x][y].flag) {
+			board[x][y].flag = 0;
+			markedMines--;
+			updateScore();
+		}
 		if (board[x][y].bomb) {
 			revealBoard();
 			alert("You lose!");
 			$('#canvas').off();
+			$('#play-again').removeAttr('disabled');
+			$('#play-again').show();
 		} else if (board[x][y].neighbors == 0) {
 			colorSquare(x, y, "#dddddd");
 			
@@ -125,7 +132,6 @@ var clickCell = function(x, y, button) {
 			}
 		} else if (board[x][y].neighbors > 0) {
 			colorSquare(x, y, "#dddddd");
-			ctx.fillStyle = "#0000FF";
 			printNum(x, y, board[x][y].neighbors);
 		}
 	}
@@ -137,8 +143,11 @@ var clickCell = function(x, y, button) {
 		markedMines++;
 		updateScore();
 		if (markedMines == maxMines && checkWin()) {
+			revealBoard();
 			alert("You win!");
 			$('#canvas').off();
+			$('#play-again').removeAttr('disabled');
+			$('#play-again').show();
 		}
 
 	}
@@ -235,16 +244,21 @@ var revealBoard = function() {
 	var yoff = 0;
 	for (var i = 0; i < ydim; i++) {
 		for (var j = 0; j < xdim; j++) {
-			ctx.fillStyle = "#dddddd";
+			var color = "#dddddd";
 			if (board[j][i].bomb) {
-				ctx.fillStyle = "#FF0000";
+				if (board[j][i].flag) {
+					color = "#0000FF"; // correct flags
+				} else {
+					color = "#FF0000"; // missed flags
+				}
 			}
-			ctx.fillRect(xoff, yoff, squareSize, squareSize);
-			ctx.rect(xoff, yoff, squareSize, squareSize);
-			ctx.stroke();
+			colorSquare(j, i, color);
+		
+			if (!board[j][i].bomb && board[j][i].flag) {
+				printNum(j, i, "X"); // false flags
+			}
 
 			if (board[j][i].neighbors > 0) {
-				ctx.fillStyle = "#0000FF";
 				printNum(j, i, board[j][i].neighbors)
 			}
 
@@ -256,7 +270,33 @@ var revealBoard = function() {
 }
 
 var printNum = function(x, y, num) {
-	ctx.fillStyle = "#0000FF";
+	switch (num) {
+		case 1:
+			ctx.fillStyle = "red";
+			break;
+		case 2:
+			ctx.fillStyle = "orange";
+			break;
+		case 3:
+			ctx.fillStyle = "green";
+			break;
+		case 4:
+			ctx.fillStyle = "blue";
+			break;
+		case 5: ctx.fillStyle = "purple";
+			break;
+		case 6:
+			ctx.fillStyle = "yellow";
+			break;
+		case 7:
+			ctx.fillStyle = "pink";
+			break;
+		case 8:
+			ctx.fillStyle = "black";
+			break;
+		default:
+			ctx.fillStyle = "blue";
+	}
 	ctx.fillText(num, (x + .5) * squareSize, (y + .5) * squareSize);
 }
 
