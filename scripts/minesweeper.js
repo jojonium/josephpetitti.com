@@ -43,12 +43,22 @@ $(document).ready(function() {
 
 	$('#custom').click(function() {
 		squareSize = 25;
-		if ($('#input-width').val() < 1) $('#input-width').val(20);
 		xdim = $('#input-width').val();
-		if ($('#input-height').val() < 1) $('#input-height').val(15);
 		ydim = $('#input-height').val();
-		if ($('#input-mines').val() < 1) $('#input-mines').val(xdim);
+		if (xdim < 1) {
+			xdim = 20;
+			$('#input-width').val(20);
+		}
+		if (ydim < 1) {
+			ydim = 15;
+			$('#input-height').val(15);
+		}
+
 		maxMines = $('#input-mines').val();
+		if (maxMines < 1 || maxMines > ydim * xdim) {
+			maxMines = Math.floor(Math.sqrt(xdim * ydim));
+			$('#input-mines').val(maxMines);
+		}
 		start();
 	});
 });
