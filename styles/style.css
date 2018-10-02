@@ -374,6 +374,12 @@ main button a {
     color: #FFF;
 }
 
+button:disabled, .disabled {
+	background-color: #d3d3d3;
+	color: #eeeeee;
+	border-color: #bbbbbb;
+}
+
 
 /*===================================*\
                  Figures 
