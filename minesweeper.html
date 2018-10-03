@@ -65,6 +65,14 @@
 			<center><button id="play-again" style="display: none" onclick="location.reload()">Play Again?</button></center>
 			
 			<p id="score"></p>
+			
+			<h2>Instructions</h2>
+			
+			<p>Mines have been hidden throughout the board, and it's your job to find out where they are! Left
+			   click on a square to explore it, but beware: if there's a mine in that square it'll explode. If
+			   there isn't, the square will show how many of its neighbors (including diagonals) contain mines.
+			   When you think you know where a mine is, right click that square to mark it. If you mark every
+			   mine square and explore every non-mine square, you win!</p>
 		</main>
 		
 		
@@ -77,9 +85,6 @@
 			#canvas-holder {
 				overflow: auto;
 				max-height: 800px;
-			}
-			
-			main {
 				min-height: 400px;
 			}
 		</style>
