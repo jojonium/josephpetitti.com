@@ -6,7 +6,7 @@ var cell = function(n, c, f, b) {
 }
 
 // global variables
-var xdim, ydim, board, canvas, ctx, squareSize, maxMines, markedMines;
+var xdim, ydim, board, canvas, ctx, squareSize, maxMines, markedMines, clCount;
 
 $(document).ready(function() {
 	$('#easy').click(function() {
@@ -118,20 +118,20 @@ var clickCell = function(x, y, button) {
 	// left click
 	if (button == 0 && !board[x][y].clicked) {
 		board[x][y].clicked = 1;
-		if (board[x][y].flag) {
+		clCount++;
+		if (board[x][y].flag) { // left clicked a flag, remove flag
 			board[x][y].flag = 0;
 			markedMines--;
 			updateScore();
 		}
-		if (board[x][y].bomb) {
+		if (board[x][y].bomb) { // left clicked a bomb, they lose
 			revealBoard();
 			alert("You lose!");
 			$('#canvas').off();
 			$('#play-again').removeAttr('disabled');
 			$('#play-again').show();
-		} else if (board[x][y].neighbors == 0) {
+		} else if (board[x][y].neighbors == 0) { // clicked 0-neighbor
 			colorSquare(x, y, "#dddddd");
-			
 			for (var i = -1; i <= 1; i++) {
 				for (var j = -1; j <= 1; j++) {
 					if (x+i >= 0 && x+i < xdim
@@ -140,9 +140,11 @@ var clickCell = function(x, y, button) {
 					}
 				}
 			}
-		} else if (board[x][y].neighbors > 0) {
+		} else if (board[x][y].neighbors > 0) { // clicked a n-neighbor
 			colorSquare(x, y, "#dddddd");
 			printNum(x, y, board[x][y].neighbors);
+			// check if they won
+			gameEnd();
 		}
 	}
 
@@ -159,19 +161,25 @@ var clickCell = function(x, y, button) {
 			markedMines--;
 			updateScore();
 		}
-		if (markedMines == maxMines && checkWin()) {
-			revealBoard();
-			alert("You win!");
-			$('#canvas').off();
-			$('#play-again').removeAttr('disabled');
-			$('#play-again').show();
-		}
 
+		// check to see if the player won
+		gameEnd();
 	}
+}
 
+var gameEnd = function() {
+	if (markedMines == maxMines && 
+		clCount == (xdim * ydim) - maxMines && checkWin()) {
+		revealBoard();
+		alert("You win!");
+		$('#canvas').off();
+		$('#play-again').removeAttr('disabled');
+		$('#play-again').show();
+	}
 }
 
 var checkWin = function() {
+	console.log("checkWin");
 	var win = true;
 	for (var i = 0; i < ydim; i++) {
 		for (var j = 0; j < xdim; j++) {
@@ -222,6 +230,7 @@ var initBoard = function() {
 		}
 	}
 	markedMines = 0;
+	clCount = 0;
 
 	// count neighbors
 	for (var i = 0; i < ydim; i++) {
