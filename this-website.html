@@ -27,7 +27,7 @@
 						<li><a href="this-website">This Website</a></li>
 						<li><a href="http-server-client">HTTP Server & Client</a></li>
 						<li><a href="process-statistics">Process Statistics</a></li>
-                        <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
 						<li><a href="hci-project5">HCI Project 5</a></li>
 						<li><a href="hci-project6">HCI Project 6</a></li>
 					</ul>
@@ -47,75 +47,85 @@
 		
 	
 	<!-- Main -->
-        <main>
-        
+		<main>
+		
 			<img src="images/refrigerator.jpg"
 				 style="padding: 4em .5em 0 .5em; float: right"
 				 title="Well you'd better go catch it!">
 
 			<h2 id="about">About</h2>
 			
-			<p>This website is written almost entirely in HTML and CSS. The point of this website is to help
-			   teach myself web design, and make a personal website that looks good enough to show off to 
-			   employers and friends. The design of the site has evolved over several months as I learned of new ways
-			   to do things and thought of more elements that would look cool. I also sometimes use the site to host
-			   pieces of projects for classes. To see the history of changes I've made to the site, check out my
-			   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a> page.</p>
+			<p>This website is written almost entirely in HTML and CSS. The point of
+			this website is to help teach myself web design, and make a personal
+			website that looks good enough to show off to employers and friends. The
+			design of the site has evolved over several months as I learned of new
+			ways to do things and thought of more elements that would look cool. I
+			also sometimes use the site to host pieces of projects for classes. To see
+			the history of changes I've made to the site, check out my <a
+			href="https://github.com/jojonium/josephpetitti.com">GitHub</a> page.</p>
 			   
-			<p>The HTML and CSS is written entirely from scratch by myself, without any website-building tool or
-			   service. The only program I use is the excellent <a href="https://notepad-plus-plus.org">Notepad++
-			   </a>. The site was originally hosted using <a href="https://pages.github.com">Github Pages</a>, 
-			   but in July 2018 I switched to self hosting it on a server I built and set up (see <a href="#self-hosting">below</a>).</p>
+			<p>The HTML and CSS is written entirely from scratch by myself, without
+			any website-building tool or service. The only program I use is the
+			excellent <a href="https://notepad-plus-plus.org">Notepad++ </a>. The site
+			was originally hosted using <a href="https://pages.github.com">Github
+			Pages</a>, but in July 2018 I switched to self hosting it on a server I
+			built and set up (see <a href="#self-hosting">below</a>).</p>
 
-			<p>Unfortunately, one of the issues I've run into is that I don't know what to actually write!
-			   It turns out that creating good-looking pages is a lot easier than coming up with interesting
-			   content to put on them.</p>
+			<p>Unfortunately, one of the issues I've run into is that I don't know
+			what to actually write!  It turns out that creating good-looking pages is
+			a lot easier than coming up with interesting content to put on them.</p>
 			
-			<p>Also, I have discovered that CSS is annoying. Now I'm pretty competent with it, but it took
-			   many frustrating hours to learn everything. For example, these parallax headers look really
-			   cool, but it took a <i>very</i> long time to figure out how to position everything properly.</p>
+			<p>Also, I have discovered that CSS is annoying. Now I'm pretty competent
+			with it, but it took many frustrating hours to learn everything. For
+			example, these parallax headers look really cool, but it took a
+			<i>very</i> long time to figure out how to position everything
+			properly.</p>
 			
 			<div class="parallax p3">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #e37682;">PARALLAX IS COOL</div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
+				<div class="parallax-center">
+					<div class="parallax-spacer"></div>
+					<div class="parallax-header" style="background-color: #e37682;">PARALLAX IS COOL</div>
+					<div class="parallax-spacer"></div>
+				</div>
+			</div>
 			
 			<hr>
 			
-            <canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>
+			<canvas width="500" height="500" id="seen-canvas" style="float: right;"></canvas>
 
 			<h2 id="seen.js">seen.js</h2>
 			 
-			<p>However, it's not all HTML and CSS. The visualization on the <a href="index">front page</a> was
-			   created using <a href="http://seenjs.io">seen.js</a>, a JavaScript framework for rendering 3D
-			   scenes into an SVG or HTML5 canvas. The scenes are written in <a href="http://coffeescript.org">CoffeeScript</a>,
-			   a cleaner and simpler language that compiles into JavaScript.</p>
+			<p>However, it's not all HTML and CSS. The visualization on the <a
+							href="index">front page</a> was created using <a
+							href="http://seenjs.io">seen.js</a>, a JavaScript framework for
+			rendering 3D scenes into an SVG or HTML5 canvas. The scenes are written in
+			<a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and simpler
+			language that compiles into JavaScript.</p>
 			   
-            <p>It was quite simple to just link the minified CoffeeScript and seen.js scripts and copy the 
-               examples from the seen.js website. However, almost all of their examples (like the sphere to the
-               right), were set to generate random colors for each surface. I wanted the colors of the main page
-			   visualization to match the color scheme of the site.</p>
-               
-            <p>I wanted the color of the surfaces to range smoothly between the two colors of the background,
-               #e37682 and #5f4d93. I couldn't find a built-in function to do this, so I wrote one myself.
-               First, seen.js applies colors to surfaces not with hex values, and not even with RGB, but with
-               HSL values. It uses three numbers between 0 and 1, representing the hue, saturation, and 
-               lightness of the color. Converted into hues, the two theme colors are 0.70833 and 0.980555. I
-               wrote this snippet of CoffeeScript code to loop over each surface in the shape and apply a
-               color:</p>
-            
-            <div class="code">hue = <span style="color: orange">0.70833</span>
-    <span style="color: blue">for</span> surface <span style="color: blue">in</span> shape.surfaces
-        hue += (<span style="color: orange">.272225</span>) * (<span style="color: orange">1</span> / shape.surfaces.length)
-        surface.fill seen.Colors.hsl(hue, <span style="color: orange">0.5</span>, <span style="color: orange">0.4<span>)</div>
+			<p>It was quite simple to just link the minified CoffeeScript and seen.js
+			scripts and copy the examples from the seen.js website. However, almost
+			all of their examples (like the sphere to the right), were set to generate
+			random colors for each surface. I wanted the colors of the main page
+			visualization to match the color scheme of the site.</p>
+			   
+			<p>I wanted the color of the surfaces to range smoothly between the two
+			colors of the background, #e37682 and #5f4d93. I couldn't find a built-in
+			function to do this, so I wrote one myself.  First, seen.js applies colors
+			to surfaces not with hex values, and not even with RGB, but with HSL
+			values. It uses three numbers between 0 and 1, representing the hue,
+			saturation, and lightness of the color. Converted into hues, the two theme
+			colors are 0.70833 and 0.980555. I wrote this snippet of CoffeeScript code
+			to loop over each surface in the shape and apply a color:</p>
+			
+<div class="code">hue = <span style="color: orange">0.70833</span>
+	<span style="color: blue">for</span> surface <span style="color: blue">in</span> shape.surfaces
+		hue += (<span style="color: orange">.272225</span>) * (<span style="color: orange">1</span> / shape.surfaces.length)
+		surface.fill seen.Colors.hsl(hue, <span style="color: orange">0.5</span>, <span style="color: orange">0.4</span>)</div>
 
-            <p>It applies the 0.70833 color to the
-               first surface, then increments the hue by the difference between the two colors (.272225)
-               multiplied by the inverse of the number of surfaces. This makes a smooth transition over the
-               surface of the entire shape.</p>
+			<p>It applies the 0.70833 color to the
+			   first surface, then increments the hue by the difference between the two colors (.272225)
+			   multiplied by the inverse of the number of surfaces. This makes a smooth transition over the
+			   surface of the entire shape.</p>
 			
 			<hr>
 			
@@ -212,61 +222,61 @@
 		
 		
 		<script>
-            var monthlyByYear = {
-                "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
-                "data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
-                "width": 300, "height": 300,
-                "mark": "area",
-                "encoding": {
-                "x": {
-                    "field": "Date",
-                    "type": "temporal",
-                    "timeUnit": "yearmonth"
-                },
-                "y": {
-                    "aggregate": "count",
-                    "field": "*",
-                    "type": "quantitative",
-                    "axis": "null"
-                },
-                "color": {
-                    "bin": {"maxbins": 10},
-                    "field": "Year",
-                    "type": "ordinal"
-                }
-                }
-            };
-            // Embed the visualization in the container with id `vis`
-            vegaEmbed("#vis", monthlyByYear);
+			var monthlyByYear = {
+				"$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+				"data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
+				"width": 300, "height": 300,
+				"mark": "area",
+				"encoding": {
+				"x": {
+					"field": "Date",
+					"type": "temporal",
+					"timeUnit": "yearmonth"
+				},
+				"y": {
+					"aggregate": "count",
+					"field": "*",
+					"type": "quantitative",
+					"axis": "null"
+				},
+				"color": {
+					"bin": {"maxbins": 10},
+					"field": "Year",
+					"type": "ordinal"
+				}
+				}
+			};
+			// Embed the visualization in the container with id `vis`
+			vegaEmbed("#vis", monthlyByYear);
 	  </script>
 	  <script type="text/coffeescript" id="code">
-        width  = 500
-        height = 500
+		width  = 500
+		height = 500
 
-        # Create sphere shape with randomly colored surfaces
-        shape = seen.Shapes.sphere(2).scale(height * 0.4)
-        seen.Colors.randomSurfaces2(shape)
+		# Create sphere shape with randomly colored surfaces
+		shape = seen.Shapes.sphere(2).scale(height * 0.4)
+		seen.Colors.randomSurfaces2(shape)
 
-        # Create scene and add shape to model
-        scene = new seen.Scene
-            model    : seen.Models.default().add(shape)
-            viewport : seen.Viewports.center(width, height)
+		# Create scene and add shape to model
+		scene = new seen.Scene
+			model	: seen.Models.default().add(shape)
+			viewport : seen.Viewports.center(width, height)
 
-        # Create render context from canvas
-        context = seen.Context('seen-canvas', scene).render()
+		# Create render context from canvas
+		context = seen.Context('seen-canvas', scene).render()
 
-        # Slowly rotate sphere
-        context.animate()
-            .onBefore((t, dt) -> shape.rotx(dt*1e-4).roty(0.7*dt*1e-4))
-            .start()
+		# Slowly rotate sphere
+		context.animate()
+			.onBefore((t, dt) -> shape.rotx(dt*1e-4).roty(0.7*dt*1e-4))
+			.start()
 
-        # Enable drag-to-rotate on the canvas
-        dragger = new seen.Drag('seen-canvas', {inertia : true})
-        dragger.on('drag.rotate', (e) ->
-            xform = seen.Quaternion.xyToTransform(e.offsetRelative...)
-            shape.transform(xform)
-            context.render()
-        )
+		# Enable drag-to-rotate on the canvas
+		dragger = new seen.Drag('seen-canvas', {inertia : true})
+		dragger.on('drag.rotate', (e) ->
+			xform = seen.Quaternion.xyToTransform(e.offsetRelative...)
+			shape.transform(xform)
+			context.render()
+		)
 	  </script>
 	</body>
 </html>
