@@ -7,7 +7,8 @@ var cell = function(d, f) {
 }
 
 // global variables
-var xdim, ydim, board, canvas, ctx, score, squareSize, head, snakeColor;
+var xdim, ydim, board, canvas, ctx, score, squareSize, head, snakeColor,
+	nextDirection, stopped, newColor;
 
 $(document).ready(function() {
 	$('#small').click(function() {
@@ -88,75 +89,86 @@ var start = function() {
 
 	// place snake
 	board[head.x][head.y].direction = 1;
+	nextDirection = 1;
 	snakeColor = 'red';
 
 	$(document).keydown(function(e) {
 		if (e.which == 87 || e.which == 38 || e.which == 75) {
 			// up
 			e.preventDefault();
-			board[head.x][head.y].direction = 1;
+			if (board[head.x][head.y] != 3) nextDirection = 1;
 		} else if (e.which == 68 || e.which == 39 | e.which == 76) {
 			// right
 			e.preventDefault();
-			board[head.x][head.y].direction = 2;
+			if (board[head.x][head.y] != 4) nextDirection = 2;
 		} else if (e.which == 83 || e.which == 40 | e.which == 74) {
 			// down
 			e.preventDefault();
-			board[head.x][head.y].direction = 3;
+			if (board[head.x][head.y] != 1) nextDirection = 3;
 		} else if (e.which == 65 || e.which == 37 | e.which == 72) {
 			//left
 			e.preventDefault();
-			board[head.x][head.y].direction = 4;
+			if (board[head.x][head.y] != 2) nextDirection = 4;
+		} else if(e.which == 32) {
+			e.preventDefault();
+			stopped = !stopped;
 		}
 	});
 
 	drawSnake(head.x, head.y);
 	placeFood();
 
+	var interval = 300;
 	setInterval(function() {
-		moveSnake();
-	}, 1000);
+		if (!stopped)
+			moveSnake();
+		if (interval > 100) interval-= 10;
+	}, interval);
 	
 }
 
 var moveSnake = function() {
 	var ate = board[head.x][head.y].food;
-	if (ate) board[head.x][head.y].food = false;
-	var oldDirection = board[head.x][head.y].direction;
+	if (ate) {
+		board[head.x][head.y].food = false;
+		snakeColor = newColor;
+	}
 	var newX = head.x;
 	var newY = head.y;
 	// draw the new head
-	switch (oldDirection) {
+	switch (nextDirection) {
 		case 1: head.y--; break;
 		case 2: head.x++; break;
 		case 3: head.y++; break;
 		case 4: head.x--; break;
 	}
-	board[head.x][head.y].direction = oldDirection;
-	console.log("head x: " + head.x + " y: " + head.y + " dir: " + oldDirection);
+	// see if they went out of bounds or died
+	if (head.x >= xdim || head.x < 0 || head.y >= ydim || head.y < 0 ||
+		board[head.x][head.y].direction) {
+		stopped = true;
+		alert("You lose!");
+		$('#play-again').removeAttr('disabled').show();
+		return;
+	}
+	board[head.x][head.y].direction = nextDirection;
 	drawSnake(head.x, head.y);
 
 	// travel down snake and remove tail
 	if (!ate) {
 		// travel backwards
-		for (var i = 0; i < score; i++) {
-			console.log("i: " + i + " newx: " + newX + " newy: " + newY);
-			switch (board[newX][newY]) {
+		for (var i = 1; i < score; i++) {
+			switch (board[newX][newY].direction) {
 				case 1: newY++; break;
 				case 2: newX--; break;
 				case 3: newY--; break;
 				case 4: newX++; break;
 			}
 		}
-		console.log("erase x: " + newX + " y: " + newY);
 		// now that we're at the old tail, erase it
 		ctx.fillStyle = '#bbbbbb';
 		ctx.fillRect(newX * squareSize, newY * squareSize,
 			squareSize, squareSize);
-		ctx.rect(newX * squareSize, newY * squareSize,
-			squareSize, squareSize);
-		ctx.stroke();
-		//board[newX][newY].direction = 0;
+		board[newX][newY].direction = 0;
 	} else {
 		score++;
 		updateScore();
@@ -167,11 +179,8 @@ var moveSnake = function() {
 		
 
 var drawSnake = function(x, y) {
-	console.log("drawsnake");
 	ctx.fillStyle = snakeColor;
-	ctx.fillRect(x * squareSize, y * squareSize, squareSize, squareSize);
-	ctx.rect(x * squareSize, y * squareSize, squareSize, squareSize);
-	ctx.stroke();
+	ctx.fillRect(x * squareSize + 1, y * squareSize + 1, squareSize - 2, squareSize - 2);
 }
 
 var initBoard = function() {
@@ -179,14 +188,11 @@ var initBoard = function() {
 	var yoff = 0;
 
 	// draw initial board
-	ctx.lineWidth = '2';
-	ctx.strokeStyle = '#3d3d3d';
 	ctx.fillStyle = '#bbbbbb';
 	
 	for (var i = 0; i < ydim; i++) {
 		for (var j = 0; j < xdim; j++) {
 			ctx.fillRect(xoff, yoff, squareSize, squareSize);
-			ctx.rect(xoff, yoff, squareSize, squareSize);
 			ctx.stroke();
 
 			xoff += squareSize;
@@ -197,7 +203,6 @@ var initBoard = function() {
 }
 
 var placeFood = function() {
-	console.log("place food");
 	do {
 		var foodx = Math.floor(Math.random() * xdim);
 		var foody = Math.floor(Math.random() * ydim);
@@ -208,9 +213,11 @@ var placeFood = function() {
 		foody * squareSize + squareSize / 2,
 		squareSize / 2 - 8, 0, 2 * Math.PI, false);
 	ctx.closePath();
-	ctx.fillStyle = 'green';
+	newColor = "rgb(" + Math.floor(Math.random() * 256) + ", " +
+		Math.floor(Math.random() * 256) + ", " +
+		Math.floor(Math.random() * 256) + ")";
+	ctx.fillStyle = newColor;
 	ctx.fill();
-	ctx.stroke();
 }
 
 var updateScore = function() {
