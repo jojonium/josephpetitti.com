@@ -96,21 +96,25 @@ var start = function() {
 		if (e.which == 87 || e.which == 38 || e.which == 75) {
 			// up
 			e.preventDefault();
+			stopped = false;
 			if (board[head.x][head.y].direction != 3)
 				nextDirection = 1;
 		} else if (e.which == 68 || e.which == 39 | e.which == 76) {
 			// right
 			e.preventDefault();
+			stopped = false;
 			if (board[head.x][head.y].direction != 4) 
 				nextDirection = 2;
 		} else if (e.which == 83 || e.which == 40 | e.which == 74) {
 			// down
 			e.preventDefault();
+			stopped = false;
 			if (board[head.x][head.y].direction != 1)
 				nextDirection = 3;
 		} else if (e.which == 65 || e.which == 37 | e.which == 72) {
 			//left
 			e.preventDefault();
+			stopped = false;
 			if (board[head.x][head.y].direction != 2) 
 				nextDirection = 4;
 		} else if(e.which == 32) {
@@ -122,6 +126,7 @@ var start = function() {
 	drawSnake(head.x, head.y);
 	placeFood();
 
+	stopped = true; // press a button to start
 	setInterval(function() {
 		if (!stopped)
 			moveSnake();
