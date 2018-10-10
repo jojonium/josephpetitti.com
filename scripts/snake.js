@@ -96,19 +96,23 @@ var start = function() {
 		if (e.which == 87 || e.which == 38 || e.which == 75) {
 			// up
 			e.preventDefault();
-			if (board[head.x][head.y] != 3) nextDirection = 1;
+			if (board[head.x][head.y].direction != 3)
+				nextDirection = 1;
 		} else if (e.which == 68 || e.which == 39 | e.which == 76) {
 			// right
 			e.preventDefault();
-			if (board[head.x][head.y] != 4) nextDirection = 2;
+			if (board[head.x][head.y].direction != 4) 
+				nextDirection = 2;
 		} else if (e.which == 83 || e.which == 40 | e.which == 74) {
 			// down
 			e.preventDefault();
-			if (board[head.x][head.y] != 1) nextDirection = 3;
+			if (board[head.x][head.y].direction != 1)
+				nextDirection = 3;
 		} else if (e.which == 65 || e.which == 37 | e.which == 72) {
 			//left
 			e.preventDefault();
-			if (board[head.x][head.y] != 2) nextDirection = 4;
+			if (board[head.x][head.y].direction != 2) 
+				nextDirection = 4;
 		} else if(e.which == 32) {
 			e.preventDefault();
 			stopped = !stopped;
@@ -118,12 +122,10 @@ var start = function() {
 	drawSnake(head.x, head.y);
 	placeFood();
 
-	var interval = 300;
 	setInterval(function() {
 		if (!stopped)
 			moveSnake();
-		if (interval > 100) interval-= 10;
-	}, interval);
+	}, 100);
 	
 }
 
@@ -146,7 +148,10 @@ var moveSnake = function() {
 	if (head.x >= xdim || head.x < 0 || head.y >= ydim || head.y < 0 ||
 		board[head.x][head.y].direction) {
 		stopped = true;
-		alert("You lose!");
+		if (score == xdim * ydim)
+			alert("Holy shit you won!");
+		else 
+			alert("You lose!");
 		$('#play-again').removeAttr('disabled').show();
 		return;
 	}
