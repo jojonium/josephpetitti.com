@@ -8,7 +8,7 @@ var cell = function(d, f) {
 
 // global variables
 var xdim, ydim, board, canvas, ctx, score, squareSize, head, snakeColor,
-	nextDirection, stopped, newColor;
+	stopped, newColor, done, moveQueue;
 
 $(document).ready(function() {
 	$('#small').click(function() {
@@ -74,6 +74,7 @@ var start = function() {
 	}
 
 	score = 1;
+	moveQueue = [];
 
 	// set up board
 	initBoard();
@@ -89,7 +90,7 @@ var start = function() {
 
 	// place snake
 	board[head.x][head.y].direction = 1;
-	nextDirection = 1;
+	moveQueue.unshift(1);
 	snakeColor = 'red';
 
 	$(document).keydown(function(e) {
@@ -98,29 +99,34 @@ var start = function() {
 			e.preventDefault();
 			stopped = false;
 			if (board[head.x][head.y].direction != 3)
-				nextDirection = 1;
-		} else if (e.which == 68 || e.which == 39 | e.which == 76) {
+				moveQueue.unshift(1);
+		} else if (e.which == 68 || e.which == 39 || e.which == 76) {
 			// right
 			e.preventDefault();
 			stopped = false;
 			if (board[head.x][head.y].direction != 4) 
-				nextDirection = 2;
-		} else if (e.which == 83 || e.which == 40 | e.which == 74) {
+				moveQueue.unshift(2);
+		} else if (e.which == 83 || e.which == 40 || e.which == 74) {
 			// down
 			e.preventDefault();
 			stopped = false;
 			if (board[head.x][head.y].direction != 1)
-				nextDirection = 3;
-		} else if (e.which == 65 || e.which == 37 | e.which == 72) {
+				moveQueue.unshift(3);
+		} else if (e.which == 65 || e.which == 37 || e.which == 72) {
 			//left
 			e.preventDefault();
 			stopped = false;
 			if (board[head.x][head.y].direction != 2) 
-				nextDirection = 4;
-		} else if(e.which == 32) {
+				moveQueue.unshift(4);
+		} else if (e.which == 32) {
 			e.preventDefault();
 			stopped = !stopped;
+		} else if (e.which == 82) {
+			e.preventDefault();
+			location.reload();
 		}
+		// delete last move if longer than 2
+		if (moveQueue.length > 2) moveQueue.pop();
 	});
 
 	drawHead(head.x, head.y, 1);
@@ -128,7 +134,7 @@ var start = function() {
 
 	stopped = true; // press a button to start
 	setInterval(function() {
-		if (!stopped)
+		if (!stopped && !done)
 			moveSnake();
 	}, 100);
 	
@@ -136,6 +142,12 @@ var start = function() {
 
 var moveSnake = function() {
 	var ate = board[head.x][head.y].food;
+	var nextDirection
+	if (moveQueue.length != 0) {
+		nextDirection = moveQueue.pop();
+	} else {
+		nextDirection = board[head.x][head.y].direction;
+	}
 	if (ate) {
 		board[head.x][head.y].food = false;
 		snakeColor = newColor;
@@ -152,7 +164,7 @@ var moveSnake = function() {
 	// see if they went out of bounds or died
 	if (head.x >= xdim || head.x < 0 || head.y >= ydim || head.y < 0 ||
 		board[head.x][head.y].direction) {
-		stopped = true;
+		done = true;
 		if (score == xdim * ydim)
 			alert("Holy shit you won!");
 		else 
@@ -176,7 +188,7 @@ var moveSnake = function() {
 			}
 		}
 		// now that we're at the old tail, erase it
-		ctx.fillStyle = '#bbbbbb';
+		ctx.fillStyle = '#d3d3d3';
 		ctx.fillRect(newX * squareSize, newY * squareSize,
 			squareSize, squareSize);
 		board[newX][newY].direction = 0;
@@ -255,20 +267,20 @@ var drawNeck = function(x, y, nextDir) {
 		console.log("HERE");
 		var fromX, fromY, centerX, centerY, radius1, radius2, startA,
 			endA, c1, c2
-		ctx.fillStyle = '#bbbbbb';
+		ctx.fillStyle = '#d3d3d3';
 		ctx.fillRect(x * squareSize, y * squareSize,
 			squareSize, squareSize);
 		ctx.fillStyle = snakeColor;
-		radius1 = squareSize - wid;
-		radius2 = squareSize - wid - wid
+		radius1 = squareSize - wid - 1;
+		radius2 = squareSize - wid - wid - 1;
 		if ((prevDir == 1 && nextDir == 2) ||
 			(prevDir == 4 && nextDir == 3)) {
 			console.log("ASDFASDF");
 			// bottom to right
 			fromX = x * squareSize + wid + 1;
 			fromY = y * squareSize + squareSize - 1;
-			centerX = (x + 1) * squareSize;
-			centerY = (y + 1) * squareSize;
+			centerX = (x + 1) * squareSize - 1;
+			centerY = (y + 1) * squareSize - 1;
 			startA = Math.PI;
 			endA = 1.5 * Math.PI;
 			c1 = false;
@@ -278,8 +290,8 @@ var drawNeck = function(x, y, nextDir) {
 			// bottom to left
 			fromX = x * squareSize + wid + 1;
 			fromY = y * squareSize + squareSize - 1;
-			centerX = x * squareSize;
-			centerY = (y + 1) * squareSize;
+			centerX = x * squareSize + 1;
+			centerY = (y + 1) * squareSize - 1;
 			startA = 0;
 			endA = 1.5 * Math.PI;
 			c1 = true;
@@ -289,8 +301,8 @@ var drawNeck = function(x, y, nextDir) {
 			// top to right
 			fromX = x * squareSize + wid + 1;
 			fromY = y * squareSize + 1;
-			centerX = (x + 1) * squareSize;
-			centerY = y * squareSize;
+			centerX = (x + 1) * squareSize - 1;
+			centerY = y * squareSize + 1;
 			startA = Math.PI;
 			endA = .5 * Math.PI;
 			c1 = true;
@@ -300,8 +312,8 @@ var drawNeck = function(x, y, nextDir) {
 			// top to left
 			fromX = x * squareSize + wid + 1;
 			fromY = y * squareSize + 1
-			centerX = x * squareSize;
-			centerY = y * squareSize;
+			centerX = x * squareSize + 1;
+			centerY = y * squareSize + 1;
 			startA = 0;
 			endA = .5 * Math.PI;
 			c1 = false;
@@ -316,52 +328,12 @@ var drawNeck = function(x, y, nextDir) {
 	}
 }
 
-
-var drawSnake = function(x, y) {
-	ctx.fillStyle = snakeColor;
-	
-	// find the direction of the previous unit
-	var newX = x;
-	var newY = y;
-	var prevDirection = 0;
-	var wid = squareSize * 0.4;
-	switch (board[x][y].direction) {
-		case 1: prevDirection = board[newX][--newY].direction; break;
-		case 2: prevDirection = board[++newX][newY].direction; break;
-		case 3: prevDirection = board[newX][++newY].direction; break;
-		case 4: prevDirection = board[--newX][newY].direction; break;
-	}
-	if (prevDirection == board[x][y].direction) {  // going straight
-		if (prevDirection == 1 || prevDirection == 3) {
-			ctx.fillRect(x * squareSize + wid, y * squareSize + 1,
-				squareSize - (wid * 2), squareSize - 2);
-		} else {
-			ctx.fillRect(x * squareSize + 1, y * squareSize + wid,
-				squareSize - 2, squareSize - (wid * 2));
-		}
-	} else { // turning
-		if ((prevDirection == 1 && board[x][y].direction == 2) ||
-			(prevDirection == 4 && board[x][y].direction == 3)) {
-			// bottom to right
-		} else if ((prevDirection == 1 && board[x][y].direction == 4) ||
-			(prevDirection == 2 && board[x][y].direction == 3)) {
-			// bottom to left
-		} else if ((prevDirection == 3 && board[x][y].direction == 2) ||
-			(prevDirection == 4 && board[x][y].direction == 1)) {
-			// top to right
-		} else if ((prevDirection == 3 && board[x][y].direction == 4) ||
-			prevDirection == 2 && board[x][y].direction == 1) {
-			// top to left
-		}
-	}
-}
-
 var initBoard = function() {
 	var xoff = 0;
 	var yoff = 0;
 
 	// draw initial board
-	ctx.fillStyle = '#bbbbbb';
+	ctx.fillStyle = '#d3d3d3';
 	
 	for (var i = 0; i < ydim; i++) {
 		for (var j = 0; j < xdim; j++) {
@@ -386,9 +358,9 @@ var placeFood = function() {
 		foody * squareSize + squareSize / 2,
 		squareSize / 2 - 8, 0, 2 * Math.PI, false);
 	ctx.closePath();
-	newColor = "rgb(" + Math.floor(Math.random() * 256) + ", " +
-		Math.floor(Math.random() * 256) + ", " +
-		Math.floor(Math.random() * 256) + ")";
+	newColor = "rgb(" + Math.floor(Math.random() * 200) + ", " +
+		Math.floor(Math.random() * 200) + ", " +
+		Math.floor(Math.random() * 200) + ")";
 	ctx.fillStyle = newColor;
 	ctx.fill();
 }
