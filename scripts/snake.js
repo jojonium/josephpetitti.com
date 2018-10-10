@@ -253,7 +253,6 @@ var drawNeck = function(x, y, nextDir) {
 	ctx.fillStyle = snakeColor;
 	var prevDir = board[x][y].direction;
 	var wid = squareSize / 3;
-	console.log("prevDir: " + prevDir + " nextDir: " + nextDir);
 
 	if (prevDir == nextDir) { // straight
 		if (prevDir == 1 || prevDir == 3) { // up or down
@@ -264,7 +263,6 @@ var drawNeck = function(x, y, nextDir) {
 				squareSize - 2, squareSize - (wid * 2));
 		}
 	} else { // turning
-		console.log("HERE");
 		var fromX, fromY, centerX, centerY, radius1, radius2, startA,
 			endA, c1, c2
 		ctx.fillStyle = '#d3d3d3';
@@ -275,7 +273,6 @@ var drawNeck = function(x, y, nextDir) {
 		radius2 = squareSize - wid - wid - 1;
 		if ((prevDir == 1 && nextDir == 2) ||
 			(prevDir == 4 && nextDir == 3)) {
-			console.log("ASDFASDF");
 			// bottom to right
 			fromX = x * squareSize + wid + 1;
 			fromY = y * squareSize + squareSize - 1;
