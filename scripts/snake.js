@@ -98,26 +98,22 @@ var start = function() {
 			// up
 			e.preventDefault();
 			stopped = false;
-			if (board[head.x][head.y].direction != 3)
-				moveQueue.unshift(1);
+			moveQueue.unshift(1);
 		} else if (e.which == 68 || e.which == 39 || e.which == 76) {
 			// right
 			e.preventDefault();
 			stopped = false;
-			if (board[head.x][head.y].direction != 4) 
-				moveQueue.unshift(2);
+			moveQueue.unshift(2);
 		} else if (e.which == 83 || e.which == 40 || e.which == 74) {
 			// down
 			e.preventDefault();
 			stopped = false;
-			if (board[head.x][head.y].direction != 1)
-				moveQueue.unshift(3);
+			moveQueue.unshift(3);
 		} else if (e.which == 65 || e.which == 37 || e.which == 72) {
 			//left
 			e.preventDefault();
 			stopped = false;
-			if (board[head.x][head.y].direction != 2) 
-				moveQueue.unshift(4);
+			moveQueue.unshift(4);
 		} else if (e.which == 32) {
 			e.preventDefault();
 			stopped = !stopped;
@@ -126,7 +122,7 @@ var start = function() {
 			location.reload();
 		}
 		// delete last move if longer than 2
-		if (moveQueue.length > 2) moveQueue.pop();
+		if (moveQueue.length > 3) moveQueue.pop();
 	});
 
 	drawHead(head.x, head.y, 1);
@@ -146,6 +142,10 @@ var moveSnake = function() {
 	if (moveQueue.length != 0) {
 		nextDirection = moveQueue.pop();
 	} else {
+		nextDirection = board[head.x][head.y].direction;
+	}
+	// make sure you can't turn 180 degrees
+	if (board[head.x][head.y].direction % 2 == nextDirection % 2) {
 		nextDirection = board[head.x][head.y].direction;
 	}
 	if (ate) {
@@ -201,11 +201,12 @@ var moveSnake = function() {
 }
 
 var drawHead = function(x, y, dir) {
-	ctx.fillStyle = snakeColor;
-	ctx.lineJoin = "round";
 	var wid = squareSize / 3;
 	var fromX, fromY, toX, toY, pX, pY;
 
+	ctx.fillStyle = '#d3d3d3';
+	ctx.fillRect(x * squareSize, y * squareSize, squareSize, squareSize);
+	ctx.fillStyle = snakeColor;
 	switch(dir) {
 		case 1:
 			fromX = x * squareSize + wid;
