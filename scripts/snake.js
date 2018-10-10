@@ -123,7 +123,7 @@ var start = function() {
 		}
 	});
 
-	drawSnake(head.x, head.y);
+	drawHead(head.x, head.y, 1);
 	placeFood();
 
 	stopped = true; // press a button to start
@@ -156,12 +156,13 @@ var moveSnake = function() {
 		if (score == xdim * ydim)
 			alert("Holy shit you won!");
 		else 
-			alert("You lose!");
+			$('#score').html($('#score').html() + " &mdash; You lose!");
 		$('#play-again').removeAttr('disabled').show();
 		return;
 	}
 	board[head.x][head.y].direction = nextDirection;
-	drawSnake(head.x, head.y);
+	drawHead(head.x, head.y, nextDirection);
+	drawNeck(newX, newY, nextDirection);
 
 	// travel down snake and remove tail
 	if (!ate) {
@@ -186,11 +187,173 @@ var moveSnake = function() {
 	}
 
 }
-		
+
+var drawHead = function(x, y, dir) {
+	ctx.fillStyle = snakeColor;
+	ctx.lineJoin = "round";
+	var wid = squareSize / 3;
+	var fromX, fromY, toX, toY, pX, pY;
+
+	switch(dir) {
+		case 1:
+			fromX = x * squareSize + wid;
+			fromY = y * squareSize + squareSize - 2;
+			toX = fromX + wid;
+			toY = fromY;
+			pX = x * squareSize + squareSize / 2;
+			pY = y * squareSize;
+			break;
+		case 2:
+			fromX = x * squareSize + 2;
+			fromY = y * squareSize + wid;
+			toX = fromX;
+			toY = fromY + wid;
+			pX = x * squareSize + squareSize;
+			pY = y * squareSize + squareSize / 2;
+			break;
+		case 3:
+			fromX = x * squareSize + wid;
+			fromY = y * squareSize + 2;
+			toX = fromX + wid;
+			toY = fromY;
+			pX = x * squareSize + squareSize / 2;
+			pY = y * squareSize + squareSize;
+			break;
+		case 4:
+			fromX = x * squareSize + squareSize - 2;
+			fromY = y * squareSize + wid;
+			toX = fromX;
+			toY = fromY + wid;
+			pX = x * squareSize;
+			pY = y * squareSize + squareSize / 2;
+			break;
+	}
+
+	ctx.beginPath();
+	ctx.moveTo(fromX, fromY);
+	ctx.lineTo(pX, pY);
+	ctx.lineTo(toX, toY);
+	ctx.closePath();
+	ctx.fill();
+}
+
+var drawNeck = function(x, y, nextDir) {
+	ctx.fillStyle = snakeColor;
+	var prevDir = board[x][y].direction;
+	var wid = squareSize / 3;
+	console.log("prevDir: " + prevDir + " nextDir: " + nextDir);
+
+	if (prevDir == nextDir) { // straight
+		if (prevDir == 1 || prevDir == 3) { // up or down
+			ctx.fillRect(x * squareSize + wid, y * squareSize + 1,
+				squareSize - (wid * 2), squareSize - 2);
+		} else { // left or right
+			ctx.fillRect(x * squareSize + 1, y * squareSize + wid,
+				squareSize - 2, squareSize - (wid * 2));
+		}
+	} else { // turning
+		console.log("HERE");
+		var fromX, fromY, centerX, centerY, radius1, radius2, startA,
+			endA, c1, c2
+		ctx.fillStyle = '#bbbbbb';
+		ctx.fillRect(x * squareSize, y * squareSize,
+			squareSize, squareSize);
+		ctx.fillStyle = snakeColor;
+		radius1 = squareSize - wid;
+		radius2 = squareSize - wid - wid
+		if ((prevDir == 1 && nextDir == 2) ||
+			(prevDir == 4 && nextDir == 3)) {
+			console.log("ASDFASDF");
+			// bottom to right
+			fromX = x * squareSize + wid + 1;
+			fromY = y * squareSize + squareSize - 1;
+			centerX = (x + 1) * squareSize;
+			centerY = (y + 1) * squareSize;
+			startA = Math.PI;
+			endA = 1.5 * Math.PI;
+			c1 = false;
+			c2 = true;
+		} else if ((prevDir == 1 && nextDir == 4) ||
+			(prevDir == 2 && nextDir == 3)) {
+			// bottom to left
+			fromX = x * squareSize + wid + 1;
+			fromY = y * squareSize + squareSize - 1;
+			centerX = x * squareSize;
+			centerY = (y + 1) * squareSize;
+			startA = 0;
+			endA = 1.5 * Math.PI;
+			c1 = true;
+			c2 = false;
+		} else if ((prevDir == 3 && nextDir == 2) ||
+			(prevDir == 4 && nextDir == 1)) {
+			// top to right
+			fromX = x * squareSize + wid + 1;
+			fromY = y * squareSize + 1;
+			centerX = (x + 1) * squareSize;
+			centerY = y * squareSize;
+			startA = Math.PI;
+			endA = .5 * Math.PI;
+			c1 = true;
+			c2 = false;
+		} else if ((prevDir == 3 && nextDir == 4) ||
+			prevDir == 2 && nextDir == 1) {
+			// top to left
+			fromX = x * squareSize + wid + 1;
+			fromY = y * squareSize + 1
+			centerX = x * squareSize;
+			centerY = y * squareSize;
+			startA = 0;
+			endA = .5 * Math.PI;
+			c1 = false;
+			c2 = true;
+		}
+		ctx.beginPath();
+		ctx.moveTo(fromX, fromY);
+		ctx.arc(centerX, centerY, radius1, startA, endA, c1);
+		ctx.arc(centerX, centerY, radius2, endA, startA, c2);
+		ctx.closePath();
+		ctx.fill();
+	}
+}
+
 
 var drawSnake = function(x, y) {
 	ctx.fillStyle = snakeColor;
-	ctx.fillRect(x * squareSize + 1, y * squareSize + 1, squareSize - 2, squareSize - 2);
+	
+	// find the direction of the previous unit
+	var newX = x;
+	var newY = y;
+	var prevDirection = 0;
+	var wid = squareSize * 0.4;
+	switch (board[x][y].direction) {
+		case 1: prevDirection = board[newX][--newY].direction; break;
+		case 2: prevDirection = board[++newX][newY].direction; break;
+		case 3: prevDirection = board[newX][++newY].direction; break;
+		case 4: prevDirection = board[--newX][newY].direction; break;
+	}
+	if (prevDirection == board[x][y].direction) {  // going straight
+		if (prevDirection == 1 || prevDirection == 3) {
+			ctx.fillRect(x * squareSize + wid, y * squareSize + 1,
+				squareSize - (wid * 2), squareSize - 2);
+		} else {
+			ctx.fillRect(x * squareSize + 1, y * squareSize + wid,
+				squareSize - 2, squareSize - (wid * 2));
+		}
+	} else { // turning
+		if ((prevDirection == 1 && board[x][y].direction == 2) ||
+			(prevDirection == 4 && board[x][y].direction == 3)) {
+			// bottom to right
+		} else if ((prevDirection == 1 && board[x][y].direction == 4) ||
+			(prevDirection == 2 && board[x][y].direction == 3)) {
+			// bottom to left
+		} else if ((prevDirection == 3 && board[x][y].direction == 2) ||
+			(prevDirection == 4 && board[x][y].direction == 1)) {
+			// top to right
+		} else if ((prevDirection == 3 && board[x][y].direction == 4) ||
+			prevDirection == 2 && board[x][y].direction == 1) {
+			// top to left
+		}
+	}
 }
 
 var initBoard = function() {
