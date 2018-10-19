@@ -1,7 +1,7 @@
 /* (c) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
 
 // global variables
-const squareSize = 40;
+const squareSize = 50;
 const xdim = 10;
 const ydim = 10;
 const bgColor = "#dddddd";
