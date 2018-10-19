@@ -66,6 +66,7 @@ var start = function() {
 
 	// handle clicking on the canvas
 	$('#canvas').mousedown(function(e) {
+		e.preventDefault();
 		var x, y;
 		if (e.pageX || e.pageY) {
 			x = e.pageX;
