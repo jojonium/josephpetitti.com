@@ -126,7 +126,7 @@ var clickCell = function(x, y) {
 			} else if (turn < 48) {
 				turnsToGo = 3;
 				numColors = 5;
-			} else if (turn < 64) {
+			} else {
 				turnsToGo = 3;
 				numColors = 6;
 			}
