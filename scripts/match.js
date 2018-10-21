@@ -292,7 +292,7 @@ var moveUp = function(newRow, offset, imageData) {
 			board[i][ydim - 1] = {c: newRow[i], s: 0, h: 0, d: 0};
 		}
 		ctx.stroke();
-		aninmating = false;
+		animating = false;
 	}
 };
 
