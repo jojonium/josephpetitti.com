@@ -114,16 +114,19 @@ var clickCell = function(x, y) {
 		turnsToGo--;
 		if (turnsToGo == 0) {
 			addFlag = true;
-			if (turn < 13) {
+			if (turn < 18) {
 				turnsToGo = 5;
 				numColors = 3;
-			} else if (turn < 23) {
+			} else if (turn < 27) {
 				turnsToGo = 4;
 				numColors = 4;
-			} else if (turn < 37) {
+			} else if (turn < 35) {
+				turnsToGo = 3;
+				numColors = 4;
+			} else if (turn < 41) {
 				turnsToGo = 3;
 				numColors = 5;
-			} else {
+			} else if (turn < 54) {
 				turnsToGo = 3;
 				numColors = 6;
 			}
