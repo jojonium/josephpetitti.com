@@ -119,14 +119,14 @@ var clickCell = function(x, y) {
 				numColors = 3;
 			} else if (turn < 27) {
 				turnsToGo = 4;
-				numColors = 4;
+				numColors = 3;
 			} else if (turn < 35) {
 				turnsToGo = 3;
 				numColors = 4;
-			} else if (turn < 41) {
+			} else if (turn < 48) {
 				turnsToGo = 3;
 				numColors = 5;
-			} else if (turn < 54) {
+			} else if (turn < 64) {
 				turnsToGo = 3;
 				numColors = 6;
 			}
