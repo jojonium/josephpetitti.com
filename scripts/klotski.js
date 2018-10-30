@@ -186,23 +186,20 @@ var GUI = function(board) {
 	this.canvas.height = SQUARE_SIZE * board.height + 8;
 	document.getElementById('canvas-holder').appendChild(this.canvas);
 	this.ctx = canvas.getContext('2d');
-	this.ctx.fillStyle = "#fffee7";
-	this.ctx.strokeStyle = "#222222";
-	this.ctx.lineWidth = 4;
-
 }
 
 GUI.prototype = {
 	drawBoard: function() {
 		this.ctx.fillStyle = "#dddddd";
 		this.ctx.fillRect(0, 0, canvas.width, canvas.height);
+		this.ctx.strokeStyle = "#e06d78";
 		this.ctx.lineWidth = 6;
 		this.ctx.beginPath();
 		this.ctx.moveTo(SQUARE_SIZE, canvas.height - 3);
 		this.ctx.lineTo(3 * SQUARE_SIZE, canvas.height - 3);
 		this.ctx.stroke();
 		this.ctx.lineWidth = 4;
-
+		this.ctx.strokeStyle = "#222222";
 		for (let i = 0; i < this.board.pieces.length; ++i) {
 			if (this.board.selectedPiece === this.board.pieces[i])
 				this.ctx.fillStyle = "#008cff";
