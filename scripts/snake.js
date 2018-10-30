@@ -96,28 +96,28 @@ var start = function() {
 	$(document).keydown(function(e) {
 		if (e.which == 87 || e.which == 38 || e.which == 75) {
 			// up
-			e.preventDefault();
+			if (e.which == 38) e.preventDefault();
 			stopped = false;
 			moveQueue.unshift(1);
 		} else if (e.which == 68 || e.which == 39 || e.which == 76) {
 			// right
-			e.preventDefault();
 			stopped = false;
 			moveQueue.unshift(2);
 		} else if (e.which == 83 || e.which == 40 || e.which == 74) {
 			// down
-			e.preventDefault();
+			if (e.which == 40) e.preventDefault();
 			stopped = false;
 			moveQueue.unshift(3);
 		} else if (e.which == 65 || e.which == 37 || e.which == 72) {
 			//left
-			e.preventDefault();
 			stopped = false;
 			moveQueue.unshift(4);
 		} else if (e.which == 32) {
+			// pause
 			e.preventDefault();
 			stopped = !stopped;
 		} else if (e.which == 82) {
+			// restart
 			e.preventDefault();
 			location.reload();
 		}
