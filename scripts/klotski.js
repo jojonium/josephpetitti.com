@@ -2,6 +2,7 @@
 
 // Global constants
 const SQUARE_SIZE = 100;
+var configuration = 1;
 
 var Piece = function(points) {
 		this.points = points;
@@ -278,30 +279,79 @@ var hitKey = function(e) { gooey.handleKey(e); };
 
 $(document).ready(function() { main(); });
 
+var config = function(num) {
+	configuration = num;
+	reset();
+}
+
+var genPieces = function(num) {
+	var out = new Array(10);
+
+	if (num == 1) {
+		out[0] = new Piece([new Point(1, 0), new Point(2, 0), 
+			new Point(1, 1), new Point(2, 1)]);
+		out[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
+		out[2] = new Piece([new Point(3, 0), new Point(3, 1)]);
+		out[3] = new Piece([new Point(0, 2), new Point(0, 3)]);
+		out[4] = new Piece([new Point(1, 2)]);
+		out[5] = new Piece([new Point(2, 2)]);
+		out[6] = new Piece([new Point(3, 2), new Point(3, 3)]);
+		out[7] = new Piece([new Point(1, 3)]);
+		out[8] = new Piece([new Point(2, 3)]);
+		out[9] = new Piece([new Point(1, 4), new Point(2, 4)]);
+	} else if (num == 2) {
+		out[0] = new Piece([new Point(1, 0), new Point(2, 0), 
+			new Point(1, 1), new Point(2, 1)]);
+		out[1] = new Piece([new Point(0, 0)]);
+		out[2] = new Piece([new Point(3, 0)]);
+		out[3] = new Piece([new Point(0, 1), new Point(0, 2)]);
+		out[4] = new Piece([new Point(3, 1), new Point(3, 2)]);
+		out[5] = new Piece([new Point(0, 3)]);
+		out[6] = new Piece([new Point(1, 2), new Point(1, 3)]);
+		out[7] = new Piece([new Point(3, 3)]);
+		out[8] = new Piece([new Point(0, 4), new Point(1, 4)]);
+		out[9] = new Piece([new Point(2, 4), new Point(3, 4)]);
+	} else if (num == 3) {
+		out[0] = new Piece([new Point(2, 1), new Point(2, 2),
+			new Point(3, 1), new Point(3, 2)]);
+		out[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
+		out[2] = new Piece([new Point(1, 0)]);
+		out[3] = new Piece([new Point(2, 0)]);
+		out[4] = new Piece([new Point(3, 0)]);
+		out[5] = new Piece([new Point(1, 1), new Point(1, 2)]);
+		out[6] = new Piece([new Point(0, 2), new Point(0, 3)]);
+		out[7] = new Piece([new Point(1, 3), new Point(2, 3)]);
+		out[8] = new Piece([new Point(3, 3)]);
+		out[9] = new Piece([new Point(2, 4), new Point(3, 4)]);
+	} else if (num == 4) {
+		out[0] = new Piece([new Point(1, 0), new Point(2, 0), 
+			new Point(1, 1), new Point(2, 1)]);
+		out[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
+		out[2] = new Piece([new Point(3, 0), new Point(3, 1)]);
+		out[3] = new Piece([new Point(0, 2), new Point(0, 3)]);
+		out[4] = new Piece([new Point(1, 2), new Point(2, 2)]);
+		out[5] = new Piece([new Point(3, 2), new Point(3, 3)]);
+		out[6] = new Piece([new Point(1, 3)]);
+		out[7] = new Piece([new Point(2, 3)]);
+		out[8] = new Piece([new Point(0, 4)]);
+		out[9] = new Piece([new Point(3, 4)]);
+	}
+
+	return out;
+};
+
 var gooey;
 
 var main = function() {
 	// make the board
-	var pieces = new Array(10);
-	pieces[0] = new Piece([new Point(1, 0), new Point(2, 0), 
-		new Point(1, 1), new Point(2, 1)]);
-	pieces[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
-	pieces[2] = new Piece([new Point(3, 0), new Point(3, 1)]);
-	pieces[3] = new Piece([new Point(0, 2), new Point(0, 3)]);
-	pieces[4] = new Piece([new Point(1, 2)]);
-	pieces[5] = new Piece([new Point(2, 2)]);
-	pieces[6] = new Piece([new Point(3, 2), new Point(3, 3)]);
-	pieces[7] = new Piece([new Point(1, 3)]);
-	pieces[8] = new Piece([new Point(2, 3)]);
-	pieces[9] = new Piece([new Point(1, 4), new Point(2, 4)]);
-	
+	var pieces = genPieces(configuration);
 
 	var b = new Board(pieces);
 
 	gooey = new GUI(b);
 
 	// handle clicking on the canvas
-	document.getElementById('canvas').addEventListener("mousedown", clickIt);
+	document.getElementById('canvas').addEventListener("mousedown",clickIt);
 	document.addEventListener("keydown", hitKey);
 	
 	gooey.updateMoves(0);
@@ -310,7 +360,8 @@ var main = function() {
 
 var reset = function() {
 	// remove the canvas
-	document.getElementById('canvas').removeEventListener("mousedown", clickIt);
+	document.getElementById('canvas')
+		.removeEventListener("mousedown", clickIt);
 	document.removeEventListener("keydown", hitKey);
 	var canv = document.getElementById("canvas");
 	canv.parentNode.removeChild(canv);

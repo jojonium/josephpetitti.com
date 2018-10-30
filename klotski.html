@@ -47,15 +47,18 @@
 			</ul>
 		</nav>
 
-
-
-
-
-		
 	<!-- Main -->
 		<main>
 			<div id="message"></div>
+			<div style="float: left; width: 150px">
 			<button id="reset" onclick="reset()">Reset Puzzle</button>
+			</div>
+			<div style="float: right">
+			<button id="config-1" class="config" onclick="config(1)">Configuration 1</button>
+			<button id="config-2" class="config" onclick="config(2)">Configuration 2</button>
+			<button id="config-3" class="config" onclick="config(3)">Configuration 3</button>
+			<button id="config-4" class="config" onclick="config(4)">Configuration 4</button>
+			</div>
 
 			<center id="canvas-holder"></center>
 
@@ -75,6 +78,12 @@
 		
 		
 		<style>
+			button.config {
+				width: 150px;
+				display: block;
+				margin: 5px;
+			}
+
 			#canvas {
 				border: 1px solid black;
 				margin: 15px;
@@ -84,11 +93,12 @@
 				overflow: auto;
 				max-height: 800px;
 				min-height: 400px;
+				margin-top: 20px;
 			}
 			
 			#message {
 				font-size: 80px;
-				color: #333333;
+				color: #ffff00;
 				font-weight: 700;
 				position: absolute;
 				width: 20%;
