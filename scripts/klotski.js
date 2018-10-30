@@ -301,7 +301,7 @@ var main = function() {
 	gooey = new GUI(b);
 
 	// handle clicking on the canvas
-	document.getElementById('canvas').addEventListener("click", clickIt);
+	document.getElementById('canvas').addEventListener("mousedown", clickIt);
 	document.addEventListener("keydown", hitKey);
 	
 	gooey.updateMoves(0);
@@ -310,7 +310,7 @@ var main = function() {
 
 var reset = function() {
 	// remove the canvas
-	document.getElementById('canvas').removeEventListener("click", clickIt);
+	document.getElementById('canvas').removeEventListener("mousedown", clickIt);
 	document.removeEventListener("keydown", hitKey);
 	var canv = document.getElementById("canvas");
 	canv.parentNode.removeChild(canv);
