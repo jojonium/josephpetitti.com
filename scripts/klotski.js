@@ -137,9 +137,11 @@ Board.prototype = {
 
 		// check win
 		if (this.selectedPiece === this.pieces[0] &&
-			this.selectedPiece.getTopLeft().x == {x: 1, y: 3} &&
+			this.selectedPiece.getTopLeft().x == 1 &&
+			this.selectedPiece.getTopLeft().y == 3 &&
 			direction == 2) {
 			$("#message").html("YOU WIN!");
+			$("#play-again").show();
 			return true;
 		}
 
@@ -188,10 +190,6 @@ var GUI = function(board) {
 	this.ctx.strokeStyle = "#222222";
 	this.ctx.lineWidth = 4;
 
-	// handle clicking on the canvas
-	canvas.addEventListener("click", function(e) { gooey.handleClick(e); });
-
-	document.addEventListener("keydown", function(e) {gooey.handleKey(e);});
 }
 
 GUI.prototype = {
@@ -268,6 +266,9 @@ GUI.prototype = {
 };
 
 
+var clickIt = function(e) { gooey.handleClick(e); };
+var hitKey = function(e) { gooey.handleKey(e); };
+
 
 $(document).ready(function() { main(); });
 
@@ -287,19 +288,33 @@ var main = function() {
 	pieces[7] = new Piece([new Point(1, 3)]);
 	pieces[8] = new Piece([new Point(2, 3)]);
 	pieces[9] = new Piece([new Point(1, 4), new Point(2, 4)]);
+	
 
-	b = new Board(pieces);
+	var b = new Board(pieces);
 
 	gooey = new GUI(b);
 
+	// handle clicking on the canvas
+	document.getElementById('canvas').addEventListener("click", clickIt);
+	document.addEventListener("keydown", hitKey);
+	
 	gooey.updateMoves(0);
 	gooey.drawBoard();
 };
 
 var reset = function() {
 	// remove the canvas
+	document.getElementById('canvas').removeEventListener("click", clickIt);
+	document.removeEventListener("keydown", hitKey);
 	var canv = document.getElementById("canvas");
 	canv.parentNode.removeChild(canv);
+
+
+	// hide the message
+	$("#message").html('');
+	
+	// hide the play again button
+	$("#play-again").hide();
 
 	// start over
 	main();
