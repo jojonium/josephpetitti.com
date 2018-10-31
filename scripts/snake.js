@@ -15,28 +15,28 @@ $(document).ready(function() {
 		xdim = 10;
 		ydim = 10;
 		squareSize = 50;
-		start();
+		reset();
 	});
 
 	$('#medium').click(function() {
 		xdim = 15;
 		ydim = 15;
 		squareSize = 40;
-		start();
+		reset();
 	});
 
 	$('#large').click(function() {
 		xdim = 20;
 		ydim = 20;
 		squareSize = 30;
-		start();
+		reset();
 	});
 
 	$('#huge').click(function() {
 		xdim = 30;
 		ydim = 30;
 		squareSize = 25;
-		start();
+		reset();
 	});
 
 	$('#custom').click(function() {
@@ -51,8 +51,14 @@ $(document).ready(function() {
 			ydim = 15;
 			$('#input-height').val(15);
 		}
-		start();
+		reset();
 	});
+	
+	stopped = true; // press a button to start
+	setInterval(function() {
+		if (!stopped && !done)
+			moveSnake();
+	}, 100);
 });
 
 var start = function() {
@@ -81,8 +87,8 @@ var start = function() {
 
 	updateScore();
 
-	$('button').prop('disabled', true);
-	$('input').prop('disabled', true);
+	//$('button').prop('disabled', true);
+	//$('input').prop('disabled', true);
 
 	head = {x:Math.floor(xdim / 2),
 		y:Math.floor(ydim / 2)};
@@ -93,48 +99,45 @@ var start = function() {
 	moveQueue.unshift(1);
 	snakeColor = 'red';
 
-	$(document).keydown(function(e) {
-		if (e.which == 87 || e.which == 38 || e.which == 75) {
-			// up
-			if (e.which == 38) e.preventDefault();
-			stopped = false;
-			moveQueue.unshift(1);
-		} else if (e.which == 68 || e.which == 39 || e.which == 76) {
-			// right
-			stopped = false;
-			moveQueue.unshift(2);
-		} else if (e.which == 83 || e.which == 40 || e.which == 74) {
-			// down
-			if (e.which == 40) e.preventDefault();
-			stopped = false;
-			moveQueue.unshift(3);
-		} else if (e.which == 65 || e.which == 37 || e.which == 72) {
-			//left
-			stopped = false;
-			moveQueue.unshift(4);
-		} else if (e.which == 32) {
-			// pause
-			e.preventDefault();
-			stopped = !stopped;
-		} else if (e.which == 82) {
-			// restart
-			e.preventDefault();
-			location.reload();
-		}
-		// delete last move if longer than 2
-		if (moveQueue.length > 3) moveQueue.pop();
-	});
 
 	drawHead(head.x, head.y, 1);
 	placeFood();
 
 	stopped = true; // press a button to start
-	setInterval(function() {
-		if (!stopped && !done)
-			moveSnake();
-	}, 100);
-	
+	done = false;
 }
+
+$(document).keydown(function(e) {
+	if (e.which == 87 || e.which == 38 || e.which == 75) {
+		// up
+		if (e.which == 38) e.preventDefault();
+		stopped = false;
+		moveQueue.unshift(1);
+	} else if (e.which == 68 || e.which == 39 || e.which == 76) {
+		// right
+		stopped = false;
+		moveQueue.unshift(2);
+	} else if (e.which == 83 || e.which == 40 || e.which == 74) {
+		// down
+		if (e.which == 40) e.preventDefault();
+		stopped = false;
+		moveQueue.unshift(3);
+	} else if (e.which == 65 || e.which == 37 || e.which == 72) {
+		//left
+		stopped = false;
+		moveQueue.unshift(4);
+	} else if (e.which == 32) {
+		// pause
+		e.preventDefault();
+		stopped = !stopped;
+	} else if (e.which == 82) {
+		// restart
+		e.preventDefault();
+		reset();
+	}
+	// delete last move if longer than 2
+	if (moveQueue.length > 3) moveQueue.pop();
+});
 
 var moveSnake = function() {
 	var ate = board[head.x][head.y].food;
@@ -168,8 +171,8 @@ var moveSnake = function() {
 		if (score == xdim * ydim)
 			alert("Holy shit you won!");
 		else 
-			$('#score').html($('#score').html() + " &mdash; You lose!");
-		$('#play-again').removeAttr('disabled').show();
+			$('#score').html($('#score').html()+" &mdash; You lose!");
+		$('#play-again').show();
 		return;
 	}
 	board[head.x][head.y].direction = nextDirection;
@@ -366,3 +369,13 @@ var placeFood = function() {
 var updateScore = function() {
 	$('#score').html("Score: " + score);
 }
+
+var reset = function() {
+	// remove the canvas
+	if (canvas != null)
+		canvas.parentNode.removeChild(canvas);
+
+	$("#play-again").hide();
+
+	start();
+};
