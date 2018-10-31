@@ -156,6 +156,8 @@ $(document).ready(function() {
 	b = new Board();
 	m = new MiniMax();
 	
+	computerSay("Who should go first?");
+
 	// initialize click functions
 	$('#me-first').show().click(function() {
 		$('#me-first').hide();
@@ -171,9 +173,6 @@ $(document).ready(function() {
 		computerSay("Okay, I'll go first");
 		go();
 	});
-	
-	
-	computerSay("Who should go first?");
 });
 
 function go() {
