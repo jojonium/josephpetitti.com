@@ -281,6 +281,8 @@ $(document).ready(function() { main(); });
 
 var config = function(num) {
 	configuration = num;
+	$(".config").css("background-color", "#a89cc8");
+	$("#config-" + num).css("background-color", "#34d058");
 	reset();
 }
 
