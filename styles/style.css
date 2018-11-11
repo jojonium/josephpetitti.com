@@ -175,16 +175,6 @@ div.code {
 	border-bottom-left-radius: 0px;
 }
 
-.circular-portrait {
-	float: right;
-	background: url("../images/portrait.jpg") center;
-	height: 200px;
-	width: 200px;
-	border-radius: 100px;
-	margin: 8em 1em 1em;
-	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-}
-
 main img.full-width {
 	width: 100%;
 }
