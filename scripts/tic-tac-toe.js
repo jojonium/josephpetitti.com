@@ -7,68 +7,79 @@ var MiniMax = function(){
 }
 
 MiniMax.prototype = {
-	//function called from game, bestmove will return the computer move
-	buildTree: function(board, player, cb){
+	// function called from game, bestmove will return the computer move
+	buildTree: function(board, player, cb) {
 		this.bestMove = 0;
 		var alpha = this.buildTree_r(board, player, 0);
 		cb(this.bestMove);
 	},
 
-	//recursive function to build minimax tree and rate the value of the board
-	buildTree_r: function(board, currPlayer, depth){
-		if(depth > this.MAX_DEPTH){
+	// recursive function to build minimax tree and rate the value of the
+	// board
+	buildTree_r: function(board, currPlayer, depth) {
+		if (depth > this.MAX_DEPTH) {
 			return 0;
 		}
 		
-		//Set the otherplayer for the next game state and to check for loss
+		// Set the otherplayer for the next game state and check for
+		// loss
 		var otherPlayer;
-		if(currPlayer == board.X){
+		if (currPlayer == board.X) {
 			otherPlayer = board.O;
 		} else {
 			otherPlayer = board.X;
 		}
 		
-		//check for a winner in the boardstate, if currPlayer we win, else we lose in this tree
+		// check for a winner in the boardstate
+		// if currPlayer then we win, otherwise we lose in this tree
 		var winner = board.getWinner();
-		if(winner == currPlayer){
+		if (winner == currPlayer) {
 			return 1;
 		} else if(winner == otherPlayer){
 			return -1;
 		}
 		
-		//check for a full board and therefore cats game in this true
-		if(board.isFull()){
+		// check for a full board, if so game is a draw
+		if (board.isFull()) {
 			return 0;
 		}
 		
-		//this is where we begin to rank moves, get an array of moves, set alpha low, instantiate parallel
-		//subAlpha list  to movelist to remember move ranks
+		// this is where we begin to rank moves
+		// get an array of moves, set alpha low, and instantiate 
+		// parallel subAlpha list to movelist so we can remember move
+		// ranks
 		var moveList = board.getMoves();
 		var alpha = -1;
 		var saList = [];
-		for(var i=0; i<moveList.length; i++){
+		for (var i = 0; i < moveList.length; i++) {
+ 			// copy current gamestate
+			var boardCopy = board.copy();
+			// make a move for each possible move in the gamestate
+			boardCopy.move(currPlayer, moveList[i]);
 
-			var boardCopy = board.copy(); //Copy current gamestate
-			boardCopy.move(currPlayer, moveList[i]); //Make a move for in the gamestate for each possible move
-			//console.log(boardCopy.gamestate);
-
-			var subalpha = -this.buildTree_r(boardCopy, otherPlayer, depth + 1); //pass new gamestate into recursion
-			if(alpha < subalpha){ //if move is better than alpha, increase alpha
+			//pass new gamestate into recursion
+			var subalpha = -this.buildTree_r(boardCopy, otherPlayer,
+				depth + 1); 
+			// if move is better than alpha, increase alpha
+			if (alpha < subalpha) { 
 				alpha = subalpha;
 			}
-			if(depth == 0){ //only if we are looking at REAL gamestate do we push an alpha to the list
+			// push subalpha to the list only if we're looking at a
+			// 'real' gamestate
+			if (depth == 0) { 
 				saList.push(subalpha);
 			}
 		}
 		
-		if(depth == 0){
+		if (depth == 0) {
 			var posMoves = [];
-			for(var n=0; n<saList.length; n++){
-				if(saList[n] == alpha){
+			for (var n = 0; n < saList.length; n++) {
+				if (saList[n] == alpha) {
 					posMoves.push(moveList[n]);
 				}
 			}
-			this.bestMove = this.rand(posMoves); //in future pick random..
+			// in future pick a random move
+			this.bestMove = this.rand(posMoves);
 		}
 		return alpha;
 	},
@@ -97,39 +108,39 @@ var Board = function(){
 }
 
 Board.prototype = {
-	copy: function(){
+	copy: function() {
 		var b = new Board();
-		for(var i = 0; i < 9; i++){
+		for (var i = 0; i < 9; i++) {
 			b.gamestate[i] = this.gamestate[i];
 		}
 		return b;
 	},
 	
-	move: function(player, pos){
+	move: function(player, pos) {
 		this.gamestate[pos] = player;
 	},
 	
-	getMoves: function(){
+	getMoves: function() {
 		var moves = [];
-		for(var i = 0; i < 9; i++){
-			if(this.gamestate[i] == this.empty){
+		for (var i = 0; i < 9; i++) {
+			if (this.gamestate[i] == this.empty) {
 				moves.push(i);
 			}
 		}
 		return moves;
 	},
 	
-	isFull: function(){
+	isFull: function() {
 		for(var i = 0; i < 9; i++){
-			if(this.gamestate[i] == this.empty){
+			if (this.gamestate[i] == this.empty) {
 				return false;
 			}
 		}
 		return true;
 	},
 	
-	getWinner: function(){
-		for(var i = 0; i < this.wins.length; i++){
+	getWinner: function() {
+		for (var i = 0; i < this.wins.length; i++) {
 			var a, b ,c;
 			a = this.gamestate[this.wins[i][0]];
 			b = this.gamestate[this.wins[i][1]];
@@ -143,11 +154,7 @@ Board.prototype = {
 	}
 }
 
-
-
-
-
-var b;
+var b; // global variable to store the board
 
 $(document).ready(function() {
 	$('.square').text('a');
@@ -158,34 +165,36 @@ $(document).ready(function() {
 	
 	computerSay("Who should go first?");
 
-	// initialize click functions
-	$('#me-first').show().click(function() {
-		$('#me-first').hide();
-		$('#computer-first').hide();
-		initializeBoard();
-		computerSay("Go ahead");
-	});
-	
-	$('#computer-first').show().click(function() {
-		$('#me-first').hide();
-		$('#computer-first').hide();
-		initializeBoard();
-		computerSay("Okay, I'll go first");
-		go();
-	});
+	// initialize click functions after brief delay so they're more obvious
+	setTimeout(function() {
+		$('#me-first').show().click(function() {
+			$('#me-first').hide();
+			$('#computer-first').hide();
+			initializeBoard();
+			computerSay("Go ahead");
+		});
+		
+		$('#computer-first').show().click(function() {
+			$('#me-first').hide();
+			$('#computer-first').hide();
+			initializeBoard();
+			computerSay("Okay, I'll go first");
+			go();
+		});
+	}, 100);
 });
 
-function go() {
+var go = function() {
 	setTimeout(computerMove, 1);
 }
 
-function computerMove() {
+var computerMove = function() {
 	m.buildTree(b, b.X, function(bestMove) {
 		realMove(b.X, bestMove);
 	});
 }
 
-function checkGameEnd(prevPlayer) {
+var checkGameEnd = function(prevPlayer) {
 	var winner = b.getWinner();
 	if (winner) {
 		if (winner == b.X) {
@@ -210,13 +219,13 @@ function checkGameEnd(prevPlayer) {
 	return 0;
 }
 
-function realMove(player, pos) {
+var realMove = function(player, pos) {
 	b.move(player, pos);
 	updateDisplay();
 	return checkGameEnd(player);
 }
 
-function updateDisplay() {
+var updateDisplay = function() {
 	for (var i = 0; i < 9; i++) {
 		if (b.gamestate[i] == b.X) {
 			$('.square').eq(i).text('X').css('color', 'black');
@@ -226,13 +235,13 @@ function updateDisplay() {
 	}
 }
 
-function computerSay(string) {
+var computerSay = function(string) {
 	$('#log').append("<p>" + string + "</p>");
 	$('#log').scrollTop($('#log')[0].scrollHeight);
 }
 
 // set all click functions and hide buttons
-function initializeBoard() {
+var initializeBoard = function() {
 	$('#top-left').click(function() {
 		squareClick(0);
 	});
@@ -272,11 +281,10 @@ function initializeBoard() {
 	$('#play-again').click(function() {
 		location.reload();
 	});
-	
 }
 
 // human player makes a move
-function squareClick(n) {
+var squareClick = function(n) {
 	if (b.gamestate[n]) {
 		computerSay("Hey, that's an illegal move!");
 	}
