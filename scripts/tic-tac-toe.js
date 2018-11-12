@@ -157,6 +157,13 @@ Board.prototype = {
 var b; // global variable to store the board
 
 $(document).ready(function() {
+	initializeButtons();
+	initializeBoard();
+	start();
+});
+
+var start = function() {
+	$('.square').css('color', 'white');
 	$('.square').text('a');
 	
 	// initialize board and minimax
@@ -167,32 +174,27 @@ $(document).ready(function() {
 
 	// initialize click functions after brief delay so they're more obvious
 	setTimeout(function() {
-		$('#me-first').show().click(function() {
-			$('#me-first').hide();
-			$('#computer-first').hide();
-			initializeBoard();
-			computerSay("Go ahead");
-		});
-		
-		$('#computer-first').show().click(function() {
-			$('#me-first').hide();
-			$('#computer-first').hide();
-			initializeBoard();
-			computerSay("Okay, I'll go first");
-			go();
-		});
+		showSelectionButtons();
 	}, 100);
-});
+};
+
+var showSelectionButtons = function() {
+	$('#me-first').show();
+	
+	$('#computer-first').show();
+};
+
 
 var go = function() {
+	// timeout is necessary to prevent concurrency issues
 	setTimeout(computerMove, 1);
-}
+};
 
 var computerMove = function() {
 	m.buildTree(b, b.X, function(bestMove) {
 		realMove(b.X, bestMove);
 	});
-}
+};
 
 var checkGameEnd = function(prevPlayer) {
 	var winner = b.getWinner();
@@ -217,13 +219,13 @@ var checkGameEnd = function(prevPlayer) {
 		computerSay("Your move");
 	}
 	return 0;
-}
+};
 
 var realMove = function(player, pos) {
 	b.move(player, pos);
 	updateDisplay();
 	return checkGameEnd(player);
-}
+};
 
 var updateDisplay = function() {
 	for (var i = 0; i < 9; i++) {
@@ -233,55 +235,73 @@ var updateDisplay = function() {
 			$('.square').eq(i).text('O').css('color', 'black');
 		}
 	}
-}
+};
 
 var computerSay = function(string) {
 	$('#log').append("<p>" + string + "</p>");
 	$('#log').scrollTop($('#log')[0].scrollHeight);
-}
+};
 
-// set all click functions and hide buttons
 var initializeBoard = function() {
-	$('#top-left').click(function() {
+	$('#sq_1').click(function() {
 		squareClick(0);
 	});
 	
-	$('#top').click(function() {
+	$('#sq_2').click(function() {
 		squareClick(1);
 	});
 	
-	$('#top-right').click(function() {
+	$('#sq_3').click(function() {
 		squareClick(2);
 	});
 	
-	$('#left').click(function() {
+	$('#sq_4').click(function() {
 		squareClick(3);
 	});
 	
-	$('#center').click(function() {
+	$('#sq_5').click(function() {
 		squareClick(4);
 	});
 	
-	$('#right').click(function() {
+	$('#sq_6').click(function() {
 		squareClick(5);
 	});
 	
-	$('#bottom-left').click(function() {
+	$('#sq_7').click(function() {
 		squareClick(6);
 	});
 	
-	$('#bottom').click(function() {
+	$('#sq_8').click(function() {
 		squareClick(7);
 	});
 	
-	$('#bottom-right').click(function() {
+	$('#sq_9').click(function() {
 		squareClick(8);
 	});
-	
-	$('#play-again').click(function() {
-		location.reload();
-	});
 }
+
+// set all click functions for buttons
+var initializeButtons = function() {
+	$('#me-first').click(function() {
+		$('#me-first').hide();
+		$('#computer-first').hide();
+		computerSay("Go ahead");
+	});
+	
+	$('#computer-first').click(function() {
+		$('#me-first').hide();
+		$('#computer-first').hide();
+		computerSay("Okay, I'll go first");
+		go();
+	});
+
+	$('#play-again').click(function() {
+		$('#log').html('');
+		$('#play-again').hide();
+		initializeBoard();
+		start();
+	});
+};
 
 // human player makes a move
 var squareClick = function(n) {
@@ -289,7 +309,8 @@ var squareClick = function(n) {
 		computerSay("Hey, that's an illegal move!");
 	}
 	else {
+		console.log("here");
 		var over = realMove(b.O, n);
 		if (!over) go();
 	}
-}
+};
