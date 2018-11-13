@@ -1,11 +1,14 @@
 /* (c) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
 
-// Global constants
+// Global constants and variables
 const SQUARE_SIZE = 100;
 var configuration = 1;
 
-var Piece = function(points) {
-		this.points = points;
+var Piece = function(x, y, w, h) {
+	this.x = x;
+	this.y = y;
+	this.w = w;
+	this.h = h;
 }
 
 Piece.prototype = {
@@ -16,17 +19,13 @@ Piece.prototype = {
 	 */
 	move: function(direction) {
 		if (direction == 0) { // up
-			for (let i = 0; i < this.points.length; ++i)
-				this.points[i].y--;
+			this.y--;
 		} else if (direction == 1) { // right
-			for (let i = 0; i < this.points.length; ++i)
-				this.points[i].x++;
+			this.x++;
 		} else if (direction == 2) { // down
-			for (let i = 0; i < this.points.length; ++i)
-				this.points[i].y++;
+			this.y++;
 		} else if (direction == 3) {
-			for (let i = 0; i < this.points.length; ++i)
-				this.points[i].x--;
+			this.x--;
 		}
 	},
 
@@ -34,47 +33,19 @@ Piece.prototype = {
 	 * returns true if this piece contains the given point, false otherwise
 	 */
 	containsPoint: function(x, y) {
-		for (let i = 0; i < this.points.length; ++i) {
-			if (this.points[i].x == x && this.points[i].y == y)
-				return true;
-		}
-		return false;
+		return (x >= this.x && y >= this.y && x < (this.x + this.w) &&
+			y < (this.y + this.h));
 	},
 
-	/*
-	 * returns the x and y coordinates of the top-left-most point in the
-	 * piece
+	/**
+	 * Finds the x and y coordinates of the top left point in the piece, as
+	 * well as the piece's width and height in a convenient array
+	 * @return an array with the left, top, width, and height values
 	 */
-	getTopLeft: function() {
-		var outx = this.points[0].x;
-		var outy = this.points[0].y;
-		for (let i = 1; i < this.points.length; ++i) {
-			if (this.points[i].x < outx)
-				outx = this.points[i].x;
-			if (this.points[i].y < outy)
-				outy = this.points[i].y;
-		}
-
-		return new Point(outx, outy);
-	},
-	
-	/*
-	 * returns the x and y coordinates of the bottom-right-most point in the
-	 * piece
-	 */
-	getBottomRight: function() {
-		var outx = this.points[0].x;
-		var outy = this.points[0].y;
-		for (let i = 1; i < this.points.length; ++i) {
-			if (this.points[i].x > outx)
-				outx = this.points[i].x;
-			if (this.points[i].y > outy)
-				outy = this.points[i].y;
-		}
-
-		return new Point(outx, outy);
+	getDims() {
+		return [this.x, this.y, this.w, this.h];
 	}
-}
+};
 
 /*
  * Constructor for a Board object. pieces[0] MUST be the piece that needs to be
@@ -82,7 +53,7 @@ Piece.prototype = {
  */
 var Board = function(pieces) {
 	this.pieces = pieces;
-	this.selectedPiece = null;
+	this.selected = null;
 	this.height = 5;
 	this.width = 4;
 	this.moves = 0;
@@ -91,21 +62,20 @@ var Board = function(pieces) {
 Board.prototype = {
 	/*
 	 * Sets the selected piece as the piece at the given x and y coordinates
+	 * @return true if a piece was selected, false otherwise
 	 */
 	selectPiece: function(x, y) {
 		for (let i = 0; i < this.pieces.length; ++i) {
-			for (let j = 0; j < this.pieces[i].points.length; ++j) {
-				if (this.pieces[i].points[j].x == x && 
-					this.pieces[i].points[j].y == y) {
-					this.selectedPiece = this.pieces[i];
-					return;
-				}
+			if (this.pieces[i].containsPoint(x, y)) {
+				this.selected = this.pieces[i];
+				return true;
 			}
 		}
 
 		// if we get here then they clicked on an empty square, so
 		// deselect the current piece
-		this.selectedPiece = null;
+		this.selected = null;
+		return false;
 	},
 
 	/*
@@ -113,11 +83,8 @@ Board.prototype = {
 	 */
 	isOccupied: function(x, y) {
 		for (let i = 0; i < this.pieces.length; ++i) {
-			for (j = 0; j < this.pieces[i].points.length; ++j) {
-				if (this.pieces[i].points[j].x == x && 
-					this.pieces[i].points[j].y == y) {
-					return true;
-				}
+			if (this.pieces[i].containsPoint(x, y)) {
+				return true;
 			}
 		}
 		return false;
@@ -130,44 +97,73 @@ Board.prototype = {
 	 * was successful, false otherwise
 	 */
 	movePiece: function(direction) {
-		var dx, dy, tempx, tempy;
+		var i;
 
-		if (this.selectedPiece == null) {
+		// if there's no selected piece we can't move, so just return
+		// false
+		if (this.selected == null) {
 			return false;
 		}
 
 		// check win
-		if (this.selectedPiece === this.pieces[0] &&
-			this.selectedPiece.getTopLeft().x == 1 &&
-			this.selectedPiece.getTopLeft().y == 3 &&
+		if (this.selected === this.pieces[0] &&
+			this.selected.x == 1 &&
+			this.selected.y == 3 &&
 			direction == 2) {
 			$("#message").html("YOU WIN!");
 			$("#play-again").show();
 			return true;
 		}
 
-		switch (direction) {
-			case 0: dx = 0; dy = -1; break;
-			case 1: dx = 1; dy = 0; break;
-			case 2: dx = 0; dy = 1; break;
-			case 3: dx = -1; dy = 0; break;
-		}
-
-		for (let i = 0; i < this.selectedPiece.points.length; ++i) {
-			tempx = this.selectedPiece.points[i].x + dx;
-			tempy = this.selectedPiece.points[i].y + dy;
-			if ((tempx >= this.width || tempx < 0 || 
-				tempy >= this.height || tempy < 0) || 
-				this.isOccupied(tempx, tempy) &&
-				!this.selectedPiece.containsPoint(tempx,tempy)){
-				// if the point we're trying to move to is
-				// occupied by another piece
+		// make sure the move is valid
+		if (direction == 0) {
+			// up
+			if (this.selected.y == 0) return false; // ceiling
+			for (i = this.selected.x;
+				i < this.selected.x + this.selected.w; ++i) {
+				if (this.isOccupied(i, this.selected.y - 1)) {
+					// there's a piece blocking this one
+					return false;
+				}
+			}
+		} else if (direction == 1) {
+			// right
+			if (this.selected.x + this.selected.w == this.width)
 				return false;
+			for (i = this.selected.y; 
+				i < this.selected.y + this.selected.h; ++i) {
+				if (this.isOccupied(
+					this.selected.x + this.selected.w, i)) {
+					// there's a piece blocking this one
+					return false;
+				}
+			}
+		} else if (direction == 2) {
+			// down
+			if (this.selected.y + this.selected.h == this.height)
+				return false;
+			for (i = this.selected.x;
+				i < this.selected.x + this.selected.w; ++i) {
+				if (this.isOccupied(i,
+					this.selected.y + this.selected.h)) {
+					// there's a piece blocking this one
+					return false;
+				}
+			}
+		} else if (direction == 3) {
+			// left
+			if (this.selected.x == 0) return false;
+			for (i = this.selected.y; 
+				i < this.selected.y + this.selected.h; ++i) {
+				if (this.isOccupied(this.selected.x - 1, i)) {
+					// there's a piece blocking this one
+					return false;
+				}
 			}
 		}
 
 		// if we've gotten here it means we're clear to move the piece
-		this.selectedPiece.move(direction);
+		this.selected.move(direction);
 		++this.moves;
 		gooey.updateMoves(this.moves);
 		return true;
@@ -187,6 +183,7 @@ var GUI = function(board) {
 	this.canvas.height = SQUARE_SIZE * board.height + 8;
 	document.getElementById('canvas-holder').appendChild(this.canvas);
 	this.ctx = canvas.getContext('2d');
+	this.prevPoint = null;
 }
 
 GUI.prototype = {
@@ -202,25 +199,27 @@ GUI.prototype = {
 		this.ctx.lineWidth = 4;
 		this.ctx.strokeStyle = "#222222";
 		for (let i = 0; i < this.board.pieces.length; ++i) {
-			if (this.board.selectedPiece === this.board.pieces[i])
+			if (this.board.selected === this.board.pieces[i])
 				this.ctx.fillStyle = "#008cff";
 			else if (i == 0)
 				this.ctx.fillStyle = "#e06d78";
 			else
 				this.ctx.fillStyle = "#fffee7";
-			var tl = this.board.pieces[i].getTopLeft();
-			var br = this.board.pieces[i].getBottomRight();
+			var tlx = this.board.pieces[i].getDims()[0];
+			var tly = this.board.pieces[i].getDims()[1];
+			var wid = this.board.pieces[i].getDims()[2];
+			var hei = this.board.pieces[i].getDims()[3];
 			this.ctx.beginPath();
-			this.ctx.rect(tl.x * SQUARE_SIZE + 5, 
-				tl.y * SQUARE_SIZE + 5,
-				(br.x - tl.x + 1) * SQUARE_SIZE - 10, 
-				(br.y - tl.y + 1) * SQUARE_SIZE - 10);
+			this.ctx.rect(tlx * SQUARE_SIZE + 5, 
+				tly * SQUARE_SIZE + 5,
+				wid * SQUARE_SIZE - 10, 
+				hei * SQUARE_SIZE - 10);
 		//	this.ctx.closePath();
 			this.ctx.stroke();
-			this.ctx.fillRect(tl.x * SQUARE_SIZE + 5,
-				tl.y*SQUARE_SIZE + 5,
-				(br.x - tl.x + 1) * SQUARE_SIZE - 10, 
-				(br.y - tl.y + 1) * SQUARE_SIZE - 10);
+			this.ctx.fillRect(tlx * SQUARE_SIZE + 5, 
+				tly * SQUARE_SIZE + 5,
+				wid * SQUARE_SIZE - 10, 
+				hei * SQUARE_SIZE - 10);
 		}
 	},
 
@@ -231,13 +230,15 @@ GUI.prototype = {
 			x = e.pageX;
 			y = e.pageY;
 		} else {
-			 x = e.clientX + document.body.scrollLeft +
+			x = e.clientX + document.body.scrollLeft +
 				document.documentElement.scrollLeft;
 			y = e.clientY + document.body.scrollTop +
 				document.documentElement.scrollTop;
 		}
 		x -= canvas.offsetLeft;
 		y -= canvas.offsetTop;
+		
+		this.prevPoint = new Point(x, y);
 
 		x = Math.floor(x / SQUARE_SIZE);
 		y = Math.floor(y / SQUARE_SIZE);
@@ -246,6 +247,47 @@ GUI.prototype = {
 
 		this.drawBoard();
 	},
+
+	handleUnclick: function(e) {
+		e.preventDefault();
+		var newX, newY;
+		if (e.pageX || e.pageY) {
+			newX = e.pageX;
+			newY = e.pageY;
+		} else {
+			newX = e.clientX + document.body.scrollLeft +
+				document.documentElement.scrollLeft;
+			newY = e.clientY + document.body.scrollTop +
+				document.documentElement.scrollTop;
+		}
+		newX -= canvas.offsetLeft;
+		newY -= canvas.offsetTop;
+
+		var dx = newX - this.prevPoint.x;
+		var dy = newY - this.prevPoint.y;
+		if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+			// mouse dragged
+			if (Math.abs(dx) > Math.abs(dy)) {
+				// horizontal drag
+				if (dx > 0) {
+					this.board.movePiece(1);
+				} else {
+					this.board.movePiece(3);
+				}
+			} else {
+				// vertical drag
+				if (dy > 0) {
+					this.board.movePiece(2);
+				} else {
+					this.board.movePiece(0);
+				}
+			}
+		}
+
+		this.drawBoard();
+	},
+		
+
 
 	handleKey: function(e) {
 		if (e.which == 87 || e.which == 38 || e.which == 75) {
@@ -274,6 +316,7 @@ GUI.prototype = {
 
 
 var clickIt = function(e) { gooey.handleClick(e); };
+var unclickIt = function(e) { gooey.handleUnclick(e); };
 var hitKey = function(e) { gooey.handleKey(e); };
 
 
@@ -290,53 +333,49 @@ var genPieces = function(num) {
 	var out = new Array(10);
 
 	if (num == 1) {
-		out[0] = new Piece([new Point(1, 0), new Point(2, 0), 
-			new Point(1, 1), new Point(2, 1)]);
-		out[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
-		out[2] = new Piece([new Point(3, 0), new Point(3, 1)]);
-		out[3] = new Piece([new Point(0, 2), new Point(0, 3)]);
-		out[4] = new Piece([new Point(1, 2)]);
-		out[5] = new Piece([new Point(2, 2)]);
-		out[6] = new Piece([new Point(3, 2), new Point(3, 3)]);
-		out[7] = new Piece([new Point(1, 3)]);
-		out[8] = new Piece([new Point(2, 3)]);
-		out[9] = new Piece([new Point(1, 4), new Point(2, 4)]);
+		out[0] = new Piece(1, 0, 2, 2);
+		out[1] = new Piece(0, 0, 1, 2);
+		out[2] = new Piece(3, 0, 1, 2);
+		out[3] = new Piece(0, 2, 1, 2);
+		out[4] = new Piece(1, 2, 1, 1);
+		out[5] = new Piece(2, 2, 1, 1);
+		out[6] = new Piece(3, 2, 1, 2);
+		out[7] = new Piece(1, 3, 1, 1);
+		out[8] = new Piece(2, 3, 1, 1);
+		out[9] = new Piece(1, 4, 2, 1);
 	} else if (num == 2) {
-		out[0] = new Piece([new Point(1, 0), new Point(2, 0), 
-			new Point(1, 1), new Point(2, 1)]);
-		out[1] = new Piece([new Point(0, 0)]);
-		out[2] = new Piece([new Point(3, 0)]);
-		out[3] = new Piece([new Point(0, 1), new Point(0, 2)]);
-		out[4] = new Piece([new Point(3, 1), new Point(3, 2)]);
-		out[5] = new Piece([new Point(0, 3)]);
-		out[6] = new Piece([new Point(1, 2), new Point(1, 3)]);
-		out[7] = new Piece([new Point(3, 3)]);
-		out[8] = new Piece([new Point(0, 4), new Point(1, 4)]);
-		out[9] = new Piece([new Point(2, 4), new Point(3, 4)]);
+		out[0] = new Piece(1, 0, 2, 2);
+		out[1] = new Piece(0, 0, 1, 1);
+		out[2] = new Piece(3, 0, 1, 1);
+		out[3] = new Piece(0, 1, 1, 2);
+		out[4] = new Piece(3, 1, 1, 2);
+		out[5] = new Piece(1, 2, 1, 2);
+		out[6] = new Piece(0, 3, 1, 1);
+		out[7] = new Piece(3, 3, 1, 1);
+		out[8] = new Piece(0, 4, 2, 1);
+		out[9] = new Piece(2, 4, 2, 1);
 	} else if (num == 3) {
-		out[0] = new Piece([new Point(2, 1), new Point(2, 2),
-			new Point(3, 1), new Point(3, 2)]);
-		out[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
-		out[2] = new Piece([new Point(1, 0)]);
-		out[3] = new Piece([new Point(2, 0)]);
-		out[4] = new Piece([new Point(3, 0)]);
-		out[5] = new Piece([new Point(1, 1), new Point(1, 2)]);
-		out[6] = new Piece([new Point(0, 2), new Point(0, 3)]);
-		out[7] = new Piece([new Point(1, 3), new Point(2, 3)]);
-		out[8] = new Piece([new Point(3, 3)]);
-		out[9] = new Piece([new Point(2, 4), new Point(3, 4)]);
+		out[0] = new Piece(2, 1, 2, 2);
+		out[1] = new Piece(0, 0, 1, 2);
+		out[2] = new Piece(1, 0, 1, 1);
+		out[3] = new Piece(2, 0, 1, 1);
+		out[4] = new Piece(3, 0, 1, 1);
+		out[5] = new Piece(1, 1, 1, 2);
+		out[6] = new Piece(0, 2, 1, 2);
+		out[7] = new Piece(1, 3, 2, 1);
+		out[8] = new Piece(3, 3, 1, 1);
+		out[9] = new Piece(2, 4, 2, 1);
 	} else if (num == 4) {
-		out[0] = new Piece([new Point(1, 0), new Point(2, 0), 
-			new Point(1, 1), new Point(2, 1)]);
-		out[1] = new Piece([new Point(0, 0), new Point(0, 1)]);
-		out[2] = new Piece([new Point(3, 0), new Point(3, 1)]);
-		out[3] = new Piece([new Point(0, 2), new Point(0, 3)]);
-		out[4] = new Piece([new Point(1, 2), new Point(2, 2)]);
-		out[5] = new Piece([new Point(3, 2), new Point(3, 3)]);
-		out[6] = new Piece([new Point(1, 3)]);
-		out[7] = new Piece([new Point(2, 3)]);
-		out[8] = new Piece([new Point(0, 4)]);
-		out[9] = new Piece([new Point(3, 4)]);
+		out[0] = new Piece(1, 0, 2, 2);
+		out[1] = new Piece(0, 0, 1, 2);
+		out[2] = new Piece(3, 0, 1, 2);
+		out[3] = new Piece(0, 2, 1, 2);
+		out[4] = new Piece(1, 2, 2, 1);
+		out[5] = new Piece(3, 2, 1, 2);
+		out[6] = new Piece(1, 3, 1, 1);
+		out[7] = new Piece(2, 3, 1, 1);
+		out[8] = new Piece(0, 4, 1, 1);
+		out[9] = new Piece(3, 4, 1, 1);
 	}
 
 	return out;
@@ -354,6 +393,7 @@ var main = function() {
 
 	// handle clicking on the canvas
 	document.getElementById('canvas').addEventListener("mousedown",clickIt);
+	document.getElementById('canvas').addEventListener("mouseup",unclickIt);
 	document.addEventListener("keydown", hitKey);
 	
 	gooey.updateMoves(0);
@@ -364,6 +404,8 @@ var reset = function() {
 	// remove the canvas
 	document.getElementById('canvas')
 		.removeEventListener("mousedown", clickIt);
+	document.getElementById('canvas')
+		.removeEventListener("mouseup", unclickIt);
 	document.removeEventListener("keydown", hitKey);
 	var canv = document.getElementById("canvas");
 	canv.parentNode.removeChild(canv);
