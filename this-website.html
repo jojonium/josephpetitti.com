@@ -179,7 +179,12 @@
 			   support for HTTPS. Also, if I ever want my website to be anything but static HTML pages and
 			   client-side scripts GitHub Pages won't work for my needs any more. Plus, I had an old computer
 			   lying around and a strong desire to learn about servers and networking.</p>
-			   
+			
+			<figure class="float right">
+				<img src="images/server.jpg" alt="My server setup">
+				<figcaption>My personal data center/fire hazard</figcaption>
+			</figure>
+			
 			<p>First, I installed <a href="https://www.ubuntu.com/server">Ubuntu Server</a> 18.04 LTS on the server,
 			   and set up an SSH connection from my main desktop. From there, I installed <a href="https://nginx.org">nginx</a>
 			   and used it to configure a reverse proxy so I could have multiple servers running on the same machine. I
@@ -192,6 +197,8 @@
 			<p>Having little GNU/Linux, and even less command line experience before hand, this process was slow, confusing, and
 			   frustrating at times. Almost everything that could go wrong while setting up nginx did go wrong. But it 
 			   definitely taught me a lot about networking, GNU/Linux, and web development.</p>
+			   
+
 
 		</main>
 		
@@ -226,36 +233,6 @@
 			</section>
 		</footer>
 		
-		
-		
-		<script>
-			var monthlyByYear = {
-				"$schema": "https://vega.github.io/schema/vega-lite/v2.json",
-				"data": {"url": "https://raw.githubusercontent.com/jojonium/jojonium.github.io/master/assets/film-data/diary.csv"},
-				"width": 300, "height": 300,
-				"mark": "area",
-				"encoding": {
-				"x": {
-					"field": "Date",
-					"type": "temporal",
-					"timeUnit": "yearmonth"
-				},
-				"y": {
-					"aggregate": "count",
-					"field": "*",
-					"type": "quantitative",
-					"axis": "null"
-				},
-				"color": {
-					"bin": {"maxbins": 10},
-					"field": "Year",
-					"type": "ordinal"
-				}
-				}
-			};
-			// Embed the visualization in the container with id `vis`
-			vegaEmbed("#vis", monthlyByYear);
-	  </script>
 	  <script type="text/coffeescript" id="code">
 		width  = 500
 		height = 500
