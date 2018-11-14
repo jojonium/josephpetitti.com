@@ -411,12 +411,9 @@ figcaption {
                  Statistics 
 \*===================================*/
 .statistics {
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
 		display: flex;
 		width: 100%;
-		margin: 0 0 3em 0;
+		margin: 0 0 0 0;
 		padding: 0;
 		list-style: none;
 		cursor: default;
@@ -428,13 +425,11 @@ figcaption {
 		}
 
 		.statistics li {
-			-moz-flex: 1;
-			-webkit-flex: 1;
-			-ms-flex: 1;
 			flex: 1;
 			padding: 1.5em;
 			color: #ffffff;
 			text-align: center;
+			line-height: 2em;
 		}
 
 			.statistics li.style1 {
@@ -461,9 +456,10 @@ figcaption {
 				display: block;
 				font-size: 2em;
 				line-height: 1.1;
-				color: inherit !important;
+				color: inherit;
 				font-weight: 300;
 				letter-spacing: -0.025em;
+				line-height: 1.4em;
 			}
 
 			.statistics li:first-child {
@@ -481,7 +477,7 @@ figcaption {
 			}
 
 				.statistics li .icon:before {
-					font-size: 2.75rem;
+					font-size: 3rem;
 					line-height: 1.3;
 				}
 				
