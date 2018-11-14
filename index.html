@@ -108,12 +108,12 @@
 					Commits in past year <strong>618</strong>
 				</li>
 				<li class="style3">
-					<span class="icon fas fa-film"></span></br>
-					Films watched <strong>1,036</strong>
+					<span class="icon fas fa-server"></span></br>
+					Server uptime hours <strong id="uptime-hours">677</strong>
 				</li>
 				<li class="style4">
-					<span class="icon fas fa-server"></span></br>
-					Servers running <strong>3</strong>
+					<span class="icon fas fa-film"></span></br>
+					Films watched <strong>1,036</strong>
 				</li>
 			</ul>
 
@@ -211,6 +211,12 @@
 						surf.dirty = true
 				)
 				.start()
+		</script>
+		
+		<script type="text/javascript">
+			// get time since Oct 16 in hours
+			var interval = Math.floor((new Date() - new Date(2018, 9, 16, 19, 30)) / 3600000);
+			document.getElementById("uptime-hours").innerHTML = interval;
 		</script>
 		
 		<style>
