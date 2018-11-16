@@ -155,10 +155,10 @@ Board.prototype = {
 }
 
 var b; // global variable to store the board
+var firstTime = false;; // so that we only set the listeners once
 
 $(document).ready(function() {
 	initializeButtons();
-	initializeBoard();
 	start();
 });
 
@@ -285,6 +285,7 @@ var initializeButtons = function() {
 	$('#me-first').click(function() {
 		$('#me-first').hide();
 		$('#computer-first').hide();
+		if (!firstTime) initializeBoard();
 		computerSay("Go ahead");
 	});
 	
@@ -292,13 +293,13 @@ var initializeButtons = function() {
 		$('#me-first').hide();
 		$('#computer-first').hide();
 		computerSay("Okay, I'll go first");
+		if (!firstTime) initializeBoard();
 		go();
 	});
 
 	$('#play-again').click(function() {
 		$('#log').html('');
 		$('#play-again').hide();
-		initializeBoard();
 		start();
 	});
 };
