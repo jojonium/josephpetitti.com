@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>CS 3733 Git</title>
+		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+		<link rel="stylesheet" href="styles/brands.css" type="text/css">
+		<link rel="stylesheet" href="styles/gitgraph.css" type="text/css">
+		<script src="scripts/jquery-3.3.1.min.js"></script>
+		<script src="scripts/gitgraph.js"></script>
+	</head>
+	<body>
+	
+	<!-- Header -->
+		<header>
+			<h1>CS 3733 Git</h1>
+		</header>
+		
+	<!-- Nav -->
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="http-server-client">HTTP Server & Client</a></li>
+						<li><a href="process-statistics">Process Statistics</a></li>
+                        <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+						<li><a href="hci-project6">HCI Project 6</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="dice">Dice</a></li>
+						<li><a href="ant">Langton's Ant</a></li>
+						<li><a href="rps">RPS Automaton</a></li>
+						<li><a href="type">Typing Game</a></li>
+						<li><a href="minesweeper">Minesweeper</a></li>
+						<li><a href="snake">Snake</a></li>
+						<li><a href="match">Color Match</a></li>
+						<li><a href="klotski">Klotski</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+	<!-- Main -->
+		<main>
+			<canvas id="gitGraph"></canvas>
+		</main>
+		
+		
+		<script src="scripts/cs-3733-git.js"></script>
+		
+	<!-- Footer -->
+		<footer id="footer">
+			<section class="about">
+				<h2>About this website</h2>
+				<p>I created this website as a personal project in my free time to learn more about web design,
+				   CSS, HTML, and JavaScript.</p>
+				<p>All portions of this website written by me are released under the <a href="license.txt">
+				   MIT License</a>. Other scripts and resources are licensed under free licenses by their
+				   respective owners. All source code is available on
+				   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.</p>
+			</section>
+			<section class="contact">
+				<h2>Contact Information</h2>
+				<dl>
+					<dt>Address</dt>
+						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+					<dt>Phone</dt>
+						<dd>(518) 545-1984</dd>
+					<dt>Email</dt>
+						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+				</dl>
+				<ul class="icons">
+					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+				</ul>
+			</section>
+		</footer>
+	</body>
+</html>
