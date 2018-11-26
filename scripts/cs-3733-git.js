@@ -40,3 +40,15 @@ gapi.commit({
 });
 
 gapi.merge(master, {sha1: "a479d1e"});
+
+var workspaceSetup = groupProject.branch("workspace-setup");
+
+workspaceSetup.commit({
+	sha1: "2ce9b72",
+	message: "Set up eclipse project"
+});
+
+workspaceSetup.merge(master, {
+	sha1: "448b08b",
+	author: "Justin Cheng"
+});
