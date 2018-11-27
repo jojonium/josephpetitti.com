@@ -52,3 +52,24 @@ workspaceSetup.merge(master, {
 	sha1: "448b08b",
 	author: "Justin Cheng"
 });
+
+var clientSide = groupProject.branch("client-side");
+
+clientSide.commit({
+	sha1: "b4081ae",
+	message: "added HTML stubs"
+});
+
+var featureAWS = groupProject.branch("feature-AWS");
+
+featureAWS.commit({
+	sha1: "2d35cf7",
+	message: "Stubbed LambdaFunctionHandler class",
+	author: "Matthew Hagan"
+});
+
+featureAWS.commit({
+	sha1: "18f2f66",
+	message: "LambdaFunctionHandler updated with basic functionality",
+	author: "Matthew Hagan"
+});

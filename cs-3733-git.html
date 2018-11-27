@@ -50,8 +50,17 @@
 
 	<!-- Main -->
 		<main>
-			<canvas id="gitGraph"></canvas>
+			<div id="canvas-holder">
+				<canvas id="gitGraph"></canvas>
+			</div>
 		</main>
+		
+		<style>
+			#canvas-holder {
+				overflow-x: scroll;
+				width: 100%;
+			}
+		</style>
 		
 		
 		<script src="scripts/cs-3733-git.js"></script>
