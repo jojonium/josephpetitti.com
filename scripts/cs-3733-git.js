@@ -73,3 +73,23 @@ featureAWS.commit({
 	message: "LambdaFunctionHandler updated with basic functionality",
 	author: "Matthew Hagan"
 });
+
+gapi.commit({
+	sha1: "c8855d4",
+	message: "updated based on grade"
+});
+
+gapi.merge(master, {
+	sha1: "a172002"
+});
+
+clientSide.commit({
+	sha1: "bde0272",
+	message: "added html index and weekly schedule page",
+	author: "Andrew Levy"
+});
+
+clientSide.commit({
+	sha1: "2aa5f62",
+	message: "created index page"
+});
