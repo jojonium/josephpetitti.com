@@ -93,3 +93,8 @@ clientSide.commit({
 	sha1: "2aa5f62",
 	message: "created index page"
 });
+
+clientSide.commit({
+	sha1: "2b1cf78",
+	message: "added error page"
+});
