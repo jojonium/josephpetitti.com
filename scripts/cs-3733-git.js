@@ -99,6 +99,11 @@ clientSide.commit({
 	message: "added error page"
 });
 
+clientSide.commit({
+	sha1: "f06eeaa",
+	message: "added weekly schedule view"
+});
+
 master.commit({
 	sha1: "fb13d1c",
 	message: "added license"
@@ -117,4 +122,3 @@ clientSide.merge(master, {
 	sha1: "89e5400",
 	author: "Andrew Levy"
 });
-
