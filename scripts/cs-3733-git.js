@@ -98,3 +98,8 @@ clientSide.commit({
 	sha1: "2b1cf78",
 	message: "added error page"
 });
+
+clientSide.commit({
+	sha1: "f06eeaa",
+	message: "added weekly schedule view"
+});
