@@ -98,3 +98,23 @@ clientSide.commit({
 	sha1: "2b1cf78",
 	message: "added error page"
 });
+
+master.commit({
+	sha1: "fb13d1c",
+	message: "added license"
+});
+
+master.merge(clientSide, {
+	sha1: "20d780d"
+});
+
+clientSide.commit({
+	sha1: "871ac75c",
+	message: "added styling and started JS"
+});
+
+clientSide.merge(master, {
+	sha1: "89e5400",
+	author: "Andrew Levy"
+});
+
