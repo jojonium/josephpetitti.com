@@ -122,3 +122,59 @@ clientSide.merge(master, {
 	sha1: "89e5400",
 	author: "Andrew Levy"
 });
+
+featureAWS.commit({
+	sha1: "5bfe1a4",
+	message: "Delete LambdaFunctionHandler.java",
+	author: "Matthew Hagan"
+});
+
+featureAWS.commit({
+	sha1: "0a3e518",
+	message: "Add files via upload",
+	author: "Matthew Hagan"
+});
+
+featureAWS.commit({
+	sha1: "3d5faa4",
+	message: "Add files via upload",
+	author: "Matthew Hagan"
+});
+
+featureAWS.commit({
+	sha1: "7588844",
+	message: "Delete ScheduleDAO.java",
+	author: "Matthew Hagan"
+});
+
+featureAWS.commit({
+	sha1: "d3f602c",
+	message: "Add files via upload",
+	author: "Matthew Hagan"
+});
+
+featureAWS.commit({
+	sha1: "283fb76",
+	message: "Update CreateScheduleHandler.java",
+	author: "Matthew Hagan"
+});
+
+featureAWS.merge(master, {
+	sha1: "f89ef48"
+});
+
+clientSide.commit({
+	sha1: "5b16b3f",
+	message: "added easter egg and more scripts"
+});
+
+clientSide.commit({
+	sha1: "661bc77",
+	message: "added more scripts and style"
+});
+
+featureAWS.commit({
+	sha1: "c18da56",
+	message: "staging",
+	author: "Matthew Hagan"
+});
