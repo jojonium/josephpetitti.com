@@ -178,3 +178,28 @@ featureAWS.commit({
 	message: "staging",
 	author: "Matthew Hagan"
 });
+
+featureAWS.commit({
+	sha1: "d0f8d62",
+	message: "Created Schedule, TimeSlot Entity and DAO classes",
+	author: "Justin Cheng"
+});
+
+clientSide.commit({
+	sha1: "47e6a8e",
+	message: "further styling"
+});
+
+
+featureAWS.merge(master, {
+	sha1: "0ef3683",
+	author: "Justin Cheng"
+});
+
+
+
+featureAWS.commit({
+	sha1: "6fc9510",
+	message: "Fixed TimeSlot & DAO, Schedule timeslots under construction",
+	author: "Justin Cheng"
+});
