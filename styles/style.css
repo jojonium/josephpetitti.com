@@ -134,6 +134,10 @@ h2 {
 }
 
 h3 {
+	font-size: 1.35em;
+}
+
+h3.resume {
 	padding: 4px;
 	text-align: center;
 	font-size: 1.375em;

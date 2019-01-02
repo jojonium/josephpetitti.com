@@ -196,6 +196,9 @@ featureAWS.merge(master, {
 	author: "Justin Cheng"
 });
 
+clientSide.merge(featureAWS, {
+	sha1: "86581c8",
+});
 
 
 featureAWS.commit({
