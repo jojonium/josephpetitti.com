@@ -277,7 +277,7 @@ main img.full-width {
 			
 			div.parallax-center {
                 position: relative;
-                top: 45%;
+                top: 225px;
                 height: 10%;
                 width: 100%;
                 display: inline-flex;
