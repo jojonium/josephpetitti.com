@@ -7,6 +7,7 @@
 		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
 		<link rel="stylesheet" href="styles/brands.css" type="text/css">
+		<link rel="stylesheet" href="styles/solid.min.css" type="text/css">
 	</head>
 	<body>
 	
@@ -25,7 +26,7 @@
 						<li><a href="this-website">This Website</a></li>
 						<li><a href="http-server-client">HTTP Server & Client</a></li>
 						<li><a href="process-statistics">Process Statistics</a></li>
-												<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
 						<li><a href="hci-project5">HCI Project 5</a></li>
 						<li><a href="hci-project6">HCI Project 6</a></li>
 					</ul>
@@ -47,14 +48,47 @@
 		
 	<!-- Main -->
 		<main id="main">
-			<p class="dl-button">
+			<div class="main-links-holder">
 				<a href="https://github.com/jojonium/CS-3733"	target="_blank">
-					<span class="fab fa-github"></span> View on GitHub
+					<button class="main-links" style="background-color: #5f4d93">
+						<span class="fab fa-github"></span> View on GitHub
+					</button>
 				</a>
-			</p>
+				
+				<a href="https://algol.petitti.org" target="_blank">
+					<button class="main-links" style="background-color: #2dca50">
+						<i class="fas fa-desktop"></i> View Website
+					</button>
+				</a>
+			</div>
+			
+			<style>
+				div.main-links-holder {
+					display: flex;
+					justify-content: center;
+				}
+				
+				button.main-links {
+					width: 300px;
+					padding: 10px;
+					box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+					margin: 20px 10px 0;
+				}
+				
+				button {
+					cursor: pointer;
+				}
+			</style>
 	
 			<h2 id="about">About</h2>
-							
+			
+			<figure class="float right">
+				<a href="images/algol-front-page.png">
+					<img src="images/algol-front-page.png" alt="The front page of our web app"></img>
+				</a>
+				<figcaption>The front page of the Algol meeting scheduler</figcaption>
+			</figure>
+
 			<p>
 			This project was done for CS 3733: Software Engineering. It was completed
 			by a <a href="#team">team</a> of four students in about three weeks. The
@@ -64,7 +98,7 @@
 			project's code can be seen at 
 			<a href="https://github.com/jojonium/CS-3733" target="_blank">GitHub</a>,
 			or it can be seen in action on 
-			<a href="https://cs3733.com" target="_blank">our website</a>.
+			<a href="https://algol.petitti.org" target="_blank">our website</a>.
 			</p>
 	
 			<p>
@@ -95,6 +129,13 @@
 			see the names of all participants and when their meetings are scheduled
 			for.
 			</p>
+			
+			<figure class="full-width">
+				<a href="images/algole-schedule-view.png">
+					<img src="images/algol-schedule-view.png" alt="Standard schedule view"></img>
+				</a>
+				<figcaption>The schedule view that participants can see</figcaption>
+			</figure>
 
 			<h3>Participants</h3>
 
@@ -105,9 +146,9 @@
 			same time. Participants are given a secret code when they request a
 			meeting.
 			</p>
-
+			
 			<h2 id="development">Development</h2>
-
+			
 			<p>
 			Our team had one week to plan out the project, including designing the API
 			using Swagger, drawing up UML diagrams, and writing out use cases. Then,
@@ -125,6 +166,13 @@
 			objects, then completes the requested action. They connect to the
 			database, a MySQL instance running in AWS RDS, through JDBC.
 			</p>
+			
+			<figure class="full-width" style="max-width: 70%; margin: 0 auto;">
+				<a href="images/algol-search-view.png">
+					<img src="images/algol-search-view.png" alt="The view for searching for open time slots"></img>
+				</a>
+				<figcaption>The view from which participants can search for open time slots</figcaption>
+			</figure>
 
 			<h3>Front-End</h3>
 
@@ -159,6 +207,9 @@
 					much of the AWS back-end, designed and deployed the API, and spent far
 					too many late nights debugging and testing.
 					</p>
+					
+					<a href="https://josephpetitti.com" target="_blank"><button>Website</button></a>
+					<a href="https://github.com/jojonium" target="_blank"><button>GitHub</button></a>
 				</div>
 
 				<div class="team-box">
@@ -172,6 +223,9 @@
 					lambda functions. He was our database expert and wrote all the SQL
 					statements and queries necessary for this web app to work.
 					</p>
+					
+					<a href="https://justcheng.com" target="_blank"><button>Website</button></a>
+					<a href="https://github.com/jchengz" target="_blank"><button>GitHub</button></a>
 				</div>
 			</div>
 
@@ -188,6 +242,9 @@
 					the Lambdas to ensure that the boundary and entity control flow ran
 					smoothly.
 					</p>
+					
+					<a href="http://doublediamond.io" target="_blank"><button>Website</button></a>
+					<a href="https://github.com/subbassbro" target="_blank"><button>GitHub</button></a>
 				</div>
 
 				<div class="team-box">
@@ -201,6 +258,9 @@
 					reports. He also wrote, tested, and debugged many of the lambda
 					functions. Also, Andy wanted everyone to know that he has hamsters.
 					</p>
+					
+					<a href="http://andrew-levy.com" target="_blank"><button>Website</button></a>
+					<a href="https://github.com/AndrewLevy395" target="_blank"><button>GitHub</button></a>
 				</div>
 			</div>
 <style>
