@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>Hong Kong Historic Conservation</title>
+		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+		<link rel="stylesheet" href="styles/brands.css" type="text/css">
+		<link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+
+	</head>
+	<body>
+	
+	<!-- Header -->
+		<header>
+			<h1>Hong Kong Historic Conservation</h1>
+		</header>
+		
+	<!-- Nav -->
+		<nav class="sticky">
+			<ul class="top-level sticky">
+				<li><a href="index">Home</a></li>
+				<li><a href="resume">Resume</a></li>
+				<li class="parent"><a href="projects">Projects</a>
+					<ul class="child">
+						<li><a href="this-website">This Website</a></li>
+						<li><a href="http-server-client">HTTP Server & Client</a></li>
+						<li><a href="process-statistics">Process Statistics</a></li>
+						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+						<li><a href="hci-project5">HCI Project 5</a></li>
+						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+					</ul>
+				</li>
+				<li class="parent"><a href="other">Other</a>
+					<ul class="child">
+						<li><a href="dice">Dice</a></li>
+						<li><a href="ant">Langton's Ant</a></li>
+						<li><a href="rps">RPS Automaton</a></li>
+						<li><a href="type">Typing Game</a></li>
+						<li><a href="minesweeper">Minesweeper</a></li>
+						<li><a href="snake">Snake</a></li>
+						<li><a href="match">Color Match</a></li>
+						<li><a href="klotski">Klotski</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+		
+	<!-- Main -->
+		<main id="main">
+			<div class="main-links-holder">
+				<a href="https://github.com/jojonium/SCTP-Website" target="_blank">
+					<button class="main-links" style="background-color: #5f4d93">
+						<span class="fab fa-github"></span> View on GitHub
+					</button>
+				</a>
+				
+				<a href="https://sctp.petitti.org" target="_blank">
+					<button class="main-links" style="background-color: #2dca50">
+						<i class="fas fa-desktop"></i> View Website
+					</button>
+				</a>
+			</div>
+			
+			<style>
+				div.main-links-holder {
+					display: flex;
+					justify-content: center;
+				}
+				
+				button.main-links {
+					width: 300px;
+					padding: 10px;
+					box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+					margin: 20px 10px 0;
+					cursor: pointer;
+					border: none;
+				}
+			</style>
+	
+			<h2 id="introduction">Introduction</h2>
+			
+			<figure class="float right">
+				<a href="images/hk-central.jpg">
+					<img src="images/th_hk-central.jpg" 
+					     alt="Hong Kong's Central District">
+					</img>
+				</a>
+				<figcaption>
+					Hong Kong's Central District
+				</figcaption>
+			</figure>
+
+			<p>
+				In January 2019 I went to Hong Kong with 22 other WPI students
+				to complete my Interactive Qualifying Project (IQP), a
+				requirement for graduation. In Hong Kong, I was part of a group
+				of four students working on a project for the Institute for
+				Sustainable Urbanisation, a non-profit public organization
+				founded in 2014 and funded by the Hong Kong government and
+				private donations. Their mission is to promote livable,
+				walkable, and sustainable cities worldwide.
+			</p>
+
+			<p>
+				Our project focused on conserving the historic heritage of an
+				area in the Central District, the business heart of Hong Kong.
+				This area, known as the Smart Cultural Triangle Precinct (SCTP),
+				contains a lot of unique history and culture, and redevelopment
+				projects threaten its old buildings. The SCTP project aims to
+				help preserve and promote these buildings as a cohesive cultural
+				precinct.
+			</p>
+
+			<p>
+				My team researched historic conservation in Hong Kong and other
+				cities around the world, conducted a survey of locals and
+				tourists in the area, and interviewed experts and stakeholders
+				to learn more about the challenges involved with SCTP project.
+				We conducted a walkability assessment of streets eleven streets
+				in the area to determine what needs to be done to make it more
+				accessible, and planned a walking tour to promote its history.
+				Finally, we created a fully-functional website as an
+				informational platform for the precinct.
+			</p>
+
+			<h2 id="background">Background</h2>
+
+			<p>
+				The SCTP is a triangular area in the Central District defined by
+				three major historic sites at its corners:
+			</p>
+
+			<ol>
+				<li>
+					<strong>Tai Kwun</strong>&mdash;Formerly the Central Police
+					Station and Victoria Prison, this complex includes some of
+					the oldest British colonial buildings in Hong Kong. In
+					recent years it has been rennovated and reopened in 2018 as
+					a center for arts and entertainment.
+				</li>
+
+				<li>
+					<strong>PMQ</strong>&mdash;This buildings stands on the
+					grounds of the first government primary and secondary school
+					in Hong Kong. The original building was destroyed in World
+					War II, and in 1951 the British constructed the Police
+					Married Quarters on the site. This building housed high
+					ranking married police officers and their families until
+					2000, when it as rennovated and turned into commercial
+					space.
+				</li>
+
+				<li>
+					<strong>Central Market</strong>&mdash;One of Hong Kong's
+					oldest markets, this site originally opened in 1842, and
+					provided locals with stalls for produce, seafood, daily
+					essentials, and services like tailoring and knife
+					sharpening. The the building that currently stands on the
+					site was built in 1939, and is currently under rennovation,
+					expected to open in 2024.
+				</li>
+			</ol>
+
+			<p>
+				The triangle is bisected by the Central&ndash;Mid-Levels
+				Escalator, the world's longest outdoor covered escalator system
+				and a popular tourist attraction.
+			</p>
+
+			<figure class="full-width" style="margin: 0;">
+				<div id="mapDiv" style="height: 500px; width: 100%; z-index: 0">
+					<i>There's supposed to be an interactive map here, but you
+					don't have JavaScript enabled :/</i>
+				</div>
+				<figcaption>Location of the SCTP</figcaption>
+			</figure>
+
+			<script>
+				if (L)
+					document.getElementById('mapDiv').innerHTML = '';
+				var mymap = L.map('mapDiv').setView([22.282, 114.154], 16);
+          		L.tileLayer(
+					'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+					{
+						attribution: `&copy;
+                  			<a href="https://www.openstreetmap.org/copyright">
+                      			OpenStreetMap
+                  			</a>`,
+						subdomains: ['a','b','c']
+					}
+				).addTo( mymap );
+
+				var triangle = L.polygon([
+					[22.28366, 114.15095],
+					[22.27983, 114.15420],
+					[22.28463, 114.15649]
+				]).addTo(mymap);
+			</script>
+
+		
+		</main>
+		
+	<!-- Footer -->
+		<footer id="footer">
+			<section class="about">
+				<h2>About this website</h2>
+
+				<p>
+					I created this website as a personal project in my free time
+					to learn more about web design, CSS, HTML, and JavaScript.
+				</p>
+
+				<p>
+					All portions of this website written by me are released
+					under the <a href="license.txt"> MIT License</a>. Other
+					scripts and resources are licensed under free licenses by
+					their respective owners. All source code is available on
+					<a href="https://github.com/jojonium/josephpetitti.com">
+						GitHub</a>.
+				</p>
+			</section>
+
+			<section class="contact">
+				<h2>Contact Information</h2>
+				<dl>
+					<dt>Address</dt>
+						<dd>
+							100 Institute Road, Mailbox #2658 Worcester, MA
+							01609
+						</dd>
+					<dt>Phone</dt>
+						<dd>(518) 545-1984</dd>
+					<dt>Email</dt>
+						<dd>
+							<a href="mailto:jppetitti@wpi.edu">
+								jppetitti@wpi.edu
+							</a>
+						</dd>
+				</dl>
+				<ul class="icons">
+					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+				</ul>
+			</section>
+		</footer>
+		</body>
+</html>

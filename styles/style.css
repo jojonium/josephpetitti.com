@@ -110,7 +110,7 @@ main {
 	margin: 0 auto;
 	background: #FFFFFF;
 	padding: 12px 40px 40px 40px;
-	border-radius: 0 0 4px 4px;
+	border-radius: 0 0 10px 10px;
 
 }
 
@@ -146,9 +146,9 @@ h3.resume {
 	border-bottom: 2px solid black;
 }
 
-main p, main li, main dt, main dd, .normal {
-	/*font-size: 1.375em;
-    line-height: 1.5em;*/
+main p {
+	text-align: justify;
+	text-justify: inter-word;
 }
 
 dd {
@@ -397,6 +397,7 @@ figure img {
 
 figure.float {
 	width: 40%;
+	margin: 10px 30px;
 }
 
 figure.right {
