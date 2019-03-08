@@ -257,7 +257,6 @@ main img.full-width {
 \*===================================*/
             div.parallax {
                 height: 500px;
-
                 background-attachment: fixed;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -266,17 +265,19 @@ main img.full-width {
                 
             }
 			
-			div.parallax.p1 {background-image: url("../images/landscape-1.jpg");}
+			div.parallax.p1 {background-image: url("../images/th_landscape-1.jpg");}
 
-			div.parallax.p2 {background-image: url("../images/landscape-2.jpg");}
+			div.parallax.p2 {background-image: url("../images/th_landscape-2.jpg");}
 			
-			div.parallax.p3 {background-image: url("../images/landscape-3.jpg");}
+			div.parallax.p3 {background-image: url("../images/th_landscape-3.jpg");}
 			
-			div.parallax.p4 {background-image: url("../images/landscape-4.jpg");}
+			div.parallax.p4 {background-image: url("../images/th_landscape-4.jpg");}
 			
-			div.parallax.p5 {background-image: url("../images/landscape-5.jpg");}
+			div.parallax.p5 {background-image: url("../images/th_landscape-5.jpg");}
 			
-			div.parallax.p6 {background-image: url("../images/landscape-6.jpg");}
+			div.parallax.p6 {background-image: url("../images/th_landscape-6.jpg");}
+
+			div.parallax.p7 {background-image: url("../images/th_jc-cube.jpg");}
 			
 			div.parallax-center {
                 position: relative;
