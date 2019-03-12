@@ -1,6 +1,7 @@
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage{latexsym}
+\usepackage[utf8]{inputenc}
 \usepackage[empty]{fullpage}
 \usepackage{titlesec}
 \usepackage{marvosym}
@@ -69,34 +70,31 @@
 %----------HEADING-----------------
 \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
   \textbf{\huge Joseph Petitti} & Email : \href{mailto:jppetitti@wpi.edu}{jppetitti@wpi.edu}\\
-	\href{https://josephpetitti.com/}{https://josephpetitti.com} / \href{https://github.com/jojonium}{https://github.com/jojonium} & Phone : (518)-545-1984 \\
+	\href{https://josephpetitti.com/}{https://josephpetitti.com} · \href{https://github.com/jojonium}{https://github.com/jojonium} & Phone : (518)-545-1984 \\
 \end{tabular*}
 
 
 %-----------OBJECTIVE-----------------
 \section{Objective}
-A summer 2019 internship in computer science
+A summer 2020 internship in computer science
 
 %-----------EDUCATION-----------------
 \section{Education}
   \resumeSubHeadingListStart
     \resumeSubheading
       {Worcester Polytechnic Institute}{Worcester, MA}
-      {Bachelor of Science in Computer Science;  GPA: 3.92/4.00}{Expec. May 2020}
-    \resumeSubheading
-      {Guilderland High School}{Guilderland, NY}
-      {High School Diploma;  GPA: 4.0/4.0 }{June 2016}
+      {Bachelor of Science in Computer Science;  GPA: 3.90/4.00}{Expec. May 2020}
   \resumeSubHeadingListEnd
 
 %--------PROGRAMMING SKILLS------------
 \section{Skills}
   \resumeSubHeadingListStart
     \item{
-      \textbf{Languages}{: C/C++, Javascript/JQuery, Java, PL/SQL, HTML/CSS, Python, Racket}
+      \textbf{Languages}{: JavaScript/TypeScript, C, Java, PL/SQL, HTML/CSS, Python, Racket}
       \hfill
     }
     \item{
-      \textbf{Technologies}{: GNU/Linux, Eclipse, IntelliJ IDEA, PyCharm, git, nginx, Microsoft Office}
+      \textbf{Technologies}{: GNU/Linux, Angular, Node.js, Eclipse, IntelliJ IDEA, PyCharm, git, nginx, Microsoft Office}
       \hfill
     }
   \resumeSubHeadingListEnd
@@ -108,32 +106,20 @@ A summer 2019 internship in computer science
 
     \resumeSubheading
       {Worcester Polytechnic Institute}{Worcester, MA}
-      {Teaching Assistant}{Aug 2018 - Present}
+      {Teaching Assistant}{Aug 2018--Present}
       \resumeItemListStart
-        \resumeItem{Labs}
-	  {Taught labs and graded assignments for undergraduate computer science classes at WPI.}
-        \resumeItem{Office Hours}
-	  {Held office hours weekly to assist students with programming concepts.}
+        \resumeItem{Labs, Office Hours}
+          {Taught labs, held office hours, and graded assignments for undergraduate CS classes}
       \resumeItemListEnd
 
     \resumeSubheading
       {MAPFRE Insurance}{Webster, MA}
-      {Application Services Intern}{May 2018 - Aug 2018}
+      {Application Services Intern}{May--Aug 2018}
       \resumeItemListStart
         \resumeItem{Enterprise Web Appraisal System}
-	  {The Enterprise Web Appraisal System (EWAS) is a web application developed by MAPFRE for internal use by their appraisers, automating the appraisal process and increasing efficiency and consistency. Worked on application services team to develop front-end and debug database.}
+          {The Enterprise Web Appraisal System (EWAS) is a web application developed by MAPFRE for internal use by their appraisers, automating the appraisal process and increasing efficiency and consistency. Worked on application services team to develop front-end and debug database}
         \resumeItem{EWAS Front-End}
-	  {Developed and deployed dynamic web application front-end in Javascript/JQuery.}
-      \resumeItemListEnd
-
-    \resumeSubheading
-      {Guilderland High School Help Desk}{Guilderland, NY}
-      {Student Technician}{Sep 2015 - Jun 2016}
-      \resumeItemListStart
-        \resumeItem{Information Technology Troubleshooting}
-	  {Worked with a team of other students to fix information technology issues within the school.}
-        \resumeItem{Hardware}
-	  {Common work included setting up Chromebooks, repairing computers, fixing printers, servicing projectors, configuring network connections, and maintaining hardware inventories.}
+          {Developed and deployed dynamic web application front-end in Javascript/JQuery}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
 
@@ -141,16 +127,25 @@ A summer 2019 internship in computer science
 %-----------PROJECTS-----------------
 \section{Projects}
   \resumeSubHeadingListStart
+    \resumeSubheading
+    {Cultural Preservation and Promotion}{Central, Hong Kong}
+    {Team Member}{Jan--Mar 2019}
+    \resumeItemListStart
+      \resumeItem{Web Design}{Worked with team of four to research and create prototype website for preservation and promotion of historically significant sites in Hong Kong}
+    \resumeItemListEnd
+      
+    \resumeSubheading
+    {Algol Meeting Scheduler}{WPI, Worcester, MA}
+    {Project Manager}{Nov--Dec 2018}
+    \resumeItemListStart
+      \resumeItem{Angular Front-end}
+        {Independently developed responsive front-end for schedule planning web app using Typescript, Angular, and Google's Material Design}
+      \resumeItem{AWS Back-end}
+        {Led team of four to develop Java API and MySQL database in Amazon Web Services}
+    \resumeItemListEnd
+      
     \resumeSubItem{Personal Website}
-      {Mar 2018 - Present. Independently designed and developed personal website to host projects. HTML, CSS, and Javascript on Ubuntu Server using nginx back-end.}
-    \resumeSubItem{Operating Systems}
-      {Aug - Oct 2018. Ubuntu Linux, C.}
-    \resumeSubItem{Introduction to Machine Organization and Assembly Language}
-      {Mar - Apr 2018. C, x86.}
-    \resumeSubItem{Database Systems I}
-      {Jan - Mar 2018. PL/SQL.}
-    \resumeSubItem{Group Effort: Study Group Matching Service}
-      {Aug - Dec 2016. Worked in group of four to research and create a web application to assign calculus students into study groups based on ability and availability.}
+      {Mar 2018--Present. Independently designed and developed personal website to host projects. HTML, CSS, and Javascript on Ubuntu Server using nginx back-end}
   \resumeSubHeadingListEnd
 
 
@@ -158,22 +153,26 @@ A summer 2019 internship in computer science
 \section{Work History}
   \resumeSubHeadingListStart
     \resumeSubItem{Wakpominee Scout Camp}
-      {\textbf{Camp Counselor/Area Director}, Fort Ann, NY, Summer 2015 - 2017}
+      {\textit{Camp Counselor/Area Director}, Fort Ann, NY, Summer 2015--2017}
+    \resumeSubItem{Guilderland High School Help Desk}
+      {\textit{Student Technician}, Guilderland, NY, Sep 2015--Jun 2016}
     \resumeSubItem{Beverwyck Senior Living Community}
-      {\textbf{Wait Staff/Manager}, Slingerlands, NY, Jan 2015 - Jun 2017}
+      {\textit{Wait Staff/Manager}, Slingerlands, NY, Jan 2015--Jun 2017}
   \resumeSubHeadingListEnd
 
 %--------AWARDS------------
 \section{Awards/Other Positions}
   \resumeSubHeadingListStart
+    \resumeSubItem{Finance Chairman}
+      {Beta Theta Pi, Eta Tau Chapter, Jan 2018--Present}
+    \resumeSubItem{Upsilon Pi Epsilon}
+      {Computer Science honor society, Nov 2018}
     \resumeSubItem{Risk Management Chairman}
-      {Beta Theta Pi, Eta Tau Chapter, Jan 2018 - Present}
+      {Beta Theta Pi, Eta Tau Chapter, Jan--Dec 2018}
     \resumeSubItem{Charles O. Thompson Scholar}
       {WPI, Apr 2017}
     \resumeSubItem{Dean's List}
-      {WPI, Fall 2016, Spring 2017, Fall 2017, Spring 2018}
-    \resumeSubItem{National Merit Scholar Finalist}
-      {GHS, 2016}
+      {WPI, Fall 2016, Spring 2017, Fall 2017, Spring 2018, Fall 2018}
     \resumeSubItem{Eagle Scout Award}
       {Boy Scouts of America, Sep 2012}
   \resumeSubHeadingListEnd
