@@ -163,10 +163,17 @@ document.getElementById("add-ant").addEventListener("click", function() {
 	var newInput = document.createElement('div');
 	newInput.className = "an-ant";
 	
-	var htmlString = "<h2>Ant " + antNum + "</h2>" +
-		"Start X Position: <input type=\"text\" id=\"start-x-" + antNum + "\" value=\"" + Math.floor(Math.random() * document.getElementById('grid-size').value) + "\"><br>" +
-		"Start Y Position: <input type=\"text\" id=\"start-y-" + antNum + "\" value=\"" + Math.floor(Math.random() * document.getElementById('grid-size').value) + "\"><br>" +
-		"Direction (0-3): <input type=\"text\" id=\"direction-" + antNum + "\" value=\"" + Math.floor(Math.random() * 4) + "\"><br>";
+	let xVal = Math.floor(Math.random() * document.getElementById('grid-size').value);
+	let yVal = Math.floor(Math.random() * document.getElementById('grid-size').value);
+	let dirVal = Math.floor(Math.random() * 4)
+	
+	var htmlString = `<h2>Ant ${antNum}</h2>` +
+		`	<div class="an-ant-flex">` +
+		`		<span>Start X Position: </span><input type="text" id="start-x-${antNum}" value="${xVal}">` +
+		`		<span>Start Y Position: </span><input type="text" id="start-y-${antNum}" value="${yVal}">` +
+		`		<span>Direction (0-3): </span><input type="text" id="direction-${antNum}" value="${dirVal}">` +
+		`	</div>`;
+	
 
 	newInput.innerHTML = htmlString;
 	
@@ -244,7 +251,7 @@ document.getElementById("go").addEventListener("click", function() {
 	var ruleArray = [];
 	var ruleElements = document.getElementById('color-rules').children;
 	var ruleLetter;
-	for (r = 1; r < ruleElements.length; r += 3) {
+	for (r = 0; r < ruleElements.length; r += 2) {
 		rgbString = ruleElements[r].children[0].value;
 		icr = parseInt(rgbString.slice(1, 3), 16);
 		icg = parseInt(rgbString.slice(3, 5), 16);
@@ -304,6 +311,15 @@ document.getElementById('clear').addEventListener("click", function() {
 	location.reload();
 });
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 // Add Rule button
 document.getElementById('add-rule').addEventListener("click", function() {
 	var rulePanel = document.getElementById('color-rules');
@@ -313,16 +329,14 @@ document.getElementById('add-rule').addEventListener("click", function() {
 	swatch.className = 'swatch';
 	
 	// generate a random color
-	var r = Math.floor(Math.random() * 255).toString(16);
-	var g = Math.floor(Math.random() * 255).toString(16);
-	var b = Math.floor(Math.random() * 255).toString(16);
+	var randCol = getRandomColor();
 	
     // make the swatch wrapper
     var swatchWrapper = document.createElement('div');
     swatchWrapper.className = 'swatch-wrapper';
-    swatchWrapper.style.backgroundColor = '#' + r + g + b;
+    swatchWrapper.style.backgroundColor = randCol;
     swatchWrapper.id = "color-wrapper-" + ruleNum;
-	swatch.value = '#' + r + g  + b;
+	swatch.value = randCol;
 	swatch.id = "color-" + ruleNum;
     swatch.onchange = function(){swatchChange(this.id)};
     
@@ -345,7 +359,6 @@ document.getElementById('add-rule').addEventListener("click", function() {
 		newInput.value = "C";
 	}
 	rulePanel.appendChild(newInput);
-	rulePanel.appendChild(document.createElement('br'));
 });
 
 // Make wrap button affect check box
@@ -356,7 +369,6 @@ document.getElementById('wrap-button').addEventListener("click", function() {
 
 var swatchChange = function(wrapId) {
     var number = wrapId.slice(6);
-    console.log(number);
     document.getElementById("color-wrapper-" + number).style.backgroundColor = document.getElementById("color-" + number).value;
 };
 

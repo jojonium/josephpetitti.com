@@ -8,6 +8,7 @@
 		<link rel="shortcut icon" href="https://josephpetitti.com/icon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
 		<link rel="stylesheet" href="styles/brands.css" type="text/css">
+		<link rel="stylesheet" href="styles/ant.css" type="text/css">
 	</head>
 	
 	<body>
@@ -47,21 +48,16 @@
 			</ul>
 		</nav>
 
-
-
-
-
-
-
-
-		
 	<!-- Main -->
 		<main id="main">
-			<form style="float: right; border: 1px solid black;">
-				<div id="color-rules">
-					<h2>Rules</h2>
-					<div class="swatch-wrapper" id="color-wrapper-1" style="background-color: #ffffff"><input class="swatch" id="color-1" value="#ffffff" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-1" value="R"><br>
-					<div class="swatch-wrapper" id="color-wrapper-2" style="background-color: #000000"><input class="swatch" id="color-2" value="#000000" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-2" value="L"><br>
+			<form style="float: right; border: 1px solid black; width: 140px;">
+				<div>
+					<h2 class="color-rules">Rules</h2>
+					<div class="rule-flex" id="color-rules">
+						<div class="swatch-wrapper" id="color-wrapper-1" style="background-color: #ffffff"><input class="swatch" id="color-1" value="#ffffff" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-1" value="R">
+						
+						<div class="swatch-wrapper" id="color-wrapper-2" style="background-color: #000000"><input class="swatch" id="color-2" value="#000000" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-2" value="L">
+					</div>
 				</div>
 				<button id="add-rule" type="button" style="display: block;">Add Rule</button>
 			</form>
@@ -75,9 +71,11 @@
 			<form id="input-ants">
 				<div class="an-ant" id="original-ant">
 					<h2>Ant 1</h2>
-					Start X Position: <input type="text" id="start-x-1" value="50"><br>
-					Start Y Position: <input type="text" id="start-y-1" value="50"><br>
-					Direction (0-3): <input type="text" id="direction-1" value="0"><br>
+					<div class="an-ant-flex">
+						<span>Start X Position: </span><input type="text" id="start-x-1" value="50">
+						<span>Start Y Position: </span><input type="text" id="start-y-1" value="50">
+						<span>Direction (0-3): </span><input type="text" id="direction-1" value="0">
+					</div>
 				</div>
 			</form>
 			
@@ -188,75 +186,6 @@
 			   has started.</p>
 			
 			<script src="scripts/ant.js"></script>
-			<style>
-				button:disabled, .disabled {
-					background-color: #d3d3d3 !important;
-					color: #eeeeee !important;
-					border-color: #bbbbbb !important;
-				}
-
-				.an-ant {
-					border: 1px solid gray;
-					display: inline-block;
-				}
-				
-				#canvas-holder {
-					overflow: auto;
-					max-height: 800px;
-				}
-				
-				#globalCanvas {	border: 1px solid black;	}
-				
-				.swatch {
-					width: 19px;
-					height: 19px;
-					display: inline-block;
-					position: relative;
-					margin: 0;
-					padding: 0;
-					border: none;
-					opacity: 0;
-				}
-				
-				.swatch-wrapper {
-                    float: left;
-                    border: 1px solid black;
-				}
-				
-				#color-rules h2, .an-ant h2 {
-					text-align: center;
-					margin: 0;
-					padding: 14px 0;
-				}
-				
-				body button {
-					width: auto;
-					margin: 2px 0;
-				}
-				
-				form { margin: 10px 0; }
-				
-				input { width: 100px; }
-				
-				#add-rule { margin: 6px auto; }
-				
-				.an-ant {
-					margin: 4px;
-					position: relative;
-					left: 0;
-					width: 240px;
-					height: 100px;
-				}
-				
-				.an-ant input {
-					position: absolute;
-					right: 0;
-				}
-				
-				figure.float {
-					width: 30%;
-				}
-			</style>
 		</main>
 	<!-- Footer -->
 		<footer id="footer">
