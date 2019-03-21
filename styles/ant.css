@@ -20,7 +20,7 @@ button:disabled, .disabled {
 
 #canvas-holder {
     overflow: auto;
-    max-height: 800px;
+    max-height: 975px;
 }
 
 #globalCanvas {	border: 1px solid black;	}
