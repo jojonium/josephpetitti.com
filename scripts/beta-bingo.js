@@ -1,4 +1,4 @@
-const o = new Array(23);
+const o = new Array(36);
 
 function shuffle(array) {
   let counter = array.length;
@@ -46,6 +46,20 @@ window.onload = () => {
   o[21] = 'Agenda not Filled Out';
   o[22] = 'Values are Mentioned';
   o[23] = 'Event Signup';
+  o[24] = '"Robert\'s Rules"';
+  o[25] = 'Discuss Taking Money from Savings';
+  o[26] = 'Push this Discussion to Next Meeting';
+  o[27] = 'Senior Talks About how we Used to Do Stuff';
+  o[28] = 'Snark Lasts More Than a Minute';
+  o[29] = 'IFC Screws Up';
+  o[30] = 'Discussion About Discussions';
+  o[31] = 'Song Lyrics are Wrong';
+  o[32] = 'Someone asks What day of the Week an Event is';
+  o[33] = 'Asking if Everyone can see the Minutes/Zoom in';
+  o[34] = '*Dabs*';
+  o[35] = 'Chairman Spacing out When it\'s Time for Their Report';
+  
+  
   
   shuffle(o);
     
