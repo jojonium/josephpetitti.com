@@ -34,7 +34,7 @@ window.onload = () => {
   o[9] = 'Forgetting Role Call';
   o[10] = 'Someone has a Burrito Bowl';
   o[11] = 'Matt Messes up Voting Procedure';
-  o[12] = '"Talk to me After Chatper"';
+  o[12] = '"Talk to me After Chapter"';
   o[13] = 'More than 3 People Late';
   o[14] = 'No Kai Kan';
   o[15] = 'Let\'s Check the Constitution';
