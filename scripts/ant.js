@@ -12,7 +12,6 @@ var iterationCount = 0;
 var paused = false;
 
 function langtonant(antx, optx, rulex) {
-	'use strict';
 	var x, y, i;
 	
 	// extend default opts
@@ -373,7 +372,7 @@ var swatchChange = function(wrapId) {
 };
 
 
-// Cool bonus
+// I'm Feeling Lucky button
 document.getElementById('bonus').addEventListener("click", function() {
 	// make sure there are exactly 4 ants
 	var antElements = document.getElementsByClassName('an-ant');
@@ -401,9 +400,8 @@ document.getElementById('bonus').addEventListener("click", function() {
 	document.getElementById('start-y-4').value = 57;
 	document.getElementById('direction-4').value = 0;
 	
-	document.getElementById('grid-size').value = 100;
-	document.getElementById('pixel-size').value = 4;
-	document.getElementById('interval').value = 4;
+	if (document.getElementById('grid-size').value < 100)
+		document.getElementById('grid-size').value = 100;
 	
 	// go
 	document.getElementById('go').click();
