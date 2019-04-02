@@ -1,493 +1,498 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Hong Kong Historic Conservation</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/leaflet.css" type="text/css">
-		<script src="scripts/leaflet.js"></script>
-	</head>
-	<body>
-	
-	<!-- Header -->
-		<header>
-			<h1>Hong Kong Historic Conservation</h1>
-		</header>
-		
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Hong Kong Historic Conservation</title>
+    <base href="https://josephpetitti.com/" />
+    <meta name="description" content="A two month historic conservation project by Joseph Petitti completed in Hong Kong in 2019" />
+    <meta property="og:title" content="Hong Kong Historic Conservation" />
+    <meta property="og:description" content="A two month historic conservation project by Joseph Petitti completed in Hong Kong in 2019" />
+    <meta property="og:image" content="https://josephpetitti.com/images/th_hk-central.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/hong-kong-historic-preservation" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/leaflet.css" type="text/css">
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <script src="scripts/leaflet.js"></script>
+  </head>
+  <body>
+  
+  <!-- Header -->
+    <header>
+      <h1>Hong Kong Historic Conservation</h1>
+    </header>
+    
+  <!-- Nav -->
+    <nav class="sticky">
+      <ul class="top-level sticky">
+        <li><a href="index">Home</a></li>
+        <li><a href="resume">Resume</a></li>
+        <li class="parent"><a href="projects">Projects</a>
+          <ul class="child">
+            <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+            <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+            <li><a href="this-website">This Website</a></li>
+            <li><a href="http-server-client">HTTP Server & Client</a></li>
+            <li><a href="process-statistics">Process Statistics</a></li>
+            <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            <li><a href="dinner-suggester">Dinner Suggester</a></li>
+          </ul>
+        </li>
+        <li class="parent"><a href="other">Other</a>
+          <ul class="child">
+            <li><a href="dice">Dice</a></li>
+            <li><a href="ant">Langton's Ant</a></li>
+            <li><a href="rps">RPS Automaton</a></li>
+            <li><a href="type">Typing Game</a></li>
+            <li><a href="minesweeper">Minesweeper</a></li>
+            <li><a href="snake">Snake</a></li>
+            <li><a href="match">Color Match</a></li>
+            <li><a href="klotski">Klotski</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+  <!-- Main -->
+    <main id="main">
+      <div class="main-links-holder">
+        <a href="https://github.com/jojonium/SCTP-Website" target="_blank">
+          <button class="main-links" style="background-color: #5f4d93">
+            <span class="fab fa-github"></span> View on GitHub
+          </button>
+        </a>
+        
+        <a href="https://sctp.petitti.org" target="_blank">
+          <button class="main-links" style="background-color: #2dca50">
+            <i class="fas fa-desktop"></i> View Website
+          </button>
+        </a>
+
+        <a href="assets/iqp-paper.pdf" target="_blank">
+          <button class="main-links" style="background-color: #d37184">
+            <i class="fas fa-file-alt"></i> Read Paper
+          </button>
+        </a>
+      </div>
+      
+      <style>
+        div.main-links-holder {
+          display: flex;
+          justify-content: center;
+        }
+        
+        button.main-links {
+          width: 300px;
+          padding: 10px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          margin: 20px 10px 0;
+          cursor: pointer;
+          border: none;
+        }
+      </style>
+
+      <h2 id="summary">Summary</h2>
+
+      <p>
+        I worked with a team of three other WPI students in Hong Kong
+        for two months on the preservation and promotion of a
+        historically significant precinct in the Central District of
+        Hong Kong. For the project, I created a
+        <a href="https://sctp.petitti.org/">website</a> prototype as a
+        proof of concept digital platform for our sponsors.
+      </p>
+  
+      <h2 id="introduction">Introduction</h2>
+      
+      <figure class="float right">
+        <a href="images/hk-central.jpg">
+          <img src="images/th_hk-central.jpg" 
+               alt="Hong Kong's Central District">
+          </img>
+        </a>
+        <figcaption>
+          Hong Kong's Central District
+        </figcaption>
+      </figure>
+
+      <p>
+        In January 2019 I went to Hong Kong with 22 other WPI students
+        to complete my Interactive Qualifying Project (IQP), a
+        requirement for graduation. In Hong Kong, I was part of a group
+        of four students working on a project for the Institute for
+        Sustainable Urbanisation, a non-profit public organization
+        founded in 2014 and funded by the Hong Kong government and
+        private donations. Their mission is to promote livable,
+        walkable, and sustainable cities worldwide.
+      </p>
+
+      <p>
+        Our project focused on conserving the historic heritage of an
+        area in the Central District, the business heart of Hong Kong.
+        This area, known as the Smart Cultural Triangle Precinct (SCTP),
+        contains a lot of unique history and culture, and redevelopment
+        projects threaten its old buildings. The SCTP project aims to
+        help preserve and promote these buildings as a cohesive cultural
+        precinct.
+      </p>
+
+      <p>
+        My team researched historic conservation in Hong Kong and other
+        cities around the world, conducted a survey of locals and
+        tourists in the area, and interviewed experts and stakeholders
+        to learn more about the challenges involved with SCTP project.
+        We conducted a walkability assessment of streets eleven streets
+        in the area to determine what needs to be done to make it more
+        accessible, and planned a walking tour to promote its history.
+        Finally, we created a fully-functional website as an
+        informational platform for the precinct.
+      </p>
+
+      <h2 id="background">Background</h2>
+
+      <p>
+        The SCTP is a triangular area in the Central District defined by
+        three major historic sites at its corners:
+      </p>
+
+      <ol>
+        <li>
+          <strong>Tai Kwun</strong>&mdash;Formerly the Central Police
+          Station and Victoria Prison, this complex includes some of
+          the oldest British colonial buildings in Hong Kong. In
+          recent years it has been rennovated and reopened in 2018 as
+          a center for arts and entertainment.
+        </li>
+
+        <li>
+          <strong>PMQ</strong>&mdash;This buildings stands on the
+          grounds of the first government primary and secondary school
+          in Hong Kong. The original building was destroyed in World
+          War II, and in 1951 the British constructed the Police
+          Married Quarters on the site. This building housed high
+          ranking married police officers and their families until
+          2000, when it as rennovated and turned into commercial
+          space.
+        </li>
+
+        <li>
+          <strong>Central Market</strong>&mdash;One of Hong Kong's
+          oldest markets, this site originally opened in 1842, and
+          provided locals with stalls for produce, seafood, daily
+          essentials, and services like tailoring and knife
+          sharpening. The the building that currently stands on the
+          site was built in 1939, and is currently under rennovation,
+          expected to open in 2024.
+        </li>
+      </ol>
+
+      <p>
+        The triangle is bisected by the Central&ndash;Mid-Levels
+        Escalator, the world's longest outdoor covered escalator system
+        and a popular tourist attraction.
+      </p>
+
+      <figure class="full-width" style="margin: 0;">
+        <div id="mapDiv" style="height: 500px; width: 100%; z-index: 0">
+          <i>There's supposed to be an interactive map here, but you
+          don't have JavaScript enabled :/</i>
+        </div>
+        <figcaption>Location of the SCTP</figcaption>
+      </figure>
+
+      <script>
+        if (L)
+          document.getElementById('mapDiv').innerHTML = '';
+        var mymap = L.map('mapDiv').setView([22.282, 114.154], 16);
+              L.tileLayer(
+          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          {
+            attribution: `&copy;
+                        <a href="https://www.openstreetmap.org/copyright">
+                            OpenStreetMap
+                        </a>`,
+            subdomains: ['a','b','c']
+          }
+        ).addTo( mymap );
+
+        var triangle = L.polygon([
+          [22.28366, 114.15095],
+          [22.27983, 114.15420],
+          [22.28463, 114.15649]
+        ]).addTo(mymap);
+      </script>
+
+      <h2 id="methods-and-results">Methods and Results</h2>
+
+      <p>
+        We accomplished our objectives using the following methods. We
+        conducted surveys with locals and tourists and interviewed
+        shopkeepers, experts and stakeholders and synthesized the
+        results in our report. In the survey, we asked about people’s
+        opinions on the current city walk in the SCTP, and most of them
+        were not aware of the walking tours but showed an interest in
+        one with more cultural landmarks and historical heritage. When
+        asked about a digital platform to get information about the
+        area, most people chose a website among the options of blog,
+        mobile app and pamphlet, and wanted to see event and
+        entertainment information about the SCTP, which guided our work
+        on the city walk and website.
+      </p>
+
+      <p>
+        From our interview results, we found that although most
+        shopkeepers think promoting the SCTP will be helpful for their
+        business, there is still a lack of knowledge of the history of
+        the area among them. Most of the experts we interviewed
+        suggested that the government should preserve the heritage in
+        the Central District as an area, not just individual buildings,
+        and creating the SCTP will promote the preservation efforts. A
+        digital platform such as a website and a walking tour could be
+        helpful for public engagement, especially with the younger
+        generation. As for stakeholders, they are more concerned about
+        the interests of the group that they represent. They suggested
+        public awareness could be promoted by providing updated walking
+        tours and including interesting stories to attract both locals
+        and tourists. They said the government should value historic
+        buildings of local communities, and try to provide more
+        affordable place in sites like PMQ for public engagement.
+      </p>
+
+      <p>
+        We carried out case study research on existing similar platforms
+        focusing on Hong Kong and other cities. We determined what
+        content was needed and desired by stakeholders and the public
+        based on data gathered from the survey and research. One thing
+        that our group noticed when researching websites and apps was
+        that we should make ours have a very user friendly and visually
+        appealing interface to attract more people. A website was the
+        favored option in our survey, and websites are cheaper and
+        easier to develop and maintain than apps or physical platforms
+        like pamphlets or brochures. They also have a wide reach, as
+        anyone with internet connectivity and a web browser can access
+        it at any time for free.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/sctp-website.png">
+          <img src="images/th_sctp-website.png" 
+            alt="A screenshot of the website prototype">
+          </img>
+        </a>
+        <figcaption>
+          A screenshot of the website prototype
+        </figcaption>
+      </figure>
+
+      <p>
+        We also observed many streets within the precinct, and made
+        notes of specific qualities about each of the streets. Many of
+        the observations that we made were about the general
+        characteristics of the street, such as whether it was narrow or
+        wide, the slope, and any obstacles that were around, including
+        cars and people. These specific things are hard to change about
+        a street, but the things that can be changed are safety,
+        signage, cleanliness and sometimes accessibility. Fixing small
+        things like these can be helpful in the long run to promote and
+        preserve the SCTP.
+      </p>
+
+      <h2 id="recommendations">Recommendations</h2>
+
+      <p>
+        Based on our results, we developed the following nine
+        recommendations, divided into three groups: those related to the
+        walking tour, suggestions about the website, and ideas for
+        future research.
+      </p>
+
+      <p>
+        <strong>Walking Tour</strong>&mdash;From the results of the
+        survey and our walkability assessment, here are some
+        recommendations for stakeholders:
+      </p>
+
+      <ol>
+        <li>
+          To help promote the SCTP, we recommend that the government
+          improve cleanli ness, add railings to streets with narrow
+          sidewalks and busy traffic, and add signage in more
+          locations in the area, including bigger signs at the
+          entrances to important sites.
+        </li>
+
+        <li>
+          We propose our walking tour plans to the ISU as a guideline
+          for the further im- provement of their walk, in the case
+          that the Central–Mid-Levels Escalator is under construction.
+          See Sections 4.4.2 and 4.4.3 of the <a
+          href="assets/iqp-paper.pdf">full report</a> for details.
+        </li>
+
+        <li>
+           Tour organizers should include practical information and
+           interesting stories and cultural landmarks such as H6
+           Conet, Hong Kong News-Expo, and Pak Tsz Park, and historic
+           sites such as Man Mo Temple and the Duddell Street Steps.
+        </li>
+      </ol>
+
+      <p>
+        <strong>Website</strong>&mdash;Based on our experience
+        developing the website prototype, here are the recommendations
+        we suggest for the stakeholders and future research on the
+        topic:
+      </p>
+
+      <ol>
+        <li>
+          Because locations of shops and restaurants can change
+          frequently, the ISU should hire some maintainer to update
+          the information on the map page at regular intervals. As
+          development projects are completed, some of the information
+          on the site will become outdated too. For example, the page
+          on the Central Market should be updated once construction on
+          the market has been completed.
+        </li>
+
+        <li>
+           The site could be updated with information about currently
+           ongoing events in the SCTP. Our survey respondents were
+           split on the question of what information they would like
+           to see from an online platform, but the two most popular
+           responses were “News and Events Information” and
+           “Entertainment Information.” The website could serve as a
+           valuable source of information on events in the area.
+           Again, this would require a maintainer to keep the
+           information up to date.
+        </li>
+
+        <li>
+           More interactive features such as a public forum or a blog
+           with public comments could be added. Our team determined
+           this would be a useful way for locals and tourists to
+           interact and learn more about the history and current state
+           of the area, as well as voice their opinions and concerns
+           about it.
+        </li>
+      </ol>
+
+      <p>
+        <strong>General Recommendations and Further
+        Research</strong>&mdash;Here are our general recommendations for
+        stakeholders in the SCTP area and future groups that continue to
+        work on this project.
+      </p>
+
+      <ol>
+        <li>
+           Our interviews show that most preserved buildings are
+           public or government sites, and private buildings are still
+           at risk. Therefore, we suggest that the Urban Renewal
+           Authority (URA) should make an effort to preserve private
+           buildings that are important to the local community.
+        </li>
+
+        <li>
+           We recommend that the managers of each historic and
+           cultural site keep the sites open and accessible to the
+           local small businesses so that they can remain economically
+           stable and the historic sites can sustain themselves.
+        </li>
+
+        <li>
+           For future groups working on the SCTP project, we recommend
+           they research what needs to be done to make an area more
+           walkable, how online platforms can be used to effectively
+           promote areas like the SCTP, and what work has been done at
+           the Central Market and other historic sites around Central.
+           If a future group uses a survey, we would recommend they
+           plan to conduct it for a longer period of time, and
+           translate it into more languages, such as Korean and
+           Japanese.
+        </li>
+      </ol>
+
+      <p>
+        We hope that the implementation of one or more of these
+        recommendations can get more people engaged in the preservation
+        of historic sites in the Central District of Hong Kong.
+      </p>
 
 
+      <figure class="full-width">
+        <a href="images/tai-kwun-parade-ground.jpg">
+          <img src="images/th_tai-kwun-parade-ground.jpg" 
+          alt="Parade grounds of the former Central Police Station">
+          </img>
+        </a>
+        <figcaption>
+          Parade grounds of the former Central Police Station
+        </figcaption>
+      </figure>
 
-		
-	<!-- Main -->
-		<main id="main">
-			<div class="main-links-holder">
-				<a href="https://github.com/jojonium/SCTP-Website" target="_blank">
-					<button class="main-links" style="background-color: #5f4d93">
-						<span class="fab fa-github"></span> View on GitHub
-					</button>
-				</a>
-				
-				<a href="https://sctp.petitti.org" target="_blank">
-					<button class="main-links" style="background-color: #2dca50">
-						<i class="fas fa-desktop"></i> View Website
-					</button>
-				</a>
+      <h2 id="conclusion">Conclusion</h2>
 
-				<a href="assets/iqp-paper.pdf" target="_blank">
-					<button class="main-links" style="background-color: #d37184">
-						<i class="fas fa-file-alt"></i> Read Paper
-					</button>
-				</a>
-			</div>
-			
-			<style>
-				div.main-links-holder {
-					display: flex;
-					justify-content: center;
-				}
-				
-				button.main-links {
-					width: 300px;
-					padding: 10px;
-					box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-					margin: 20px 10px 0;
-					cursor: pointer;
-					border: none;
-				}
-			</style>
+      <p>
+        This IQP was certainly an enlightening experience for me,
+        spending two months in a foreign culture working on a primarily
+        social science project. My team did a lot of work that I didn't
+        have time to mention on this page, but if you're interested feel
+        free to read the entire 90 page, 20 MiB 
+        <a href="assets/iqp-paper.pdf">paper</a> we wrote. Also, if
+        you're interested in learning more about the SCTP, check out the
+        <a href="https://sctp.petitti.org">website</a> I made.
+      </p>
+    </main>
+    
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
 
-			<h2 id="summary">Summary</h2>
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
 
-			<p>
-				I worked with a team of three other WPI students in Hong Kong
-				for two months on the preservation and promotion of a
-				historically significant precinct in the Central District of
-				Hong Kong. For the project, I created a
-				<a href="https://sctp.petitti.org/">website</a> prototype as a
-				proof of concept digital platform for our sponsors.
-			</p>
-	
-			<h2 id="introduction">Introduction</h2>
-			
-			<figure class="float right">
-				<a href="images/hk-central.jpg">
-					<img src="images/th_hk-central.jpg" 
-					     alt="Hong Kong's Central District">
-					</img>
-				</a>
-				<figcaption>
-					Hong Kong's Central District
-				</figcaption>
-			</figure>
+        <p>
+          All portions of this website written by me are
+          released under the <a href="license.txt"> MIT License</a>.
+          Other scripts and resources are licensed under free licenses
+          by their respective owners. All source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">
+          GitHub</a>.
+        </p>
+      </section>
 
-			<p>
-				In January 2019 I went to Hong Kong with 22 other WPI students
-				to complete my Interactive Qualifying Project (IQP), a
-				requirement for graduation. In Hong Kong, I was part of a group
-				of four students working on a project for the Institute for
-				Sustainable Urbanisation, a non-profit public organization
-				founded in 2014 and funded by the Hong Kong government and
-				private donations. Their mission is to promote livable,
-				walkable, and sustainable cities worldwide.
-			</p>
-
-			<p>
-				Our project focused on conserving the historic heritage of an
-				area in the Central District, the business heart of Hong Kong.
-				This area, known as the Smart Cultural Triangle Precinct (SCTP),
-				contains a lot of unique history and culture, and redevelopment
-				projects threaten its old buildings. The SCTP project aims to
-				help preserve and promote these buildings as a cohesive cultural
-				precinct.
-			</p>
-
-			<p>
-				My team researched historic conservation in Hong Kong and other
-				cities around the world, conducted a survey of locals and
-				tourists in the area, and interviewed experts and stakeholders
-				to learn more about the challenges involved with SCTP project.
-				We conducted a walkability assessment of streets eleven streets
-				in the area to determine what needs to be done to make it more
-				accessible, and planned a walking tour to promote its history.
-				Finally, we created a fully-functional website as an
-				informational platform for the precinct.
-			</p>
-
-			<h2 id="background">Background</h2>
-
-			<p>
-				The SCTP is a triangular area in the Central District defined by
-				three major historic sites at its corners:
-			</p>
-
-			<ol>
-				<li>
-					<strong>Tai Kwun</strong>&mdash;Formerly the Central Police
-					Station and Victoria Prison, this complex includes some of
-					the oldest British colonial buildings in Hong Kong. In
-					recent years it has been rennovated and reopened in 2018 as
-					a center for arts and entertainment.
-				</li>
-
-				<li>
-					<strong>PMQ</strong>&mdash;This buildings stands on the
-					grounds of the first government primary and secondary school
-					in Hong Kong. The original building was destroyed in World
-					War II, and in 1951 the British constructed the Police
-					Married Quarters on the site. This building housed high
-					ranking married police officers and their families until
-					2000, when it as rennovated and turned into commercial
-					space.
-				</li>
-
-				<li>
-					<strong>Central Market</strong>&mdash;One of Hong Kong's
-					oldest markets, this site originally opened in 1842, and
-					provided locals with stalls for produce, seafood, daily
-					essentials, and services like tailoring and knife
-					sharpening. The the building that currently stands on the
-					site was built in 1939, and is currently under rennovation,
-					expected to open in 2024.
-				</li>
-			</ol>
-
-			<p>
-				The triangle is bisected by the Central&ndash;Mid-Levels
-				Escalator, the world's longest outdoor covered escalator system
-				and a popular tourist attraction.
-			</p>
-
-			<figure class="full-width" style="margin: 0;">
-				<div id="mapDiv" style="height: 500px; width: 100%; z-index: 0">
-					<i>There's supposed to be an interactive map here, but you
-					don't have JavaScript enabled :/</i>
-				</div>
-				<figcaption>Location of the SCTP</figcaption>
-			</figure>
-
-			<script>
-				if (L)
-					document.getElementById('mapDiv').innerHTML = '';
-				var mymap = L.map('mapDiv').setView([22.282, 114.154], 16);
-          		L.tileLayer(
-					'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-					{
-						attribution: `&copy;
-                  			<a href="https://www.openstreetmap.org/copyright">
-                      			OpenStreetMap
-                  			</a>`,
-						subdomains: ['a','b','c']
-					}
-				).addTo( mymap );
-
-				var triangle = L.polygon([
-					[22.28366, 114.15095],
-					[22.27983, 114.15420],
-					[22.28463, 114.15649]
-				]).addTo(mymap);
-			</script>
-
-			<h2 id="methods-and-results">Methods and Results</h2>
-
-			<p>
-				We accomplished our objectives using the following methods. We
-				conducted surveys with locals and tourists and interviewed
-				shopkeepers, experts and stakeholders and synthesized the
-				results in our report. In the survey, we asked about people’s
-				opinions on the current city walk in the SCTP, and most of them
-				were not aware of the walking tours but showed an interest in
-				one with more cultural landmarks and historical heritage. When
-				asked about a digital platform to get information about the
-				area, most people chose a website among the options of blog,
-				mobile app and pamphlet, and wanted to see event and
-				entertainment information about the SCTP, which guided our work
-				on the city walk and website.
-			</p>
-
-			<p>
-				From our interview results, we found that although most
-				shopkeepers think promoting the SCTP will be helpful for their
-				business, there is still a lack of knowledge of the history of
-				the area among them. Most of the experts we interviewed
-				suggested that the government should preserve the heritage in
-				the Central District as an area, not just individual buildings,
-				and creating the SCTP will promote the preservation efforts. A
-				digital platform such as a website and a walking tour could be
-				helpful for public engagement, especially with the younger
-				generation. As for stakeholders, they are more concerned about
-				the interests of the group that they represent. They suggested
-				public awareness could be promoted by providing updated walking
-				tours and including interesting stories to attract both locals
-				and tourists. They said the government should value historic
-				buildings of local communities, and try to provide more
-				affordable place in sites like PMQ for public engagement.
-			</p>
-
-			<p>
-				We carried out case study research on existing similar platforms
-				focusing on Hong Kong and other cities. We determined what
-				content was needed and desired by stakeholders and the public
-				based on data gathered from the survey and research. One thing
-				that our group noticed when researching websites and apps was
-				that we should make ours have a very user friendly and visually
-				appealing interface to attract more people. A website was the
-				favored option in our survey, and websites are cheaper and
-				easier to develop and maintain than apps or physical platforms
-				like pamphlets or brochures. They also have a wide reach, as
-				anyone with internet connectivity and a web browser can access
-				it at any time for free.
-			</p>
-
-			<figure class="full-width">
-				<a href="images/sctp-website.png">
-					<img src="images/th_sctp-website.png" 
-						alt="A screenshot of the website prototype">
-					</img>
-				</a>
-				<figcaption>
-					A screenshot of the website prototype
-				</figcaption>
-			</figure>
-
-			<p>
-				We also observed many streets within the precinct, and made
-				notes of specific qualities about each of the streets. Many of
-				the observations that we made were about the general
-				characteristics of the street, such as whether it was narrow or
-				wide, the slope, and any obstacles that were around, including
-				cars and people. These specific things are hard to change about
-				a street, but the things that can be changed are safety,
-				signage, cleanliness and sometimes accessibility. Fixing small
-				things like these can be helpful in the long run to promote and
-				preserve the SCTP.
-			</p>
-
-			<h2 id="recommendations">Recommendations</h2>
-
-			<p>
-				Based on our results, we developed the following nine
-				recommendations, divided into three groups: those related to the
-				walking tour, suggestions about the website, and ideas for
-				future research.
-			</p>
-
-			<p>
-				<strong>Walking Tour</strong>&mdash;From the results of the
-				survey and our walkability assessment, here are some
-				recommendations for stakeholders:
-			</p>
-
-			<ol>
-				<li>
-					To help promote the SCTP, we recommend that the government
-					improve cleanli ness, add railings to streets with narrow
-					sidewalks and busy traffic, and add signage in more
-					locations in the area, including bigger signs at the
-					entrances to important sites.
-				</li>
-
-				<li>
-					We propose our walking tour plans to the ISU as a guideline
-					for the further im- provement of their walk, in the case
-					that the Central–Mid-Levels Escalator is under construction.
-					See Sections 4.4.2 and 4.4.3 of the <a
-					href="assets/iqp-paper.pdf">full report</a> for details.
-				</li>
-
-				<li>
-					 Tour organizers should include practical information and
-					 interesting stories and cultural landmarks such as H6
-					 Conet, Hong Kong News-Expo, and Pak Tsz Park, and historic
-					 sites such as Man Mo Temple and the Duddell Street Steps.
-				</li>
-			</ol>
-
-			<p>
-				<strong>Website</strong>&mdash;Based on our experience
-				developing the website prototype, here are the recommendations
-				we suggest for the stakeholders and future research on the
-				topic:
-			</p>
-
-			<ol>
-				<li>
-					Because locations of shops and restaurants can change
-					frequently, the ISU should hire some maintainer to update
-					the information on the map page at regular intervals. As
-					development projects are completed, some of the information
-					on the site will become outdated too. For example, the page
-					on the Central Market should be updated once construction on
-					the market has been completed.
-				</li>
-
-				<li>
-					 The site could be updated with information about currently
-					 ongoing events in the SCTP. Our survey respondents were
-					 split on the question of what information they would like
-					 to see from an online platform, but the two most popular
-					 responses were “News and Events Information” and
-					 “Entertainment Information.” The website could serve as a
-					 valuable source of information on events in the area.
-					 Again, this would require a maintainer to keep the
-					 information up to date.
-				</li>
-
-				<li>
-					 More interactive features such as a public forum or a blog
-					 with public comments could be added. Our team determined
-					 this would be a useful way for locals and tourists to
-					 interact and learn more about the history and current state
-					 of the area, as well as voice their opinions and concerns
-					 about it.
-				</li>
-			</ol>
-
-			<p>
-				<strong>General Recommendations and Further
-				Research</strong>&mdash;Here are our general recommendations for
-				stakeholders in the SCTP area and future groups that continue to
-				work on this project.
-			</p>
-
-			<ol>
-				<li>
-					 Our interviews show that most preserved buildings are
-					 public or government sites, and private buildings are still
-					 at risk. Therefore, we suggest that the Urban Renewal
-					 Authority (URA) should make an effort to preserve private
-					 buildings that are important to the local community.
-				</li>
-
-				<li>
-					 We recommend that the managers of each historic and
-					 cultural site keep the sites open and accessible to the
-					 local small businesses so that they can remain economically
-					 stable and the historic sites can sustain themselves.
-				</li>
-
-				<li>
-					 For future groups working on the SCTP project, we recommend
-					 they research what needs to be done to make an area more
-					 walkable, how online platforms can be used to effectively
-					 promote areas like the SCTP, and what work has been done at
-					 the Central Market and other historic sites around Central.
-					 If a future group uses a survey, we would recommend they
-					 plan to conduct it for a longer period of time, and
-					 translate it into more languages, such as Korean and
-					 Japanese.
-				</li>
-			</ol>
-
-			<p>
-				We hope that the implementation of one or more of these
-				recommendations can get more people engaged in the preservation
-				of historic sites in the Central District of Hong Kong.
-			</p>
-
-
-			<figure class="full-width">
-				<a href="images/tai-kwun-parade-ground.jpg">
-					<img src="images/th_tai-kwun-parade-ground.jpg" 
-					alt="Parade grounds of the former Central Police Station">
-					</img>
-				</a>
-				<figcaption>
-					Parade grounds of the former Central Police Station
-				</figcaption>
-			</figure>
-
-			<h2 id="conclusion">Conclusion</h2>
-
-			<p>
-				This IQP was certainly an enlightening experience for me,
-				spending two months in a foreign culture working on a primarily
-				social science project. My team did a lot of work that I didn't
-				have time to mention on this page, but if you're interested feel
-				free to read the entire 90 page, 20 MiB 
-				<a href="assets/iqp-paper.pdf">paper</a> we wrote. Also, if
-				you're interested in learning more about the SCTP, check out the
-				<a href="https://sctp.petitti.org">website</a> I made.
-			</p>
-		</main>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-
-				<p>
-					I created this website as a personal project in my free time
-					to learn more about web design, CSS, HTML, and JavaScript.
-				</p>
-
-				<p>
-					All portions of this website written by me are
-					released under the <a href="license.txt"> MIT License</a>.
-					Other scripts and resources are licensed under free licenses
-					by their respective owners. All source code is available on
-					<a href="https://github.com/jojonium/josephpetitti.com">
-					GitHub</a>.
-				</p>
-			</section>
-
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>
-							100 Institute Road, Mailbox #2658 Worcester, MA
-							01609
-						</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd>
-							<a href="mailto:jppetitti@wpi.edu">
-								jppetitti@wpi.edu
-							</a>
-						</dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-		</body>
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">
+                jppetitti@wpi.edu
+              </a>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
 </html>
