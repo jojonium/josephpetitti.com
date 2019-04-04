@@ -71,10 +71,12 @@ window.onload = () => {
   }
   
   $('.bbox').click(function() {
-    if ($(this).css('backgroundColor') != 'rgb(0, 255, 0)') {
-      $(this).css('background-color', 'rgb(0, 255, 0)');
+    if ($(this).css('backgroundColor') != 'rgba(240, 153, 12, 0.9)') {
+      $(this).css('background-color', 'rgba(240, 153, 12, 0.9)')
+		.css('color', 'black');
     } else {
-      $(this).css('background-color', 'white');
+      $(this).css('background-color', '#004b6e')
+		.css('color', '#bcd');
     }
   });
 }
