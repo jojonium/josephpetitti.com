@@ -21,12 +21,25 @@
   </head>
   <body>
 
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
+
   <!-- Header -->
     <header>
-      <a id="mobile-nav" href="#" title="Navigation"><i class="fas fa-bars"></i>
-      Menu</a>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
     <!-- Nav -->
-      <nav>
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
         <ul>
           <li><a href="index">Home</a></li>
           <li><a href="resume">Resume</a></li>

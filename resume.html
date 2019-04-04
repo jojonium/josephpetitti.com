@@ -1,178 +1,213 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Joseph Petitti's Resume</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-		</head>
-	
-	<body>
-	<!-- Header -->
-		<header>
-			<h1>Resume</h1>
-		</header>
-	
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Joseph Petitti's Resume</title>
+    <meta name="description" content="The resume of Joseph Petitti, a Junior Computer Science student at Worcester Polytechnic Institute" />
+    <meta property="og:title" content="Joseph Petitti's Resume" />
+    <meta property="og:description" content="The resume of Joseph Petitti, a Junior Computer Science student at Worcester Polytechnic Institute" />
+    <meta property="og:image" content="https://josephpetitti.com/images/portrait.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/resume" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
 
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
 
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+              <li><a href="dinner-suggester">Dinner Suggester</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
+  <!-- Main -->
+    <main id="main">
+      
+      <h1>
+        JOSEPH PETITTI
+      
+        RESUME
+      </h1>
 
+      <div class="main-links-holder long-buttons">
+        <a href="assets/resume.pdf" target=_blank">
+          <button class="long">
+            <span class="fas fa-file-alt"></span> Download PDF
+          </button>
+        </a>
+        
+        <a href="https://github.com/jojonium" target=_blank">
+          <button class="long">
+            <span class="fab fa-github"></span> Github
+          </button>
+        </a>
 
-
-
-		
-	<!-- Main -->
-		<main>
-			
-			<h1 style="color: #000000;">Joseph Petitti</h1>
-			<h3 class="resume">(518)-545-1984 &bull; jppetitti@wpi.edu &bull; 100 Institute Road #2658, Worcester, MA 01609 &bull; josephpetitti.com</h3>
-			
-			<h2>Objective</h2>
-			<p>A Summer 2019 internship in computer science</p>
-			
-			<h2 id="education">Education</h2>
-			<dl>
-				<dt><strong>Worcester Polytechnic Institute</strong> (WPI), Worcester, MA</dt>
-					<dd>Bachelor of Science in Computer Science, GPA: 3.92/4.00, May 2020</dd>
-				<dt><strong>Guilderland High School</strong> (GHS), Guilderland, NY</dt>
-					<dd>High School Diploma, GPA 4.0/4.0, June 2016</dd>
-			</dl>
-			
-			<h2 id="Skills">Skills</h2>
-			<ul style="list-style-type: none">
-				<li>Languages: C/C++, Javascript/JQuery, Java, PL/SQL, HTML/CSS, Python, Racket</li>
-				<li>Other Technologies: Eclipse, IntelliJ IDEA, PyCharm, GNU/Linux, git, nginx, Microsoft Office</li>
-				<li>Leadership/Management</li>
-				<li>Customer Service</li>
-			</ul>
-			
-			<h2 id="related-experience">Related Experience</h2>
-			<dl>
-				<dt><strong>Teaching Assistant</strong>—WPI, Worcester, MA, August 2018–Present</dt>
-					<ul>
-						<li>Taught labs and graded assignments for computer science classes at WPI.</li>
-						<li>Held office hours weekly to assist students with programming concepts.</li>
-					</ul>
-			</dl>
-				<dt><strong>Application Services Intern</strong>—MAPFRE Insurance, Webster, MA, May–August 2018</dt>
-					<ul>
-						<li>Developed and deployed front-end for enterprise-level web application for use
-						in automating appraisals within the company, increasing efficiency and consistency.</li>
-						<li>Languages included Java, SQL, and Javascript/JQuery.</li>
-					</ul>
-			</dl>
-			<dl>
-				<dt><strong>Student Technician</strong>—GHS Help Desk, Guilderland, NY, September 2015–June 2016</dt>
-					<ul>
-						<li>Worked with a team of other students to fix Information Technology problems in the school.</li>
-						<li>Common work included setting up Chromebooks, repairing computers, fixing printers, servicing projectors, configuring network connections, and maintaining hardware inventories.</li>
-					</ul>
-			</dl>
-			
-			<h2 id="projects">Projects</h2>
-			<dl>
-				<dt><strong>Personal Website, josephpetitti.com</strong></dt>
-					<dd>March 2018–Ongoing—Independently designed and developed personal website to host projects. HTML, CSS, 
-						and Javascript on Ubuntu Server using nginx backend.</dd>
+      </div>
+      
+      <h2>Objective</h2>
+      <p>A Summer 2019 internship in computer science</p>
+      
+      <h2 id="education">Education</h2>
+      <dl>
+        <dt><strong>Worcester Polytechnic Institute</strong> (WPI), Worcester, MA</dt>
+          <dd>Bachelor of Science in Computer Science, GPA: 3.92/4.00, May 2020</dd>
+        <dt><strong>Guilderland High School</strong> (GHS), Guilderland, NY</dt>
+          <dd>High School Diploma, GPA 4.0/4.0, June 2016</dd>
+      </dl>
+      
+      <h2 id="Skills">Skills</h2>
+      <ul style="list-style-type: none">
+        <li>Languages: C/C++, Javascript/JQuery, Java, PL/SQL, HTML/CSS, Python, Racket</li>
+        <li>Other Technologies: Eclipse, IntelliJ IDEA, PyCharm, GNU/Linux, git, nginx, Microsoft Office</li>
+        <li>Leadership/Management</li>
+        <li>Customer Service</li>
+      </ul>
+      
+      <h2 id="related-experience">Related Experience</h2>
+      <dl>
+        <dt><strong>Teaching Assistant</strong>—WPI, Worcester, MA, August 2018–Present</dt>
+          <ul>
+            <li>Taught labs and graded assignments for computer science classes at WPI.</li>
+            <li>Held office hours weekly to assist students with programming concepts.</li>
+          </ul>
+      </dl>
+        <dt><strong>Application Services Intern</strong>—MAPFRE Insurance, Webster, MA, May–August 2018</dt>
+          <ul>
+            <li>Developed and deployed front-end for enterprise-level web application for use
+            in automating appraisals within the company, increasing efficiency and consistency.</li>
+            <li>Languages included Java, SQL, and Javascript/JQuery.</li>
+          </ul>
+      </dl>
+      <dl>
+        <dt><strong>Student Technician</strong>—GHS Help Desk, Guilderland, NY, September 2015–June 2016</dt>
+          <ul>
+            <li>Worked with a team of other students to fix Information Technology problems in the school.</li>
+            <li>Common work included setting up Chromebooks, repairing computers, fixing printers, servicing projectors, configuring network connections, and maintaining hardware inventories.</li>
+          </ul>
+      </dl>
+      
+      <h2 id="projects">Projects</h2>
+      <dl>
+        <dt><strong>Personal Website, josephpetitti.com</strong></dt>
+          <dd>March 2018–Ongoing—Independently designed and developed personal website to host projects. HTML, CSS, 
+            and Javascript on Ubuntu Server using nginx backend.</dd>
                 <dt><strong>Operating Systems</strong></dt>
                     <dd>August–October 2018—Ubuntu, C
-				<dt><strong>Introduction to Machine Organization and Assembly Language</strong></dt>
-					<dd>March–April 2018—C, x86</dd>
-				<dt><strong>Database Systems I</strong></dt>
-					<dd>January–March 2018—PL/SQL</dd>
-				<dt><strong>Group Effort: Study Group Matching Service</strong></dt>
-					<dd>August–December 2016—Great Problems Seminars: Ignorance is Not Bliss. Worked in a group of four to
-						research and create a web-based application to assign Calculus students into study groups. Poster
-						presentation won "Best in Class."</dd>
-				<dt><strong>AP Computer Science</strong></dt>
-					<dd>April–June 2016—Worked in group of twelve to build a virtual, graphical version of the board game Risk using
-						Java. Divided and delegated into several subprojects</dd>
-			</dl>
-			
-			<h2 id="work-history">Work History</h2>
-			<dl>
-				<dt><strong>Wait Staff/Manager</strong></dt>
-					<dd>Beverwyck Senior Living Community, Slingerlands, NY, January 2015–June 2017</dd>
-				<dt><strong>Camp Counselor/Area Director</strong></dt>
-					<dd>Wakpominee Scout Camp, Fort Ann, NY, June–August 2015–2017</dd>
-			</dl>
-			
-			<h2 id="Awards_Other_Positions">Awards/Other Positions</h2>
-			<ul style="list-style-type: none">
-				<li>Risk Management Chairman—Beta Theta Pi, WPI Colony, January 2018–Present</li>
-				<li>Charles O. Thompson Scholar—WPI, April 2017</li>
-				<li>Dean’s List—WPI, Fall 2016, Spring 2017, Fall 2017, Spring 2018</li>
-				<li>Great Problems Seminars Poster Presentation: Best in Class—WPI, December 2016</li>
-				<li>National Merit Scholar Finalist—GHS, 2016</li>
-				<li>Eagle Scout Award—Boy Scouts of America, September 2012</li>
-			</ul>
-			
-	
-			<p class="dl-button"><a href="assets/resume.pdf" target="_blank"><span class="fas fa-download"></span> Download PDF</a></p>
-		</main>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-				<p>I created this website as a personal project in my free time to learn more about web design,
-				   CSS, HTML, and JavaScript.</p>
-				<p>All portions of this website written by me are released under the <a href="license.txt">
-				   MIT License</a>. Other scripts and resources are licensed under free licenses by their
-				   respective owners. All source code is available on
-				   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.</p>
-			</section>
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-	</body>
+        <dt><strong>Introduction to Machine Organization and Assembly Language</strong></dt>
+          <dd>March–April 2018—C, x86</dd>
+        <dt><strong>Database Systems I</strong></dt>
+          <dd>January–March 2018—PL/SQL</dd>
+        <dt><strong>Group Effort: Study Group Matching Service</strong></dt>
+          <dd>August–December 2016—Great Problems Seminars: Ignorance is Not Bliss. Worked in a group of four to
+            research and create a web-based application to assign Calculus students into study groups. Poster
+            presentation won "Best in Class."</dd>
+        <dt><strong>AP Computer Science</strong></dt>
+          <dd>April–June 2016—Worked in group of twelve to build a virtual, graphical version of the board game Risk using
+            Java. Divided and delegated into several subprojects</dd>
+      </dl>
+      
+      <h2 id="work-history">Work History</h2>
+      <dl>
+        <dt><strong>Wait Staff/Manager</strong></dt>
+          <dd>Beverwyck Senior Living Community, Slingerlands, NY, January 2015–June 2017</dd>
+        <dt><strong>Camp Counselor/Area Director</strong></dt>
+          <dd>Wakpominee Scout Camp, Fort Ann, NY, June–August 2015–2017</dd>
+      </dl>
+      
+      <h2 id="Awards_Other_Positions">Awards/Other Positions</h2>
+      <ul style="list-style-type: none">
+        <li>Risk Management Chairman—Beta Theta Pi, WPI Colony, January 2018–Present</li>
+        <li>Charles O. Thompson Scholar—WPI, April 2017</li>
+        <li>Dean’s List—WPI, Fall 2016, Spring 2017, Fall 2017, Spring 2018</li>
+        <li>Great Problems Seminars Poster Presentation: Best in Class—WPI, December 2016</li>
+        <li>National Merit Scholar Finalist—GHS, 2016</li>
+        <li>Eagle Scout Award—Boy Scouts of America, September 2012</li>
+      </ul>
+      
+  
+    </main>
+    
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+        <p>
+          All portions of this website written by me are released under the
+          <a href="license.txt"> MIT License</a>. Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
 </html>

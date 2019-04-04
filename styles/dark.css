@@ -1,9 +1,9 @@
 /** Colors
  *
- * Pink (header): rgba(195, 86, 98, 1);
- * Pink (h1):  #ce687a;
- * Background: #1f0053;
- * Other colors: #5f4d93, #2dca50, #d37184
+ * Pink (header): 
+ * Pink (h1): 
+ * Background:
+ * Other colors:
  * 
  */
 
@@ -84,7 +84,7 @@ header {
   background-color: #005377;
 }
 
-header a#mobile-nav {
+header a#mobile-nav, header a#mobile-nav-close {
   display: none;
 }
 
@@ -102,6 +102,7 @@ header a:hover {
 }
 
 header nav {
+  display: block;
   flex-grow: 1;
 }
 
@@ -139,13 +140,12 @@ header nav ul li ul>li:last-child, button.long {
 }
 
 header nav ul li ul li {
-  background-color: green; /*#005377;*/
+  background-color: #005377;
   max-width: 100%;
 }
 
 header nav ul li:hover ul {
   max-height: 100%;
-  overflow: show;
 }
 
 /* Figures */
@@ -239,13 +239,62 @@ footer section ul.icons li {
 
 /* Mobile */
 @media screen and (max-width: 800px) {
+  header nav {
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    transition: width .8s;
+    z-index: 2;
+    background-color: #005377;
+    overflow: auto;
+  }
+
+  header nav.shown {
+    width: 80%;
+  }
+
   header nav ul {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-inline-start: 3em;
+  }
+
+  header nav ul li {
+    max-width: 100%;
+    font-size: 1.5em;
+    text-align: left;
+  }
+
+  header nav ul li ul {
+    position: static;
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: none;
+    padding-inline-start: 3em;
+  }
+
+  header nav ul li ul li {
+    background-color: transparent;
+    font-size: .75em;
+  }
+
+  header nav ul li ul>li:last-child {
+    clip-path: none;
   }
 
   header a#mobile-nav {
     display: inline-block;
+    max-width: 25%;
   }
+  header nav a#mobile-nav-close {
+    display: inline-block;
+    margin-bottom: 2em;
+  }
+
+  
 
   main::before {
     width: 100%;
