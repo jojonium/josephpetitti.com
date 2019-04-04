@@ -1,3 +1,12 @@
+/** Colors
+ *
+ * Pink (header): rgba(195, 86, 98, 1);
+ * Pink (h1):  #ce687a;
+ * Background: #1f0053;
+ * Other colors: #5f4d93, #2dca50, #d37184
+ * 
+ */
+
 /* Whole Page */
 html, body {
   width: 100%;
@@ -9,7 +18,6 @@ html {
   background-color: #1f0053;
   color: #bcd;
   font-family: Lato, "noto sans", sans-serif;
-  /*background-image: url('../images/cubes.png');*/
 }
 
 main::before {
@@ -18,7 +26,7 @@ main::before {
   content: "";
   left: 10%;
   top: 0;
-  min-width: 80%; 
+  width: 80%; 
   height: 800px;
   z-index: -1;
   background-repeat: repeat;
@@ -31,7 +39,7 @@ main img {
 main {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 20px;
 }
 
 /* Text */
@@ -45,11 +53,12 @@ p, li {
 }
 
 h1 {
-  color: #ce687a;
+  color: #f1a208;
   text-align: center;
   text-shadow: 3px 3px 4px black;
   margin: 2em;
   font-size: 3em;
+  letter-spacing: 0.05em;
 }
 
 h2, h3, h4, h5, h6 {
@@ -67,24 +76,19 @@ a:hover {
 
 /* Header */
 header {
-  width: 80%;
-  position: relative;
-  left: 20%;
+  width: 100%;
+  /*position: relative;
+  left: 20%;*/
   display: flex;
+  z-index: 2;
+  background-color: #005377;
 }
 
-header::before {
-  content: " ";
-  background-color: rgba(195, 86, 98, .8);
-  flex-grow: 0;
-  flex-basis: 10%;
-  display: inline-block;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 25% 100%, 10% 73%, 0 26%);
-  position: relative;
-  right: 0;
+header a#mobile-nav {
+  display: none;
 }
 
-header nav a {
+header a {
   color: white;
   font-size: 1.5em;
   display: block;
@@ -93,53 +97,62 @@ header nav a {
   box-sizing: border-box;
 }
 
-header nav a:hover {
+header a:hover {
   color: #dadada;
 }
 
 header nav {
   flex-grow: 1;
-  background-color: rgba(195, 86, 98, .8);
 }
 
 header nav ul {
   display: flex;
   justify-content: flex-start;
   list-style-type: none;
-  padding: 0 18% 0 0;
-  margin: 0;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-inline-start: 0;
 }
 
 header nav ul li {
-  max-width: 20%;
+  max-width: 15em;
   flex-grow: 1;
-  text-align: left;
+  text-align: center;
 }
 
 header nav ul li ul {
-  display: none;
+  display: flex;
   flex-direction: column;
   position: absolute;
-  background-color: rgba(195, 86, 98, .9);
   max-width: 15em;
   padding: 0;
+  box-shadow: -5px 10px 16px 0px rgba(0, 0, 0, .3);
+  z-index: 1;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .8s;
+  transition-timing-function: ease;
+}
+
+header nav ul li ul>li:last-child, button.long {
+  clip-path: polygon(0 0, 150% 0, 101% 70%, 90% 101%, 0 150%);
 }
 
 header nav ul li ul li {
+  background-color: green; /*#005377;*/
   max-width: 100%;
 }
 
-header nav ul li ul:last {
-  right: 0;
-}
-
 header nav ul li:hover ul {
-  display: flex;
+  max-height: 100%;
+  overflow: show;
 }
 
 /* Figures */
 figure {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 40px;
@@ -162,20 +175,28 @@ figure figcaption {
 
 /* Buttons */
 button.long {
+  z-index: 0;
   font-size: 1.125em;
   color: white;
   min-width: 200px;
   padding: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  margin: 20px 10px 0;
   cursor: pointer;
   border: none;
-  border-radius: 4px;
+  background-color: #004b6e;
+}
+
+.long-buttons a {
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.long-buttons a:hover button {
+  background-color: #105b6e;
 }
 
 div.main-links-holder {
   display: flex;
   justify-content: space-around;
+  padding: 2em 0;
 }
 
 /* Footer */
@@ -214,4 +235,26 @@ footer section ul.icons {
 
 footer section ul.icons li {
   display: inline;
+}
+
+/* Mobile */
+@media screen and (max-width: 800px) {
+  header nav ul {
+    display: none;
+  }
+
+  header a#mobile-nav {
+    display: inline-block;
+  }
+
+  main::before {
+    width: 100%;
+    background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%), url('../images/subtle-white-feathers.png');   left: 0;
+  }
+
+  figure.float.left, figure.float.right {
+    width: 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+  }
 }
