@@ -188,23 +188,23 @@ var GUI = function(board) {
 
 GUI.prototype = {
 	drawBoard: function() {
-		this.ctx.fillStyle = "#dddddd";
+		this.ctx.fillStyle = "#005377";
 		this.ctx.fillRect(0, 0, canvas.width, canvas.height);
-		this.ctx.strokeStyle = "#e06d78";
+		this.ctx.strokeStyle = "#f1a208";
 		this.ctx.lineWidth = 6;
 		this.ctx.beginPath();
 		this.ctx.moveTo(SQUARE_SIZE, canvas.height - 3);
 		this.ctx.lineTo(3 * SQUARE_SIZE, canvas.height - 3);
 		this.ctx.stroke();
 		this.ctx.lineWidth = 4;
-		this.ctx.strokeStyle = "#222222";
+		this.ctx.strokeStyle = "#2b2b2b";
 		for (let i = 0; i < this.board.pieces.length; ++i) {
 			if (this.board.selected === this.board.pieces[i])
-				this.ctx.fillStyle = "#008cff";
+				this.ctx.fillStyle = "#3066be";
 			else if (i == 0)
-				this.ctx.fillStyle = "#e06d78";
+				this.ctx.fillStyle = "#f1a208";
 			else
-				this.ctx.fillStyle = "#fffee7";
+				this.ctx.fillStyle = "#4ea5d9";
 			var tlx = this.board.pieces[i].getDims()[0];
 			var tly = this.board.pieces[i].getDims()[1];
 			var wid = this.board.pieces[i].getDims()[2];
@@ -324,8 +324,8 @@ $(document).ready(function() { main(); });
 
 var config = function(num) {
 	configuration = num;
-	$(".config").css("background-color", "#a89cc8");
-	$("#config-" + num).css("background-color", "#34d058");
+	$(".config").css("background-color", "#3066be");
+	$("#config-" + num).css("background-color", "#f1a208");
 	reset();
 }
 
