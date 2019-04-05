@@ -114,7 +114,9 @@ header a {
 }
 
 header a:hover {
-  color: #dadada;
+  color: #eee;
+  transition: .2s;
+  background-color: #4ea5d9;
 }
 
 header nav {
@@ -143,7 +145,7 @@ header nav ul li ul {
   position: absolute;
   max-width: 15em;
   padding: 0;
-  box-shadow: -5px 10px 16px 0px rgba(0, 0, 0, .3);
+  box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .6);
   z-index: 1;
   max-height: 0;
   overflow: hidden;
@@ -151,9 +153,6 @@ header nav ul li ul {
   transition-timing-function: ease;
 }
 
-header nav ul li ul>li:last-child {
-  clip-path: polygon(0 0, 150% 0, 101% 70%, 90% 101%, 0 150%);
-}
 
 header nav ul li ul li {
   background-color: #005377;
