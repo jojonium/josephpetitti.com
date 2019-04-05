@@ -15,7 +15,7 @@ html, body {
   padding: 0;
 }
 
-html, button {
+html {
   background-color: #1f0053;
   color: #bcd;
   font-family: Lato, "noto sans", sans-serif;
