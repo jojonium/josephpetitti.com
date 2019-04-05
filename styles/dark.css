@@ -1,10 +1,9 @@
+/* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
+
 /** Colors
- *
- * Pink (header): 
- * Pink (h1): 
- * Background:
- * Other colors:
- * 
+ * Light (header): #005377;
+ * Orange (h1): #f1a208;
+ * Background: #1f0053;
  */
 
 /* Whole Page */
@@ -14,7 +13,7 @@ html, body {
   padding: 0;
 }
 
-html {
+html, button, .button-like {
   background-color: #1f0053;
   color: #bcd;
   font-family: Lato, "noto sans", sans-serif;
@@ -164,6 +163,11 @@ figure.float.right {
   width: 40%;
 }
 
+figure.float.left {
+  float: left;
+  width: 40%;
+}
+
 figure.full-width {
   margin-inline-start: 0;
   margin-inline-end: 0;
@@ -176,20 +180,26 @@ figure figcaption {
 /* Buttons */
 button.long {
   z-index: 0;
-  font-size: 1.125em;
-  color: white;
   min-width: 200px;
-  padding: 10px;
   cursor: pointer;
   border: none;
+  width: 12em;
+  margin: .5em;
+}
+
+button, .button-like {
+  font-size: 1.125em;
+  color: white;
   background-color: #004b6e;
+  padding: 10px;
+  border: none;
 }
 
 .long-buttons a {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.long-buttons a:hover button {
+.long-buttons a:hover button, button:hover {
   background-color: #105b6e;
 }
 
@@ -238,7 +248,11 @@ footer section ul.icons li {
 }
 
 /* Mobile */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
+  header {
+    font-size: 1.75em;
+  }
+
   header nav {
     height: 100%;
     position: fixed;
@@ -252,19 +266,20 @@ footer section ul.icons li {
   }
 
   header nav.shown {
-    width: 80%;
+    width: 100%;
   }
 
   header nav ul {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding-inline-start: 3em;
+    padding-inline-start: 1em;
+    box-sizing: border-box;
   }
 
   header nav ul li {
     max-width: 100%;
-    font-size: 1.5em;
+    font-size: 1em;
     text-align: left;
   }
 
@@ -291,10 +306,29 @@ footer section ul.icons li {
   }
   header nav a#mobile-nav-close {
     display: inline-block;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
 
+  footer { 
+    flex-direction: column;
+  }
+
+  footer dt {
+    font-size: 2em;
+  }
+
+  footer section ul.icons {
+    font-size: 4em;
+  }
+
+  div.main-links-holder {
+    flex-direction: column;
+    align-items: center;
+  }
   
+  button.long {
+    font-size: 1.75em;
+  }
 
   main::before {
     width: 100%;

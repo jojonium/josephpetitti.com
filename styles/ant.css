@@ -5,11 +5,11 @@ button:disabled, .disabled {
 }
 
 .an-ant {
-    border: 1px solid gray;
     display: inline-block;
     width: 280px;
     margin: 4px;
     padding: 5px;
+    background-color: #005377;
 }
 
 .an-ant-flex {
@@ -25,17 +25,26 @@ button:disabled, .disabled {
 
 #globalCanvas {	border: 1px solid black;	}
 
+form#rule-form {
+    background-color: #005377;
+    float: right;
+    width: 140px;
+}
 .swatch {
     display: inline-block;
     border: none;
     opacity: 0;
     flex-shrink: 0;
-    border: none;
     margin: 0;
     padding: 0;
     width: 25px;
     height: 100%;
 }
+
+input#wrap {
+  margin: 0;
+}
+
 
 .swatch-wrapper {
     border: 1px solid black;
@@ -64,7 +73,7 @@ h2.color-rules, .an-ant h2 {
 
 body button {
     width: auto;
-    margin: 2px 0;
+    /*margin: 2px 0;*/
 }
 
 form { margin: 10px 0; }

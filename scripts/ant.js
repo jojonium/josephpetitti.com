@@ -68,6 +68,11 @@ function langtonant(antx, optx, rulex) {
 	canv.width = opts.gridsize * opts.pixlsize;
 	canv.height = opts.gridsize * opts.pixlsize;
 
+	cont.fillStyle = 'rgb(' + rules[0].cr + ', '
+		+ rules[0].cg + ', ' 
+		+ rules[0].cb + ')';
+	cont.fillRect(0, 0, canv.width, canv.height);
+
 	// Initialize pixels
 	var pixelArray = [];
 	var temp;
