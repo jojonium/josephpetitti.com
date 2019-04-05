@@ -215,6 +215,13 @@ button, .button-like {
   transition: .2s;
 }
 
+button[disabled], .button-like[disabled], 
+    .long-buttons a:hover button[disabled], button[disabled]:hover,
+    .button-like[disabled]:hover {
+  background-color: #d2d2d2;
+  box-shadow: none;
+}
+
 .long-buttons a:hover button, button:hover, .button-like:hover {
   background-color: #4ea5d9;
   box-shadow: 6px 6px 10px 1px rgba(0, 0, 0, 1);
