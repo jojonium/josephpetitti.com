@@ -4,9 +4,9 @@
 const squareSize = 50;
 const xdim = 10;
 const ydim = 10;
-const bgColor = "#dddddd";
-const colors = [bgColor, "#e37682", "#FFFF00", "#ddbc37", "#09e3f7", "#5f4d93",
-	"#34d058"];
+const bgColor = "#005377";
+const colors = [bgColor, "#95190c", "#610345", "#107e7d", "#fcca46", "#a44200",
+	"#f2f3ae"];
 var board, ctx, canvas, bar, barctx, currTime, deltaTime, sDeltaTime, lastColor;
 var score = 0;
 var turn = 0;
@@ -38,11 +38,11 @@ var start = function() {
 	barctx = bar.getContext('2d');
 	document.getElementById('canvas-holder').appendChild(bar);
 	barctx.fillStyle = "#00ff00";
-	barctx.strokeStyle = "green";
+	barctx.strokeStyle = "#1f0053";
 	barctx.lineWidth = 2;
 	updateBar(5);
 
-	ctx.strokeStyle = "#aaaaaa";
+	ctx.strokeStyle = "#1f0053";
 	ctx.lineWidth = 1;
 
 	// create board
@@ -142,7 +142,7 @@ var updateBar = function(x) {
 	for (let q = x; q > 0; q--) {
 		barctx.beginPath();
 		barctx.arc(25, (ydim * squareSize) - (q*50), 20, 0, 2 * Math.PI);
-		barctx.fillStyle = "#00ff00";
+		barctx.fillStyle = "#f1a208";
 		barctx.fill();
 		barctx.stroke();
 	}
@@ -190,7 +190,6 @@ var checkAdjacent = function(x, y, color) {
 	}
 	return out;
 };
-
 
 var update = function() {
 	currTime = Date.now();
