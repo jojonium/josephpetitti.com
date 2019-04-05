@@ -4,6 +4,7 @@
  * Light (header): #005377;
  * Orange (h1): #f1a208;
  * Background: #1f0053;
+ * Buttons and other elements: #4ea5d9
  */
 
 /* Whole Page */
@@ -13,7 +14,7 @@ html, body {
   padding: 0;
 }
 
-html, button, .button-like {
+html, button {
   background-color: #1f0053;
   color: #bcd;
   font-family: Lato, "noto sans", sans-serif;
@@ -55,22 +56,37 @@ h1 {
   color: #f1a208;
   text-align: center;
   text-shadow: 3px 3px 4px black;
-  margin: 2em;
+  margin: 2em auto 1em;
   font-size: 3em;
   letter-spacing: 0.05em;
 }
 
 h2, h3, h4, h5, h6 {
-  color: #fff;
+  color: #eee;
 }
 
 a {
-  color: #ddeeff;
+  color: #eee;
   text-decoration: none;
+  transition: color .2s;
 }
 
 a:hover {
   color: #40bcf4;
+}
+
+.code {
+  font-family: monospace;
+  background-color: #2b2b2b;
+  padding: 1px 3px;
+  border-radius: 5px
+}
+
+div.code {
+  font-size: 13pt;
+  padding: 5px 10px 5px 15px;
+  border-radius: 0 5px 5px 0;
+  border-left: 4px solid #f1a208;
 }
 
 /* Header */
@@ -88,7 +104,7 @@ header a#mobile-nav, header a#mobile-nav-close {
 }
 
 header a {
-  color: white;
+  color: #eee;
   font-size: 1.5em;
   display: block;
   padding: 12px;
@@ -134,7 +150,7 @@ header nav ul li ul {
   transition-timing-function: ease;
 }
 
-header nav ul li ul>li:last-child, button.long {
+header nav ul li ul>li:last-child {
   clip-path: polygon(0 0, 150% 0, 101% 70%, 90% 101%, 0 150%);
 }
 
@@ -188,19 +204,19 @@ button.long {
 }
 
 button, .button-like {
+  font-family: Lato, "noto sans", sans-serif;
   font-size: 1.125em;
-  color: white;
-  background-color: #004b6e;
+  color: #eee;
+  background-color: #3066be;
   padding: 10px;
   border: none;
+  box-shadow: 5px 5px rgba(0, 0, 0, 1);
+  transition: .2s;
 }
 
-.long-buttons a {
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.long-buttons a:hover button, button:hover {
-  background-color: #105b6e;
+.long-buttons a:hover button, button:hover, .button-like:hover {
+  background-color: #4ea5d9;
+  box-shadow: 6px 6px 10px 1px rgba(0, 0, 0, 1);
 }
 
 div.main-links-holder {
@@ -250,7 +266,7 @@ footer section ul.icons li {
 /* Mobile */
 @media screen and (max-width: 1000px) {
   header {
-    font-size: 1.75em;
+    font-size: 16pt;
   }
 
   header nav {
@@ -302,7 +318,7 @@ footer section ul.icons li {
 
   header a#mobile-nav {
     display: inline-block;
-    max-width: 25%;
+    max-width: 200px;
   }
   header nav a#mobile-nav-close {
     display: inline-block;
@@ -313,12 +329,12 @@ footer section ul.icons li {
     flex-direction: column;
   }
 
-  footer dt {
-    font-size: 2em;
+  footer dt, footer dd, footer p {
+    font-size: 13pt;
   }
 
   footer section ul.icons {
-    font-size: 4em;
+    font-size: 28pt;
   }
 
   div.main-links-holder {

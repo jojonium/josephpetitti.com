@@ -10,6 +10,8 @@ button:disabled, .disabled {
     margin: 4px;
     padding: 5px;
     background-color: #005377;
+    border: 2px solid #1f0053;
+    border-radius: 6px;
 }
 
 .an-ant-flex {
@@ -29,6 +31,8 @@ form#rule-form {
     background-color: #005377;
     float: right;
     width: 140px;
+    border: 2px solid #1f0053;
+    border-radius: 6px;
 }
 .swatch {
     display: inline-block;
