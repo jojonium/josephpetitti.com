@@ -1,190 +1,193 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<title>Projects</title>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		</head>
-	
-	<body>
-	<!-- Header -->
-		<header>
-			<h1>Projects</h1>
-		</header>
-	
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Projects</title>
+    <meta name="description" content="Projects created by Joseph Petitti, either for school or just for fun" />
+    <meta property="og:title" content="Projects" />
+    <meta property="og:description" content="Projects created by Joseph Petitti, either for school or just for fun" />
+    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/process-statistics" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
 
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
 
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+              <li><a href="dinner-suggester">Dinner Suggester</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
+  <!-- Main -->
+    <main is="main">
+      <h1>PROJECTS</h1>
 
+      <h2><a href="hong-kong-historic-conservation">Hong Kong Historic
+          Conservation</a></h2>
 
+      <p>
+        I spent two months in early 2019 in Hong Kong working on a historic
+        conservation project with the Institute for Sustainable Urbanisation and
+        Chinese University of Hong Kong. I made a
+        <a href="https://sctp.petitti.org/">website</a> to promote the cultural
+        precinct in Hong Kong's Central District. Click
+        <a href="hong-kong-historic-conservation">here</a> to learn more about
+        what I did in "Asia's World City."
+      <p>
 
+      <hr>
 
-	
-	
-	<!-- Main -->
-        <main>
-		
-			<div class="parallax p7">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #c79cc8;">
-                        <a href="hong-kong-historic-conservation">HONG KONG HISTORIC CONSERVATION</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>I spent two months in early 2019 in Hong Kong working on a historic conservation project with the Institute for Sustainable Urbanisation and Chinese University of Hong Kong. I made a <a href="https://sctp.petitti.org/">website</a> to promote the cultural precinct in Hong Kong's Central District. Click <a href="hong-kong-historic-conservation">here</a> to learn more about what I did in "Asia's World City."<p>
-            
-            <hr>
-            
-			<div class="parallax p4">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #34d058;">
-                        <a href="meeting-scheduler">ALGOL MEETING SCHEDULER</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>The Algol Meeting Scheduler is a web application for scheduling meetings with multiple participants over long periods of time. You can read about it <a href="meeting-scheduler">here</a>, or see the live version of the site <a href="https://algol.petitti.org">here</a>.<p>
+      <h2><a href="meeting-scheduler">Algol Meeting Scheduler</a></h2>
 
-            <hr>
-        
-            <div class="parallax p1">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #e37682;">
-                        <a href="this-website">THIS WEBSITE</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>This website (<a href="index">josephpetitti.com</a>) is a personal project I put together
-            to teach myself HTML, CSS, and JavaScript. To see more about my process, click <a href=
-            "this-website">here</a>.<p>
-                
-            <hr>
-            
-            <div class="parallax p3">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #08871b;">
-                        <a href="http-server-client">HTTP SERVER & CLIENT</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>For CS 3516: Computer Networks I created a simple HTTP client and server in C. To learn more,
-               and download it for yourself, click <a href="http-server-client">here</a>.<p>
-            
-            <hr>
-            
-            <div class="parallax p5">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #ddbc37;">
-                        <a href="process-statistics">PROCESS STATISTICS</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>For CS 3013: Operating Systems I created a C program that gather information about the execution
-               of arbitrary processes. You can ues it to execute a single command, or in an interactive shell
-               mode. Either way, it forks off a child process to run the input command, then prints out
-               statistics about it including system time, wall clock time, and number of context switches. To
-               learn more and see how it works, click <a href="process-statistics">here</a>.</p>
-            
-            <hr>
-            
-			<div class="parallax p6">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #09e3f7;">
-                        <a href="tic-tac-toe">TIC-TAC-TOE</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>Greetings Professor Falken. Just for fun I wrote a program in JavaScript that uses the MiniMax
-               algorithm to play Tic-Tac-Toe. On <a href="tic-tac-toe">this page</a> you can play a game against
-               your own computer to see who is victorious. You can even choose who gets to go first.</p>
-            
-            <hr>
-                
-            <div class="parallax p2">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color: #5f4d93;">
-                        <a href="dinner-suggester">DINNER SUGGESTER</a></div>
-                    <div class="parallax-spacer"></div>
-                </div>
-            </div>
-            <p>Dinner Suggester is a group project for CS 3041, Human Computer Interactions. The project was used
-			   to explore the technology of affective computing, using technology to promote health and
-			   wellbeing. We used <a href="https://developer.affectiva.com">Affectiva</a>'s emotion-detecting
-			   API. The program analyzes your expression through your webcam as it shows you ten images of 
-			   food, to see which one you like the most. Then it gives you a recipe for how to make that
-			   particular dish. To see how it works, click <a href="dinner-suggester">here</a>.<p>
+      <p>
+        The Algol Meeting Scheduler is a web application for scheduling meetings
+        with multiple participants over long periods of time. You can read about
+        it <a href="meeting-scheduler">here</a>, or see the live version of the
+        site <a href="https://algol.petitti.org">here</a>.
+      <p>
 
-		</main>
-		
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-				<p>I created this website as a personal project in my free time to learn more about web design,
-				   CSS, HTML, and JavaScript.</p>
-				<p>All portions of this website written by me are released under the <a href="license.txt">
-				   MIT License</a>. Other scripts and resources are licensed under free licenses by their
-				   respective owners. All source code is available on
-				   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.</p>
-			</section>
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-	</body>
+      <hr>
+
+      <h2><a href="this-website">This Website</a></h2>
+
+      <p>
+        This website (<a href="index">josephpetitti.com</a>) is a personal
+        project I put together to teach myself HTML, CSS, and JavaScript. To see
+        more about my process, click <a href= "this-website">here</a>.
+      <p>
+
+      <hr>
+
+      <h2><a href="http-server-client">HTTP Server &amp; Client</a></h2>
+
+      <p>
+        For CS 3516: Computer Networks I created a simple HTTP client and server
+        in C. To learn more, and download it for yourself, click
+        <a href="http-server-client">here</a>.
+      <p>
+
+      <hr>
+
+      <h2><a href="process-statistics">Process Statistics</a></h2>
+
+      <p>
+        For CS 3013: Operating Systems I created a C program that gather
+        information about the execution of arbitrary processes. You can ues it
+        to execute a single command, or in an interactive shell mode. Either
+        way, it forks off a child process to run the input command, then prints
+        out statistics about it including system time, wall clock time, and
+        number of context switches. To learn more and see how it works, click
+        <a href="process-statistics">here</a>.
+      </p>
+
+      <hr>
+
+      <h2><a href="tic-tac-toe">Tic-Tac-Toe</a></h2>
+
+      <p>
+        Greetings Professor Falken. Just for fun I wrote a program in JavaScript
+        that uses the MiniMax algorithm to play Tic-Tac-Toe. On
+        <a href="tic-tac-toe">this page</a> you can play a game against your own
+        computer to see who is victorious. You can even choose who gets to go
+        first.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are
+          released under the <a href="license.txt"> MIT License</a>.
+          Other scripts and resources are licensed under free licenses
+          by their respective owners. All source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">
+          GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">
+                jppetitti@wpi.edu
+              </a>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
 </html>
