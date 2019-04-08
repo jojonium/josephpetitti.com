@@ -1,129 +1,170 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Snake</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<script src="scripts/jquery-3.3.1.min.js"></script>
-		<script src="scripts/snake.js"></script>
-	</head>
-	<body>
-	
-	<!-- Header -->
-		<header>
-			<h1>Snake</h1>
-		</header>
-		
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Snake</title>
+    <meta name="description" content="An implementation of the game Snake in JavaScript" />
+    <meta property="og:title" content="Snake" />
+    <meta property="og:description" content="An implementation of the game Snake in JavaScript" />
+    <meta property="og:image" content="https://josephpetitti.com/images/snake.png" />
+    <meta property="og:type" content="game" />
+    <meta property="og:url" content="https://josephpetitti.com/snake" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
 
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/snake.js"></script>
+  </head>
+  <body>
 
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
 
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+              <li><a href="dinner-suggester">Dinner Suggester</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
+  <!-- Main -->
+    <main id="main">
+      <h1>SNAKE</h1>
 
+      <button id="small">Small</button>
+      <button id="medium">Medium</button>
+      <button id="large">Large</button>
+      <button id="huge">Huge</button>
 
+      <br>
+      <br>
 
-		
-	<!-- Main -->
-		<main>
-			<button id="small">Small</button>
-			<button id="medium">Medium</button>
-			<button id="large">Large</button>
-			<button id="huge">Huge</button>
-			
-			<br>
-			<br>
-			
-			<button id="custom">Custom</button>
-			Width: <input type="number" id="input-width" value="20"></input>
-			Height: <input type="number" id="input-height" value="15"></input>
-			
-			<center id="canvas-holder"></center>
-			
-			<center><button id="play-again" style="display: none" onclick="reset()">Play Again?</button></center>
-			
-			<p id="score"></p>
-			
-			<h2>Instructions</h2>
-			
-			<p>Use the arrow keys, WASD, or HJKL (Vim controls) to move the snake. Press R to restart. Eat food to get bigger. If you run into the walls or yourself you die. If you fill the entire board with snake without dying, you win!</p>
-			
-		</main>
-		
-		
-		<style>
-			#canvas {
-				border: 1px solid black;
-				margin: 15px;
-			}
-			
-			#canvas-holder {
-				overflow: auto;
-				max-height: 800px;
-				min-height: 400px;
-			}
-		</style>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-				<p>I created this website as a personal project in my free time to learn more about web design,
-				   CSS, HTML, and JavaScript.</p>
-				<p>All portions of this website written by me are released under the <a href="license.txt">
-				   MIT License</a>. Other scripts and resources are licensed under free licenses by their
-				   respective owners. All source code is available on
-				   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.</p>
-			</section>
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-	</body>
+      <button id="custom">Custom</button>
+      Width: <input type="number" id="input-width" value="20"></input>
+      Height: <input type="number" id="input-height" value="15"></input>
+
+      <center id="canvas-holder"></center>
+
+      <center>
+        <button id="play-again" style="display: none" onclick="reset()">
+          Play Again?
+        </button>
+      </center>
+
+      <p id="score"></p>
+
+      <h2>Instructions</h2>
+
+      <p>
+        Use the arrow keys, WASD, or HJKL (Vim controls) to move the snake.
+        Press R to restart. Eat food to get bigger. If you run into the walls or
+        yourself you die. If you fill the entire board with snake without dying,
+        you win!
+      </p>
+
+    </main>
+
+    <style>
+      #canvas {
+        border: 1px solid black;
+        margin: 15px;
+      }
+
+      #canvas-holder {
+        overflow: auto;
+        max-height: 800px;
+        min-height: 400px;
+      }
+    </style>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are
+          released under the <a href="license.txt"> MIT License</a>.
+          Other scripts and resources are licensed under free licenses
+          by their respective owners. All source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">
+          GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">
+                jppetitti@wpi.edu
+              </a>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
 </html>
