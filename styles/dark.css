@@ -369,6 +369,10 @@ footer section ul.icons li {
     padding-inline-start: 3em;
   }
 
+  header nav ul li:hover ul {
+    box-shadow: none;
+  }
+
   header nav ul li ul li {
     background-color: transparent;
     font-size: .75em;
