@@ -42,7 +42,7 @@ var Particle = function(x, y) {
 Particle.prototype = {
 	draw: function() {
 		ctx.save();
-		ctx.fillStyle = "#4f92ff";
+		ctx.fillStyle = "#f1a208";
 		ctx.fillRect(this.x - 4, this.y - 4, 8, 8);
 		ctx.restore();
 	}
@@ -53,11 +53,12 @@ Enemy.prototype = {
 		ctx.save();
 		ctx.font = "bold 18px sans-serif";
 		ctx.textBaseline = "top";
-		if (globActive && globActive.text == this.text) ctx.fillStyle = "#5668aa";
-		else ctx.fillStyle = "#815f40";
+		if (globActive && globActive.text == this.text) ctx.fillStyle = "#f1a208";
+		else ctx.fillStyle = "#1f0053";
 		var width = ctx.measureText(this.text).width;
 		ctx.fillRect(this.x - 5, this.y - 5, width + 10, 18 + 10); // background
-		ctx.fillStyle = "#ffffff";
+		if (globActive && globActive.text == this.text) ctx.fillStyle = "#2b2b2b";
+		else ctx.fillStyle = "#eeeeee";
 		ctx.fillText(this.remaining, this.x /*+ (ctx.measureText(this.text.replace(this.remaining, '')))*/, this.y); // text
 		ctx.restore();
 	}
@@ -133,7 +134,7 @@ var update = function() {
 
 var render = function() {
 	// clear canvas
-	ctx.fillStyle = "#FFFFFF";
+	ctx.fillStyle = "#005377";
 	ctx.fillRect(0, 0, 400, 800);
 
 	for (var i = 0; i < particles.length; i++) {
