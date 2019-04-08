@@ -400,7 +400,7 @@ footer section ul.icons li {
   }
 
   footer section ul.icons {
-    font-size: 28pt;
+    font-size: 40pt;
   }
 
   div.main-links-holder {
@@ -421,5 +421,16 @@ footer section ul.icons li {
     width: 100%;
     margin-inline-start: 0;
     margin-inline-end: 0;
+  }
+
+  ul.statistics {
+    font-size: 20pt;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  ul.statistics li {
+    flex-basis: 40%;
+    margin: 2em 0;
   }
 }
