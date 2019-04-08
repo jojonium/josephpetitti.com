@@ -1,239 +1,266 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Joseph Petitti</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-		<script src="scripts/seen.min.js"></script>
-		<script src="scripts/coffee-script.min.js"></script>
-	</head>
-	<body>
-	
-	<!-- Header -->
-		<header>
-			<svg height="160" width="160">
-				<circle cx="80" cy="80" r="60" fill="#e37682" />
-				<!--<polygon points="80,25 140,35 140,115 80,145 20,115 20,35" fill="#e37682" />-->
-				<path id="top-line" d="M 40 50 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
-				<path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" style="fill:none;stroke:yellow;stroke-width:9" />
-				<path id="vertical-center" d="M 85 50 V 105" style="fill:none;stroke:yellow;stroke-width:9" />
-				<path id="p-lower" d="M 85 85 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
-				<path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" style="fill:none;stroke:yellow;stroke-width:9" />
-				Your browser does not support inline SVG
-			</svg>
-			<h1>Joseph Petitti</h1>
-		</header>
-		
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Joseph Petitti</title>
+    <meta name="description" content="The website of Joseph Petitti, a junior Computer Science student at Worcester Polytechnic Institute" />
+    <meta property="og:title" content="Joseph Petitti" />
+    <meta property="og:description" content="The website of Joseph Petitti, a junior Computer Science student at Worcester Polytechnic Institute" />
+    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://josephpetitti.com/" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
 
+    <script src="scripts/particles.min.js"></script>
+  </head>
+  <body>
 
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
 
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+              <li><a href="dinner-suggester">Dinner Suggester</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
+    <style>
+      main::before {
+        background-image: none;
+        height: 0;
+          width: 0;
+      }
+    </style>
 
+  <!-- Main -->
+    <main id="main">
+      <div style="display: flex; justify-content: center;">
+        <svg height="160" width="160">
+          <circle cx="80" cy="80" r="60" fill="#e37682" />
+          <path id="top-line" d="M 40 50 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
+          <path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" style="fill:none;stroke:yellow;stroke-width:9" />
+          <path id="vertical-center" d="M 85 50 V 105" style="fill:none;stroke:yellow;stroke-width:9" />
+          <path id="p-lower" d="M 85 85 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
+          <path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" style="fill:none;stroke:yellow;stroke-width:9" />
+          Your browser does not support inline SVG
+        </svg>
+      </div>
 
+      <h1 style="margin-top: .5em">JOSEPH PETITTI</h1>
 
-		
-	<!-- Main -->
-		<main style="padding: 0 40px 40px 40px;" id="main">
-			<div style="height: 500px">
-                <div class="parallax-center">
-                    <div class="parallax-spacer"></div>
-                    <div class="parallax-header" style="background-color:
-														#a89cc8; z-index: 1;">WELCOME</div>
-                    <div class="parallax-spacer"></div>
-                </div>
-				<canvas height="500" id="seen-canvas" class="seen-main"
-						style="position: relative; top: -42px;"></canvas>
-			</div>
-		
-			<div class="circular-portrait"></div>
-			<h2>Welcome to my personal website</h2>
-			<p>I'm Joseph Petitti, a junior computer science student at Worcester
-			Polytechnic Institute. I'm interested in cybersecurity, software
-			engineering, computer networking, and data science.</p> <p>Check out my <a
-			href="resume">resume</a> for an overview of my accomplishments, and see
-			the <a href="projects">projects</a> page or my <a
-							href="https://github.com/jojonium">GitHub</a> for a detailed
-			description of the projects I've been working on.</p>
-			   
-			<h2>About Me</h2>
-			<p>I have a wide range of interests. When not buried in homework,
-			studying, and meetings I enjoy learning about technology, hiking and
-			camping, watching and reviewing movies, and playing games of all
-			kinds.</p>
-			
-			<p>Technology fascinates me. I am always excited to learn more
-			about computer science, and information-technology. In both my academic
-			and personal life, I try to teach myself as much as I can about it by
-			completing programming projects. <a href="this-website">This website</a>
-			is a perfect example of that.</p>
-			
-			<ul class="statistics">
-				<li class="style1">
-					<span class="icon fas fa-graduation-cap"></span></br>
-					GPA <strong>3.90</strong>
-				</li>
-				<li class="style2">
-					<span class="icon fab fa-github"></span></br>
-					Commits in past year <strong>930</strong>
-				</li>
-				<li class="style3">
-					<span class="icon fas fa-server"></span></br>
-					Server uptime hours <strong id="uptime-hours">677</strong>
-				</li>
-				<li class="style4">
-					<span class="icon fas fa-film"></span></br>
-					Films watched <strong>1,077</strong>
-				</li>
-			</ul>
+      <div class="circular-portrait"></div>
 
-			<p>As an Eagle Scout, I love the great outdoors. Although going to school
-			in the heart of Massachusetts doesn't afford many opportunities for
-			outdoor activities, I continue to go backpacking, hiking, and camping
-			whenever I can. The photo below is a friend and me on top of Mount Colden
-			in New York.</p>
-			   
-			<img class="full-width" src="images/colden.jpg"></img>
+      <h2>Welcome to my personal website</h2>
 
-			<p>At WPI I'm a member of the Beta Theta Pi fraternity. Beta has given
-			me many great opportunities to learn, meet new friends, and improve
-			myself. I've served as the Risk Management Chairman since January 2018,
-			a position which has given me valuable leadership experience.</p>
+      <p>
+        I'm Joseph Petitti, a junior computer science student at Worcester
+        Polytechnic Institute. I'm interested in cybersecurity, software
+        engineering, computer networking, and data science.
+      </p>
+      
+      <p>
+        Check out my <a href="resume">resume</a> for an overview of my
+        accomplishments, and see the <a href="projects">projects</a> page or my
+        <a href="https://github.com/jojonium">GitHub</a> for a detailed
+        description of the projects I've been working on.
+      </p>
 
-			<p>If you have any questions or comments about this website or any of my
-			projects, or if you just want to say hi, feel free to email me at <a
-			href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>.
-			
-		</main>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-				<p>I created this website as a personal project in my free time to learn
-				more about web design, CSS, HTML, and JavaScript.</p>
-				<p>All portions of this website written by me are released under the <a
-								href="license.txt"> MIT License</a>. Other scripts and resources
-				are licensed under free licenses by their respective owners. All source
-				code is available on <a
-								href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
-				</p>
-			</section>
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>		
-		
-		<script type="text/coffeescript" id="code">
-			document.getElementById("seen-canvas").width = document.getElementById("main").offsetWidth
-			width               = document.getElementById("seen-canvas").offsetWidth
-			height              = 500
-			equilateralAltitude = Math.sqrt(3.0) / 2.0
-			triangleScale       = 70
-			patch_width         = width * 1.5
-			patch_height        = height * 1.5
+      <h2>About Me</h2>
 
-			# Create patch of triangles that spans the view
-			shape = seen.Shapes.patch(
-				patch_width / triangleScale / equilateralAltitude
-				patch_height / triangleScale
-			)
-			.scale(triangleScale)
-			.translate(-patch_width/2, -patch_height/2 + 80)
-			.rotx(-0.3)
-			
-			hue = 0.70833
-			for surface in shape.surfaces
-			  hue += (.272225) * (1 / shape.surfaces.length)
-			  surface.fill seen.Colors.hsl(hue, 0.5, 0.4)
+      <p>
+        I have a pretty wide range of interests. When not buried in homework,
+        studying, and meetings I enjoy learning about technology, hiking and
+        camping, watching and reviewing movies, and playing games of all
+        kinds.
+      </p>
 
-			# Create scene and render context
-			scene = new seen.Scene
-				model    : seen.Models.default().add(shape)
-				viewport : seen.Viewports.center(width, height)
+      <p>
+        Technology fascinates me. I am always excited to learn more about
+        computer science, and information-technology. In both my academic and
+        personal life, I try to teach myself as much as I can about it by
+        completing programming projects. <a href="this-website">This website</a>
+        is a perfect example of that.
+      </p>
 
-			context = seen.Context('seen-canvas', scene).render()
+      <ul class="statistics">
+        <li class="style1">
+          <span class="icon fas fa-graduation-cap"></span>
+          GPA <strong>3.90</strong>
+        </li>
+        <li class="style2">
+          <span class="icon fab fa-github"></span>
+          Commits in past year <strong>930</strong>
+        </li>
+        <li class="style3">
+          <span class="icon fas fa-server"></span>
+          Server uptime hours <strong id="uptime-hours">677</strong>
+        </li>
+        <li class="style4">
+          <span class="icon fas fa-film"></span>
+          Films watched <strong>1,077</strong>
+        </li>
+      </ul>
 
-			# Apply animated 3D simplex noise to patch vertices
-			t = 0
-			noiser = new seen.Simplex3D(shape)
-			context.animate()
-				.onBefore((t)->
-					for surf in shape.surfaces
-						for p in surf.points
-							p.z = 4*noiser.noise(p.x/8, p.y/8, t*1e-4)
-						# Since we're modifying the point directly, we need to mark the surface dirty
-						# to make sure the cache doesn't ignore the change
-						surf.dirty = true
-				)
-				.start()
-		</script>
-		
-		<script type="text/javascript">
-			// get time since Nov 23 in hours
-			var interval = Math.floor((new Date() - new Date(2018, 10, 23, 12, 30)) / 3600000);
-			document.getElementById("uptime-hours").innerHTML = interval;
-		</script>
-		
-		<style>
-			.circular-portrait {
-				float: right;
-				background: url("images/portrait.jpg") center;
-				background-size: cover;
-				height: 200px;
-				width: 200px;
-				border-radius: 100px;
-				margin: 8em 1em 1em;
-				box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-			}
-		</style>
-	</body>
+      <p>
+        As an Eagle Scout, I love the great outdoors. Although going to school
+        in the heart of Massachusetts doesn't afford many opportunities for
+        outdoor activities, I continue to go backpacking, hiking, and camping
+        whenever I can. The photo below is a friend and me on top of Mount
+        Colden in New York.
+      </p>
+
+      <img class="full-width" src="images/colden.jpg"></img>
+
+      <p>
+        At WPI I'm a member of the Beta Theta Pi fraternity. Beta has given me
+        many great opportunities to learn, meet new friends, and improve myself.
+        I've served as the Risk Management Chairman since January 2018, a
+        position which has given me valuable leadership experience.
+      </p>
+
+      <p>
+        If you have any questions or comments about this website or any of my
+        projects, or if you just want to say hi, feel free to email me at
+        <a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are
+          released under the <a href="license.txt"> MIT License</a>.
+          Other scripts and resources are licensed under free licenses
+          by their respective owners. All source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">
+          GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">
+                jppetitti@wpi.edu
+              </a>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+
+    <div id="particles-js"></div>
+    <div id="particles-after"></div>
+
+    <script type="text/javascript">
+      // get time since Mar 31 2019 in hours
+      var interval = Math.floor((new Date() - new Date(2019, 3, 1, 18, 30)) / 3600000);
+      document.getElementById("uptime-hours").innerHTML = interval;
+      
+      window.onload = function() {
+        particlesJS.load('particles-js', 'https://josephpetitti.com/new/assets/particle-cfg.json');
+      }
+    </script>
+
+    <style>
+      .circular-portrait {
+        float: right;
+        background: url("images/portrait.jpg") center;
+        background-size: cover;
+        height: 200px;
+        width: 200px;
+        border-radius: 100px;
+        margin: 4em 1em 1em;
+        box-shadow: 5px 5px rgba(0, 0, 0, 1);
+      }
+      div#particles-js {
+        position: absolute;
+        width: 100%;
+        height: 800px;
+        top: 0;
+        z-index: -2;
+        background-color: #3066be;
+      }
+      div#particles-after {
+        background-image: linear-gradient(90deg,#1f0053 0,rgba(31,0,83,.98556487) .97%,rgba(31,0,83,.9451312) 2.07833333%,rgba(31,0,83,.88300656) 3.29666667%,rgba(31,0,83,.80349854) 4.60166667%,rgba(31,0,83,.71091472) 5.96666667%,rgba(31,0,83,.60956268) 7.365%,rgba(31,0,83,.50375) 8.77166667%,rgba(31,0,83,.39778426) 10.16%,rgba(31,0,83,.29597303) 11.505%,rgba(31,0,83,.20262391) 12.78%,rgba(31,0,83,.12204446) 13.95833333%,rgba(31,0,83,.05854227) 15.01666667%,rgba(31,0,83,.01642493) 15.92833333%,rgba(31,0,83,0) 16.66666667%,rgba(31,0,83,0) 83.33333333%,rgba(31,0,83,.01642493) 84.07166667%,rgba(31,0,83,.05854227) 84.98333333%,rgba(31,0,83,.12204446) 86.04166667%,rgba(31,0,83,.20262391) 87.22%,rgba(31,0,83,.29597303) 88.495%,rgba(31,0,83,.39778426) 89.84%,rgba(31,0,83,.50375) 91.22833333%,rgba(31,0,83,.60956268) 92.635%,rgba(31,0,83,.71091472) 94.03333333%,rgba(31,0,83,.80349854) 95.39833333%,rgba(31,0,83,.88300656) 96.70333333%,rgba(31,0,83,.9451312) 97.92166667%,rgba(31,0,83,.98556487) 99.03%,#1f0053),linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%);
+        position: absolute;
+        width: 100%;
+        height: 800px;
+        top: 0;
+        z-index: -1;
+      }
+      canvas.particles-js-canvas-el {
+        z-index: -2;
+      }
+    </style>
+  </body>
 </html>

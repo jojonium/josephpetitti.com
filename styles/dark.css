@@ -164,14 +164,12 @@ header nav ul li ul {
   position: absolute;
   max-width: 15em;
   padding: 0;
-  box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .6);
   z-index: 1;
   max-height: 0;
   overflow: hidden;
-  transition: max-height .8s;
+  transition: max-height .8s, box-shadow .3s;
   transition-timing-function: ease;
 }
-
 
 header nav ul li ul li {
   background-color: #005377;
@@ -180,7 +178,38 @@ header nav ul li ul li {
 
 header nav ul li:hover ul {
   max-height: 100%;
+  box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .6);
 }
+
+/* Statistics */
+
+ul.statistics {
+  color: #eee;
+  margin: 3em 0;
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul.statistics li {
+  flex-grow: 1;
+  text-align: center;
+}
+
+ul.statistics li span.icon {
+  font-size: 3em;
+  display: block;
+  padding: 5px;
+}
+
+ul.statistics li strong {
+  display: block;
+  font-size: 1.5em;
+  padding: 5px;
+}
+
 
 /* Figures */
 figure {
