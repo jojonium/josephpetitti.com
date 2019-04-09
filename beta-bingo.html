@@ -9,6 +9,7 @@
     <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/2/21/Beta_Theta_Pi_flag.png" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://josephpetitti.com/beta-bingo" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
@@ -74,7 +75,6 @@
     <style>
       div.board {
         width: 100%;
-        height: 800px;
         margin: 10px auto;
       }
       
@@ -101,6 +101,19 @@
         display: inline-block;
         vertical-align: middle;
         line-height: normal;
+      }
+
+      @media screen and (max-width: 600px) {
+        div.bbox span {
+          font-size: .65em;
+        }
+
+        div.bbox {
+          height: 100px;
+          line-height: 100px;
+          padding: 0;
+        }
+
       }
     </style>
 

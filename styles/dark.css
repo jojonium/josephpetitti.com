@@ -327,8 +327,8 @@ footer section ul.icons li {
 
 /* Mobile */
 @media screen and (max-width: 1000px) {
-  header {
-    font-size: 16pt;
+  h1 {
+    font-size: 2em;
   }
 
   header nav {
@@ -357,7 +357,6 @@ footer section ul.icons li {
 
   header nav ul li {
     max-width: 100%;
-    font-size: 1em;
     text-align: left;
   }
 
@@ -395,23 +394,11 @@ footer section ul.icons li {
     flex-direction: column;
   }
 
-  footer dt, footer dd, footer p {
-    font-size: 13pt;
-  }
-
-  footer section ul.icons {
-    font-size: 40pt;
-  }
-
   div.main-links-holder {
     flex-direction: column;
     align-items: center;
   }
   
-  button.long {
-    font-size: 1.75em;
-  }
-
   main::before {
     width: 100%;
     background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%), url('../images/subtle-white-feathers.png');   left: 0;
@@ -424,7 +411,6 @@ footer section ul.icons li {
   }
 
   ul.statistics {
-    font-size: 20pt;
     flex-wrap: wrap;
     margin: 0;
   }
