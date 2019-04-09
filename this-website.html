@@ -9,6 +9,7 @@
     <meta property="og:image" content="https://josephpetitti.com/images/refrigerator.png" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://josephpetitti.com/this-website" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
@@ -76,6 +77,14 @@
 
       <h1>THIS WEBSITE</h1>
 
+      <div class="main-links-holder">
+        <a href="https://github.com/jojonium/josephpetitti.com" target="_blank">
+          <button class="long">
+            <i class="fab fa-github"></i> Source Code
+          </button>
+        </a>
+      </div>
+
       <img src="images/refrigerator.jpg"
          style="padding: 4em .5em 0 .5em; float: right"
          title="Well you'd better go catch it!">
@@ -126,6 +135,36 @@
 
       <canvas width="400" height="400" id="seen-canvas" style="float: right;">
       </canvas>
+
+      <script type="text/coffeescript" id="code">
+        width  = 400
+        height = 400
+
+        # Create sphere shape with randomly colored surfaces
+        shape = seen.Shapes.sphere(2).scale(height * 0.4)
+        seen.Colors.randomSurfaces2(shape)
+
+        # Create scene and add shape to model
+        scene = new seen.Scene
+          model    : seen.Models.default().add(shape)
+          viewport : seen.Viewports.center(width, height)
+
+        # Create render context from canvas
+        context = seen.Context('seen-canvas', scene).render()
+
+        # Slowly rotate sphere
+        context.animate()
+          .onBefore((t, dt) -> shape.rotx(dt*1e-4).roty(0.7*dt*1e-4))
+          .start()
+
+        # Enable drag-to-rotate on the canvas
+        dragger = new seen.Drag('seen-canvas', {inertia : true})
+        dragger.on('drag.rotate', (e) ->
+          xform = seen.Quaternion.xyToTransform(e.offsetRelative...)
+          shape.transform(xform)
+          context.render()
+        )
+      </script>
 
       <h2 id="seen.js">seen.js</h2>
 
@@ -188,13 +227,18 @@
 
       <div class="code">&lt;svg height="160" width="160" "style"="float: left;"&gt;
   &lt;circle cx="80" cy="80" r="60" fill="#e37682" /&gt;
-  &lt;path id="top-line" d="M 40 50 H 100" style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="vertical-center" d="M 85 50 V 105" style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="p-lower" d="M 85 85 H 100" style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" style="fill:none;stroke:yellow;stroke-width:9" /&gt;
+  &lt;path id="top-line" d="M 40 50 H 100" 
+      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
+  &lt;path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" 
+      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
+  &lt;path id="vertical-center" d="M 85 50 V 105" 
+      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
+  &lt;path id="p-lower" d="M 85 85 H 100" 
+      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
+  &lt;path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" 
+      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
   Your browser does not support inline SVG
-&lt;/svg&gt; </div>
+&lt;/svg&gt;</div>
 
       <hr>
 
@@ -220,16 +264,17 @@
       <p>
         First, I installed <a href="https://www.ubuntu.com/server">Ubuntu
         Server</a> 18.04 GNU/Linux on the server, and set up an SSH connection
-      from my main desktop. From there, I installed
+        from my main desktop. From there, I installed
         <a href="https://nginx.org">nginx</a> and used it to configure a reverse
         proxy so I could have multiple servers running on the same machine. I
         acquired an SSL certificate from <a href="https://letsencrypt.org">Let's
         Encrypt</a>, and set an nginx rule to rewrite all HTTP requests to
         HTTPS. With this and other security measures in place, I cloned the
-        website from GitHub and changed the A records in my domain name registrar
-        to point to the server, and now my little server is broadcasting to the
-        whole world. I even added a cron job to the server to automatically pull
-        from GitHub every ten minutes to keep the site up to date.
+        website from GitHub and changed the A records in my domain name
+        registrar to point to the server, and now my little server is
+        broadcasting to the whole world. I even added a cron job to the server
+        to automatically pull from GitHub every ten minutes to keep the site up
+        to date.
       </p>
 
       <p>
@@ -239,6 +284,59 @@
         it definitely taught me a lot about networking, GNU/Linux, and web
         development.
       </p>
+
+      <hr>
+
+      <h2 id="new-design">New Design</h2>
+
+      <p>
+        In April 2019, about a year after I first started working on the
+        website, I decided to revamp it with a fresh design. The original design
+        wasn't responsive on mobile, and my <span class="code">style.css</span>
+        was full of accumulated cruft from when I was first learning web design.
+        I wanted a fresh start to show off my newfound mastery of flexboxes,
+        transition animations, and responsive design.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/old-design.png">
+          <img src="images/th_old-design.png" alt="Old index page">
+        </a>
+        <figcaption>
+          The original design of the index page
+        </figcaption>
+      </figure>
+
+      <p>
+        This design was good enough (and actually helped me get a job), but the
+        accumulation of janky CSS hacks over a year made it difficult to add to
+        it consistently. The navigation bar also relied on hover states, which
+        made it unusable on mobile. Instead of hacking together a fix for the
+        existing 500-line stylesheet I decided to start over.
+      </p>
+
+      <h3 id="design-principles">Design Principles</h3>
+
+      <p>
+        I designed the new website style with these principles in mind:
+      </p>
+      
+      <ol>
+        <li>
+          <b>Simplicity</b>: the site should be simple and easy to read, with a
+            minimal number of unique elements and different colors
+        </li>
+        <li>
+          <b>Mobile compatibility</b>: everything hsould look good and be usable
+          on mobile, but the desktop experience should not be sacrificed for
+          this
+        </li>
+        <li>
+          <b>Extensibility</b>: It should be easy for me to add new elements and
+          different kinds of pages in the future
+        </li>
+      </ol>
+
 
     </main>
 
@@ -287,34 +385,5 @@
         </ul>
       </section>
     </footer>
-    <script type="text/coffeescript" id="code">
-      width  = 400
-      height = 400
-
-      # Create sphere shape with randomly colored surfaces
-      shape = seen.Shapes.sphere(2).scale(height * 0.4)
-      seen.Colors.randomSurfaces2(shape)
-
-      # Create scene and add shape to model
-      scene = new seen.Scene
-        model  : seen.Models.default().add(shape)
-        viewport : seen.Viewports.center(width, height)
-
-      # Create render context from canvas
-      context = seen.Context('seen-canvas', scene).render()
-
-      # Slowly rotate sphere
-      context.animate()
-        .onBefore((t, dt) -> shape.rotx(dt*1e-4).roty(0.7*dt*1e-4))
-        .start()
-
-      # Enable drag-to-rotate on the canvas
-      dragger = new seen.Drag('seen-canvas', {inertia : true})
-      dragger.on('drag.rotate', (e) ->
-        xform = seen.Quaternion.xyToTransform(e.offsetRelative...)
-        shape.transform(xform)
-        context.render()
-      )
-    </script>
   </body>
 </html>
