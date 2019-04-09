@@ -71,13 +71,6 @@
 
     </header>
 
-    <style>
-      main::before {
-        background-image: none;
-        height: 0;
-          width: 0;
-      }
-    </style>
 
   <!-- Main -->
     <main id="main">
@@ -95,7 +88,7 @@
 
       <h1 style="margin-top: .5em">JOSEPH PETITTI</h1>
 
-      <div class="circular-portrait"></div>
+      <!--<div class="circular-portrait"></div>-->
 
       <h2>Welcome to my personal website</h2>
 
@@ -111,6 +104,10 @@
         <a href="https://github.com/jojonium">GitHub</a> for a detailed
         description of the projects I've been working on.
       </p>
+
+      <figure class="float right">
+        <img src="images/th_portrait.jpg" alt="Portrait">
+      </figure>
 
       <h2>About Me</h2>
 
@@ -129,7 +126,7 @@
         is a perfect example of that.
       </p>
 
-      <ul class="statistics">
+      <ul class="statistics clear">
         <li class="style1">
           <span class="icon fas fa-graduation-cap"></span>
           GPA <strong>3.90</strong>
@@ -233,15 +230,20 @@
     </script>
 
     <style>
+      main::before {
+        background-image: none;
+        height: 0;
+        width: 0;
+      }
       .circular-portrait {
         float: right;
         background: url("images/portrait.jpg") center;
         background-size: cover;
         height: 200px;
         width: 200px;
-        border-radius: 100px;
-        margin: 4em 1em 1em;
+        border-radius: 100%;
         box-shadow: 5px 5px rgba(0, 0, 0, 1);
+        margin: 1em;
       }
       div#particles-js {
         position: absolute;
