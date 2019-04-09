@@ -2,7 +2,8 @@
 
 /** Colors
  * Header:  #005377;
- * Orange (h1): #f1a208;
+ * Orange: #f1a208;
+ * h1: #8eabdb;
  * Background: #1f0053;
  * Buttons and other elements: #3066be;
  * Hovered buttons: #4ea5d9;
@@ -56,6 +57,10 @@ main {
   padding: 0 20px;
 }
 
+.clear {
+  clear: both;
+}
+
 /* Text */
 p {
   font-size: 13pt;
@@ -69,7 +74,7 @@ p, li {
 }
 
 h1 {
-  color: #f1a208;
+  color: #8eabdb;
   text-align: center;
   text-shadow: 3px 3px 4px black;
   margin: 2em auto 1em;
@@ -110,9 +115,8 @@ div.code {
 
 /* Header */
 header {
+  font-size: 1em;
   width: 100%;
-  /*position: relative;
-  left: 20%;*/
   display: flex;
   z-index: 2;
   background-color: #005377;
@@ -124,7 +128,6 @@ header a#mobile-nav, header a#mobile-nav-close {
 
 header a {
   color: #eee;
-  font-size: 1.5em;
   display: block;
   padding: 12px;
   width: 100%;
@@ -152,23 +155,27 @@ header nav ul {
   padding-inline-start: 0;
 }
 
-header nav ul li {
-  max-width: 15em;
-  flex-grow: 1;
+header nav>ul>li {
+  font-size: 1.5em;
+  width: 160px;
   text-align: center;
+  font-weight: 600;
 }
 
 header nav ul li ul {
+  font-size: .75em;
   display: flex;
   flex-direction: column;
   position: absolute;
-  max-width: 15em;
+  max-width: 240px;
+  min-width: 180px;
   padding: 0;
   z-index: 1;
   max-height: 0;
   overflow: hidden;
   transition: max-height .8s, box-shadow .3s;
   transition-timing-function: ease;
+  font-weight: normal;
 }
 
 header nav ul li ul li {
@@ -260,6 +267,7 @@ button, .button-like {
   border: none;
   box-shadow: 5px 5px rgba(0, 0, 0, 1);
   transition: .2s;
+  margin: 5px;
 }
 
 button[disabled], .button-like[disabled], 
@@ -331,6 +339,10 @@ footer section ul.icons li {
     font-size: 2em;
   }
 
+  header {
+    font-size: 1.25em;
+  }
+
   header nav {
     height: 100%;
     position: fixed;
@@ -349,21 +361,25 @@ footer section ul.icons li {
   }
 
   header nav ul {
+    font-size: .75em;
     display: flex;
     flex-direction: column;
     width: 100%;
     padding-inline-start: 1em;
+    padding-inline-end: 3em;
     box-sizing: border-box;
   }
 
   header nav ul li {
-    max-width: 100%;
+    width: 100%;
     text-align: left;
   }
 
   header nav ul li ul {
     position: static;
-    max-width: 100%;
+    width: 100%;
+    max-width: none;
+    min-width: none;
     max-height: 100%;
     box-shadow: none;
     padding-inline-start: 3em;
@@ -375,16 +391,11 @@ footer section ul.icons li {
 
   header nav ul li ul li {
     background-color: transparent;
-    font-size: .75em;
-  }
-
-  header nav ul li ul>li:last-child {
-    clip-path: none;
   }
 
   header a#mobile-nav {
     display: inline-block;
-    max-width: 200px;
+    max-width: 6em;
   }
   header nav a#mobile-nav-close {
     display: inline-block;
