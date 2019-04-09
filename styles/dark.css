@@ -341,6 +341,7 @@ footer section ul.icons li {
     z-index: 2;
     background-color: #005377;
     overflow: auto;
+    white-space: nowrap;
   }
 
   header nav.shown {
