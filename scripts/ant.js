@@ -1,4 +1,4 @@
-/* (c) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
+/* (c) 2018, 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
 
 // create global canvas
 var canvas = document.createElement('canvas');

@@ -1,3 +1,5 @@
+/* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
+
 const o = new Array(36);
 
 function shuffle(array) {
