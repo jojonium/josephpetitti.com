@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link href="styles/dark.css" rel="stylesheet" type="text/css">
+
+    <script src="scripts/seen.min.js"></script>
   </head>
   <body>
 
@@ -27,6 +29,27 @@
       document.getElementById('nav').classList.remove("shown");
     }
   </script>
+
+  <style>
+    canvas {
+      width: 200px;
+      height: 200px;
+    }
+    canvas.l { float: left; }
+    canvas.r {float: right; }
+    hr {
+      clear: both;
+    }
+    @media screen and (max-width: 1000px) {
+      canvas, canvas.r, canvas.l {
+        float: none;
+      }
+      div.canvas-container {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  </style>
 
   <!-- Header -->
     <header>
@@ -73,13 +96,19 @@
     <main is="main">
       <h1>PROJECTS</h1>
 
+      <div class="canvas-container">
+        <canvas width="200" height="200" id="seen-canvas-1" class="r"></canvas>
+      </div>
+
       <h2><a href="hong-kong-historic-conservation">Hong Kong Historic
           Conservation</a></h2>
 
       <p>
         I spent two months in early 2019 in Hong Kong working on a historic
         conservation project with the Institute for Sustainable Urbanisation and
-        Chinese University of Hong Kong. I made a
+        Chinese University of Hong Kong. This was my Interactive Qualifying
+        Project for WPI, a graduation requirement that many students complete in
+        off-campus project centers around the world. I made a
         <a href="https://sctp.petitti.org/">website</a> to promote the cultural
         precinct in Hong Kong's Central District. Click
         <a href="hong-kong-historic-conservation">here</a> to learn more about
@@ -88,26 +117,43 @@
 
       <hr>
 
+      <div class="canvas-container">
+        <canvas width="200" height="200" id="seen-canvas-2" class="l"></canvas>
+      </div>
+
       <h2><a href="meeting-scheduler">Algol Meeting Scheduler</a></h2>
 
       <p>
         The Algol Meeting Scheduler is a web application for scheduling meetings
-        with multiple participants over long periods of time. You can read about
-        it <a href="meeting-scheduler">here</a>, or see the live version of the
-        site <a href="https://algol.petitti.org">here</a>.
+        with multiple participants over long periods of time. For this project I
+        led a team of four as the for the WPI class CS 3733: Software
+        Engineering. You can read about it <a href="meeting-scheduler">here</a>,
+        or see the live version of the site 
+        <a href="https://algol.petitti.org">here</a>.
       <p>
 
       <hr>
+
+      <div class="canvas-container">
+        <canvas width="200" height="200" id="seen-canvas-3" class="r"></canvas>
+      </div>
 
       <h2><a href="this-website">This Website</a></h2>
 
       <p>
         This website (<a href="index">josephpetitti.com</a>) is a personal
-        project I put together to teach myself HTML, CSS, and JavaScript. To see
-        more about my process, click <a href= "this-website">here</a>.
+        project I put together to teach myself HTML, CSS, and JavaScript. It
+        also serves as a showcase for my various projects, both for school and
+        for fun. The website has been under development for almost a year, and
+        has undergone many changes in that time. To see more about my process,
+        click <a href= "this-website">here</a>.
       <p>
 
       <hr>
+
+      <div class="canvas-container">
+        <canvas width="200" height="200" id="seen-canvas-4" class="l"></canvas>
+      </div>
 
       <h2><a href="http-server-client">HTTP Server &amp; Client</a></h2>
 
@@ -118,6 +164,10 @@
       <p>
 
       <hr>
+
+      <div class="canvas-container">
+        <canvas width="200" height="200" id="seen-canvas-5" class="r"></canvas>
+      </div>
 
       <h2><a href="process-statistics">Process Statistics</a></h2>
 
@@ -133,6 +183,10 @@
 
       <hr>
 
+      <div class="canvas-container">
+        <canvas width="200" height="200" id="seen-canvas-6" class="l"></canvas>
+      </div>
+
       <h2><a href="tic-tac-toe">Tic-Tac-Toe</a></h2>
 
       <p>
@@ -142,9 +196,50 @@
         computer to see who is victorious. You can even choose who gets to go
         first.
       </p>
-
     </main>
 
+    <script type="text/javascript" id="code">
+      const width  = 200;
+      const height = 200;
+      const n      = 6;
+
+      let nums = new Array(n);
+      for (let i = 0; i < n; ++i) {
+        nums[i] = i;
+      }
+
+      // create shapes
+      let shapes = nums.map((i) => {
+        if (i % 2 === 0)
+          return seen.Shapes.sphere(1).scale(height * 0.4);
+        else
+          return seen.Shapes.icosahedron().scale(height * 0.4);
+      });
+
+      // create a scene for each shape
+      let scenes = shapes.map((shape) => {
+        return new seen.Scene({
+          fractionalPoints: true,
+          model: seen.Models.default().add(shape),
+          viewport: seen.Viewports.center(width, height)
+        })
+      });
+
+      // create render context for each shape
+      let contexts = new Array(n);
+      for (let i = 0; i < n; ++i) {
+        seen.Colors.randomSurfaces2(shapes[i]);
+        contexts[i] = seen.Context(`seen-canvas-${i + 1}`, scenes[i]).render();
+      }
+
+      // add slow rotation
+      new seen.Animator().onFrame((t, dt) => {
+        for (let i = 0; i < n; ++i) {
+          shapes[i].rotx(dt*1e-4).roty(dt*8e-5);
+          contexts[i].render();
+        }
+      }).start();
+    </script>
   <!-- Footer -->
     <footer id="footer">
       <section class="about">
