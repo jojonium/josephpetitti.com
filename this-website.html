@@ -342,6 +342,99 @@
         </li>
       </ol>
 
+      <h3 id="navigation-bar">Navigation Bar</h3>
+
+      <p>
+        In desktop mode, the navigation bar remains mostly the same since the
+        previous version, but gains some fancy new transition animations.
+        However, in mobile mode it changes into an expanding side-menu with a
+        <span class="code">@media</span> CSS selector. The only JavaScript
+        included in every page adds a class, <span class="code">shown</span>, to
+        the <span class="code">nav</span> element when the menu button is
+        clicked, and removes it when the close button is clicked:
+      </p>
+
+      <div class="code">const showNav = function() {
+  document.getElementById('nav').classList.add("shown");
+}
+const closeNav = function() {
+  document.getElementById('nav').classList.remove("shown");
+}</div>
+
+      <figure class="float left">
+        <img src="images/new-mobile-view.png" alt="New mobile version"
+        style="box-shadow: 0 0 2px 1px #667788">
+        <figcaption>
+          The new mobile version of the site
+        </figcaption>
+      </figure>
+
+      <p>
+        The <span class="code">@media</span> selector makes the site dynamically
+        adjust as the viewport width is changed. The animation the shows the
+        nav-bar opening is just a CSS transition:
+      </p>
+
+      <div class="code">header nav {
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  transition: width .8s;
+  z-index: 2;
+  background-color: #005377;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+header nav.shown {
+  width: 100%;
+}</div>
+
+      <h3 id="heading-background">Heading Background</h3>
+
+      <p>
+        The light textured background behind page titles is also just a simple
+        CSS trick. Each page's <span class="code">main</span> element has a
+        <span class="code">::before</span> pseudo-element positioned behind the
+        top of the page. This pseudo-element has a composite background image,
+        consisting of a small, mostly-transparent image repeated across the
+        page, and a gradient to create the "fading out" effect.
+      </p>
+
+      <div class="code clear">main::before {
+  position: absolute;
+  content: "";
+  left: 10%;
+  top: 0;
+  width: 80%;
+  height: 800px;
+  z-index: -1;
+  background-repeat: repeat;
+  background-image:
+    url('https://josephpetitti.com/images/subtle-white-feathers.png'),
+    linear-gradient(90deg,#1f0053 0,rgba(31,0,83,.98556487) .97%, rgba(31,0,83,.9451312) 2.07833333%,rgba(31,0,83,.88300656) 3.29666667%,rgba(31,0, 83,.80349854) 4.60166667%,rgba(31,0,83,.71091472) 5.96666667%,rgba(31,0,83,.60956 268) 7.365%,rgba(31,0,83,.50375) 8.77166667%,rgba(31,0,83,.39778426) 10.16%,rgba( 31,0,83,.29597303) 11.505%,rgba(31,0,83,.20262391) 12.78%,rgba(31,0,83,.12204446)  13.95833333%,rgba(31,0,83,.05854227) 15.01666667%,rgba(31,0,83,.01642493) 15.928 33333%,rgba(31,0,83,0) 16.66666667%,rgba(31,0,83,0) 83.33333333%,rgba(31,0,83,.01 642493) 84.07166667%,rgba(31,0,83,.05854227) 84.98333333%,rgba(31,0,83,.12204446)  86.04166667%,rgba(31,0,83,.20262391) 87.22%,rgba(31,0,83,.29597303) 88.495%,rgba (31,0,83,.39778426) 89.84%,rgba(31,0,83,.50375) 91.22833333%,rgba(31,0,83,.609562 68) 92.635%,rgba(31,0,83,.71091472) 94.03333333%,rgba(31,0,83,.80349854) 95.39833 333%,rgba(31,0,83,.88300656) 96.70333333%,rgba(31,0,83,.9451312) 97.92166667%,rgb a(31,0,83,.98556487) 99.03%,#1f0053),
+    linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23. 63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba( 31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83 ,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426 ) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88 148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(3 1,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%);
+}</div>
+
+      <p>
+        The image itself is quite small, less than 200 kiB, and everything else
+        is rendered client-side, which keeps load times fast.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/subtle-white-feathers.png"
+            alt="Heading background texture">
+      </figure>
+
+      <h3 id="particles.js">particles.js</h3>
+
+      <p>
+        For the background of the <a href="index">index</a> page I used
+        <a href="https://vincentgarreau.com/particles.js/">particles.js</a>, a
+        lightweight, free JavaScript library for creating particle effects.
+      </p>
 
     </main>
 
