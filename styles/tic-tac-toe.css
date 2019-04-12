@@ -25,8 +25,8 @@
 	height: 300px;
 }
 
-#computer-says {
-	font-size: 1.375em;
+h2#computer-says {
+  margin-top: 0;
 }
 
 #log p {
