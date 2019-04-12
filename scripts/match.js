@@ -4,7 +4,7 @@
 const squareSize = 50;
 const xdim = 10;
 const ydim = 10;
-const bgColor = "#005377";
+const bgColor = "#a5a5a5";
 const colors = [bgColor, "#95190c", "#610345", "#107e7d", "#fcca46", "#a44200",
 	"#f2f3ae"];
 var board, ctx, canvas, bar, barctx, currTime, deltaTime, sDeltaTime, lastColor;
