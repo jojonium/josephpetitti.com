@@ -310,7 +310,6 @@ var squareClick = function(n) {
 		computerSay("Hey, that's an illegal move!");
 	}
 	else {
-		console.log("here");
 		var over = realMove(b.O, n);
 		if (!over) go();
 	}

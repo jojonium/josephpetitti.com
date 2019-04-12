@@ -6,11 +6,17 @@
     margin-bottom: 50px;
 }
 
+#top-lvl-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 #output {
-	float: right;
 	width: 300px;
-	height: 300px;
-	margin-top: 20px;
+    height: 400px;
+    margin-bottom: 2em;
 }
 
 #log {
