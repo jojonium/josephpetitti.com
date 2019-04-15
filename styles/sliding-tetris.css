@@ -1,0 +1,15 @@
+div#board {
+  margin: 0 auto;
+  border: 1px solid #bbccdd;
+  background-color: #1f0053;
+  position: relative;
+}
+
+div.piece {
+  border-radius: 10px;
+  background-color: red;
+  height: 60px;
+  width: 100px;
+  position: absolute !important;
+  transition: left .5s, top .5s cubic-bezier(0.33333, 0, 0.66667, 0.33333);
+}
