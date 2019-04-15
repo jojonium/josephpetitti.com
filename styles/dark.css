@@ -118,7 +118,7 @@ a:hover {
 
 div.code {
   font-size: 13pt;
-  padding: 5px 10px 5px 15px;
+  padding: 15px 10px 15px 15px;
   border-radius: 0 5px 5px 0;
   border-left: 4px solid #f1a208;
 }
@@ -227,6 +227,18 @@ ul.statistics li strong {
   padding: 5px;
 }
 
+/* Tables */
+main table {
+  border-collapse: collapse;
+}
+
+main table thead th {
+  border-bottom: 1px solid rgba(187, 204, 221, .8);
+}
+
+main table td, main table th {
+  padding: 2px 5px 2px 0;
+}
 
 /* Figures */
 figure {

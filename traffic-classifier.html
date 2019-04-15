@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Traffic Classifier</title>
+    <meta name="description" content="A project for CS 4516: Advanced Computer Networks, involving setting up a GNU/Linux virtual machine gateway to capture encrypted packets from a subnet and use machine learning to classify which application they came from" />
+    <meta property="og:title" content="Traffic Classifier" />
+    <meta property="og:description" content="A project for CS 4516: Advanced Computer Networks, involving setting up a GNU/Linux virtual machine gateway to capture encrypted packets from a subnet and use machine learning to classify which application they came from" />
+    <meta property="og:image" content="https://josephpetitti.com/images/virtualbox-config.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/traffic-classifier" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
+
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+    </header>
+
+  <!-- Main -->
+    <main id="main">
+
+      <h1>
+        TRAFFIC CLASSIFIER
+      </h1>
+
+      <div class="main-links-holder long-buttons">
+        <a href="https://github.com/jojonium/CS-4516-Advanced-Computer-Networks" target=_blank">
+          <button class="long">
+            <span class="fab fa-github"></span> Github
+          </button>
+        </a>
+      </div>
+
+      <h2 id="overview">Overview</h2>
+
+      <p>
+        For this project for CS 4516: Advanced Computer Networks, I worked with
+        a partner to set up a network of virtual machines in which a TinyCore
+        GNU/Linux VM acts as an IP gateway for an Android 6.0 VM. The gateway
+        captures packets from the Android VM, analyzes them, and uses a random
+        forest classifier to predict what application they game from, even
+        though the packet payloads are encrypted.
+      </p>
+
+      <p>
+        This project involved dozens of hours of work over six weeks, and lots
+        of independent development and research. Neither I nor my partner had
+        any experience with machine learning, so we had to learn how to make
+        that part of the project work on our own.
+      </p>
+
+      <hr>
+
+      <h2 id="phase-1">Phase 1</h2>
+
+      <p>In this phase, we configure the TinyCore VM to act as a gateway.</p>
+
+      <p>
+        First, configure the VirtualBox NAT interface (Adapter 1) so that it
+        port-forwards from port 12345 of the host to port 22 of the guest VM:
+      </p>
+
+      <ul>
+        <li>
+          Open the VM network settings, select Adapter #1, click
+          port-forwarding.
+        </li>
+        <li>
+          Add a port forwarding rule from port 12345 of the host to port 22 of
+          the guest.
+        </li>
+      </ul>
+
+      <p>
+        Then, install Android x86 in another virtual machine, and configure it
+        to use the gateway VM to reach the internet:
+      </p>
+      
+      <figure class="full-width">
+        <img src="images/virtualbox-config.png" alt="VirtualBox configuration"/>
+        <figcaption>VirtualBox network configuration</figcaption>
+      </figure>
+
+      <p>
+        <strong>Note:</strong> Everything below this point can be done by the
+        <code>phase1/init.sh</code> script, or you can follow along and do it
+        manually.
+      </p>
+
+      <h3 id="ssh">SSH</h3>
+
+      <p>
+        We should install OpenSSH, to make it easier to work on the virtual
+        machine:
+      </p>
+
+      <div class="code">$ tce-load -wi openssh</div>
+
+      <p>Create a configuration file for SSH:</p>
+
+      <div class="code">$ sudo cp /usr/local/etc/ssh/sshd_config.orig /usr/local/etc/ssh/sshd_config</div>
+
+      <p>
+        Set a password for user tc (the script uses
+        <span class="code">cs4516</span> as the password):
+      </p>
+
+      <div class="code">$ sudo passwd tc</div>
+
+      <p>Make sure SSH starts at boot:</p>
+
+      <div class="code">$ sudo sh -c 'echo &quot;sudo /usr/local/etc/init.d/openssh start&quot; &gt;&gt; /opt/bootlocal.sh'</div>
+
+      <p>
+        TinyCore uses a RAM-based filesystem, so you need to store the changes
+        you make or they will be lost on reboot.
+      </p>
+
+      <p>Backup ssh configuration and shadow file:</p>
+
+      <div class="code">$ echo &#39;/usr/local/etc/ssh&#39; &gt;&gt; /opt/.filetool.lst
+$ echo &#39;/etc/shadow&#39; &gt;&gt; /opt/.filetool.lst</div>
+
+      <p>Backup changes:</p>
+
+      <div class="code">$ filetool.sh -b</div>
+
+      <p>
+        <strong>Note:</strong> You should be able to reboot and SSH into the
+        TinyCore gateway now with 
+        <span class="code">ssh -p 12345 tc@localhost</span> on the
+        host machine.
+      </p>
+
+      <h3 id="static-ip">Static IP</h3>
+
+      <p>
+        Next, we need to configure the eth1 interface of TinyCore with the
+        static IP address 192.168.12.1, netmask 255.255.255.0. This is the
+        interface it will use to connect to the Internet, and we have to persist
+        the change so it deploys the configuration every time the machine boots
+        up. We can do this with a command:
+      </p>
+
+      <div class="code">$ ifconfig eth1 192.168.12.1 netmask 255.255.255.0 broadcast 192.168.12.255 up</div>
+
+      <p>
+        But we want the change to be persistent, so that it deploys the new
+        configuration every time the machine boots up. We'll put it in a startup
+        script, <span class="code">/opt/eth1.sh</span> soon, but we have some other stuff to
+        do first.
+      </p>
+
+      <h3 id="ip-gateway">IP Gateway</h3>
+
+      <p>
+        For this step we need to configure TinyCore to actually forward IP
+        packets. For this we'll need to packages, so install them now:
+      </p>
+
+      <div class="code">$ tce-load -wi iptables
+$ tce-load -wi ipv6-KERNEL</div>
+
+      <p>
+        Next we need to turn on IP forwarding, and configure it to do this at
+        startup:
+      </p>
+
+      <div class="code">$ sudo sh -c 'echo &quot;sudo sysctl -w net.ipv4.ip_forward=1&quot; &gt;&gt; /opt/bootlocal.sh'</div>
+
+      <p>
+        And use the newly installed iptables package to route packets from eth0
+        (the interface connected to the Android VM):
+      </p>
+
+      <div class="code">sudo sh -c 'echo &quot;sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE&quot; &gt;&gt; /opt/bootlocal.sh'</div>
+
+      <h3 id="dhcp-server">DHCP Server</h3>
+
+      <p>
+        We also want TinyCore to act as a DHCP server for its subnet. We'll
+        create a configuration file for the program udhcpd that outlines how we
+        want it to work:
+      </p>
+
+      <div class="code">start 192.168.12.100
+end 192.168.12.200
+interface eth1
+option subnet 255.255.255.0
+option router 192.168.12.1
+option lease 43200
+option dns 10.0.2.3       # the address of VirtualBox&#39;s DNS server
+option domain network2</div>
+
+      <p>Put this file in <span class="code">/etc/eth1_udhcpd.conf</span>.</p>
+
+      <h3 id="startup-script">Startup Script</h3>
+
+      <p>
+        We're almost done setting up the IP gateway, we just need a script to
+        <span class="code">/opt/eth1.sh</span>, to do this for us every time the
+        virtual machine boots up. This script kills the udhcpc process if it's
+        already running, uses the command from earlier to set up eth1, and then
+        starts the udhcpc server process. Put this file in
+        <span class="code">/opt/eth1.sh</span>.
+      </p>
+
+      <div class="code"><span style='color:#9999a9; '>#! </span><span style='color:#007997; '>/bin/sh</span>
+
+<span style='color:#9999a9; '># kill dhcp client for eth1</span>
+<span style='color:#e66170; font-weight:bold; '>if</span> <span style='color:#d2cd86; '>[</span> <span style='color:#00dddd; '>-f</span> <span style='color:#3066be; '>/var/run/udhcpc.eth1.pid</span> <span style='color:#d2cd86; '>]</span><span style='color:#b060b0; '>;</span> <span style='color:#e66170; font-weight:bold; '>then</span>
+    <span style='color:#904050; '>kill</span> <span style='color:#ffffff;'>`cat </span><span style='color:#3066be;'>/var/run/udhcpc.eth1.pid</span><span style='color:#ffffff;'>`</span>
+    sleep <span style='color:#008c00; '>0</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>1</span>
+<span style='color:#e66170; font-weight:bold; '>fi</span>
+
+<span style='color:#9999a9; '># configure interface eth1</span>
+ifconfig eth1 <span style='color:#008c00; '>192</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>168</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>12</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>1</span> netmask <span style='color:#008c00; '>255</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>255</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>255</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>0</span> broadcast <span style='color:#008c00; '>192</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>168</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>12</span><span style='color:#e66170; font-weight:bold; '>.</span><span style='color:#008c00; '>255</span> up
+
+<span style='color:#9999a9; '># start the DHCP server process in the background once the interface is ready</span>
+sudo udhcpd <span style='color:#3066be; '>/etc/eth1_udhcpd.conf</span> <span style='color:#b060b0; '>&amp;</span></div> 
+
+      <p>
+        Now we just have to make sure <span class="code">/opt/eth1.sh</span> is
+        run at startup, so include it in <span>/opt/bootlocal.sh</span>:
+      </p>
+
+      <div class="code">$ sudo sh -c 'echo &quot;/opt/eth1.sh &amp;&quot; &gt;&gt; /opt/bootlocal.sh'</div>
+
+      <p>
+        And that's it! Make sure to run <code>filetool.sh -b</code> to backup
+        everything, then reboot and it should work. If the Android VM can't
+        connect to the internet something went wrong.
+      </p>
+
+      <hr>
+
+      <h2 id="phase2">Phase 2</h2>
+
+      <p>
+        For this phase, we wrote a Python script called
+        <span class="code">logFlows</span> that captures packets from the
+        Android VM and separates them into bursts and flows. A flow is defined
+        as a sequence of packets with the same source IP, source port,
+        destination IP, and destination port. A burst is a group of flows
+        separated by gaps of greater than one second of silence. After each
+        burst, the program prints a report on which each flow in that burst, in
+        the following format:
+      </p>
+
+      <div class="code">&lt;timestamp&gt; &lt;src addr&gt; &lt;dst addr&gt; &lt;src port&gt; &lt;dst port&gt; &lt;proto&gt; \
+&lt;#packets sent&gt; &lt;#packets rcvd&gt; &lt;#bytes send&gt; &lt;#bytes rcvd&gt;</div> 
+
+      <p>
+        Timestamps are measured in seconds since the program was started, and
+        represent the time of arrival of the last pack in the flow.
+      </p>
+
+      <p>
+        <span class="code">logFlows</span> uses Python 2 and requires the Python
+        package scapy, which can be easily installed with pip. Note that it must
+        be run as root on TinyCore.
+      </p>
+      
+      <hr>
+
+      <h2 id="phase-3">Phase 3</h2>
+
+      <p>To run this program, run:</p>
+        
+      <div class="code">./classifyFlows <i>filename.pcap</i></div>
+
+      <p>
+        where <span class="code">filename.pcap</span> is a PCAP packet capture
+        trace. It will identify all flows in this trace and attempt to identify
+        which application they are from. At the end it will print summary
+        statistics including the percentage identified as each app.
+      </p>
+
+      <h3 id="python-packages">Python Packages</h3>
+
+      <p>We used Python 3 for this phase. Required packages:</p>
+
+      <ul>
+        <li>scipy</li>
+        <li>kamene</li>
+        <li>scikit-learn</li>
+        <li>numpy</li>
+        <li>pickle</li>
+      </ul>
+
+      <h3 id="classification-vectors">Classification Vectors</h3>
+
+      <p>
+        Our classification model is a random forest classifier generated by
+        creating feature vectors from test flows with the following
+        information:
+      </p>
+
+      <ul>
+        <li>Byte ratio (bytes sent / bytes received, or reciprocal)</li>
+        <li>Packet ratio (packets sent / packets received, or reciprocal)</li>
+        <li>Mean packet length</li>
+        <li>Standard deviation of packet lengths (zero if n &lt;= 2)</li>
+        <li>Packet length kurtosis</li>
+        <li>Packet length skew</li>
+        <li>Mean time gap between each packet (zero if n &lt;= 1)</li>
+        <li>Time gap kurtosis</li>
+        <li>Time gap skew</li>
+        <li>Min packet length</li>
+        <li>Max packet length</li>
+        <li>Min time gap</li>
+        <li>Max time gap</li>
+        <li>Protocol (1 for TCP, 0 for UDP)</li>
+      </ul>
+
+      <h3 id="file-breakdown">File Breakdown</h3>
+
+      <p>
+        <span class="code">pcapper.py</span> runs on TinyCore, captures packets
+        from eth1 and writes them as PCAP files.
+        <span class="code">trainer.py</span> builds the classification model
+        based on feature vectors that we collected. It takes in two or more
+        pickled python objects representing the feature vectors and uses them to
+        build the model.  It will continue to train an existing
+        <span class="code">model.pkl</span> file if one exists, or will create
+        one otherwise. <span class="code">classifyFlows</span> requires
+        <span class="code">model.pkl</span> to be in the same directory. It
+        takes in a PCAP file as an argument and classifies each of the flows in
+        it based on the <span class="code">model.pkl</span>. It then makes a
+        prediction about what application the flow came from and prints it in
+        the following format:
+      </p>
+
+      <div class="code">&lt;timestamp&gt; &lt;src addr&gt; &lt;dst addr&gt; &lt;src port&gt; &lt;dst port&gt; &lt;proto&gt; \
+&lt;#packets sent&gt; &lt;#packets rcvd&gt; &lt;#bytes send&gt; &lt;#bytes rcvd&gt; &lt;label&gt;</div>
+
+      <p>
+        A modified version of <span class="code">classifyFlows</span> was also
+        used to build vectors out of PCAP files to feed to
+        <span class="code">trainer.py</span>.
+      </p>
+
+      <p>
+        We didn't include the PCAP and feature vector files we used for testing
+        and training to conserve space and fit within Canvas's upload limit.
+      </p>
+
+      <h3 id="results">Results</h3>
+
+      <p>
+        The following table shows the results of our test. The second column
+        shows the percentage of flows that were correctly identified, excluding
+        flows identified as unknown.
+      </p>
+
+      <table>
+        <thead>
+          <tr class="header">
+            <th>Application Name</th>
+            <th>% Correct</th>
+            <th>% Unknown</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="odd">
+            <td>YouTube</td>
+            <td>79.94%</td>
+            <td>11.39%</td>
+          </tr>
+          <tr class="even">
+            <td>Browser</td>
+            <td>20.53%</td>
+            <td>34.48%</td>
+          </tr>
+          <tr class="odd">
+            <td>Google News</td>
+            <td>36.13%</td>
+            <td>24.44%</td>
+          </tr>
+          <tr class="even">
+            <td>Fruit Ninja</td>
+            <td>53.33%</td>
+            <td>11.76%</td>
+          </tr>
+          <tr class="odd">
+            <td>Weather Channel</td>
+            <td>55.84%</td>
+            <td>20.10%</td>
+          </tr>
+          <tr class="even">
+            <td><strong>Average</strong></td>
+            <td><strong>55.84%</strong></td>
+            <td><strong>20.10%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        For each application, our model was more accurate than simply guessing
+        (20%). Overall, it is correct more often that not.
+      </p>
+
+      <h3 id="limitations-and-shortcomings">Limitations and Shortcomings</h3>
+
+      <p>
+        For some reason our model really likes misidentifying flows as being
+        from the Weather Channel app. We hypothesize that the Weather Channel's
+        app performs a variety of network applications including video,
+        advertisements, and asynchronous data requests, which makes it easy to
+        confuse with other apps. Our machine learning model is also probably not
+        ideal because neither of us have taken a machine learning class.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+        <p>
+          All portions of this website written by me are released under the
+          <a href="license.txt"> MIT License</a>. Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
+</html>
