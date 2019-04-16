@@ -103,18 +103,22 @@ Piece.prototype = {
 		let rightWall = B_WIDTH;
 
 		// find closest neighboring piece on the left
-		for (let i = this.x - 1; i >= 0; --i) {
-			if (BOARD[i][this.y] != -1) {
-				leftWall = i + 1;
-				break;
+		for (let l = this.y; l < this.y + this.height; l++) {
+			for (let i = this.x - 1; i >= 0; --i) {
+				if (BOARD[i][this.y] != -1) {
+					leftWall = Math.max(i + 1, leftWall);
+					break;
+				}
 			}
 		}
 
 		// find closest neighboring piece on the right
-		for (let i = this.x + this.width; i < B_WIDTH; ++i) {
-			if (BOARD[i][this.y] != -1) {
-				rightWall = i - this.width;
-				break;
+		for (let r = this.y; r < this.y + this.height; r++) {
+			for (let i = this.x + this.width; i < B_WIDTH; ++i) {
+				if (BOARD[i][this.y] != -1) {
+					rightWall = Math.min(i - this.width, rightWall);
+					break;
+				}
 			}
 		}
 
@@ -283,13 +287,13 @@ const prepareForNextTurn = () => {
 	}
 	$('#score').html(score);
 	if ($('.piece').length == 0) {
-		needToAdd++;
+		needToAdd+= 3;
 	}
 	setTimeout(() => {
 		clearedInARow = 0;
 		if (needToAdd > 0) {
-			addLine(difficulty, true);
-			needToAdd--;
+			addLines(difficulty, needToAdd, true);
+			needToAdd = 0;
 		}
 		else {
 			// check for win
@@ -343,10 +347,11 @@ const clearLine = (n) => {
  * Adds a line to the bottom of the board, moving all other lines up.
  *
  * lvl: integer, the difficulty level of this line, from 1 to 5
+ * num: integer, number of lines to add
  * force: boolean, force the add, even if dragging is disabled (this should only
  * be used if there are no Pieces on the board
  **/
-const addLine = (lvl = 1, force = false) => {
+const addLines = (lvl = 1, num = 1, force = false) => {
 	// don't go too fast
 	if (!force && $('.piece').draggable('option', 'disabled')) {
 		console.log('whoa, slow down!');
@@ -368,55 +373,75 @@ const addLine = (lvl = 1, force = false) => {
 		default: probs = [.5, .4, .1, 0, 0];
 	}
 
-	// we need to guarantee at least one space is empty to that the added line
-	// doesn't immediately clear
-	var forcedEmptyIndex = Math.floor(Math.random() * B_WIDTH);
-
 	// generate blocks
 	var roll, target, blockWidth;
 	var blocksToAdd = {};
 	// keep track of positions so blocks don't overlap
-	var remPos = new Array(B_WIDTH);
-	for (let r = 0; r < B_WIDTH; ++r) remPos[r] = -1;
-	remPos[forcedEmptyIndex] = -2;
+	var remPos = new Array(num);
+	for (let i = 0; i < num; ++i) {
+		remPos[i] = new Array(B_WIDTH);
+		for (let j = 0; j < B_WIDTH; ++j)
+			remPos[i][j] = -1;
+		// we need to guarantee at least one space in each row is empty to that
+		// the added lines don't immediately clear
+		var forcedEmptyIndex = Math.floor(Math.random() * B_WIDTH);
+		remPos[i][forcedEmptyIndex] = -2;
+	}
+
 	var i = 0;
-	outerloop: while (i < B_WIDTH) {
-		blockWidth = 0;
-		target = 0;
+	for (let n = 0; n < num; ++n) {
+		i = 0;
+		outerloop: while (i < B_WIDTH) {
+			blockWidth = 0;
+			target = 0;
 
-		// roll a length based on probs
-		roll = Math.random();
-		for (let j = 0; j <= 4; ++j) {
-			if (roll < target + probs[j]) {
-				blockWidth = j;
-				break;
-			} else {
-				target += probs[j];
+			// roll a length based on probs
+			roll = Math.random();
+			for (let j = 0; j <= 4; ++j) {
+				if (roll < target + probs[j]) {
+					blockWidth = j;
+					break;
+				} else {
+					target += probs[j];
+				}
 			}
-		}
 
-		// this space is empty
-		if (blockWidth == 0 || i == forcedEmptyIndex) {
-			++i;
-			continue;
-		}
-
-		// check whether this would fit here
-		innerloop: for (let j = i; j < i + blockWidth; ++j) {
-			if (j >= B_WIDTH || remPos[j] != -1) {
-				// doesn't fit
+			// this space is empty
+			if (blockWidth == 0 || i == forcedEmptyIndex) {
 				++i;
-				continue outerloop;
+				continue;
 			}
-		}
 
-		// record this position for later
-		for (let j = i; j < i + blockWidth - 1; ++j) {
-			remPos[j] = 1;
+			// roll for a multi-row block
+			let roll2 = Math.random();
+			var thisHeight = 1;
+			if (roll2 < .25 && num - n > 1)
+				thisHeight = 2;
+			else if (roll2 < .125 && num - n > 2)
+				thisHeight = 3;
+
+			// check whether this would fit here
+			for (let j = i; j < i + blockWidth; ++j) {
+				for (let k = n; k < n + thisHeight; ++k) {
+					if (j >= B_WIDTH || remPos[k][j] != -1) {
+						// doesn't fit
+						++i;
+						continue outerloop;
+					}
+				}
+			}
+
+			// mark position as unavailable
+			for (let j = i; j < i + blockWidth; ++j) {
+				for (let k = n; k < n + thisHeight; ++k) {
+					remPos[k][j] = 1;
+				}
+			}
+
+			var temp =  new Piece(i, n, blockWidth, thisHeight);
+			blocksToAdd[temp.id] = temp;
+			i += blockWidth;
 		}
-		var temp =  new Piece(i, 0, blockWidth);
-		blocksToAdd[temp.id] = temp;
-		i += blockWidth;
 	}
 
 	// move other blocks up
@@ -424,7 +449,7 @@ const addLine = (lvl = 1, force = false) => {
 		// clear old positions
 		if (P[p]) {
 			P[p].clearPosition();
-			P[p].y++;
+			P[p].y+= num;
 		}
 	}
 	for (let p in P) {
@@ -432,7 +457,7 @@ const addLine = (lvl = 1, force = false) => {
 		if (P[p]) {
 			P[p].updatePosition();
 			let newTop = Number($('#piece-' + P[p].id).css('top').slice(0, -2)) 
-				- SQUARE_SIZE;
+				- (SQUARE_SIZE * num);
 			$('#piece-' + P[p].id).css('top', newTop);
 		}
 	}
@@ -474,7 +499,7 @@ const addLineButton = () => {
 	moves++;
 	$('#moves').html(moves);
 	$('#score').html(score);
-	addLine(difficulty);
+	addLines(difficulty);
 }
 
 
@@ -510,11 +535,14 @@ const moveUp = function($el, height) {
  **/
 const init = () => {
 	$('.piece').draggable('option', 'disabled', true);
+	addLines(5, 2, true);
+	/*
 	for (let i = 0; i < 8; ++i) {
 		setTimeout(() => {
-			addLine(5, true);
+			addLines(5, 5, true);
 		}, 500);
-	} 
+	}
+	*/
 
 	prepareForNextTurn();
 };
