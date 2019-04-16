@@ -45,7 +45,11 @@ const Piece = function(x = 0, y = 0, width = 1, height = 1) {
 
 
 Piece.prototype = {
-	/* creates a DOM element for this Piece and adds it to the board */
+	/**
+	 * creates a DOM element for this Piece and adds it to the board
+	 *
+	 * Returns the object so it can be chained.
+	 **/
 	add: function() {
 		$('#board').append( $('<div></div>', { 
 			'id': 'piece-' + this.id,
@@ -67,68 +71,132 @@ Piece.prototype = {
 				}.bind(this),*/
 				stop: function() {
 					this.updatePosition();
+				}.bind(this),
+				drag: function(event, ui) {
+					this.useWalls(ui);
 				}.bind(this)
 			}
 		}));
 
 		return this;
 	},
+
+	/**
+	 * Helper function for JQuery UI's Draggable API to keep blocks from passing
+	 * through each other. Called on Piece's drag event.
+	 **/
+	useWalls: function(ui) {
+		let leftWall = 0;
+		let rightWall = B_WIDTH;
+		for (let i = this.x - 1; i >= 0; --i) {
+			if (BOARD[i][this.y] != -1) {
+				leftWall = i + 1;
+				break;
+			}
+		}
+		for (let i = this.x + this.width; i < B_WIDTH; ++i) {
+			if (BOARD[i][this.y] != -1) {
+				rightWall = i - this.width;
+				break;
+			}
+		}
+		ui.position.left =
+			Math.max(leftWall * SQUARE_SIZE, ui.position.left);
+		ui.position.left =
+			Math.min(rightWall * SQUARE_SIZE, ui.position.left);
+	},
 	
+	/**
+	 * Clears the old position of the Piece in BOARD.
+	 *
+	 * Returns the object so it can be changed
+	 **/
 	clearPosition: function() {
-		for (let i = 0; i < this.width; ++i) {
-			for (let j = 0; j < this.height; ++j) {
-				BOARD[i + this.x][j + this.y] = -1;
+		for (let i = this.x; i < this.width + this.x; ++i) {
+			for (let j = this.y; j < this.height + this.y; ++j) {
+				BOARD[i][j] = -1;
 			}
 		}
 	},
 
+	/** 
+	 * Sets the position of this Piece object in BOARD to be the same as the
+	 * position of its corresponding DOM element. Then, it calls applyGravity()
+	 * to all pieces on the board.
+	 *
+	 * Returns the object so it can be chained.
+	 **/
 	updatePosition: function() {
+		// clear the original position
 		this.clearPosition();
-		let testH = this.y + this.height;
-		for (let i = this.x; i < this.x + this.width; ++i) {
-			let found = false;
-			while (testH < B_HEIGHT && !found) {
-				if (BOARD[i][testH] >= 0) {
-					P[BOARD[i][testH]].updatePosition();
-					found = true;
-					break;
-				}
-				testH++;
-			}
-		}
+
+		// wait for the animation to finish (after 500 ms)
 		setTimeout(function() {
-
-			// fall due to gravity
+			// find the new X coordinate
 			this.x = $('#piece-' + this.id)
-					.css('left').slice(0, -2) / SQUARE_SIZE;
-			let canFall = true;
-			while (this.y > 0 && canFall) {
-				canFall = true;
-				for (let i = this.x; i < this.x + this.width; ++i) {
-					if (BOARD[i][this.y - 1] != -1) 
-						canFall = false;
-				}
-				if (canFall) {
-					this.y--;
-					$('#piece-' + this.id).css('top', 
-							(B_HEIGHT - this.y - this.height) * SQUARE_SIZE);
-				}
-			}
-
+				.css('left').slice(0, -2) / SQUARE_SIZE;
 			// update BOARD
-			for (let i = 0; i < this.width; ++i) {
-				for (let j = 0; j < this.height; ++j) {
-					BOARD[i + this.x][j + this.y] = this.id
+			for (let i = this.x; i < this.x + this.width; ++i) {
+				for (let j = this.y; j < this.y + this.height; ++j) {
+					BOARD[i][j] = this.id
 				}
 			}
+			
+			// apply gravity to the entire board
+			applyGravityAll();
 		}.bind(this), 500);
 
 		return this;
+	},
+
+	/**
+	 * Checks to see if this piece has nothing directly underneath it. If so, it
+	 * falls until it hits either another piece or the bottom of the board.
+	 *
+	 * Returns true if this object fell
+	 **/
+	applyGravity: function() {
+		var canFall = true;
+		var fell = false;
+		while (this.y > 0 && canFall) {
+			canFall = true;
+			for (let i = this.x; i < this.x + this.width; ++i) {
+				if (BOARD[i][this.y - 1] != -1) 
+					canFall = false;
+			}
+			if (canFall) {
+				for (let i = this.x; i < this.x + this.width; ++i) {
+					BOARD[i][this.y + this.height - 1] = -1;
+					BOARD[i][this.y - 1] = this.id;
+				}
+				fell = true;
+				this.y--;
+			}
+		}
+		$('#piece-' + this.id)
+			.css('top', (B_HEIGHT - this.y - this.height) * SQUARE_SIZE);
+
+		return fell;
 	}
 };
 
 
-/* generates a random, bright HTML color */
+const applyGravityAll = () => {
+	let fell = false;
+	for (p in P) {
+		if (P[p].applyGravity())
+			fell = true;
+	}
+	if (fell)
+		applyGravityAll();
+}
+
+
+/**
+ * Generates a random, bright HTML color
+ *
+ * Returns a string representing this color
+ **/
 const randColor = () => {
 	const letters = '0123456789abcdef';
 	let out = '#';
@@ -139,18 +207,26 @@ const randColor = () => {
 };
 
 
+/**
+ * Initializes the board
+ **/
 const init = () => {
 	P[0] = new Piece().add();
 	P[1] = new Piece(0, 1).add();
 	P[2] = new Piece(0, 2, 3).add();
+	P[3] = new Piece(2, 3, 3).add();
+	P[4] = new Piece(0, 3, 1).add();
+	P[5] = new Piece(5, 0, 1).add();
 };
 
 
 $('document').ready(() => {
-	// prepare board
+	// prepare board <div> element
 	$('#board').css({ width: SQUARE_SIZE * B_WIDTH + 'px',
 		height: SQUARE_SIZE * B_HEIGHT + 'px'
 	});
+
+	// prepare BOARD 2D array
 	BOARD = new Array(B_WIDTH);
 	for (let i = 0; i < B_WIDTH; ++i) {
 		BOARD[i] = new Array(B_HEIGHT);
@@ -158,5 +234,6 @@ $('document').ready(() => {
 			BOARD[i][j] = -1;
 		}
 	}
+
 	init();
 });
