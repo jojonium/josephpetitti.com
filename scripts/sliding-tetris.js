@@ -535,14 +535,9 @@ const moveUp = function($el, height) {
  **/
 const init = () => {
 	$('.piece').draggable('option', 'disabled', true);
-	addLines(5, 2, true);
-	/*
-	for (let i = 0; i < 8; ++i) {
-		setTimeout(() => {
-			addLines(5, 5, true);
-		}, 500);
+	for (let i = 0; i < 3; ++i) {
+		addLines(5, 2, true);
 	}
-	*/
 
 	prepareForNextTurn();
 };
