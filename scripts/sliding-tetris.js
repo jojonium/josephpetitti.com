@@ -5,7 +5,7 @@ var pieceCounter = 0;   // global counter to keep Piece IDs unique
 var moves = 0;          // move counter
 var difficulty = 1;     // difficulty level, based on score
 const SQUARE_SIZE = 60; // square size in pixels
-const B_HEIGHT = 10;    // board width in squares
+const B_HEIGHT = 15;    // board width in squares
 const B_WIDTH = 8;      // board height in squares
 var BOARD;              // 2D array for positions of existing Pieces
 var P = {};             // holds existing Pieces
