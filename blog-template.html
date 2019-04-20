@@ -2,24 +2,23 @@
 <html lang="en-US">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>This Website</title>
-    <meta name="description" content="A description of the process involved in the creation of Joseph Petitti's personal website" />
-    <meta property="og:title" content="This Website" />
-    <meta property="og:description" content="A description of the process involved in the creation of Joseph Petitti's personal website" />
-    <meta property="og:image" content="https://josephpetitti.com/images/refrigerator.png" />
+    <title>Blog Template</title>
+    <meta name="description" content="If you're reading this it means I forgot to change the default description" />
+    <meta property="og:title" content="Blog Template" />
+    <meta property="og:description" content="If you're reading this it means I forgot to change the default description" />
+    <meta property="og:image"
+    content="https://josephpetitti.com/images/turtle-burger.jpg" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://josephpetitti.com/this-website" />
+    <meta property="og:url" content="https://josephpetitti.com/blog-template" />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/blog.css" type="text/css">
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link href="styles/dark.css" rel="stylesheet" type="text/css">
-
-    <script src="scripts/seen.min.js"></script>
-    <script src="scripts/coffee-script.min.js"></script>
   </head>
   <body>
 
@@ -31,10 +30,6 @@
       document.getElementById('nav').classList.remove("shown");
     }
   </script>
-
-  <style>
-    @media screen and (max-width: 1000px) { canvas { max-width: 100%; } }
-  </style>
 
   <!-- Header -->
     <header>
@@ -82,281 +77,88 @@
   <!-- Main -->
     <main id="main" class="blog">
 
-      <h1 class="title">BLOG TEMPLATE</h1>
+      <span class="date"><time datetime="2019-04-20">April 20, 2019</span>
 
-      <div class="main-links-holder">
-        <a href="">
-          <button class="medium green">
-            <i class="fas fa-chevron-left"></i> Previous
-          </button>
-        </a>
+      <h1 class="title">Template for a generic blog post</h1>
 
-        <a href="blog">
-          <button class="long green">
-            Blog Index
-          </button>
-        </a>
-
-        <a href="">
-          <button class="medium green">
-            Next <i class="fas fa-chevron-right"></i>
-          </button>
-        </a>
-      </div>
-
-      <figure class="float right">
-        <img src="images/refrigerator.jpg" alt="Is your refrigerator running?"
-           title="Well you'd better go catch it!">
-      </figure>
-
-      <h2 id="about">About</h2>
+      <h2 id="sample-text">Sample Text</h2>
 
       <p>
-        This website is written almost entirely in HTML and CSS. The point of
-        this website is to help teach myself web design, and make a personal
-        website that looks good enough to show off to employers and friends. The
-        design of the site has evolved over several months as I learned of new
-        ways to do things and thought of more elements that would look cool. I
-        also sometimes use the site to host pieces of projects for classes. To
-        see the history of changes I've made to the site, check out my
-        <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>
-        page.
-      </p>
-
-      <p>
-        The HTML and CSS is written entirely from scratch by myself, without any
-        website-building tool or service. The only program I use is a simple
-        text editor (<a href="https://notepad-plus-plus.org">Notepad++</a> on
-        Windows and <a href="https://www.vim.org/">Vim</a> on GNU/Linux), and
-        Chomiums's developer tools. The site was originally hosted using 
-        <a href="https://pages.github.com">Github Pages</a>, but in July 2018 I
-        switched to self hosting it on a server I built and set up (see
-        <a href="#self-hosting">below</a>).
-      </p>
-
-      <p>
-        Unfortunately, one of the issues I've run into is that I don't know what
-        to actually write!  It turns out that creating good-looking pages is a
-        lot easier than coming up with interesting content to put on them.
-      </p>
-
-      <p>
-        Also, I have discovered that CSS is annoying. Now I'm pretty competent
-        with it, but it took many frustrating hours to learn everything. For
-        example, these headers look really cool, but it took a <i>very</i> long
-        time to figure out how to position everything properly.
-      </p>
-
-      <div class="fade-box">
-        <h1>FADES ARE COOL</h1>
-      </div>
-
-      <hr>
-
-      <canvas width="400" height="400" id="seen-canvas" style="float: right;">
-      </canvas>
-
-      <script type="text/coffeescript" id="code">
-        width  = 400
-        height = 400
-
-        # Create sphere shape with randomly colored surfaces
-        shape = seen.Shapes.sphere(2).scale(height * 0.4)
-        seen.Colors.randomSurfaces2(shape)
-
-        # Create scene and add shape to model
-        scene = new seen.Scene
-          model    : seen.Models.default().add(shape)
-          viewport : seen.Viewports.center(width, height)
-
-        # Create render context from canvas
-        context = seen.Context('seen-canvas', scene).render()
-
-        # Slowly rotate sphere
-        context.animate()
-          .onBefore((t, dt) -> shape.rotx(dt*1e-4).roty(0.7*dt*1e-4))
-          .start()
-
-        # Enable drag-to-rotate on the canvas
-        dragger = new seen.Drag('seen-canvas', {inertia : true})
-        dragger.on('drag.rotate', (e) ->
-          xform = seen.Quaternion.xyToTransform(e.offsetRelative...)
-          shape.transform(xform)
-          context.render()
-        )
-      </script>
-
-      <h2 id="seen.js">seen.js</h2>
-
-      <p>
-        However, it's not all HTML and CSS. The visualization on the
-        <a href="index">front page</a> was created using
-        <a href="http://seenjs.io">seen.js</a>, a JavaScript framework for
-        rendering 3D scenes into an SVG or HTML5 canvas. The scenes are written
-        in <a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and
-        simpler language that compiles into JavaScript.
-      </p>
-
-      <p>
-        The <a href="projects">projects</a> and <a href="other">other</a> pages
-        contain simple seen.js canvases as eye candy to make these pages more
-        visually appealing. Making these seen.js scenes also helped me learn
-        JavaScript in 2018.
-      </p>
-
-      <hr>
-
-      <h2 id="logo">Logo</h2>
-
-      <svg height="160" width="160" style="float: left;">
-        <circle cx="80" cy="80" r="60" fill="#e37682" />
-        <path id="top-line" d="M 40 50 H 100"
-              style="fill:none;stroke:yellow;stroke-width:9" />
-        <path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85"
-              style="fill:none;stroke:yellow;stroke-width:9" />
-        <path id="vertical-center" d="M 85 50 V 105"
-              style="fill:none;stroke:yellow;stroke-width:9" />
-        <path id="p-lower" d="M 85 85 H 100"
-              style="fill:none;stroke:yellow;stroke-width:9" />
-        <path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98"
-              style="fill:none;stroke:yellow;stroke-width:9" />
-        Your browser does not support inline SVG
-      </svg>
-
-      <p>
-        My personal logo, shown on the left, is a design I came up with as a
-        kid. The color scheme is completely arbitrary (being color blind and
-        knowing nothing about graphic design makes it better to just pick colors
-        out of a hat than try to figure out what matches what).
-      </p>
-
-      <p>
-        I made the original digital version of the logo years ago in Microsoft
-        PowerPoint and exported it as a PNG. However, at some point I lost the
-        original file. Because the PNG was small and didn't scale very well I
-        decided to remake the logo as an
-        <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">
-          SVG</a>.
-      </p>
-
-      <p>
-        Still knowing nothing about graphic design, I painstakingly wrote the
-        code for the SVG by hand, and it is reproduced in all its glory
-        below:
-      </p>
-
-      <div class="code">&lt;svg height="160" width="160" "style"="float: left;"&gt;
-  &lt;circle cx="80" cy="80" r="60" fill="#e37682" /&gt;
-  &lt;path id="top-line" d="M 40 50 H 100" 
-      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" 
-      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="vertical-center" d="M 85 50 V 105" 
-      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="p-lower" d="M 85 85 H 100" 
-      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  &lt;path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" 
-      style="fill:none;stroke:yellow;stroke-width:9" /&gt;
-  Your browser does not support inline SVG
-&lt;/svg&gt;</div>
-
-      <hr>
-
-      <h2 id="self-hosting">Self Hosting</h2>
-
-      <p>
-        In July of 2018 I decided to stop relying on Github Pages and host the
-        website on my own server.  This decision came for several reasons.
-        GitHub Pages was a nice service, but it doesn't have good support for
-        HTTPS. Also, if I ever want my website to be anything but static HTML
-        pages and client-side scripts GitHub Pages won't work for my needs any
-        more. Plus, I had an old computer lying around and a strong desire to
-        learn about servers and networking.
-      </p>
-
-      <figure class="float right">
-        <a href="images/server.jpg">
-          <img src="images/th_server.jpg" alt="My server setup">
-        </a>
-        <figcaption>My personal data center/fire hazard</figcaption>
-      </figure>
-
-      <p>
-        First, I installed <a href="https://www.ubuntu.com/server">Ubuntu
-        Server</a> 18.04 GNU/Linux on the server, and set up an SSH connection
-        from my main desktop. From there, I installed
-        <a href="https://nginx.org">nginx</a> and used it to configure a reverse
-        proxy so I could have multiple servers running on the same machine. I
-        acquired an SSL certificate from <a href="https://letsencrypt.org">Let's
-        Encrypt</a>, and set an nginx rule to rewrite all HTTP requests to
-        HTTPS. With this and other security measures in place, I cloned the
-        website from GitHub and changed the A records in my domain name
-        registrar to point to the server, and now my little server is
-        broadcasting to the whole world. I even added a cron job to the server
-        to automatically pull from GitHub every ten minutes to keep the site up
-        to date.
-      </p>
-
-      <p>
-        Having little GNU/Linux, and even less command line experience before
-        hand, this process was slow, confusing, and frustrating at times. Almost
-        everything that could go wrong while setting up nginx did go wrong. But
-        it definitely taught me a lot about networking, GNU/Linux, and web
-        development.
-      </p>
-
-      <hr>
-
-      <h2 id="new-design">New Design</h2>
-
-      <p>
-        In April 2019, about a year after I first started working on the
-        website, I decided to revamp it with a fresh design. The original design
-        wasn't responsive on mobile, and my <span class="code">style.css</span>
-        was full of accumulated cruft from when I was first learning web design.
-        I wanted a fresh start to show off my newfound mastery of flexboxes,
-        transition animations, and responsive design.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum leo
+        ligula, placerat a aliquam et, pulvinar sit amet enim. Proin non mi quis
+        felis sodales gravida. Pellentesque habitant morbi tristique senectus et
+        netus et malesuada fames ac turpis egestas. In auctor vehicula eros
+        congue vestibulum. Nunc eu augue vel nisi fermentum pharetra id at
+        magna. Integer tristique lorem non ligula auctor, a faucibus felis
+        finibus. In scelerisque accumsan imperdiet. Sed efficitur, massa sit
+        amet dapibus viverra, lectus elit laoreet nisi, ut auctor massa velit eu
+        nibh. Curabitur vel iaculis ante. Vivamus porta dolor at ipsum tempor,
+        eget scelerisque nisi dapibus. Vivamus eu ultrices arcu, eu suscipit
+        felis. Phasellus quis odio libero. Curabitur at elit non dui aliquam
+        interdum. Etiam eu rutrum ligula.
       </p>
 
       <figure class="full-width">
-        <a href="images/old-design.png">
-          <img src="images/th_old-design.png" alt="Old index page">
+        <a href="images/turtle-burger.jpg">
+          <img src="images/th_turtle-burger.jpg" alt="Turtle Burger">
         </a>
-        <figcaption>
-          The original design of the index page
-        </figcaption>
       </figure>
 
       <p>
-        This design was good enough (and actually helped me get a job), but the
-        accumulation of janky CSS hacks over a year made it difficult to add to
-        it consistently. The navigation bar also relied on hover states, which
-        made it unusable on mobile. Instead of hacking together a fix for the
-        existing 500-line stylesheet I decided to start over.
+        Maecenas pellentesque mollis erat. Fusce sit amet libero ut enim
+        tincidunt consectetur. Praesent accumsan mi a ex mollis euismod. Nam
+        pretium finibus dolor at aliquam. Aliquam non sem ornare, porta turpis
+        nec, gravida lectus. Nam at ipsum ut erat pretium efficitur ut sit amet
+        erat. Nam non libero quam. In et venenatis augue, sed vulputate massa.
+        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+        cubilia Curae; Donec eleifend nec erat vel luctus. Mauris et leo et quam
+        pretium tempor. Quisque convallis orci et arcu molestie, et varius magna
+        gravida. Donec purus tellus, tempus eu efficitur ac, maximus quis
+        sapien. Proin convallis dignissim sem, vitae fringilla sapien convallis
+        euismod. Quisque vel nulla et elit hendrerit tristique. Donec tincidunt
+        convallis suscipit.
       </p>
-
-      <h3 id="design-principles">Design Principles</h3>
 
       <p>
-        I designed the new website style with these principles in mind:
+        Nunc sed vestibulum tortor. Vivamus ac tempus nisl. Morbi sit amet
+        sapien turpis. Morbi est mauris, vestibulum nec tempus nec, blandit
+        tempor est. Sed faucibus ut nisi sed dictum. Vestibulum vitae libero
+        tellus. Praesent congue diam porttitor magna elementum, id eleifend
+        tortor pretium. Proin placerat nunc eget massa tempor, quis viverra nunc
+        tristique. Ut consectetur ex non sapien dictum tincidunt. Praesent et
+        euismod tortor. Curabitur et aliquet ipsum, sit amet porttitor nulla. Ut
+        eu massa non ante cursus pretium. Vestibulum tempus turpis volutpat leo
+        consequat volutpat. Suspendisse in aliquet mi. Nullam tristique at risus
+        at bibendum.
       </p>
-      
-      <ol>
-        <li>
-          <b>Simplicity</b>: the site should be simple and easy to read, with a
-            minimal number of unique elements and different colors
-        </li>
-        <li>
-          <b>Mobile compatibility</b>: everything should look good and be usable
-          on mobile, but the desktop experience should not be sacrificed for
-          this
-        </li>
-        <li>
-          <b>Extensibility</b>: It should be easy for me to add new elements and
-          different kinds of pages in the future
-        </li>
-      </ol>
 
+      <p>
+        Vestibulum in ante malesuada, consectetur nunc id, lacinia mi. Phasellus
+        porttitor mi ipsum, id pellentesque tortor auctor sit amet. Maecenas vel
+        dolor non purus elementum volutpat. Orci varius natoque penatibus et
+        magnis dis parturient montes, nascetur ridiculus mus. Aliquam rutrum
+        eget dolor vitae bibendum. Fusce diam felis, tempus eget porta vitae,
+        finibus ut nunc. Sed quis nisl posuere, commodo velit vitae, pretium
+        lacus. Ut tempus dolor cursus arcu pulvinar rutrum. In vitae ipsum eu
+        nunc pharetra interdum. Vivamus nisi libero, pharetra quis nunc id,
+        hendrerit dapibus risus. Praesent tristique, justo sit amet convallis
+        rutrum, erat lorem pharetra lectus, at consequat nisi justo eget massa.
+        Quisque ultricies vulputate nisl, non cursus ipsum condimentum nec.
+      </p>
+
+      <p>
+        Duis semper dui a sapien facilisis aliquam. Vivamus ipsum massa,
+        venenatis eget blandit quis, dignissim vel libero. Quisque nunc felis,
+        tincidunt ut placerat non, luctus at orci. In hac habitasse platea
+        dictumst. Cras pulvinar arcu ac ante luctus pretium. Aenean porttitor
+        elementum luctus. In finibus ante a semper tristique. In viverra
+        pulvinar ligula eget sagittis. Suspendisse placerat tempus ipsum, et
+        ultrices dolor volutpat id. Sed vestibulum quis felis vel posuere. Ut
+        ornare tincidunt lectus, et molestie velit aliquet ac. Fusce sodales
+        justo at elit euismod, at dignissim nulla viverra. Fusce quis diam
+        pretium, vehicula justo nec, iaculis enim. Sed eget scelerisque nibh.
+        Sed quam turpis, posuere consequat congue ut, tristique id tellus.
+      </p>
 
     </main>
 
