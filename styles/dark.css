@@ -14,12 +14,16 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-size: 14pt;
+}
+
+html, div {
+  font-family: Lato, "noto sans", sans-serif;
 }
 
 html {
   background-color: #1f0053;
   color: #bcd;
-  font-family: Lato, "noto sans", sans-serif;
 }
 
 main::before {
@@ -62,6 +66,7 @@ main img {
 }
 
 main {
+  font-family: 'Alegreya', Candara, serif;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
@@ -72,18 +77,7 @@ main {
 }
 
 /* Text */
-p {
-  font-size: 13pt;
-}
-
-p, li {
-  /*
-  text-align: justify;
-  text-justify: inter-word;
-  */
-}
-
-h1 {
+h1.title {
   color: #8eabdb;
   text-align: center;
   text-shadow: 3px 3px 4px black;
@@ -92,8 +86,10 @@ h1 {
   letter-spacing: 0.05em;
 }
 
-h2, h3, h4, h5, h6, main.blog h1 {
-  color: #eee;
+main h1, main h2, main h3, main h4, main h5, main h6 {
+  font-family: 'Galdeano', sans-serif;
+  font-size: 2em;
+  color: #ccddee;
 }
 
 a {
@@ -108,7 +104,7 @@ a:hover {
 }
 
 .code {
-  font-family: monospace;
+  font-family: 'PT Mono', monospace;
   background-color: #2b2b2b;
   padding: 1px 3px;
   border-radius: 5px;
@@ -117,7 +113,6 @@ a:hover {
 }
 
 div.code {
-  font-size: 13pt;
   padding: 15px 10px 15px 15px;
   border-radius: 0 5px 5px 0;
   border-left: 4px solid #f1a208;
@@ -201,6 +196,7 @@ header nav ul li:hover ul {
 /* Statistics */
 
 ul.statistics {
+  font-family: 'Galdeano', sans-serif;
   color: #eee;
   margin: 3em 0;
   list-style-type: none;
@@ -264,6 +260,7 @@ figure.full-width {
 }
 
 figure figcaption {
+  font-size: 13pt;
   text-align: center;
   color: #99aabb;
 }
