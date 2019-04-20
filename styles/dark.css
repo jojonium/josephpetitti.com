@@ -66,7 +66,6 @@ main img {
 }
 
 main {
-  font-family: 'Alegreya', Candara, serif;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
@@ -78,6 +77,7 @@ main {
 
 /* Text */
 h1.title {
+  font-family: "Montserrat", Lato, "Noto Sans", sans-serif;
   color: #8eabdb;
   text-align: center;
   text-shadow: 3px 3px 4px black;
@@ -87,8 +87,7 @@ h1.title {
 }
 
 main h1, main h2, main h3, main h4, main h5, main h6 {
-  font-family: 'Galdeano', sans-serif;
-  font-size: 2em;
+  font-family: "Merriweather", serif;
   color: #ccddee;
 }
 
@@ -104,7 +103,7 @@ a:hover {
 }
 
 .code {
-  font-family: 'PT Mono', monospace;
+  font-family: "Liberation Mono", monospace;
   background-color: #2b2b2b;
   padding: 1px 3px;
   border-radius: 5px;
@@ -196,7 +195,6 @@ header nav ul li:hover ul {
 /* Statistics */
 
 ul.statistics {
-  font-family: 'Galdeano', sans-serif;
   color: #eee;
   margin: 3em 0;
   list-style-type: none;
@@ -286,7 +284,6 @@ button.medium {
 }
 
 button, .button-like {
-  font-family: Lato, "noto sans", sans-serif;
   font-size: 1.125em;
   color: #eee;
   background-color: #3066be;
