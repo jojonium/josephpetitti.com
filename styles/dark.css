@@ -350,7 +350,7 @@ footer section ul.icons li {
 
 /* Mobile */
 @media screen and (max-width: 1000px) {
-  h1 {
+  h1.title {
     font-size: 2em;
   }
 
