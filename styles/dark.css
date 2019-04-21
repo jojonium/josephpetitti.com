@@ -83,12 +83,11 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 
 a {
   color: #eee;
-  text-decoration: none;
   transition: color .2s;
+  text-decoration-line: underline;
 }
 
 a:hover {
-  text-shadow: 2px 2px black;
   color: #40bcf4;
 }
 
@@ -126,6 +125,7 @@ header a {
   padding: 12px;
   width: 100%;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 header a:hover {
