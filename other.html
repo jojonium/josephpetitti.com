@@ -111,19 +111,18 @@
           that appears simple but is actually quite tricky</li>
       </ul>
 
-      <canvas height="600" id="seen-canvas"></canvas>
+      <center style="max-width: 100%; overflow: hidden;">
+        <canvas height="400" width="400" id="seen-canvas"></canvas>
+      </center>
 
     </main>
 
       <script type="text/coffeescript" id="code">
-        document.getElementById("seen-canvas").width = document.getElementById("main").offsetWidth - 80
-        width  = document.getElementById("seen-canvas").offsetWidth
-        height = 600
-
-        console.log(width)
+        width  = 400
+        height = 400
 
         # Create a simple sphere
-        shape = seen.Shapes.sphere(2).scale(250)
+        shape = seen.Shapes.sphere(2).scale(height * 0.4)
         seen.Colors.randomSurfaces2(shape)
 
         # Create scene and render context
