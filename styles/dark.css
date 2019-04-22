@@ -106,6 +106,22 @@ div.code {
   border-left: 4px solid #f1a208;
 }
 
+p.quote {
+  font-family: "Merriweather", serif;
+  font-style: italic;
+  margin-inline-start: 2em;
+  font-size: 1.25em;
+}
+
+figure p.quote {
+  margin-inline-start: 0;
+  text-align: center;
+}
+
+p.quote::before { content: "“" }
+p.quote::after { content: "”" }
+
+
 /* Header */
 header {
   font-size: 1em;
@@ -445,5 +461,9 @@ footer section ul.icons li {
   ul.statistics li {
     flex-basis: 40%;
     margin: 2em 0;
+  }
+
+  p.quote {
+  margin-inline-start: 0;
   }
 }

@@ -1,3 +1,9 @@
+@media screen and (min-width: 800px) {
+  main.blog, footer.article, header.article {
+    width: 600px;
+  }
+}
+
 main.blog::before {
   background-color: #331762;
   background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%),
@@ -5,7 +11,6 @@ main.blog::before {
   repeating-radial-gradient(circle farthest-corner at 100% -10%, rgba(0,0,255,0.2), rgba(0,0,0,0) 30%, rgba(0,0,255,0.2) 30%, rgba(0,255,0,0.1) 60%),
   linear-gradient(90deg, #1f0053, #3066be, #417b5a);
   width: 100%;
-  height: 500px;
   left: 0;
 }
 
@@ -20,5 +25,24 @@ main.blog h1.title {
 span.date {
   margin-top: 4em;
   display: block;
-  color: #8899aa;
+  color: #99aabb;
+}
+
+header.article {
+  justify-content: flex-start;
+  background-color: transparent;
+}
+
+header.article a {
+  width: auto;
+}
+
+footer.article section.about {
+  flex-basis: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  main.blog h1.title {
+    font-size: 2em;
+  }
 }
