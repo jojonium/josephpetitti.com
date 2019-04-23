@@ -129,10 +129,12 @@
       </p>
 
       <p>
-        Also, I have discovered that CSS is annoying. Now I'm pretty competent
-        with it, but it took many frustrating hours to learn everything. For
-        example, these headers look really cool, but it took a <i>very</i> long
-        time to figure out how to position everything properly.
+        I also struggled a lot with CSS at first. It's hard to wrap your head
+        around how all the rules interact with each other for someone used to
+        functional and imperative programming languages. For example, it took me
+        a lot of frustrating trial and error to figure out how to get these
+        <a href="#heading-background">heading styles</a> working, but once I
+        figured it out it was all worth it.
       </p>
 
       <div class="fade-box">
@@ -274,15 +276,15 @@
         Server</a> 18.04 GNU/Linux on the server, and set up an SSH connection
         from my main desktop. From there, I installed
         <a href="https://nginx.org">nginx</a> and used it to configure a reverse
-        proxy so I could have multiple servers running on the same machine. I
-        acquired an SSL certificate from <a href="https://letsencrypt.org">Let's
-        Encrypt</a>, and set an nginx rule to rewrite all HTTP requests to
-        HTTPS. With this and other security measures in place, I cloned the
-        website from GitHub and changed the A records in my domain name
-        registrar to point to the server, and now my little server is
-        broadcasting to the whole world. I even added a cron job to the server
-        to automatically pull from GitHub every ten minutes to keep the site up
-        to date.
+        proxy so I could have multiple servers with different domains running on
+        the same machine. I acquired an SSL certificate from
+        <a href="https://letsencrypt.org">Let's Encrypt</a>, and set an nginx
+         rule to rewrite all HTTP requests to HTTPS. With this and other
+         security measures in place, I cloned the website from GitHub and
+         changed the A records in my domain name registrar to point to the
+         server, and now my little server is broadcasting to the whole world. I
+         even added a cron job to the server to automatically pull from GitHub
+         every ten minutes to keep the site up to date.
       </p>
 
       <p>
@@ -304,6 +306,13 @@
         was full of accumulated cruft from when I was first learning web design.
         I wanted a fresh start to show off my newfound mastery of flexboxes,
         transition animations, and responsive design.
+      </p>
+
+      <p>
+        The original site is preserved in a
+        <a href="https://github.com/jojonium/josephpetitti.com/tree/old-style">
+        separate branch</a> for posterity, and is still live on the web
+        <a href="old">here</a>.
       </p>
 
       <figure class="full-width">
