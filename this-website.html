@@ -12,6 +12,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
@@ -50,7 +51,7 @@
           <li><a href="resume">Resume</a></li>
           <li><a href="projects">Projects</a>
             <ul>
-              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
               <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
               <li><a href="this-website">This Website</a></li>
               <li><a href="http-server-client">HTTP Server & Client</a></li>
@@ -81,7 +82,7 @@
   <!-- Main -->
     <main>
 
-      <h1>THIS WEBSITE</h1>
+      <h1 class="title">THIS WEBSITE</h1>
 
       <div class="main-links-holder">
         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank">
@@ -135,7 +136,7 @@
       </p>
 
       <div class="fade-box">
-        <h1>FADES ARE COOL</h1>
+        <h1 class="title">FADES ARE COOL</h1>
       </div>
 
       <hr>
@@ -355,13 +356,6 @@
         the <span class="code">nav</span> element when the menu button is
         clicked, and removes it when the close button is clicked:
       </p>
-
-      <div class="code">const showNav = function() {
-  document.getElementById('nav').classList.add("shown");
-}
-const closeNav = function() {
-  document.getElementById('nav').classList.remove("shown");
-}</div>
 
       <figure class="float left">
         <img src="images/new-mobile-view.png" alt="New mobile version"

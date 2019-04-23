@@ -12,6 +12,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
@@ -45,7 +46,7 @@
           <li><a href="resume">Resume</a></li>
           <li><a href="projects">Projects</a>
             <ul>
-              <li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
+			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
               <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
               <li><a href="this-website">This Website</a></li>
               <li><a href="http-server-client">HTTP Server & Client</a></li>
@@ -88,7 +89,7 @@
         </svg>
       </div>
 
-      <h1 style="margin-top: .5em">JOSEPH PETITTI</h1>
+      <h1 class="title" style="margin-top: .5em">JOSEPH PETITTI</h1>
 
       <!--<div class="circular-portrait"></div>-->
 
@@ -143,7 +144,7 @@
         </li>
         <li>
           <span class="icon fas fa-film"></span>
-          Films watched <strong>1,098</strong>
+          Films watched <strong>1,099</strong>
         </li>
       </ul>
 
@@ -227,12 +228,12 @@
     <div id="particles-after"></div>
 
     <script type="text/javascript">
-      // get time since Mar 31 2019 in hours
-      var interval = Math.floor((new Date() - new Date(2019, 3, 1, 18, 30)) / 3600000);
+      // get time since April 22 2019 in hours
+      var interval = Math.floor((new Date() - new Date(2019, 4, 22, 0, 0)) / 3600000);
       document.getElementById("uptime-hours").innerHTML = interval;
       
       window.onload = function() {
-        particlesJS.load('particles-js', 'https://josephpetitti.com/new/assets/particle-cfg.json');
+        particlesJS.load('particles-js', 'https://petitti.org/new/assets/particle-cfg.json');
       }
     </script>
 
