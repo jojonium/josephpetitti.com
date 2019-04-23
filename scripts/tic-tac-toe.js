@@ -163,7 +163,7 @@ $(document).ready(function() {
 });
 
 var start = function() {
-	$('.square').css('color', 'white');
+	$('.square').css('color', '#3066b3');
 	$('.square').text('a');
 	
 	// initialize board and minimax
@@ -230,9 +230,9 @@ var realMove = function(player, pos) {
 var updateDisplay = function() {
 	for (var i = 0; i < 9; i++) {
 		if (b.gamestate[i] == b.X) {
-			$('.square').eq(i).text('X').css('color', 'black');
+			$('.square').eq(i).text('X').css('color', '#eeeeee');
 		} else if (b.gamestate[i] == b.O) {
-			$('.square').eq(i).text('O').css('color', 'black');
+			$('.square').eq(i).text('O').css('color', '#eeeeee');
 		}
 	}
 };
@@ -310,7 +310,6 @@ var squareClick = function(n) {
 		computerSay("Hey, that's an illegal move!");
 	}
 	else {
-		console.log("here");
 		var over = realMove(b.O, n);
 		if (!over) go();
 	}

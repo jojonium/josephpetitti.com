@@ -1,0 +1,469 @@
+/* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
+
+/** Colors
+ * Header:  #005377;
+ * Orange: #f1a208;
+ * h1: #8eabdb;
+ * Background: #1f0053;
+ * Buttons and other elements: #3066be;
+ * Hovered buttons: #4ea5d9;
+ */
+
+/* Whole Page */
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 14pt;
+}
+
+html, div {
+  font-family: Lato, "noto sans", sans-serif;
+}
+
+html {
+  background-color: #1f0053;
+  color: #bcd;
+}
+
+main::before {
+  position: absolute;
+  content: "";
+  left: 10%;
+  top: 0;
+  width: 80%; 
+  height: 800px;
+  z-index: -1;
+  background-repeat: repeat;
+}
+
+div.fade-box, main::before {
+  background-image: linear-gradient(90deg,#1f0053 0,rgba(31,0,83,.98556487) .97%,rgba(31,0,83,.9451312) 2.07833333%,rgba(31,0,83,.88300656) 3.29666667%,rgba(31,0,83,.80349854) 4.60166667%,rgba(31,0,83,.71091472) 5.96666667%,rgba(31,0,83,.60956268) 7.365%,rgba(31,0,83,.50375) 8.77166667%,rgba(31,0,83,.39778426) 10.16%,rgba(31,0,83,.29597303) 11.505%,rgba(31,0,83,.20262391) 12.78%,rgba(31,0,83,.12204446) 13.95833333%,rgba(31,0,83,.05854227) 15.01666667%,rgba(31,0,83,.01642493) 15.92833333%,rgba(31,0,83,0) 16.66666667%,rgba(31,0,83,0) 83.33333333%,rgba(31,0,83,.01642493) 84.07166667%,rgba(31,0,83,.05854227) 84.98333333%,rgba(31,0,83,.12204446) 86.04166667%,rgba(31,0,83,.20262391) 87.22%,rgba(31,0,83,.29597303) 88.495%,rgba(31,0,83,.39778426) 89.84%,rgba(31,0,83,.50375) 91.22833333%,rgba(31,0,83,.60956268) 92.635%,rgba(31,0,83,.71091472) 94.03333333%,rgba(31,0,83,.80349854) 95.39833333%,rgba(31,0,83,.88300656) 96.70333333%,rgba(31,0,83,.9451312) 97.92166667%,rgba(31,0,83,.98556487) 99.03%,#1f0053),
+  linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%),
+  url('../images/subtle-white-feathers.png');
+}
+
+div.fade-box {
+  padding: 20px;
+  min-height: 250px;
+}
+div.fade-box h1 {
+  margin-top: 1em;
+}
+
+main img {
+  max-width: 100%;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Text */
+h1.title {
+  font-family: "Montserrat", Lato, "Noto Sans", sans-serif;
+  color: #8eabdb;
+  text-align: center;
+  text-shadow: 3px 3px 4px black;
+  margin: 2em auto 1em;
+  font-size: 3em;
+  letter-spacing: 0.05em;
+}
+
+main h1, main h2, main h3, main h4, main h5, main h6 {
+  font-family: "Merriweather", serif;
+  color: #ccddee;
+}
+
+a {
+  color: #eee;
+  transition: color .2s;
+  text-decoration-line: underline;
+}
+
+a:hover {
+  color: #40bcf4;
+}
+
+.code {
+  font-family: "Liberation Mono", monospace;
+  background-color: #2b2b2b;
+  padding: 1px 3px;
+  border-radius: 5px;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+div.code {
+  padding: 15px 10px 15px 15px;
+  border-radius: 0 5px 5px 0;
+  border-left: 4px solid #f1a208;
+}
+
+p.quote {
+  font-family: "Merriweather", serif;
+  font-style: italic;
+  margin-inline-start: 2em;
+  font-size: 1.25em;
+}
+
+figure p.quote {
+  margin-inline-start: 0;
+  text-align: center;
+}
+
+p.quote::before { content: "“" }
+p.quote::after { content: "”" }
+
+
+/* Header */
+header {
+  font-size: 1em;
+  width: 100%;
+  display: flex;
+  z-index: 2;
+  background-color: #005377;
+}
+
+header a#mobile-nav, header a#mobile-nav-close {
+  display: none;
+}
+
+header a {
+  color: #eee;
+  display: block;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+header a:hover {
+  text-shadow: none;
+  color: #eee;
+  transition: .2s;
+  background-color: #4ea5d9;
+}
+
+header nav {
+  display: block;
+  flex-grow: 1;
+}
+
+header nav ul {
+  display: flex;
+  justify-content: flex-start;
+  list-style-type: none;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-inline-start: 0;
+}
+
+header nav>ul>li {
+  font-size: 1.5em;
+  width: 160px;
+  text-align: center;
+  font-weight: 600;
+}
+
+header nav ul li ul {
+  font-size: .75em;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  max-width: 240px;
+  min-width: 180px;
+  padding: 0;
+  z-index: 1;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .8s, box-shadow .3s;
+  transition-timing-function: ease;
+  font-weight: normal;
+}
+
+header nav ul li ul li {
+  background-color: #005377;
+  max-width: 100%;
+}
+
+header nav ul li:hover ul {
+  max-height: 100%;
+  box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .6);
+}
+
+/* Statistics */
+
+ul.statistics {
+  color: #eee;
+  margin: 3em 0;
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul.statistics li {
+  flex-grow: 1;
+  text-align: center;
+}
+
+ul.statistics li span.icon {
+  font-size: 3em;
+  display: block;
+  padding: 5px;
+}
+
+ul.statistics li strong {
+  display: block;
+  font-size: 1.5em;
+  padding: 5px;
+}
+
+/* Tables */
+main table {
+  border-collapse: collapse;
+}
+
+main table thead th {
+  border-bottom: 1px solid rgba(187, 204, 221, .8);
+}
+
+main table td, main table th {
+  padding: 2px 5px 2px 0;
+}
+
+/* Figures */
+figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1em;
+}
+
+figure.float.right {
+  float: right;
+  width: 40%;
+}
+
+figure.float.left {
+  float: left;
+  width: 40%;
+}
+
+figure.full-width {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+figure figcaption {
+  font-size: 13pt;
+  text-align: center;
+  color: #99aabb;
+}
+
+/* Buttons */
+button.long {
+  z-index: 0;
+  min-width: 200px;
+  border: none;
+  width: 12em;
+}
+
+a button {
+  cursor: pointer;
+}
+
+button.green {
+  background-color: #417b5a;
+}
+
+button.medium {
+  width: 6em;
+}
+
+button, .button-like {
+  font-size: 1.125em;
+  color: #eee;
+  background-color: #3066be;
+  padding: 10px;
+  border: none;
+  box-shadow: 5px 5px rgba(0, 0, 0, 1);
+  transition: .2s;
+  margin: 5px;
+}
+
+button[disabled], .button-like[disabled], 
+    .long-buttons a:hover button[disabled], button[disabled]:hover,
+    .button-like[disabled]:hover {
+  background-color: #d2d2d2;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.long-buttons a:hover button, button:hover, .button-like:hover {
+  text-shadow: none;
+  background-color: #4ea5d9;
+  box-shadow: 6px 6px 10px 1px rgba(0, 0, 0, 1);
+}
+
+div.main-links-holder {
+  display: flex;
+  justify-content: space-around;
+  padding: 2em 0;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+/* Footer */
+footer {
+  clear: both;
+  max-width: 800px;
+  margin: 4em auto 0;
+  display: flex;
+  border-top: 1px solid gray;
+}
+
+footer section {
+  flex-basis: 50%;
+  padding: 20px;
+}
+
+footer section dt {
+  display: block;
+  margin: 0;
+  clear: left;
+  float: left;
+}
+
+footer section dd {
+  margin: 0 0 0.85em 5.5em;
+}
+
+footer section ul.icons {
+  font-family: FontAwesome;
+  font-size: 2.5em;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+  padding: 0;
+}
+
+footer section ul.icons li {
+  display: inline;
+}
+
+/* Mobile */
+@media screen and (max-width: 1000px) {
+  h1.title {
+    font-size: 2em;
+  }
+
+  header {
+    font-size: 1.25em;
+  }
+
+  header nav {
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    transition: width .8s;
+    z-index: 2;
+    background-color: #005377;
+    overflow: auto;
+    white-space: nowrap;
+  }
+
+  header nav.shown {
+    width: 100%;
+  }
+
+  header nav ul {
+    font-size: .75em;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-inline-start: 1em;
+    padding-inline-end: 3em;
+    box-sizing: border-box;
+  }
+
+  header nav ul li {
+    width: 100%;
+    text-align: left;
+  }
+
+  header nav ul li ul {
+    position: static;
+    width: 100%;
+    max-width: none;
+    min-width: none;
+    max-height: 100%;
+    box-shadow: none;
+    padding-inline-start: 3em;
+  }
+
+  header nav ul li:hover ul {
+    box-shadow: none;
+  }
+
+  header nav ul li ul li {
+    background-color: transparent;
+  }
+
+  header a#mobile-nav {
+    display: inline-block;
+    max-width: 6em;
+  }
+  header nav a#mobile-nav-close {
+    display: inline-block;
+    margin-bottom: 1em;
+  }
+
+  footer { 
+    flex-direction: column;
+  }
+
+  div.main-links-holder {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  main::before {
+    width: 100%;
+    background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%), url('../images/subtle-white-feathers.png');   left: 0;
+  }
+
+  figure.float.left, figure.float.right {
+    width: 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+  }
+
+  ul.statistics {
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  ul.statistics li {
+    flex-basis: 40%;
+    margin: 2em 0;
+  }
+
+  p.quote {
+  margin-inline-start: 0;
+  }
+}

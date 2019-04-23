@@ -1,122 +1,170 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Tic-Tac-Toe</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<script src="scripts/jquery-3.3.1.min.js"></script>
-		<script src="scripts/tic-tac-toe.js"></script>
-		<link rel="stylesheet" href="styles/tic-tac-toe.css">
-	</head>
-	<body>
-	
-	<!-- Header -->
-		<header>
-			<h1>Tic-Tac-Toe</h1>
-		</header>
-		
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Tic-Tac-Toe</title>
+    <meta name="description" content="Can you beat a computer at tic-tac-toe?" />
+    <meta property="og:title" content="Tic-Tac-Toe" />
+    <meta property="og:description" content="Can you beat a computer at tic-tac-toe?" />
+    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:type" content="game" />
+    <meta property="og:url" content="https://josephpetitti.com/tic-tac-toe" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/tic-tac-toe.js"></script>
+    <link rel="stylesheet" href="styles/tic-tac-toe.css">
+  </head>
+  <body>
+
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
+
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+              <li><a href="sliding-tetris">Sliding Tetris</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
 
 
+    </header>
 
+  <!-- Main -->
+    <main id="main">
+      <h1 class="title">TIC-TAC-TOE</h1>
 
+      <div id="top-lvl-container">
+        <div id="output">
+          <h2 id="computer-says">Computer says:</h2>
+          <div id="log"></div>
+          <button class="option" id="me-first">I want to go first</button>
+          <button class="option" id="computer-first">You can go first</button>
+          <button class="option" id="play-again">Play Again?</button>
+        </div>
 
+        <div id="board">
+          <!-- These all need to be on one line because HTML reads line breaks
+            even when it shouldn't -->
+          <div class="square" id="sq_1"></div><div class="square" id="sq_2"></div><div class="square" id="sq_3"></div><div class="square" id="sq_4"></div><div class="square" id="sq_5"></div><div class="square" id="sq_6"></div><div class="square" id="sq_7"></div><div class="square" id="sq_8"></div><div class="square" id="sq_9"></div>
+        </div>
+      </div>
 
+      <h2>How does it work?</h2>
+      <p>
+        This page uses an artificial intelligence algorithm called MiniMax to
+        play Tic-Tac-Toe. The computer recursively creates a tree of all
+        possible future moves. It then picks the most optimal move based on all
+        possible human responses. In a simple game like Tic-Tac-Toe, where there
+        are only a maximum of nine possible moves and the game must end within
+        nine turns this algorithm can run quite quickly.
+      </p>
 
+      <p>
+        Because Tic-Tac-Toe is such a simple game, the computer can win or draw
+        every time simply by using this algorithm. Whether you go first or
+        second it is completely impossible to beat the computer. The best you
+        can hope to achieve is a draw.
+      </p>
 
-		
-	<!-- Main -->
-		<main>
-			<div id="output">
-			<span id="computer-says">Computer says:</span>
-				<div id="log">
-				</div>
-				<button class="option" id="me-first">I want to go first</button>
-				<button class="option" id="computer-first">You can go first</button>
-				<button class="option" id="play-again">Play Again?</button>
-			</div>
-			
-			<p>Can you beat a computer at Tic-Tac-Toe?</p>
-			
-			<div id="board">
-				<!-- These all need to be on one line because HTML reads line breaks even when it shouldn't -->
-				<div class="square" id="sq_1"></div><div class="square" id="sq_2"></div><div class="square" id="sq_3"></div><div class="square" id="sq_4"></div><div class="square" id="sq_5"></div><div class="square" id="sq_6"></div><div class="square" id="sq_7"></div><div class="square" id="sq_8"></div><div class="square" id="sq_9"></div>
-			</div>
-			
-			<h2>How does it work?</h2>
-			<p>This page uses an artificial intelligence algorithm called MiniMax to play
-			   Tic-Tac-Toe. The computer recursively creates a tree of all
-			   possible future moves. It then picks the most optimal move based on all
-			   possible human responses. In a simple game like Tic-Tac-Toe, where there are
-			   only a maximum of nine possible moves and the game must end within nine turns
-			   this algorithm can run quite quickly.</p>
-			<p>Because Tic-Tac-Toe is such a simple game, the computer can win or draw every
-			   time simply by using this algorithm. Whether you go first or second it is
-			   completely impossible to beat the computer. The best you can hope to achieve
-			   is a draw.</p>
-			<p>For more information on the MiniMax algorithm, see <a href="https://en.wikipedia.org/wiki/Minimax">here</a>. My implementation of the algorithm in JavaScript can be viewed <a href="scripts/tic-tac-toe.js">here</a>.</p>
-		</main>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-				<p>I created this website as a personal project in my free time to learn more about web design,
-				   CSS, HTML, and JavaScript.</p>
-				<p>All portions of this website written by me are released under the <a href="license.txt">
-				   MIT License</a>. Other scripts and resources are licensed under free licenses by their
-				   respective owners. All source code is available on
-				   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.</p>
-			</section>
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-	</body>
+      <p>
+        For more information on the MiniMax algorithm, see
+        <a href="https://en.wikipedia.org/wiki/Minimax">here</a>. My
+        implementation of the algorithm in JavaScript can be viewed
+        <a href="scripts/tic-tac-toe.js">here</a>.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are
+          released under the <a href="license.txt"> MIT License</a>.
+          Other scripts and resources are licensed under free licenses
+          by their respective owners. All source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">
+          GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">
+                jppetitti@wpi.edu
+              </a>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
 </html>

@@ -1,329 +1,353 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Algol Meeting Scheduler</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-	</head>
-	<body>
-	
-	<!-- Header -->
-		<header>
-			<h1>Algol Meeting Scheduler</h1>
-		</header>
-		
-	<!-- Nav -->
-		<nav class="sticky">
-			<ul class="top-level sticky">
-				<li><a href="index">Home</a></li>
-				<li><a href="resume">Resume</a></li>
-				<li class="parent"><a href="projects">Projects</a>
-					<ul class="child">
-						<li><a href="hong-kong-historic-conservation">Hong Kong Historic Conservation</a></li>
-						<li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
-						<li><a href="this-website">This Website</a></li>
-						<li><a href="http-server-client">HTTP Server & Client</a></li>
-						<li><a href="process-statistics">Process Statistics</a></li>
-						<li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
-						<li><a href="dinner-suggester">Dinner Suggester</a></li>
-					</ul>
-				</li>
-				<li class="parent"><a href="other">Other</a>
-					<ul class="child">
-						<li><a href="dice">Dice</a></li>
-						<li><a href="ant">Langton's Ant</a></li>
-						<li><a href="rps">RPS Automaton</a></li>
-						<li><a href="type">Typing Game</a></li>
-						<li><a href="minesweeper">Minesweeper</a></li>
-						<li><a href="snake">Snake</a></li>
-						<li><a href="match">Color Match</a></li>
-						<li><a href="klotski">Klotski</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Algol Meeting Scheduler</title>
+    <meta name="description" content="A web app for scheduling meetings, designed and implemented by a team of four students led by Joseph Petitti. Includes Java API on AWS, Angular front end, and MySQL database." />
+    <meta property="og:title" content="Algol Meeting Scheduler" />
+    <meta property="og:description" content="A web app for scheduling meetings, designed and implemented by a team of four students led by Joseph Petitti. Includes Java API on AWS, Angular front end, and MySQL database." />
+    <meta property="og:image" content="https://josephpetitti.com/images/algol-schedule-view.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/meeting-scheduler" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <script>
+    const showNav = function() {
+      document.getElementById('nav').classList.add("shown");
+    }
+    const closeNav = function() {
+      document.getElementById('nav').classList.remove("shown");
+    }
+  </script>
+
+  <!-- Header -->
+    <header>
+      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </a>
+    <!-- Nav -->
+      <nav id="nav">
+        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+          <i class="fas fa-times"></i> Close
+        </a>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+              <li><a href="sliding-tetris">Sliding Tetris</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
 
 
+    </header>
 
-		
-	<!-- Main -->
-		<main id="main">
-			<div class="main-links-holder">
-				<a href="https://github.com/jojonium/CS-3733"	target="_blank">
-					<button class="main-links" style="background-color: #5f4d93">
-						<span class="fab fa-github"></span> View on GitHub
-					</button>
-				</a>
-				
-				<a href="https://algol.petitti.org" target="_blank">
-					<button class="main-links" style="background-color: #2dca50">
-						<i class="fas fa-desktop"></i> View Website
-					</button>
-				</a>
-			</div>
-			
-			<style>
-				div.main-links-holder {
-					display: flex;
-					justify-content: center;
-				}
-				
-				button.main-links {
-					width: 300px;
-					padding: 10px;
-					box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-					margin: 20px 10px 0;
-				}
-				
-				button {
-					cursor: pointer;
-				}
-			</style>
-	
-			<h2 id="about">About</h2>
-			
-			<figure class="float right">
-				<a href="images/algol-front-page.png">
-					<img src="images/algol-front-page.png" alt="The front page of our web app"></img>
-				</a>
-				<figcaption>The front page of the Algol meeting scheduler</figcaption>
-			</figure>
+  <!-- Main -->
+    <main id="main">
+      <h1 class="title">ALGOL MEETING SCHEDULER</h1>
 
-			<p>
-			This project was done for CS 3733: Software Engineering. It was completed
-			by a <a href="#team">team</a> of four students in about three weeks. The
-			goal was to create a fully functional web application, including a public
-			API, HTML/CSS/JavaScript front-end, and MySQL database. We used Amazon Web
-			Services for the back-end and Angular for the front-end. The finished
-			project's code can be seen at 
-			<a href="https://github.com/jojonium/CS-3733" target="_blank">GitHub</a>,
-			or it can be seen in action on 
-			<a href="https://algol.petitti.org" target="_blank">our website</a>.
-			</p>
-	
-			<p>
-			The actual application is designed to allow users to set up a meeting
-			schedule and send it to others, so that they can request meetings are
-			particular times with the organizer.
-			</p>
+      <div class="main-links-holder">
+        <a href="https://github.com/jojonium/CS-3733"  target="_blank">
+          <button class="long">
+            <span class="fab fa-github"></span> View on GitHub
+          </button>
+        </a>
 
-			<h3>Organizers</h3>
+        <a href="https://algol.petitti.org" target="_blank">
+          <button class="long">
+            <i class="fas fa-desktop"></i> View Website
+          </button>
+        </a>
+      </div>
 
-			<p>
-			Organizers can specify a starting and ending date for their schedule, as
-			well as a daily starting time and ending time. They can also select a
-			preferred meeting length, from ten minutes to an hour. Organizers can open
-			or close specific time slots, as well as all time slots at a particular
-			time or on a particular day. If a time slot is closed, participants can
-			not schedule a meeting for that time.
-			</p>
+      <h2 id="about">About</h2>
 
-			<p>
-			Once an organizer has created a schedule, she is given a schedule ID and a
-			secret code. The schedule ID can be given to participants, or shared as a
-			URL such as 
-			<span class="code">https://cs3733.com/schedule/<i>8bDj38</i></span>. The
-			secret code is for the organizer to use if she wants to edit the schedule
-			in the future. For example, she could extend the start or end dates or
-			close particular time slots. The organizer can also use the secret code to
-			see the names of all participants and when their meetings are scheduled
-			for.
-			</p>
-			
-			<figure class="full-width">
-				<a href="images/algol-schedule-view.png">
-					<img src="images/algol-schedule-view.png" alt="Standard schedule view"></img>
-				</a>
-				<figcaption>The schedule view that participants can see</figcaption>
-			</figure>
+      <figure class="float right">
+        <a href="images/algol-front-page.png">
+          <img src="images/algol-front-page.png" alt="The front page of our web app"></img>
+        </a>
+        <figcaption>The front page of the Algol meeting scheduler</figcaption>
+      </figure>
 
-			<h3>Participants</h3>
+      <p>
+        This project was done for CS 3733: Software Engineering. It was
+        completed by a <a href="#team">team</a> of four students in about three
+        weeks. The goal was to create a fully functional web application,
+        including a public API, HTML/CSS/JavaScript front-end, and MySQL
+        database. We used Amazon Web Services for the back-end and Angular for
+        the front-end. The finished project's code can be seen at 
+        <a href="https://github.com/jojonium/CS-3733" target="_blank">GitHub</a>,
+        or it can be seen in action on 
+        <a href="https://algol.petitti.org" target="_blank">our website</a>.
+      </p>
 
-			<p>
-			A participant can access a schedule by using its schedule ID. From here,
-			he can request a meeting on a particular time and date, as long as the
-			time slot is open and no other participant has requested a meeting at that
-			same time. Participants are given a secret code when they request a
-			meeting.
-			</p>
-			
-			<h2 id="development">Development</h2>
-			
-			<p>
-			Our team had one week to plan out the project, including designing the API
-			using Swagger, drawing up UML diagrams, and writing out use cases. Then,
-			from November 26 to December 14, 2018 we worked at a feverish pace to
-			complete the entire project.
-			</p>
+      <p>
+        <b>Note:</b> Unfortunately due to the rising costs of AWS we had to shut
+        down the backend portions of the Algol Meeting Scheduler in early 2019.
+        You can still see the frontend, but portions of the site won't work.
+      </p>
 
-			<h3>Back-End</h3>
+      <p>
+        The actual application is designed to allow users to set up a meeting
+        schedule and send it to others, so that they can request meetings are
+        particular times with the organizer.
+      </p>
 
-			<p>
-			The back-end of the project was done in AWS. API requests are processed by
-			an AWS API gateway, then passed along to a relevant lambda function. These
-			lambda functions were written in Java using the Entity-Boundary-Controller
-			design scheme. The lambda functions parse the incoming JSON data into Java
-			objects, then completes the requested action. They connect to the
-			database, a MySQL instance running in AWS RDS, through JDBC.
-			</p>
-			
-			<figure class="full-width" style="max-width: 70%; margin: 0 auto;">
-				<a href="images/algol-search-view.png">
-					<img src="images/algol-search-view.png" alt="The view for searching for open time slots"></img>
-				</a>
-				<figcaption>The view from which participants can search for open time slots</figcaption>
-			</figure>
+      <h3>Organizers</h3>
 
-			<h3>Front-End</h3>
+      <p>
+        Organizers can specify a starting and ending date for their schedule, as
+        well as a daily starting time and ending time. They can also select a
+        preferred meeting length, from ten minutes to an hour. Organizers can
+        open or close specific time slots, as well as all time slots at a
+        particular time or on a particular day. If a time slot is closed,
+        participants can not schedule a meeting for that time.
+      </p>
 
-			<p>
-			The front-end was done in Google's Angular framework, using Google's
-			material design elements and guidelines. Angular applications are written
-			in TypeScript, a superscript of JavaScript that compiles to plain
-			JavaScript. The front-end ended up being a miniature
-			Entity-Boundary-Controller project, with TypeScript object entities,
-			HTML/CSS boundaries, and TypeScript controllers that make the API calls.
-			</p>
+      <p>
+        Once an organizer has created a schedule, she is given a schedule ID and
+        a secret code. The schedule ID can be given to participants, or shared
+        as a URL such as 
+        <a>https://algol.petitti.org/schedule/<i>8bDj38</i></a>. The secret code
+        is for the organizer to use if she wants to edit the schedule in the
+        future. For example, she could extend the start or end dates or close
+        particular time slots. The organizer can also use the secret code to see
+        the names of all participants and when their meetings are scheduled for.
+      </p>
 
-			<h2 id="team">Team</h2>
+      <figure class="full-width">
+        <a href="images/algol-schedule-view.png">
+          <img src="images/algol-schedule-view.png" alt="Standard schedule view"></img>
+        </a>
+        <figcaption>The schedule view that participants can see</figcaption>
+      </figure>
 
-			<p>
-			The class was divided into groups of four students, and each group was
-			given a team name based on the names of stars. I was already friends with
-			the three other group members I worked with before the class, so it was
-			easy for me to find a group. Since our team was the first to sign up, we
-			got the "A" star name, Algol.
-			</p>
+      <h3>Participants</h3>
 
-			<div class="team-container">
-				<div class="team-box">
-					<img src="images/joseph-petitti-portrait.jpg">
+      <p>
+        A participant can access a schedule by using its schedule ID. From here,
+        he can request a meeting on a particular time and date, as long as the
+        time slot is open and no other participant has requested a meeting at
+        that same time. Participants are given a secret code when they request a
+        meeting.
+      </p>
 
-					<h2>Joseph Petitti</h2>
+      <h2 id="development">Development</h2>
 
-					<p>
-					Joseph Petitti was the fearless leader of Team Algol. He wrote the
-					entire front-end in TypeScript for Google's Angular framework, set up
-					much of the AWS back-end, designed and deployed the API, and spent far
-					too many late nights debugging and testing.
-					</p>
-					
-					<a href="https://josephpetitti.com" target="_blank"><button>Website</button></a>
-					<a href="https://github.com/jojonium" target="_blank"><button>GitHub</button></a>
-				</div>
+      <p>
+        Our team had one week to plan out the project, including designing the
+        API using Swagger, drawing up UML diagrams, and writing out use cases.
+        Then, from November 26 to December 14, 2018 we worked at a feverish pace
+        to complete the entire project.
+      </p>
 
-				<div class="team-box">
-					<img src="images/justin-cheng-portrait.jpg">
+      <h3>Back-End</h3>
 
-					<h2>Justin Cheng</h2>
+      <p>
+        The back-end of the project was done in AWS. API requests are processed
+        by an AWS API gateway, then passed along to a relevant lambda function.
+        These lambda functions were written in Java using the
+        Entity-Boundary-Controller design scheme. The lambda functions parse the
+        incoming JSON data into Java objects, then completes the requested
+        action. They connect to the database, a MySQL instance running in AWS
+        RDS, through JDBC.
+      </p>
 
-					<p>
-					Justin Cheng set up the relational database for the project in AWS,
-					wrote the database access objects, and wrote and tested several of the
-					lambda functions. He was our database expert and wrote all the SQL
-					statements and queries necessary for this web app to work.
-					</p>
-					
-					<a href="https://justcheng.com" target="_blank"><button>Website</button></a>
-					<a href="https://github.com/jchengz" target="_blank"><button>GitHub</button></a>
-				</div>
-			</div>
+      <figure class="full-width" style="max-width: 70%; margin: 0 auto;">
+        <a href="images/algol-search-view.png">
+          <img src="images/algol-search-view.png" alt="The view for searching for open time slots"></img>
+        </a>
+        <figcaption>
+          The view from which participants can search for open time slots
+        </figcaption>
+      </figure>
 
-			<div class="team-container">
-				<div class="team-box">
-					<img src="images/matthew-hagan-portrait.jpg">
+      <h3>Front-End</h3>
 
-					<h2>Matthew Hagan</h2>
+      <p>
+        The front-end was done in Google's Angular framework, using Google's
+        material design elements and guidelines. Angular applications are
+        written in TypeScript, a superscript of JavaScript that compiles to
+        plain JavaScript. The front-end ended up being a miniature
+        Entity-Boundary-Controller project, with TypeScript object entities,
+        HTML/CSS boundaries, and TypeScript controllers that make the API calls.
+      </p>
 
-					<p>
-					Matt Hagan was responsible for getting the initial AWS storage,
-					configurations, and domain set up. As time went on he transitioned to
-					being the EBC Controller lead for this project, working primarily with
-					the Lambdas to ensure that the boundary and entity control flow ran
-					smoothly.
-					</p>
-					
-					<a href="http://doublediamond.io" target="_blank"><button>Website</button></a>
-					<a href="https://github.com/subbassbro" target="_blank"><button>GitHub</button></a>
-				</div>
+      <h2 id="team">Team</h2>
 
-				<div class="team-box">
-					<img src="images/andrew-levy-portrait.jpg">
+      <p>
+        The class was divided into groups of four students, and each group was
+        given a team name based on the names of stars. I was already friends
+        with the three other group members I worked with before the class, so it
+        was easy for me to find a group. Since our team was the first to sign
+        up, we got the "A" star name, Algol.
+      </p>
 
-					<h2>Andrew Levy</h2>
+      <div class="team-container">
+        <div class="team-box">
+          <img src="images/joseph-petitti-portrait.jpg">
 
-					<p>
-					Andrew Levy designed the Algol team logo, as well as some of the HTML
-					of the early project. He kept us on track by writing weekly progress
-					reports. He also wrote, tested, and debugged many of the lambda
-					functions. Also, Andy wanted everyone to know that he has hamsters.
-					</p>
-					
-					<a href="http://andrew-levy.com" target="_blank"><button>Website</button></a>
-					<a href="https://github.com/AndrewLevy395" target="_blank"><button>GitHub</button></a>
-				</div>
-			</div>
-<style>
-	div.team-container {
-		display: flex;
-		flex-direction: right;
-	}
+          <h2>Joseph Petitti</h2>
 
-	div.team-box {
-		border: 1px solid grey;
-		border-radius: 5px;
-		padding: 2%;
-		margin: 1%;
-		flex: 1;
-	}
+          <p>
+          Joseph Petitti was the fearless leader of Team Algol. He wrote the
+          entire front-end in TypeScript for Google's Angular framework, set up
+          much of the AWS back-end, designed and deployed the API, and spent far
+          too many late nights debugging and testing.
+          </p>
 
-	div.team-box img {
-	 width: 100%;
-	}
-</style>
+          <a href="https://josephpetitti.com" target="_blank"><button>Website</button></a>
+          <a href="https://github.com/jojonium" target="_blank"><button>GitHub</button></a>
+        </div>
 
-		</main>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
+        <div class="team-box">
+          <img src="images/justin-cheng-portrait.jpg">
 
-				<p>
-				I created this website as a personal project in my free time to learn
-				more about web design, CSS, HTML, and JavaScript.
-				</p>
+          <h2>Justin Cheng</h2>
 
-				<p>
-				All portions of this website written by me are released under the 
-				<a href="license.txt"> MIT License</a>. Other scripts and resources
-				are licensed under free licenses by their respective owners. All source
-				code is available on 
-				<a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
-				</p>
-			</section>
+          <p>
+          Justin Cheng set up the relational database for the project in AWS,
+          wrote the database access objects, and wrote and tested several of the
+          lambda functions. He was our database expert and wrote all the SQL
+          statements and queries necessary for this web app to work.
+          </p>
 
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-		</body>
+          <a href="https://justcheng.com" target="_blank"><button>Website</button></a>
+          <a href="https://github.com/jchengz" target="_blank"><button>GitHub</button></a>
+        </div>
+      </div>
+
+      <div class="team-container">
+        <div class="team-box">
+          <img src="images/matthew-hagan-portrait.jpg">
+
+          <h2>Matthew Hagan</h2>
+
+          <p>
+          Matt Hagan was responsible for getting the initial AWS storage,
+          configurations, and domain set up. As time went on he transitioned to
+          being the EBC Controller lead for this project, working primarily with
+          the Lambdas to ensure that the boundary and entity control flow ran
+          smoothly.
+          </p>
+
+          <a href="http://doublediamond.io" target="_blank"><button>Website</button></a>
+          <a href="https://github.com/subbassbro" target="_blank"><button>GitHub</button></a>
+        </div>
+
+        <div class="team-box">
+          <img src="images/andrew-levy-portrait.jpg">
+
+          <h2>Andrew Levy</h2>
+
+          <p>
+          Andrew Levy designed the Algol team logo, as well as some of the HTML
+          of the early project. He kept us on track by writing weekly progress
+          reports. He also wrote, tested, and debugged many of the lambda
+          functions. Also, Andy wanted everyone to know that he has hamsters.
+          </p>
+
+          <a href="http://andrew-levy.com" target="_blank"><button>Website</button></a>
+          <a href="https://github.com/AndrewLevy395" target="_blank"><button>GitHub</button></a>
+        </div>
+      </div>
+
+      <style>
+        div.team-container {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        div.team-box {
+          background-color: #005377;
+          padding: 2%;
+          margin: 1%;
+          flex-basis: 300px;
+          flex-grow: 1;
+          box-shadow: 5px 5px 8px rgba(0, 0, 0, .8);
+        }
+
+        div.team-box img {
+         width: 100%;
+        }
+      </style>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are
+          released under the <a href="license.txt"> MIT License</a>.
+          Other scripts and resources are licensed under free licenses
+          by their respective owners. All source code is available on
+          <a href="https://github.com/jojonium/josephpetitti.com">
+          GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">
+                jppetitti@wpi.edu
+              </a>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+          <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+          <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+          <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
 </html>

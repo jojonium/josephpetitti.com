@@ -1,4 +1,4 @@
-/* (c) 2018 Joseph Petitti | https://josephpetitti.com/license.txt */
+/* (c) 2018, 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
 
 // create global canvas
 var canvas = document.createElement('canvas');
@@ -67,6 +67,11 @@ function langtonant(antx, optx, rulex) {
 	var cont = canv.getContext('2d');
 	canv.width = opts.gridsize * opts.pixlsize;
 	canv.height = opts.gridsize * opts.pixlsize;
+
+	cont.fillStyle = 'rgb(' + rules[0].cr + ', '
+		+ rules[0].cg + ', ' 
+		+ rules[0].cb + ')';
+	cont.fillRect(0, 0, canv.width, canv.height);
 
 	// Initialize pixels
 	var pixelArray = [];
