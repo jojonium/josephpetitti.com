@@ -229,12 +229,12 @@ ul.statistics li strong {
 
 /* Tables */
 main table {
-  border-collapse: separate;
-  border-spacing: 10px 0;
+  border-collapse: collapse;
+  box-sizing: border-box;
 }
 
 main table td, main table th {
-  padding: 2px 5px 2px 0;
+  padding: 2px 2em 2px 0;
   text-align: left;
 }
 
@@ -242,6 +242,9 @@ main table th.r, main table td.r {
   text-align: right;
 }
 
+main table thead.header th {
+  border-bottom: 1px solid #bbccdd;
+}
 
 
 /* Figures */
