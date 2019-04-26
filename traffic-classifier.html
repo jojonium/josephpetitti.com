@@ -107,134 +107,34 @@
 
       <h2 id="phase-1">Phase 1</h2>
 
-      <p>In this phase, we configure the TinyCore VM to act as a gateway.</p>
-
       <p>
-        First, configure the VirtualBox NAT interface (Adapter 1) so that it
-        port-forwards from port 12345 of the host to port 22 of the guest VM:
+        In this phase, we configured the TinyCore VM to act as a gateway. We set
+        up an SSH connection to the virtual machine from the host machine and
+        configured the Android x86 6.0 and TinyCore VMs to work on the same
+        virtual network.
       </p>
 
-      <ul>
-        <li>
-          Open the VM network settings, select Adapter #1, click
-          port-forwarding.
-        </li>
-        <li>
-          Add a port forwarding rule from port 12345 of the host to port 22 of
-          the guest.
-        </li>
-      </ul>
-
-      <p>
-        Then, install Android x86 in another virtual machine, and configure it
-        to use the gateway VM to reach the internet:
-      </p>
-      
       <figure class="full-width">
         <img src="images/virtualbox-config.png" alt="VirtualBox configuration"/>
         <figcaption>VirtualBox network configuration</figcaption>
       </figure>
 
-      <p>
-        <strong>Note:</strong> Everything below this point can be done by the
-        <code>phase1/init.sh</code> script, or you can follow along and do it
-        manually.
-      </p>
-
-      <h3 id="ssh">SSH</h3>
-
-      <p>
-        We should install OpenSSH, to make it easier to work on the virtual
-        machine:
-      </p>
-
-      <div class="code">$ tce-load -wi openssh</div>
-
-      <p>Create a configuration file for SSH:</p>
-
-      <div class="code">$ sudo cp /usr/local/etc/ssh/sshd_config.orig /usr/local/etc/ssh/sshd_config</div>
-
-      <p>
-        Set a password for user tc (the script uses
-        <span class="code">cs4516</span> as the password):
-      </p>
-
-      <div class="code">$ sudo passwd tc</div>
-
-      <p>Make sure SSH starts at boot:</p>
-
-      <div class="code">$ sudo sh -c 'echo &quot;sudo /usr/local/etc/init.d/openssh start&quot; &gt;&gt; /opt/bootlocal.sh'</div>
-
-      <p>
-        TinyCore uses a RAM-based filesystem, so you need to store the changes
-        you make or they will be lost on reboot.
-      </p>
-
-      <p>Backup ssh configuration and shadow file:</p>
-
-      <div class="code">$ echo &#39;/usr/local/etc/ssh&#39; &gt;&gt; /opt/.filetool.lst
-$ echo &#39;/etc/shadow&#39; &gt;&gt; /opt/.filetool.lst</div>
-
-      <p>Backup changes:</p>
-
-      <div class="code">$ filetool.sh -b</div>
-
-      <p>
-        <strong>Note:</strong> You should be able to reboot and SSH into the
-        TinyCore gateway now with 
-        <span class="code">ssh -p 12345 tc@localhost</span> on the
-        host machine.
-      </p>
-
-      <h3 id="static-ip">Static IP</h3>
-
-      <p>
-        Next, we need to configure the eth1 interface of TinyCore with the
-        static IP address 192.168.12.1, netmask 255.255.255.0. This is the
-        interface it will use to connect to the Internet, and we have to persist
-        the change so it deploys the configuration every time the machine boots
-        up. We can do this with a command:
-      </p>
-
-      <div class="code">$ ifconfig eth1 192.168.12.1 netmask 255.255.255.0 broadcast 192.168.12.255 up</div>
-
-      <p>
-        But we want the change to be persistent, so that it deploys the new
-        configuration every time the machine boots up. We'll put it in a startup
-        script, <span class="code">/opt/eth1.sh</span> soon, but we have some other stuff to
-        do first.
-      </p>
-
       <h3 id="ip-gateway">IP Gateway</h3>
 
       <p>
-        For this step we need to configure TinyCore to actually forward IP
-        packets. For this we'll need to packages, so install them now:
+        Next, we configured the eth1 interface of TinyCore to have the static IP
+        address 192.168.12.1, netmask 255.255.255.0. This is the interface it
+        uses to connect to the Internet. TinyCore's other (virtual) interface,
+        eth0, will be hooked up to the Android VM. We also used iptables to
+        route packets from eth0 to the Internet and back. Now TinyCore can act
+        like a gateway middlebox.
       </p>
-
-      <div class="code">$ tce-load -wi iptables
-$ tce-load -wi ipv6-KERNEL</div>
-
-      <p>
-        Next we need to turn on IP forwarding, and configure it to do this at
-        startup:
-      </p>
-
-      <div class="code">$ sudo sh -c 'echo &quot;sudo sysctl -w net.ipv4.ip_forward=1&quot; &gt;&gt; /opt/bootlocal.sh'</div>
-
-      <p>
-        And use the newly installed iptables package to route packets from eth0
-        (the interface connected to the Android VM):
-      </p>
-
-      <div class="code">sudo sh -c 'echo &quot;sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE&quot; &gt;&gt; /opt/bootlocal.sh'</div>
 
       <h3 id="dhcp-server">DHCP Server</h3>
 
       <p>
-        We also want TinyCore to act as a DHCP server for its subnet. We'll
-        create a configuration file for the program udhcpd that outlines how we
-        want it to work:
+        We also wanted TinyCore to act as a DHCP server for its subnet. We used
+        the program udhcpd with this configuration file to do that:
       </p>
 
       <div class="code">start 192.168.12.100
@@ -246,17 +146,15 @@ option lease 43200
 option dns 10.0.2.3       # the address of VirtualBox&#39;s DNS server
 option domain network2</div>
 
-      <p>Put this file in <span class="code">/etc/eth1_udhcpd.conf</span>.</p>
-
       <h3 id="startup-script">Startup Script</h3>
 
       <p>
-        We're almost done setting up the IP gateway, we just need a script to
-        <span class="code">/opt/eth1.sh</span>, to do this for us every time the
-        virtual machine boots up. This script kills the udhcpc process if it's
-        already running, uses the command from earlier to set up eth1, and then
-        starts the udhcpc server process. Put this file in
-        <span class="code">/opt/eth1.sh</span>.
+        Finally, we needed to persist these changes so they apply every time the
+        TinyCore VM reboots. We wrote this script, 
+        <span class="code">/opt/eth1.sh</span>, to run at startup and apply all
+        the configurations. This script kills the udhcpc process if it's already
+        running, configures eth1 interface, and then starts the udhcpc server
+        process.
       </p>
 
       <div class="code"><span style='color:#9999a9; '>#! </span><span style='color:#007997; '>/bin/sh</span>
@@ -272,19 +170,6 @@ ifconfig eth1 <span style='color:#008c00; '>192</span><span style='color:#e66170
 
 <span style='color:#9999a9; '># start the DHCP server process in the background once the interface is ready</span>
 sudo udhcpd <span style='color:#3066be; '>/etc/eth1_udhcpd.conf</span> <span style='color:#b060b0; '>&amp;</span></div> 
-
-      <p>
-        Now we just have to make sure <span class="code">/opt/eth1.sh</span> is
-        run at startup, so include it in <span>/opt/bootlocal.sh</span>:
-      </p>
-
-      <div class="code">$ sudo sh -c 'echo &quot;/opt/eth1.sh &amp;&quot; &gt;&gt; /opt/bootlocal.sh'</div>
-
-      <p>
-        And that's it! Make sure to run <code>filetool.sh -b</code> to backup
-        everything, then reboot and it should work. If the Android VM can't
-        connect to the internet something went wrong.
-      </p>
 
       <hr>
 
@@ -408,43 +293,43 @@ sudo udhcpd <span style='color:#3066be; '>/etc/eth1_udhcpd.conf</span> <span sty
       </p>
 
       <table>
-        <thead>
-          <tr class="header">
+        <thead class="header">
+          <tr>
             <th>Application Name</th>
-            <th>% Correct</th>
-            <th>% Unknown</th>
+            <th class="r">% Correct</th>
+            <th class="r">% Unknown</th>
           </tr>
         </thead>
         <tbody>
           <tr class="odd">
-            <td>YouTube</td>
-            <td>79.94%</td>
-            <td>11.39%</td>
+            <th>YouTube</th>
+            <td class="r">79.94%</td>
+            <td class="r">11.39%</td>
           </tr>
           <tr class="even">
-            <td>Browser</td>
-            <td>20.53%</td>
-            <td>34.48%</td>
+            <th>Browser</th>
+            <td class="r">20.53%</td>
+            <td class="r">34.48%</td>
           </tr>
           <tr class="odd">
-            <td>Google News</td>
-            <td>36.13%</td>
-            <td>24.44%</td>
+            <th>Google News</th>
+            <td class="r">36.13%</td>
+            <td class="r">24.44%</td>
           </tr>
           <tr class="even">
-            <td>Fruit Ninja</td>
-            <td>53.33%</td>
-            <td>11.76%</td>
+            <th>Fruit Ninja</th>
+            <td class="r">53.33%</td>
+            <td class="r">11.76%</td>
           </tr>
           <tr class="odd">
-            <td>Weather Channel</td>
-            <td>55.84%</td>
-            <td>20.10%</td>
+            <th>Weather Channel</th>
+            <td class="r">55.84%</td>
+            <td class="r">20.10%</td>
           </tr>
-          <tr class="even">
-            <td><strong>Average</strong></td>
-            <td><strong>55.84%</strong></td>
-            <td><strong>20.10%</strong></td>
+          <tr class="even" style="color: #eee">
+            <th><strong>Average</strong></th>
+            <td class="r"><strong>50.15%</strong></td>
+            <td class="r"><strong>20.43%</strong></td>
           </tr>
         </tbody>
       </table>
@@ -463,6 +348,34 @@ sudo udhcpd <span style='color:#3066be; '>/etc/eth1_udhcpd.conf</span> <span sty
         advertisements, and asynchronous data requests, which makes it easy to
         confuse with other apps. Our machine learning model is also probably not
         ideal because neither of us have taken a machine learning class.
+      </p>
+
+      <hr>
+
+      <h2 id="phase-4">Phase 4</h2>
+
+      <p>
+        For this phase we combined all the previous phases to make a complete
+        project. We retrained the model from Phase 3 to work on 32-bit TinyCore,
+        and set it up to run continuously on the VM. It captured live packets
+        from the Android VM and classified them in real time, writing the
+        results of each classification to a log.
+      </p>
+
+      <p>
+        This project shows how traffic classification is still possible despite
+        the use of encryption. Even without knowing anything about packet
+        payloads we were able to correctly identify which application a packet
+        flow came from a decent percentage of the time. With more time and
+        machine learning experience we could likely get this accuracy higher.
+      </p>
+
+      <p>
+        Even without knowing the specific contents of packets, there's a lot you
+        can do with this information. For example, you could selectively block
+        particular applications, or know what shady apps a surveilled political
+        opponent is using. Regardless, this project shows that even end-to-end
+        encryption is not the perfect security solution.
       </p>
     </main>
 

@@ -229,16 +229,20 @@ ul.statistics li strong {
 
 /* Tables */
 main table {
-  border-collapse: collapse;
-}
-
-main table thead th {
-  border-bottom: 1px solid rgba(187, 204, 221, .8);
+  border-collapse: separate;
+  border-spacing: 10px 0;
 }
 
 main table td, main table th {
   padding: 2px 5px 2px 0;
+  text-align: left;
 }
+
+main table th.r, main table td.r {
+  text-align: right;
+}
+
+
 
 /* Figures */
 figure {
