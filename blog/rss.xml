@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 
 	<channel>
 		<title>Joseph Petitti's Blog</title>
 		<link>https://josephpetitti.com/blog</link>
 		<description>This blog is a collection of random opinions and ramblings on a variety of topics including programming, software, films, and the great outdoors.</description>
+			<image>
+				<url>https://josephpetitti.com/images/logo.png</url>
+				<title>Joseph Petitti's Blog</title>
+				<link>https://josephpetitti.com/blog</link>
+			</image>
+		<language>en-us</language>
+		<atom:link href="https://josephpetitti.com/blog/rss.xml" rel="self" type="application/rss+xml" />
 
 		<item>
 			<title>The underrated brilliance of American Psycho</title>
 			<link>https://josephpetitti.com/blog/the-underrated-brilliance-of-american-psycho</link>
 			<description>I've seen a lot of movies, and Mary Harron's 2000 psychological thriller American Psycho is one of my favorites of all time. Yet for some reason it seems like this masterpiece has mostly flown under the radar, seen as a curious but shallow origin of memes, and remembered with a casual "oh yeah, that was alright." This lack of acclaim for a film I rank among the likes of 2001: A Space Odyssey and The End of Evangelion is great injustice in my eyes, so I will try to explain what I like so much about it. Be warned, there be spoilers here, so for the best experience go watch the film first and come up with your own explanations, then come back and read this.</description>
-			<image>https://josephpetitti.com/blog/images/american-psycho-title-card.jpg</image>
-			<language>en-us</language>
 			<pubDate>Mon, 22 Apr 2019 18:00:00 EDT</pubDate>
+			<guid>https://josephpetitti.com/blog/the-underrated-brilliance-of-american-psycho</guid>
 		</item>
 
 		<item>
 			<title>Audica and Beat Saber: how to do early access right and wrong</title>
 			<link>https://josephpetitti.com/blog/audica-and-beat-saber-how-to-do-early-access-right-and-wrong</link>
 			<description>Very rarely do you get such a perfect case study handed to you as with Audica and Beat Saber. Both are early access VR rhythm games on Steam and Oculus, both involve hitting red and blue notes with the correctly-colored weapon carried in each of you hands, and both are damn good fun. Let's take a look at how Audica takes advantage of early access to push content to early adopters while Beat Saber takes advantage of early access to take advantage of users.</description>
-			<language>en-us</language>
 			<pubDate>Sun, 28 Apr 2019 23:00:00 EDT</pubDate>
+			<guid>https://josephpetitti.com/blog/audica-and-beat-saber-how-to-do-early-access-right-and-wrong</guid>
 		</item>
 
 	</channel>
