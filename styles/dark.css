@@ -285,6 +285,10 @@ figure figcaption {
   color: #99aabb;
 }
 
+video {
+  max-width: 100%;
+}
+
 /* Buttons */
 button.long {
   z-index: 0;
