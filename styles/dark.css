@@ -111,6 +111,15 @@ p.quote {
   font-style: italic;
   margin-inline-start: 2em;
   font-size: 1.25em;
+  color: #8899aa;
+}
+
+p.quote.block, figure p.quote.block {
+  text-align: left;
+  font-size: 1em;
+  padding-left: 1em;
+  margin-left: 1em;
+  border-left: 4px solid #8899aa;
 }
 
 figure p.quote {
