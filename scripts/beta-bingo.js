@@ -1,6 +1,6 @@
 /* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
 
-const o = new Array(48);
+const o = new Array(47);
 
 function shuffle(array) {
   let counter = array.length;
@@ -68,11 +68,12 @@ window.onload = () => {
   o[41] = 'More than one "no report"';
   o[42] = 'Something said goes in #quotes';
   o[43] = 'Google Doc linked in a report';
-  o[45] = '"Straw poll"';
-  o[46] = 'Hagan checks his phone';
-  o[47] = 'Syzygy says something weird and act like it isn\'t';
+  o[44] = '"Straw poll"';
+  o[45] = 'Hagan checks his phone';
+  o[46] = 'Syzygy says something weird and act like it isn\'t';
 
   shuffle(o);
+
 
   var j = 0;
   for (let i = 1; i <= 25; ++i) {
@@ -95,7 +96,6 @@ window.onload = () => {
 
   // right click
   $('.bbox').on('contextmenu', function(event) {
-    console.log('here');
     if ($(this).css('backgroundColor') != 'rgba(83, 83, 83, 0.9)') {
       $(this).css({
         'background-color': 'rgba(83, 83, 83, 0.9)',
