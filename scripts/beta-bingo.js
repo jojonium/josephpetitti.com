@@ -1,6 +1,6 @@
 /* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
 
-const o = new Array(36);
+const o = new Array(48);
 
 function shuffle(array) {
   let counter = array.length;
@@ -62,6 +62,15 @@ window.onload = () => {
   o[35] = 'Chairman spacing out when it\'s time for their report';
   o[36] = 'Single discussion exceeds 20 minutes';
   o[37] = 'One big snap';
+  o[38] = 'Hagan is late';
+  o[39] = 'One discussion exceeds 20 minutes';
+  o[40] = 'Clock is wrong';
+  o[41] = 'More than one "no report"';
+  o[42] = 'Something said goes in #quotes';
+  o[43] = 'Google Doc linked in a report';
+  o[45] = '"Straw poll"';
+  o[46] = 'Hagan checks his phone';
+  o[47] = 'Syzygy says something weird and act like it isn\'t';
 
   shuffle(o);
 
