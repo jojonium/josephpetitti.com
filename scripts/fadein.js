@@ -1,5 +1,5 @@
 /* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
-window.addEventListener('scroll', (e) => {
+const fadein = () => {
 	let pageTop = window.scrollY;
 	let pageBottom = pageTop + window.innerHeight;
 	
@@ -11,4 +11,6 @@ window.addEventListener('scroll', (e) => {
 			tag.classList.remove('visible');
 		}
 	}
-});
+}
+
+window.addEventListener('scroll', (e) => fadein());
