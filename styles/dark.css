@@ -388,7 +388,7 @@ footer section ul.icons li {
 .fadein {
   opacity: 0;
   transform: translate(0, 20px);
-  transition: all 1s;
+  transition: transform 1s, opacity 1s;
 }
 
 .fadein.visible {
