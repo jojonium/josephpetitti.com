@@ -384,6 +384,18 @@ footer section ul.icons li {
   display: inline;
 }
 
+/* Fade in */
+.fadein {
+  opacity: 0;
+  transform: translate(0, 20px);
+  transition: all 1s;
+}
+
+.fadein.visible {
+  opacity: 1;
+  transform: translate: (0, 0);
+}
+
 /* Mobile */
 @media screen and (max-width: 1000px) {
   h1.title {
