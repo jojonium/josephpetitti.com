@@ -19,3 +19,7 @@ div#stats {
   display: flex;
   justify-content: space-between;
 }
+
+a#play-again-anchor  {
+  display: none;
+}

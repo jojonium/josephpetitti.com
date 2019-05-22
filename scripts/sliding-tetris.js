@@ -1,17 +1,17 @@
 /* (C) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
 
 /* globals */
-var pieceCounter = 0;   // global counter to keep Piece IDs unique
-var moves = 0;          // move counter
-var difficulty = 1;     // difficulty level, based on score
+var pieceCounter;       // global counter to keep Piece IDs unique
+var moves;              // move counter
+var difficulty;         // difficulty level, based on score
 const SQUARE_SIZE = 60; // square size in pixels
 const B_HEIGHT = 15;    // board width in squares
 const B_WIDTH = 8;      // board height in squares
 var BOARD;              // 2D array for positions of existing Pieces
-var P = {};             // holds existing Pieces
-var score = 0;          // global for player's score
-var clearedInARow = 0;  // global counter keeps track of multiple rows cleared
-var needToAdd = 0;      // how many lines should be added once animations stop
+var P;                  // holds existing Pieces
+var score;              // global for player's score
+var clearedInARow;      // global counter keeps track of multiple rows cleared
+var needToAdd;          // how many lines should be added once animations stop
 
 
 /* Piece constructor */
@@ -299,9 +299,7 @@ const prepareForNextTurn = () => {
 			// check for win
 			for (let i = 0; i < B_WIDTH; ++i) {
 				if (BOARD[i].length > B_HEIGHT) {
-					alert('You lose!');
-					$('.piece').draggable('option', 'disabled', true);
-					$('#addLineButton').prop('disabled', true);
+					lose();
 					return;
 				}
 			}
@@ -309,6 +307,20 @@ const prepareForNextTurn = () => {
 		}
 	}, 500);
 }
+
+const lose = () => {
+	alert('You lose!');
+	// pieces fall off the screen and disappear
+	$('.piece').css('top', 
+			$(document).scrollTop() + 
+			$(window).height() - 
+			$('#board').position().top).draggable('option', 'disabled', true);
+	setTimeout(() => {
+		$('.piece').remove();
+	}, 500);
+	$('#add-line-anchor').css('display', 'none');
+	$('#play-again-anchor').css('display', 'block');
+};
 
 
 /**
@@ -494,6 +506,11 @@ const applyGravityAll = () => {
 };
 
 
+/**
+ * Adds a line to the bottom on command
+ * Removed because I decided I didn't like this feature
+ **/
+/*
 const addLineButton = () => {
 	score -= 10 * difficulty;
 	moves++;
@@ -501,6 +518,7 @@ const addLineButton = () => {
 	$('#score').html(score);
 	addLines(difficulty);
 }
+*/
 
 
 /**
@@ -528,12 +546,46 @@ const moveUp = function($el, height) {
 		$el.css('top', '-=' + SQUARE_SIZE);
 	}, 1);
 };
-	
+
 
 /**
- * Initializes the board
+ * Resets the game so it can be played again
+ **/
+const playAgain = () => {
+	$('#play-again-anchor').css('display', 'none');
+	init();
+};
+
+
+/**
+ * Initializes the board at the start of the game
  **/
 const init = () => {
+	// prepare BOARD 2D array
+	BOARD = new Array(B_WIDTH);
+	for (let i = 0; i < B_WIDTH; ++i) {
+		BOARD[i] = new Array(B_HEIGHT);
+		for (let j = 0; j < B_HEIGHT; ++j) {
+			BOARD[i][j] = -1;
+		}
+	}
+
+	// prepare globals
+	pieceCounter = 0;
+	moves = 0;
+	difficulty = 1;
+	P = {};
+	score = 0;
+	clearedInARow = 0;
+	needToAdd = 0;
+
+	// prepare #moves and #stats
+	$('#moves').html(moves);
+	$('#stats').css('width', SQUARE_SIZE * B_WIDTH + 'px');
+	$('#score').html(score);
+	$('#difficulty').html(difficulty);
+
+	// add initial lines
 	$('.piece').draggable('option', 'disabled', true);
 	for (let i = 0; i < 3; ++i) {
 		addLines(5, 2, true);
@@ -551,21 +603,6 @@ $('document').ready(() => {
 	$('#board').css({ width: SQUARE_SIZE * B_WIDTH + 'px',
 		height: SQUARE_SIZE * B_HEIGHT + 'px'
 	});
-
-	// prepare BOARD 2D array
-	BOARD = new Array(B_WIDTH);
-	for (let i = 0; i < B_WIDTH; ++i) {
-		BOARD[i] = new Array(B_HEIGHT);
-		for (let j = 0; j < B_HEIGHT; ++j) {
-			BOARD[i][j] = -1;
-		}
-	}
-
-	// prepare #moves and #stats
-	$('#moves').html(moves);
-	$('#stats').css('width', SQUARE_SIZE * B_WIDTH + 'px');
-	$('#score').html(score);
-	$('#difficulty').html(difficulty);
 
 	init();
 });

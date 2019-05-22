@@ -91,15 +91,46 @@
 
       <h2 style="text-align: center">Moves: <span id="moves"></h2>
 
-      <div class="main-links-holder">
-        <a href="javascript:addLineButton()">
+      <center>
+        <a href="javascript:playAgain()" id="play-again-anchor">
+          <button id="playAgainButton" class="long">Play Again?</button>
+        </a>
+        <!-- Removed because I decided I don't like this feature
+        <a href="javascript:addLineButton()" id="add-line-anchor">
           <button id="addLineButton" class="long">Add Line</button>
         </a>
-      </div>
+        -->
+      </center>
 
       <p>
         <strong>Note:</strong> This is still a work in progress and may contain
-        bugs
+        bugs.
+      </p>
+
+      <h2 id="instructions">Instructions</h2>
+
+      <p>
+        This game is similar to the Soviet classic <i>Tetris</i>, except that
+        rows of blocks move up from the bottom of the screen rather than falling
+        one at a time from the top. Your goal is to clear blocks by making
+        complete rows without any gaps. You can slide blocks left and right by
+        clicking and dragging them, and they will fall due to gravity when you
+        let go. You get more points for clearing more lines in one move, so
+        setting up chains is a good strategy. When the blocks reach the top of
+        the board you lose.
+      </p>
+
+      <h2 id="about">About</h2>
+
+      <p>
+        I made this game in a day, basically to see if I could. Most of the
+        other games on this site involve an HTML5 canvas that I draw on with
+        JavaScript to create the game graphics. In Sliding Tetris, however,
+        everything is pure HTML elements. Each block is just a colored div, and
+        the animations come from CSS3 transition properties. This was a
+        different and confusing way of making a game, and probably led to a lot
+        of the bugs that are still present in the game, but it taught me a lot
+        about manipulating the DOM with JavaScript.
       </p>
 
     </main>
