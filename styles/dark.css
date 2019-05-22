@@ -393,7 +393,7 @@ footer section ul.icons li {
 
 .fadein.visible {
   opacity: 1;
-  transform: translate: (0, 0);
+  transform: translate(0, 0);
 }
 
 /* Mobile */
