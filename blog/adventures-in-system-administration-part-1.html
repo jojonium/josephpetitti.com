@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Adventures in system administration - Part 1</title>
+    <meta name="description" content="Part 1 of an ongoing guide documenting my process of setting up a virtual network of servers to host various services for me" />
+    <meta property="og:title" content="Adventures in system administration - Part 1" />
+    <meta property="og:description" content="Part 1 of an ongoing guide documenting my process of setting up a virtual network of servers to host various services for me" />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/r710.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/adventures-in-system-administration-part-1" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-05-26">May 26, 2019</span>
+
+      <h1 class="title">Adventures in system administration - Part 1</h1>
+
+      <h2 id="background">Background</h2>
+
+      <p>
+        For the past year or so I've been running a bunch of services off of two
+        servers in my apartment. These include several simple websites
+        (including this one) served by Nginx, a Plex server, a few different
+        game servers, and Transmission-daemon behind a VPN. This worked fine for
+        a while, but as my desire to host more things myself grew, the two old
+        HP desktops I had been using couldn't keep up. In May 2019 I decided to
+        upgrade.
+      </p>
+
+      <p>
+        This is the first in what I assume will be a long series of blog posts
+        describing in detail the process I used to set up my own network of
+        virtual servers to handle the tasks I want automated for my personal
+        life. The goal is both as documentation for my own purposes, and as a
+        guide so others can do the same thing.
+      </p>
+
+      <h3 id="hardware">Hardware</h3>
+
+      <p>
+        I bought a used Dell PowerEdge R710 2U rack server based on online
+        recommendations, with 32 GB of RAM and two Intel Xeon E5620 CPUs. The
+        RAID controller it came with could only handle drives up to 2 TB, so I
+        swapped it out with a PERC H700. I also bought two 1 TB hard drives to
+        use in a RAID 1 array for important OS data, and an 8 TB drive for low
+        priority storage. I plan to buy more 8 TB hard drives for expanded
+        storage and backups, but this will do for now.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/r710.jpg">
+          <img src="images/th_r710.jpg" alt="Dell PowerEdge R710">
+        </a>
+        <figcaption>The Dell PowerEdge R710</figcaption>
+      </figure>
+
+      <h3 id="software">Software</h3>
+
+      <p>
+        I'll be using <a href="https://www.centos.org/">CentOS 7</a> for both
+        host and guest operating systems. This is because it's based on Red Hat
+        Enterprise Linux, which has wide support in a lot of server-based
+        applications, and also because my prior experience with Ubuntu server
+        left me feeling annoyed.
+      </p>
+
+      <p>
+        For virtualization technology I'm using KVM/QEMU. I tried using
+        Spacewalk/Cobbler for system provisioning, but couldn't quite get it set
+        up right, so I switched to
+        <a href="https://www.theforeman.org/">Foreman</a>.
+      </p>
+
+      <p>
+        With that out of the way, let's get right into setting it up.
+      </p>
+
+      <h2 id="step-1-setting-up-the-host">Step 1: Setting up the host</h2>
+
+      <p>
+        The first step is obviously to install the operating system, so head
+        over to <a href="https://www.centos.org/download/">centos.org</a> and
+        grab an ISO. I went for the minimal version because I don't need a GUI.
+        That install is pretty straightforward, so the next step is setting our
+        host up as a KVM hypervisor.
+      </p>
+
+      <p><b>Note:</b> make sure your system is up to date with: </p>
+
+      <code class="block"># yum upgrade</code>
+
+      <p>before proceding.</p>
+
+      <h3 id="install-kvm">Install KVM</h3>
+
+      <p>
+        This is simple enough if you know what packages to grab:
+      </p>
+
+      <code class="block"># yum install qemu-kvm libvirt libvirt-python \
+libguestfs-tools virt-install</code>
+
+      <p>
+        Next we have to start the libvirtd service, and "enable" it so it starts
+        on boot.
+      </p>
+
+      <code class="block"># systemctl enable libvirtd
+# systemctl start libvirtd</code>
+
+      <p>
+        We want our virtual machines to be able to talk to real machines outside
+        their virtual network, so we need to set up a network bridge for them.
+        By default KVM sets up a 192.168.122.0/24 private network for VMs, which
+        can be seen with <code>virsh net-dumpxml default</code>.
+      </p>
+
+      <p>
+        To set up our brige, we'll have to edit a config script for our physical
+        LAN interface. You can find the name of it with <code>ifconfig</code>
+        (you might need to <code>yum install net-tools</code> if you don't if
+        <code>ifconfig</code>). My interface is called <code>em1</code>, but
+        yours might be different.
+      </p>
+
+      <code class="block"># vi /etc/sysconfig/network-scripts/ifcfg-<i>em1</i></code>
+
+      <p>
+        Note: your script might not be named exactly the same way, just find the
+        one with your interface in the name. To this file we just have to add:
+      </p>
+
+      <code class="block">BRIDGE=br0</code>
+
+      <p>
+        to the bottom. Save and close it. Next we create a config file for the
+        bridge, in <code>/etc/sysconfig/network-scripts/ifcfg-br0</code>. Put
+        this in that file:
+      </p>
+
+      <code class="block">DEVICE="br0"
+BOOTPROTO="dhcp"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+ONBOOT="yes"
+TYPE="Bridge"
+DELAY="0"</code>
+
+      <p>
+        Restart the networking service and we'll be good to go:
+      </p>
+
+      <code class="block"># systemctl restart NetworkManager</code>
+
+      <p>
+        You can verify that everything worked by running 
+        <code>brctl show</code>. You should see a bridge named <code>br0</code>.
+      </p>
+
+      <p>
+        We could start creating VMs now, but first we want to install Foreman to
+        automate a lot of the work associated with that.
+      </p>
+
+      <h3 id="install-foreman">Install Foreman</h3>
+
+      <p>
+        Foreman is a big confusing piece of software that includes a lot of
+        moving parts, but it will make our lives easier in the future when we
+        have a fleet of VMs running different services and want to be able to
+        create more on the fly without any direct interaction.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/foreman-architecture.png">
+          <img src="images/foreman-architecture.png" alt="Chart of Foreman's
+                  various services">
+        </a>
+      </figure>
+
+      <p>
+        The Foreman installer uses Puppet to install Foreman, so first we need
+        to install Puppet:
+      </p>
+
+      <code class="block"># yum install https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm</code>
+
+      <p>
+        Then, enable the Etra Packages for Enterprise Linux (EPEL) and Foreman
+        repos:
+      </p>
+
+      <code class="block"># yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# yum install https://yum.theforeman.org/releases/1.21/el7/x86_64/foreman-release.rpm</code>
+
+      <p>
+        Download the installer:
+      </p>
+
+      <code class="block"># yum install foreman-installer</code>
+
+      <p>
+        Before we run the installer, we have to make sure we have our
+        Fully-Qualified Domain Name set up correctly. The FQDN includes the
+        machine's hostname and an internet domain that points to it. For
+        example, if my server is named <code>steve</code>, the FQDN could be
+        <code>steve.example.com</code>. To update the hostname, run:
+      </p>
+
+      <code class="block"># hostnamectl set-hostname <i>steve</i></code>
+
+      <p>
+        Then edit <code>/etc/hosts</code>. Add a line to it that looks like
+        this:
+      </p>
+
+      <code class="block">1.2.3.4 hostname.example.com hostname</code>
+
+      <p>
+        Make sure you replace 1.2.3.4 with the computer's real internal IP
+        address though.
+      </p>
+
+      <p>
+        With that done, we can run the installer.
+      </p>
+
+      <code class="block"># foreman-installer</code>
+
+      <p>When it's finished you should get a block of text like this:</p>
+
+      <code class="block">Success!
+* Foreman is running at https://hostname.example.com
+    Initial credentials are admin / aUaMiCRtLFXikhAF
+* Foreman Proxy is running at https://hostname.example.com:8443
+* Puppetmaster is running at port 8140
+The full log is at /var/log/foreman-installer/foreman.log</code>
+
+      <p>
+        If you can't reach the web interface at the given address, make sure the
+        correct ports are open on your server:
+      </p>
+
+      <code class="block"># firewall-cmd --zone=public --add-port 80/tcp --permanent</code>
+
+      <p>Repeat for each needed port.</p>
+
+      <p>
+        Now, if you log in to the Foreman web interface with the credentials you
+        received from foreman-installer, you should be able to go to the Hosts
+        tab and see your Foreman host. You should take this opportunity to set a
+        new, secure password.
+      </p>
+
+      <p>
+        Now that we have the host machine configured and set up, that's enough
+        for today. Next time we'll get into provisioning our virtual machines
+        and setting up fun stuff like LDAP and DHCP.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are released under the 
+          <a href="../license.txt"> MIT License</a>.  Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on 
+          <a href="https://github.com/jojonium/josephpetitti.com"> GitHub</a>.
+        </p>
+      </section>
+
+  </body>
+</html>

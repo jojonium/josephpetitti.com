@@ -91,7 +91,7 @@ a:hover {
   color: #40bcf4;
 }
 
-.code {
+.code, code {
   font-family: "Liberation Mono", monospace;
   background-color: #2b2b2b;
   padding: 1px 3px;
@@ -100,10 +100,13 @@ a:hover {
   overflow-x: auto;
 }
 
-div.code {
+div.code, code.block {
   padding: 15px 10px 15px 15px;
   border-radius: 0 5px 5px 0;
   border-left: 4px solid #f1a208;
+  width: 100%;
+  overflow-x: auto;
+  display: block;
 }
 
 p.quote {

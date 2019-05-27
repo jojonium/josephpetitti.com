@@ -45,5 +45,13 @@
 			<guid>https://josephpetitti.com/blog/meet-the-cloud-office-the-workplace-of-the-future</guid>
 		</item>
 
+		<item>
+			<title>Adventures in system administration - Part 1</title>
+			<link>https://josephpetitti.com/blog/adventures-in-system-administration-part-1</link>
+			<description>Part 1 of an ongoing guide documenting my process of setting up a virtual network of servers to host various services for me</description>
+			<pubDate>Sun, 26 May 2019 21:44:00 EDT</pubDate>
+			<guid>https://josephpetitti.com/blog/adventures-in-system-administration-part-1</guid>
+		</item>
+
 	</channel>
 </rss>
