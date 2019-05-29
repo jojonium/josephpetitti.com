@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Adventures in system administration - Part 2</title>
+    <meta name="description" content="" />
+    <meta property="og:title" content="Adventures in system administration - Part 2" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/r710.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/adventures-in-system-administration-part-2" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-05-28">May 28, 2019</span>
+
+      <h1 class="title">Adventures in system administration - Part 2</h1>
+
+      <h2 id="step-2-creating-virtual-machines">
+        Step 2: Creating virtual machines
+      </h2>
+
+      <p>
+        We're almost ready to start creating virtual servers with Foreman. We
+        need to get Foreman and Libvirt to talk to each other first, which
+        requires a little extra work. First, install the foreman-libvirt package
+        like so:
+      </p>
+
+      <code class="block"># yum install foreman-libvirt</code>
+
+      <p>Restart your physical server so everything refreshes:</p>
+
+      <code class="block"># reboot</code>
+
+      <p>
+        Once it comes back online, you should be able to go to Foreman's web
+        interface and set up a Libvirt compute resource. But before we do that,
+        we need to make our Libvirt trust Foreman.
+      </p>
+
+      <code class="block">root@box# su foreman -s /bin/bash
+foreman@box$ ssh-keygen
+foreman@box$ ssh-copy-id root@host.example.com</code>
+
+      <p>
+        You can leave Foreman user's SSH key in the default location and leave
+        the password blank if you want. When prompted, enter the root password
+        to copy SSH IDs. At this point, while logged in as <code>foreman</code>
+        you should be able to execute:
+      </p>
+
+      <code class="block">foreman@box$ ssh root@host.example.com</code>
+
+      <p>to get into a superuser shell. As the final test, try executing:</p>
+
+      <code class="block">foreman@box$ virsh -c qemu+ssh://root@host.example.com/system list</code>
+      
+      <p>
+        If you did everything right up to here it should work without error. Now
+        return to the Foreman web interface. Go to Infrastructure &gt; Compute
+        Resources and click the big blue "Create" button. Pick a cool-sounding
+        name, and choose Libvirt from the Provider menu. For the URL, use:
+      </p>
+
+      <code class="block">qemu+ssh://root@host.example.com/system</code>
+
+      <p>
+        As a final sanity test you can try the "Test Connection" button. If
+        everything looks good click "Submit" and you should be all good.
+      </p>
+
+      <h3 id="more-foreman-administration">More Foreman administration</h3>
+
+      <p>
+        There are a few more things we need to set up before we can start
+        conjuring VMs out of thin air.
+      </p>
+
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are released under the 
+          <a href="../license.txt"> MIT License</a>.  Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on 
+          <a href="https://github.com/jojonium/josephpetitti.com"> GitHub</a>.
+        </p>
+      </section>
+
+  </body>
+</html>
