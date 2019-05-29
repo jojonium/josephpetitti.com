@@ -5,7 +5,7 @@ var pieceCounter;       // global counter to keep Piece IDs unique
 var moves;              // move counter
 var difficulty;         // difficulty level, based on score
 const SQUARE_SIZE = 60; // square size in pixels
-const B_HEIGHT = 15;    // board width in squares
+const B_HEIGHT = 12;    // board width in squares
 const B_WIDTH = 8;      // board height in squares
 var BOARD;              // 2D array for positions of existing Pieces
 var P;                  // holds existing Pieces
@@ -114,7 +114,6 @@ Piece.prototype = {
 
 		// find closest neighboring piece on the right
 		for (let r = this.y; r < this.y + this.height; r++) {
-			console.log('r: ' + r);
 			for (let i = this.x + this.width; i < B_WIDTH; ++i) {
 				if (BOARD[i][r] != -1) {
 					rightWall = Math.min(i - this.width, rightWall);
@@ -174,12 +173,12 @@ Piece.prototype = {
 		// wait for the animation to finish (after 500 ms)
 		setTimeout(function() {
 			// find the new X coordinate
-			this.x = $('#piece-' + this.id)
-				.css('left').slice(0, -2) / SQUARE_SIZE;
+			this.x = Math.floor($('#piece-' + this.id)
+				.css('left').slice(0, -2)) / SQUARE_SIZE;
 			// update BOARD
 			for (let i = this.x; i < this.x + this.width; ++i) {
 				for (let j = this.y; j < this.y + this.height; ++j) {
-					BOARD[i][j] = this.id
+					BOARD[i][j] = this.id;
 				}
 			}
 			
