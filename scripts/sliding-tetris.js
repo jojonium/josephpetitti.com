@@ -105,7 +105,7 @@ Piece.prototype = {
 		// find closest neighboring piece on the left
 		for (let l = this.y; l < this.y + this.height; l++) {
 			for (let i = this.x - 1; i >= 0; --i) {
-				if (BOARD[i][this.y] != -1) {
+				if (BOARD[i][l] != -1) {
 					leftWall = Math.max(i + 1, leftWall);
 					break;
 				}
@@ -114,15 +114,16 @@ Piece.prototype = {
 
 		// find closest neighboring piece on the right
 		for (let r = this.y; r < this.y + this.height; r++) {
+			console.log('r: ' + r);
 			for (let i = this.x + this.width; i < B_WIDTH; ++i) {
-				if (BOARD[i][this.y] != -1) {
+				if (BOARD[i][r] != -1) {
 					rightWall = Math.min(i - this.width, rightWall);
 					break;
 				}
 			}
 		}
 
-		// make sure the Piece being dragged doesn't cross left and rightwalls
+		// make sure the Piece being dragged doesn't cross left and right walls
 		ui.position.left =
 			Math.max(leftWall * SQUARE_SIZE, ui.position.left);
 		ui.position.left =
