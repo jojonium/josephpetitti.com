@@ -78,9 +78,10 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
       
       <p>
         If you did everything right up to here it should work without error. Now
-        return to the Foreman web interface. Go to Infrastructure &gt; Compute
-        Resources and click the big blue "Create" button. Pick a cool-sounding
-        name, and choose Libvirt from the Provider menu. For the URL, use:
+        return to the Foreman web interface. Go to <i>Infrastructure &gt;
+        Compute Resources</i> and click the big blue "Create" button. Pick a
+        cool-sounding name, and choose Libvirt from the Provider menu. For the
+        URL, use:
       </p>
 
       <code class="block">qemu+ssh://root@host.example.com/system</code>
@@ -97,6 +98,92 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
         conjuring VMs out of thin air.
       </p>
 
+      <p>
+        Make sure you have a Libvirt storage pool with 
+        <code>virsh pool-list</code>. If you don't already have an active pool
+        with autostart turned on, create one like so:
+      </p>
+
+      <code class="block"># virsh pool-define-as --name <i>default</i> --type dir \
+--target /path/of/your/choice
+# virsh pool-autostart <i>default</i>
+# virsh pool-start <i>default</i></code>
+
+      <p>
+        Next, we want to make a provisioning template so all of our virtual
+        machines are set up basically the same. Foreman comes with a few helpful
+        example templates to get you started, so we'll just copy one of those to
+        work with.
+      </p>
+
+      <p>
+        Go to <i>Hosts &gt; Provisioning Templates</i> and find the template
+        called "Kickstart default PXELinux." Use the action button to clone it,
+        and start editing the clone. Give this template whatever name you want,
+        then head over to the Association tab to make sure it's associated with
+        our CentOS 7.6 operating system (Foreman automagically knows about this
+        OS because it knows what it's installed on). Make sure you click
+        "Submit" once you're done.
+      </p>
+
+      <p>
+        Now go to <i>Hosts &gt; Operating Systems</i> and edit CentOS 7.6. Under
+        the Templates tab set the template we just made as the PXELinux template
+        for this operating system and hit Submit.
+      </p>
+
+      <p>
+        While still editing the CentOS 7.6 operating system, switch to the
+        Partition Table tab. Associate the included "kickstart default"
+        partition table with this OS.
+      </p>
+
+      <p>
+        Now we're finally ready to create our first virtual machine!
+      </p>
+
+      <h3 id="into-the-virtual-world">Into the virtual world</h3>
+
+      <p>
+        Let's go ahead and create our first virtual server. Go to <i>Hosts &gt;
+        Create Host</i> and enter a cool name. Make the Organization and
+        Location default, and make sure you choose the Libvirt compute module
+        you configured earlier instead of Bare Metal for what to deploy on.
+        Configure the Virtual Machine tab however you want. I want this host to
+        be an LDAP server, so I think I can leave it with the default 1 CPU and
+        2 GB of memory. Under Storage, you should see the virsh pool you created
+        earlier. Choose how big you want your virtual hard drive to be, I picked
+        20 GB just to be safe. If you change the type to QCOW2 the file that
+        represents the virtual disk will grow as it's needed, so it's not the
+        full 20 GB unless it's totally full.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/create-host.png">
+          <img src="images/th_create-host.png" alt="This is what the Virtual Machine tab should look like">
+        </a>
+      </figure>
+
+      <p>
+        Under the Operating System tab, we're going to pick x86_64 as the
+        architecture and CentOS 7.6.1810 as the operating system. For media
+        choose the default CentOS mirror. Select the partition table you
+        configured earlier, and the PXE loader will be PXELinux BIOS.  Make suer
+        you set a strong root password too. If you clidk "Resolve" the
+        provisioning template we configured earlier should show up.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/create-host-os.png">
+          <img src="images/th_create-host-os.png" alt="This is what the Operating System tab should look like">
+        </a>
+      </figure>
+
+      <p>
+        You can configure the interface to assign a specific IP address if you
+        want, but if not that's it.
+      </p>
+        
 
     </main>
 
