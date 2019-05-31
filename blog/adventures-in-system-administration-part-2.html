@@ -138,6 +138,88 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
         partition table with this OS.
       </p>
 
+      <h3 id="setting-up-dhcp">Setting up DHCP</h3>
+
+      <p>
+        Our next step is to set up a DHCP server for our virtual network, using
+        Foreman and Libvirt. Edit the default Libvirt network with
+        <code>virsh net-edit default</code> so that it looks like this:
+      </p>
+
+      <code class="block">&lt;network&gt;
+  &lt;name&gt;default&lt;/name&gt;
+  &lt;uuid&gt;c9c73310-bd3c-4d04-a758-11bc905edd17&lt;/uuid&gt;
+  &lt;forward mode='nat'/&gt;
+  &lt;bridge name='virbr0' stp='on' delay='0'/&gt;
+  &lt;domain name="virtnet" /&gt;
+  &lt;dns&gt;
+  &lt;/dns&gt;
+  &lt;mac address='52:54:00:7e:be:1c'/&gt;
+  &lt;ip address='192.168.122.1' netmask='255.255.255.0'&gt;
+    &lt;tftp root='var/tftproot' /&gt;
+    &lt;dhcp&gt;
+      &lt;range start='192.168.122.2' end='192.168.122.254'/&gt;
+      &lt;bootp file='pxelinux.0' /&gt;
+    &lt;/dhcp&gt;
+  &lt;/ip&gt;
+&lt;/network&gt;</code>
+
+      <p>
+        Make a TFTP root directory, make sure it is writeable by the 
+        <code>foreman-proxy</code> user and accessible to the accoung dnsmasq is
+        running on (<code>nobody</code>), set the gid flag for newly copied
+        files and copy necessary files to the new TFTP root directory:
+      </p>
+
+      <code class="block"># mkdir -p /var/tftproot/{boot,pxelinux.cfg}
+# yum -y install syslinux
+# cp /usr/share/syslinux/{pxelinux.0,menu.c32,chain.c32} /var/tftproot
+# chown -R foreman-proxy:nobody /var/tftproot
+# find /var/tftproot/ -type d | xargs chmod g+s</code>
+
+      <p>
+        Next, edit <code>/etc/libvirt/libvirtd.conf</code> and uncomment these
+        lines to allow <code>foreman-proxy</code> to be able to connect to the
+        libvirt daemon.
+      </p>
+
+      <code class="block">unix_sock_group = "foreman-proxy"
+unix_sock_rw_perms = "0770"</code>
+
+      <p>
+        Next, cd into <code>/etc/foreman-proxy/settings.d</code>. There are a
+        few config files we need to edit.
+      </p>
+
+      <p>
+        Put these in <code>tftp.yml</code>:
+      </p>
+
+      <code class="block">:tftp: true
+:tftproot: /var/tftproot
+:tftp_servername: 192.168.122.1</code>
+
+      <p>
+        In <code>dns.yml</code>:
+      </p>
+
+      <code class="block">:enabled: true
+:use_provider: dns_libvirt</code>
+
+      <p>
+        In <code>dhcp.yml</code>:
+      </p>
+
+      <code class="block">:enabled: true
+:use_provider: dhcp_libvirt</code>
+
+      <p>
+        And in <code>dns_libvirt.yml</code> and <code>dhcp_libvirt.yml</code>:
+      </p>
+
+      <code class="block">:etwork: default
+:url: qemu:///system</code>
+
       <p>
         Now we're finally ready to create our first virtual machine!
       </p>
