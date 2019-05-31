@@ -53,5 +53,13 @@
 			<guid>https://josephpetitti.com/blog/adventures-in-system-administration-part-1</guid>
 		</item>
 
+		<item>
+			<title>How to change Wordpress URLs in the database</title>
+			<link>https://josephpetitti.com/blog/how-to-change-wordpress-urls-in-the-database</link>
+			<description>Wordpress has a nasty habit of redirecting you to what it thinks the correct domain name is, and this value is hidden in multiple obscure places in the database. If you've ever had to migrate a Wordpress site from one domain name to another you've probably encountered this problem. Fortunately, there is a relatively painless way to reconfigure Wordpress to use the new domain name from inside its database.</description>
+			<pubDate>Fri, 31 May 2019 16:42:00 EDT</pubDate>
+			<guid>https://josephpetitti.com/blog/how-to-change-wordpress-urls-in-the-database</guid>
+		</item>
+
 	</channel>
 </rss>

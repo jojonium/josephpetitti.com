@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How to change Wordpress URLs in the database</title>
+    <meta name="description" content="Wordpress has a nasty habit of redirecting you to what it thinks the correct domain name is, and this value is hidden in multiple obscure places in the database. If you've ever had to migrate a Wordpress site from one domain name to another you've probably encountered this problem. Fortunately, there is a relatively painless way to reconfigure Wordpress to use the new domain name from inside its database." />
+    <meta property="og:title" content="Blog Template" />
+    <meta property="og:description" content="Wordpress has a nasty habit of redirecting you to what it thinks the correct domain name is, and this value is hidden in multiple obscure places in the database. If you've ever had to migrate a Wordpress site from one domain name to another you've probably encountered this problem. Fortunately, there is a relatively painless way to reconfigure Wordpress to use the new domain name from inside its database." />
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/WordPress_logo.svg/1920px-WordPress_logo.svg.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/how-to-change-wordpress-urls-in-the-database" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-05-31">May 31, 2019</span>
+
+      <h1 class="title">How to change Wordpress URLs in the database</h1>
+
+      <p>
+        Wordpress has a nasty habit of redirecting you to what it thinks the
+        correct domain name is, and this value is hidden in multiple obscure
+        places in the database.  If you've ever had to migrate a Wordpress site
+        from one domain name to another you've probably encountered this
+        problem.
+      </p>
+
+      <p>
+        Fortunately, there is a relatively painless way to reconfigure Wordpress
+        to use the new domain name from inside its database.
+      </p>
+
+      <p>
+        First, connect to your Wordpress database like so:
+      </p>
+
+      <code class="block">$ mysql -h <i>db.url.com</i> -u <i>username</i> -p <i>database_name</i></code>
+
+      <p>
+        Enter your password when prompted (obviously). If you don't know the
+        URL or credentials for your database, check your
+        <code>wp-config.php</code> file.
+      </p>
+
+      <p>
+        From the MySQL shell that you should now be connected to, run the
+        following queries, making sure to replace
+        <code>http://oldname.com</code> and <code>https://newname.com</code>
+        with the actual old and new URLs of your site:
+      </p>
+
+      <code class="block" style="font-size: .75em;">mysql&gt; UPDATE wp_options SET option_value = replace(option_value, 'http://oldname.com', 'https://newname.com') WHERE option_name = 'home' OR option_name = 'siteurl';
+mysql&gt; UPDATE wp_posts SET guid = replace(guid, 'http://oldname.com', 'https://newname.com');
+mysql&gt; UPDATE wp_posts SET post_content = replace(post_content, 'http://oldname.com', 'https://newname.com');
+mysql&gt; UPDATE wp_postmeta SET meta_value = replace(meta_value, 'http://oldname.com', 'https://newname.com');</code>
+
+      <p>
+        Not only will this fix those pesky redirects, it also fixes the metadata
+        for all your blog posts.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are released under the 
+          <a href="../license.txt"> MIT License</a>.  Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on 
+          <a href="https://github.com/jojonium/josephpetitti.com"> GitHub</a>.
+        </p>
+      </section>
+
+  </body>
+</html>
