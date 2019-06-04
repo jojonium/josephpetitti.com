@@ -72,10 +72,11 @@ Piece.prototype = {
 					$('.piece').draggable('option', 'disabled', true);
 					moves++;
 					this.updatePositionByDOM();
+					// choose a number of lines to add
 					let m = (difficulty > 2) ? 2 : 3;
 					if (moves % m == 0) {
 						needToAdd += Math.round(Math.random() * 
-							Math.min(difficulty, 3)) + 1;
+							Math.min(difficulty, 2)) + 1;
 					}
 				}.bind(this),
 				drag: function(event, ui) {
@@ -270,6 +271,7 @@ const turnDone = () => {
  **/
 const prepareForNextTurn = () => {
 	if (clearedInARow > 0) {
+		// update score and difficulty
 		if (moves != 0)
 			score += Math.pow(difficulty + 1, clearedInARow) * 10;
 		clearedInARow = 0;
