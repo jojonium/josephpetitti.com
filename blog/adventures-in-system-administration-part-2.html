@@ -3,10 +3,10 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Adventures in system administration - Part 2</title>
-    <meta name="description" content="" />
+    <meta name="description" content="Part 2 of an ongoing series about setting up a network of virtual servers. In this post, we configure Foreman and and a virtual network to allow unattended creation and provisioning of virtual hosts." />
     <meta property="og:title" content="Adventures in system administration - Part 2" />
-    <meta property="og:description" content="" />
-    <meta property="og:image" content="https://josephpetitti.com/blog/images/r710.jpg" />
+    <meta property="og:description" content="Part 2 of an ongoing series about setting up a network of virtual servers. In this post, we configure Foreman and and a virtual network to allow unattended creation and provisioning of virtual hosts." />
+    <meta property="og:image" content="https://www.theforeman.org/static/images/diagrams/foreman_workflow_final.jpg" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://josephpetitti.com/blog/adventures-in-system-administration-part-2" />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
@@ -133,6 +133,18 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
       </p>
 
       <p>
+        Repeat this process for each of the five provisioning templates needed
+        by the OS:
+      </p>
+
+      <ul>
+        <li>Provisioning template: Kickstart default</li>
+        <li>Finish template: Kickstart default finish</li>
+        <li>iPXE template: Kickstart default iPXE</li>
+        <li>User data template: Kickstart default user data</li>
+        <li>PXELinux template: Kickstart default PXELinux</li>
+
+      <p>
         While still editing the CentOS 7.6 operating system, switch to the
         Partition Table tab. Associate the included "kickstart default"
         partition table with this OS.
@@ -250,9 +262,9 @@ unix_sock_rw_perms = "0770"</code>
         Under the Operating System tab, we're going to pick x86_64 as the
         architecture and CentOS 7.6.1810 as the operating system. For media
         choose the default CentOS mirror. Select the partition table you
-        configured earlier, and the PXE loader will be PXELinux BIOS.  Make suer
-        you set a strong root password too. If you clidk "Resolve" the
-        provisioning template we configured earlier should show up.
+        configured earlier, and the PXE loader will be PXELinux BIOS.  Make sure
+        you set a strong root password too. If you click "Resolve" the
+        provisioning templates we configured earlier should show up.
       </p>
 
       <figure class="full-width">
@@ -262,9 +274,66 @@ unix_sock_rw_perms = "0770"</code>
       </figure>
 
       <p>
-        You can configure the interface to assign a specific IP address if you
-        want, but if not that's it.
+        Finally, in the "Interfaces" tab edit the default interface it creates
+        and set virbr0 as the Network.
       </p>
+
+      <p>
+        That's it! Go ahead and launch that VM.
+      </p>
+
+      <h3 id="port-forwarding">Port forwarding</h3>
+
+      <p>
+        Because our VMs are behind a NAT'd virtual network, we have to port
+        forward to make them accessible from the outside world. You should have
+        no problem SSHing into your VM from the host they're running on, just
+        do:
+      </p>
+
+      <code class="block"># virsh net-dhcp-leases default</code>
+
+      <p>
+        to find the IP address of your VM. But this address should be
+        unreachable from anywhere else in your network or the world. If you want
+        to run a server, you'll need to port forward the virtual network.
+      </p>
+
+      <p>
+        For this example, I'll assume we want to forward TCP traffic on incoming
+        port 14122 to local port 22 on a VM with the address 192.168.122.141.
+      </p>
+
+      <p>
+        Allow connections from the outside:
+      </p>
+
+      <code class="block"># iptables -I FORWARD -o virbr0 -d 192.168.122.141 -j ACCEPT
+# iptables -t nat -I PREROUTING -p tcp --dport 14122 -j DNAT --to 291.168.122.141:22</code>
+
+      <p>
+        And masquerade the local subnet:
+      </p>
+
+      <code class="block"># iptables -I FORWARD -o virbr0 -d 192.168.122.141 -j ACCEPT
+# iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -j MASQUERADE
+# iptables -A FORWARD -o virbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+# iptables -A FORWARD -i virbr0 -o em1 -j ACCEPT
+# iptables -A FORWARD -i virbr0 -o lo -j ACCEPT</code>
+
+      <p>
+        You can now test it by trying to connect to 192.168.122.1:14122 from any
+        other host on your physical network. It should forward you to the
+        virtual machine's port 22.
+      </p>
+
+      <p>
+        To make these changes persist when you reboot, do the following:
+      </p>
+
+      <code class="block"># yum install iptables-services
+# systemctl enable iptables
+# service iptables save</code>
         
 
     </main>

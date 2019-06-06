@@ -61,5 +61,12 @@
 			<guid>https://josephpetitti.com/blog/how-to-change-wordpress-urls-in-the-database</guid>
 		</item>
 
+		<item>
+			<title>Adventures in system administration - Part 2</title>
+			<link>https://josephpetitti.com/blog/adventures-in-system-administration-part-2</link>
+			<description>Part 2 of an ongoing series about setting up a network of virtual servers. In this post, we configure Foreman and and a virtual network to allow unattended creation and provisioning of virtual hosts.</description>
+			<pubDate>Wed, 5 June 2019 21:25:00 EDT</pubDate>
+			<guid>https://josephpetitti.com/blog/adventures-in-system-administration-part-2</guid>
+		</item>
 	</channel>
 </rss>
