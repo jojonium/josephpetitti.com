@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Adventures in system administration - Part 3</title>
+    <meta name="description" content="" />
+    <meta property="og:title" content="Adventures in system administration - Part 3" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/adventures-in-system-administration-part-3" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-06-06">June 6, 2019</span>
+
+      <h1 class="title">Adventures in system administration - Part 3</h1>
+
+      <h2 id="step-3-organizing-the-network">Step 3: Organizing the network</h2>
+
+      <p>
+        This article will probably not apply to other setups, but I want to
+        document it for the sake of thoroughness, and also in case I forget how
+        I set stuff up in the future.
+      </p>
+
+      <h3 id="nginx">Nginx</h3>
+      
+      <p>
+        The first thing I did after getting the virtual network set up is to
+        move my nginx reverse proxy from an old physical server to the R710.
+        This reverse proxy allows me to run multiple web services from behind
+        one public IPv4 address, using HTTP's name-based virtual hosting.
+      </p>
+
+      <p>
+        Unfortunately, Foreman installs its own httpd (Apache) web server when
+        it's installed, and getting nginx and Apache to play nice with each
+        other is notoriously difficult. The first thing I had to do was free up
+        the default HTTP and HTTPS ports from Apache's grasp.
+      </p>
+
+      <p>
+        Apache's config files are located in <code>/etc/https/</code>. Edit
+        <code>conf/ports.conf</code> and change the listen directives to use new
+        ports. I chose these ones because they don't conflict with any of
+        Foreman's other services:
+      </p>
+
+      <code class="block">Listen 4430
+Listen 8080</code>
+
+      <p>
+        Next, you have to change the virtual server blocks in the
+        <code>conf.d</code> folder. The two files we need to edit here are
+        <code>05-foreman.conf</code> and <code>05-foreman-ssl.conf</code>,
+        replacing all references to port 80 and 443 with our newly chosen ports.
+      </p>
+
+      <p>
+        At this point you may think you can just restart httpd and everything
+        will be good, but Apache will likely complain that it can't bind to the
+        ports you chose. This is because SELinux is preventing it from doing so.
+        You can check this with:
+      </p>
+
+      <code class="block"># semanage port -l | grep http</code>
+
+      <p>
+        The ports you chose will likely not be in the list of known http ports,
+        so go ahead and add them with:
+      </p>
+
+      <code class="block"># semanage port -a -t http_port_t -p tcp <i>port</i></code>
+
+      <p>
+        Now you should be able to <code>systemctl restart httpd</code> and it'll
+        come back up gracefully.
+      </p>
+
+      <p>Now, let's install and enable nginx.</p>
+      
+      <code class="block"># yum install nginx
+# systemctl enable nginx
+# systemctl start nginx</code>
+
+      <p>You can verify that nginx has taken over port 80 with:</p>
+      
+      <code class="block"># curl -I localhost | grep Server</code>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are released under the 
+          <a href="../license.txt"> MIT License</a>.  Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on 
+          <a href="https://github.com/jojonium/josephpetitti.com"> GitHub</a>.
+        </p>
+      </section>
+
+  </body>
+</html>
