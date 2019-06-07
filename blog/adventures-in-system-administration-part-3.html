@@ -44,7 +44,7 @@
         I set stuff up in the future.
       </p>
 
-      <h3 id="nginx">Nginx</h3>
+      <h3 id="install-nginx">Install nginx</h3>
       
       <p>
         The first thing I did after getting the virtual network set up is to
@@ -106,7 +106,90 @@ Listen 8080</code>
 
       <p>You can verify that nginx has taken over port 80 with:</p>
       
-      <code class="block"># curl -I localhost | grep Server</code>
+      <code class="block"># curl -I localhost</code>
+
+      <p>You should see something like this:</p>
+
+      <code class="block">HTTP/1.1 200 OK
+<span style="color: red">Server: nginx/1.12.2</span>
+Date: Fri, 07 Jun 2019 1:10:57 GMT
+Content-Type: text/html
+...</code>
+
+      <h3 id="configure-nginx">Configure nginx</h3>
+
+      <p>
+        Let's set up nginx as a secure and powerful reverse proxy. First, we'll
+        add some system-wide settings to <code>/etc/nginx/nginx.conf</code>. The
+        default configuration is pretty good, but let's enable gzip compression
+        in the <code>http</code> block so our pages load a little faster:
+      </p>
+
+      <code class="block">gzip on;
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_http_version 1.1;
+gzip_min_length 256;
+gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml+rss text/javascript application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon;</code>
+
+      <p>
+        We'll also add some security headers to all of our responses, and stop
+        broadcasting the version number of nginx we're running.
+      </p>
+
+      <code class="block">server_tokens off;
+add_header X-Frame-Options SAMEORIGIN;
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";</code>
+
+      <p>
+        Finally, we want to use expires headers to enable browser caching, but
+        we want to cache different assets for different periods of time. A map
+        block here will allow us to include this easily in each of our site
+        configs.
+      </p>
+
+      <code class="block">map $sent_http_content_type $expires {
+    default    off;
+    text/html              epoch;
+    text/css               30d;
+    application/javascript 30d;
+    ~/image/               30d;
+}</code>
+
+    <p>
+      Let's make a general-purpose site config file that we can copy for any
+      future sites we want to enable in the future. I've already made one, and
+      it can be seen <a href="../assets/nginx-default.txt">here</a>.
+    </p>
+
+    <p>
+      The first site config we're going to install will simply proxy pass
+      requests along to Apache so we can access Foreman again. The structure of
+      this config is pretty straightforward, just include this snippet in the
+      server block:
+    </p>
+
+    <code class="block">location / {
+    proxy_pass https://192.168.1.25:4430;
+    proxy_hide_header X-Powered-By;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}</code>
+    
+    <p>
+      If you like forcing HTTPS (as you should), certbot makes it super easy to
+      get TLS certificates.
+    </p>
+
+    <code class="block"># yum install python-certbot-nginx
+# certbot --nginx -d <i>foreman.example.com</i></code>
+
 
     </main>
 
