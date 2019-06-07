@@ -152,11 +152,11 @@ add_header X-XSS-Protection "1; mode=block";</code>
       </p>
 
       <code class="block">map $sent_http_content_type $expires {
-    default    off;
+    default                off;
     text/html              epoch;
     text/css               30d;
     application/javascript 30d;
-    ~/image/               30d;
+    ~/image/               max;
 }</code>
 
     <p>
