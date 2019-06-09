@@ -129,53 +129,85 @@ libguestfs-tools virt-install</code>
       <code class="block"># systemctl enable libvirtd
 # systemctl start libvirtd</code>
 
+      <h3 if="create-network-bridge">Create network bridge</h3>
+
       <p>
         We want our virtual machines to be able to talk to real machines outside
         their virtual network, so we need to set up a network bridge for them.
-        By default KVM sets up a 192.168.122.0/24 private network for VMs, which
-        can be seen with <code>virsh net-dumpxml default</code>.
+        By default KVM sets up a NAT'd private network for VMs, which can be
+        seen with <code>virsh net-dumpxml default</code>. We don't want our VMs
+        to be hiding behind NAT, so we can go ahead and get rid of that.
+      </p>
+
+      <code class="block"># virsh net-destroy default
+# virsh net-undefine default</code>
+
+      <p>
+        CentOS 7 uses NetworkManager, wich supports network bridges. We still
+        have to install a new package to use them though:
+      </p>
+
+      <code class="block"># yum install bridge-utils</code>
+      
+      <p>
+        To set up our brige, we'll have to edit a couple of config scripts.
+        <code>cd</code> into <code>/etc/sysconfig/network-scripts</code> and
+        edit the file corresponding to your physical network interface. Mine is
+        called em1, so I edited <code>ifcfg-em1</code>. Make a backup of this
+        file somewhere safe, then edit it so it looks like this:
+      </p>
+
+      <code class="block">DEVICE=em1
+NAME=em1
+HWADDR="<i>05:2a:cd:d6:d9:c3</i>"
+NM_CONTROLLED=yes
+ONBOOT=yes
+TYPE=Ethernet
+BRIDGE=br0</code>
+
+      <p>
+        <b>Note:</b> make sure you replace the MAC address above with your
+        interface's real MAC address. It can be seen with <code>ip a</code>.
       </p>
 
       <p>
-        To set up our brige, we'll have to edit a config script for our physical
-        LAN interface. You can find the name of it with <code>ifconfig</code>
-        (you might need to <code>yum install net-tools</code> if you don't have
-        <code>ifconfig</code>). My interface is called <code>em1</code>, but
-        yours might be different.
+        Next, we'll create a config script for our bridge, in the same directory
+        (<code>/etc/sysconfig/network-scripts/ifcfg-br0</code>). Make it look
+        like this:
       </p>
 
-      <code class="block"># vi /etc/sysconfig/network-scripts/ifcfg-<i>em1</i></code>
+      <code class="block">DEVICE=br0
+NAME=br0
+NM_CONTROLLED=yes
+ONBOOT=yes
+TYPE=Bridge
+STP=off
+DELAY=0
+
+IPADDR=192.168.1.25
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+
+IPV6INIT=yes
+IPV6_AUTOCONF=no
+IPV6ADDR=2001:db8::1
+IPV6DEFAULTGW=fe80::1%br0</code>
 
       <p>
-        Note: your script might not be named exactly the same way, just find the
-        one with your interface in the name. To this file we just have to add:
+        You'll likely have to change the IPADDR, NETMASK, and GATEWAY entries
+        above to fit your actual network. Restart the networking service and
+        we'll be good to go:
       </p>
 
-      <code class="block">BRIDGE=br0</code>
+      <code class="block"># nmcli connection reload
+# nmcli connection down em1 &amp;&amp; \
+nmcli connection up em1</code>
 
       <p>
-        to the bottom. Save and close it. Next we create a config file for the
-        bridge, in <code>/etc/sysconfig/network-scripts/ifcfg-br0</code>. Put
-        this in that file:
-      </p>
-
-      <code class="block">DEVICE="br0"
-BOOTPROTO="dhcp"
-IPV6INIT="yes"
-IPV6_AUTOCONF="yes"
-ONBOOT="yes"
-TYPE="Bridge"
-DELAY="0"</code>
-
-      <p>
-        Restart the networking service and we'll be good to go:
-      </p>
-
-      <code class="block"># systemctl restart NetworkManager</code>
-
-      <p>
-        You can verify that everything worked by running 
-        <code>brctl show</code>. You should see a bridge named <code>br0</code>.
+        You might want to reboot the machine as well to make sure everything
+        comes back up correctly.  You can verify that everything worked by
+        running <code>brctl show</code>. You should see a bridge named
+        <code>br0</code>.
       </p>
 
       <p>
@@ -204,7 +236,7 @@ DELAY="0"</code>
         to install Puppet:
       </p>
 
-      <code class="block"># yum install https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm</code>
+      <code class="block"># yum install https://yum.puppet.com/puppet6-release-el-7.noarch.rpm</code>
 
       <p>
         Then, enable the Extra Packages for Enterprise Linux (EPEL) and Foreman
@@ -212,7 +244,7 @@ DELAY="0"</code>
       </p>
 
       <code class="block"># yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-# yum install https://yum.theforeman.org/releases/1.21/el7/x86_64/foreman-release.rpm</code>
+# yum -y install https://yum.theforeman.org/releases/1.22/el7/x86_64/foreman-release.rpm</code>
 
       <p>
         Download the installer:

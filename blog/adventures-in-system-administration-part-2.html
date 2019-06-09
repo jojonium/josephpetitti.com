@@ -151,7 +151,12 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
         partition table with this OS.
       </p>
 
-      <h3 id="setting-up-dhcp">Setting up DHCP</h3>
+      <h3 id="setting-up-dhcp-and-dns">Setting up DHCP and DNS</h3>
+
+      <p>
+        <b>Note:</b> only do this step if you want to use Libvirt's network for
+        DHCP and DNS. I chose not to for my setup.
+      </p>
 
       <p>
         Our next step is to set up a DHCP server for our virtual network, using
@@ -284,6 +289,13 @@ unix_sock_rw_perms = "0770"</code>
       </p>
 
       <h3 id="port-forwarding">Port forwarding</h3>
+
+      <p>
+        <b>Note:</b> this section only applies if you are using a Libvirt
+        network with NAT for your VMs. I chose to use a network bridge to
+        connect my VMs directly to my network, so this I didn't use this in my
+        setup.
+      </p>
 
       <p>
         Because our VMs are behind a NAT'd virtual network, we have to port
