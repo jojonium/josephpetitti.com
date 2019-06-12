@@ -110,26 +110,25 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
 # virsh pool-start <i>default</i></code>
 
       <p>
-        Next, we want to make a provisioning template so all of our virtual
-        machines are set up basically the same. Foreman comes with a few helpful
-        example templates to get you started, so we'll just copy one of those to
-        work with.
+        Next, we want to set up provisioning templates so we can install virtual
+        machines unattended. Foreman comes with a few helpful example templates
+        to get you started, so we'll just use those for now. They can always be
+        customized later.
       </p>
 
       <p>
         Go to <i>Hosts &gt; Provisioning Templates</i> and find the template
-        called "Kickstart default PXELinux." Use the action button to clone it,
-        and start editing the clone. Give this template whatever name you want,
-        then head over to the Association tab to make sure it's associated with
-        our CentOS 7.6 operating system (Foreman automagically knows about this
-        OS because it knows what it's installed on). Make sure you click
-        "Submit" once you're done.
+        called "Kickstart default PXELinux." Click on it, then go to the
+        Association tab and make sure it's associated with our CentOS 7.6
+        operating system (Foreman automagically knows about this OS because it
+        knows what it's installed on). Make sure you click "Submit" once you're
+        done.
       </p>
 
       <p>
         Now go to <i>Hosts &gt; Operating Systems</i> and edit CentOS 7.6. Under
-        the Templates tab set the template we just made as the PXELinux template
-        for this operating system and hit Submit.
+        the Templates tab set the same template (Kickstart default PXELinux) as
+        the PXELinux template for this operating system and hit Submit.
       </p>
 
       <p>
@@ -148,19 +147,25 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
       <p>
         While still editing the CentOS 7.6 operating system, switch to the
         Partition Table tab. Associate the included "kickstart default"
-        partition table with this OS.
+        partition table with this OS. Under the Installation Media tab,
+        associate the CentOS mirror.
       </p>
 
       <h3 id="setting-up-dhcp-and-dns">Setting up DHCP and DNS</h3>
 
       <p>
-        <b>Note:</b> only do this step if you want to use Libvirt's network for
-        DHCP and DNS. I chose not to for my setup.
+        Our next step is to set up a DHCP server for our virtual network, using
+        Foreman and Libvirt. In the end we want each of our virtual machines to
+        have two network interfaces: one attached to <code>br0</code> which
+        gives them an IP address from the DHCP server running on our physical
+        router, in the subnet 192.168.0.0/16; and another attached to
+        <code>virbr0</code>, a purely virtual network in the subnet 10.0.0.0/16.
+        The virtual network will be used by Foreman for unattended provisioning
+        and kickstarting.
       </p>
 
       <p>
-        Our next step is to set up a DHCP server for our virtual network, using
-        Foreman and Libvirt. Edit the default Libvirt network with
+        Edit the default Libvirt network with
         <code>virsh net-edit default</code> so that it looks like this:
       </p>
 
@@ -173,27 +178,19 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
   &lt;dns&gt;
   &lt;/dns&gt;
   &lt;mac address='52:54:00:7e:be:1c'/&gt;
-  &lt;ip address='192.168.122.1' netmask='255.255.255.0'&gt;
-    &lt;tftp root='var/tftproot' /&gt;
+  &lt;ip address='10.0.0.1' netmask='255.255.0.0'&gt;
+    &lt;tftp root='/var/lib/tftpboot' /&gt;
     &lt;dhcp&gt;
-      &lt;range start='192.168.122.2' end='192.168.122.254'/&gt;
+      &lt;range start='10.0.0.2' end='10.0.254.254'/&gt;
       &lt;bootp file='pxelinux.0' /&gt;
     &lt;/dhcp&gt;
   &lt;/ip&gt;
 &lt;/network&gt;</code>
 
       <p>
-        Make a TFTP root directory, make sure it is writeable by the 
-        <code>foreman-proxy</code> user and accessible to the accoung dnsmasq is
-        running on (<code>nobody</code>), set the gid flag for newly copied
-        files and copy necessary files to the new TFTP root directory:
+        The TFTP root directory, <code>/var/lib/tftpboot</code>, should have
+        already been made by foreman-proxy.
       </p>
-
-      <code class="block"># mkdir -p /var/tftproot/{boot,pxelinux.cfg}
-# yum -y install syslinux
-# cp /usr/share/syslinux/{pxelinux.0,menu.c32,chain.c32} /var/tftproot
-# chown -R foreman-proxy:nobody /var/tftproot
-# find /var/tftproot/ -type d | xargs chmod g+s</code>
 
       <p>
         Next, edit <code>/etc/libvirt/libvirtd.conf</code> and uncomment these
@@ -215,7 +212,7 @@ unix_sock_rw_perms = "0770"</code>
 
       <code class="block">:tftp: true
 :tftproot: /var/tftproot
-:tftp_servername: 192.168.122.1</code>
+:tftp_servername: 10.0.0.1</code>
 
       <p>
         In <code>dns.yml</code>:
@@ -229,17 +226,41 @@ unix_sock_rw_perms = "0770"</code>
       </p>
 
       <code class="block">:enabled: true
-:use_provider: dhcp_libvirt</code>
+:use_provider: dhcp_libvirt
+:server: 10.0.0.1</code>
 
       <p>
-        And in <code>dns_libvirt.yml</code> and <code>dhcp_libvirt.yml</code>:
+        In <code>dns_libvirt.yml</code> and <code>dhcp_libvirt.yml</code>:
       </p>
 
       <code class="block">:network: default
 :url: qemu:///system</code>
 
       <p>
-        Now we're finally ready to create our first virtual machine!
+        And in <code>templates.yml</code>:
+      </p>
+
+      <code class="block">:enabled: true
+:template_url: https://host.example.com:8443</code>
+
+      <p>
+        Restart foreman-proxy so that it reloads the config files:
+      </p>
+
+      <code class="block"># systemctl restart foreman-proxy</code>
+
+      <p>
+        Now if you look in <i>Infrastructure &gt; Smart Proxies</i> you should
+        be able to see that your smart proxy manages DHCP, DNS, and TFTP.
+      </p>
+
+      <p>
+        The last bit of administration we need to do it creating some subnets.
+        I'm going to make two, because my virtual machines will each have two
+        network interfaces. This is pretty straightforward, just go to
+        <i>Infrastructure &gt; Subnets</i> and enter the information for each
+        one. Make sure you assign proxies for your virtual network under the
+        Proxies tab.
       </p>
 
       <h3 id="into-the-virtual-world">Into the virtual world</h3>
