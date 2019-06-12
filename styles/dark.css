@@ -143,11 +143,15 @@ header {
   background-color: #005377;
 }
 
-header a#mobile-nav, header a#mobile-nav-close {
+header input[type=checkbox]#toggle-menu {
   display: none;
 }
 
-header a {
+header label#mobile-nav, header label#mobile-nav-close {
+  display: none;
+}
+
+header a, header label {
   color: #eee;
   display: block;
   padding: 12px;
@@ -156,7 +160,7 @@ header a {
   text-decoration: none;
 }
 
-header a:hover {
+header a:hover, header label:hover {
   text-shadow: none;
   color: #eee;
   transition: .2s;
@@ -422,7 +426,7 @@ footer section ul.icons li {
     white-space: nowrap;
   }
 
-  header nav.shown {
+  input[type=checkbox]:checked ~ nav {
     width: 100%;
   }
 
@@ -459,11 +463,12 @@ footer section ul.icons li {
     background-color: transparent;
   }
 
-  header a#mobile-nav {
+  header label#mobile-nav {
     display: inline-block;
     max-width: 6em;
   }
-  header nav a#mobile-nav-close {
+
+  header nav label#mobile-nav-close {
     display: inline-block;
     margin-bottom: 1em;
   }
