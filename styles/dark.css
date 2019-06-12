@@ -149,6 +149,7 @@ header input[type=checkbox]#toggle-menu {
 
 header label#mobile-nav, header label#mobile-nav-close {
   display: none;
+  cursor: pointer;
 }
 
 header a, header label {
