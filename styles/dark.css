@@ -319,7 +319,7 @@ button, .button-like {
   padding: 10px;
   border: none;
   box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  transition: .2s;
+  transition: background-color .2s, box-shadow .2s;
   margin: 5px;
 }
 
