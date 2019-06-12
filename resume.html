@@ -3,9 +3,9 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Joseph Petitti's Resume</title>
-    <meta name="description" content="The resume of Joseph Petitti, a Junior Computer Science student at Worcester Polytechnic Institute" />
+    <meta name="description" content="The resume of Joseph Petitti, a Senior Computer Science student at Worcester Polytechnic Institute" />
     <meta property="og:title" content="Joseph Petitti's Resume" />
-    <meta property="og:description" content="The resume of Joseph Petitti, a Junior Computer Science student at Worcester Polytechnic Institute" />
+    <meta property="og:description" content="The resume of Joseph Petitti, a Senior Computer Science student at Worcester Polytechnic Institute" />
     <meta property="og:image" content="https://josephpetitti.com/images/portrait.jpg" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://josephpetitti.com/resume" />
@@ -16,23 +16,21 @@
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-    <link href="styles/dark.css" rel="stylesheet" type="text/css">
-
-    <script src="scripts/common.js"></script>
+    <link rel="stylesheet" href="styles/dark.css" type="text/css">
   </head>
   <body>
 
-
   <!-- Header -->
     <header>
-      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
         <i class="fas fa-bars"></i> Menu
-      </a>
+      </label>
     <!-- Nav -->
       <nav id="nav">
-        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
           <i class="fas fa-times"></i> Close
-        </a>
+        </label>
         <ul>
           <li><a href="index">Home</a></li>
           <li><a href="resume">Resume</a></li>
@@ -63,7 +61,6 @@
           </li>
         </ul>
       </nav>
-
 
     </header>
     <style>

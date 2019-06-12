@@ -16,25 +16,24 @@
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="styles/dark.css" type="text/css">
 
-    <script src="scripts/common.js"></script>
     <script src="scripts/jquery-3.3.1.min.js"></script>
     <script src="scripts/klotski.js"></script>
   </head>
   <body>
- 
 
   <!-- Header -->
     <header>
-      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
         <i class="fas fa-bars"></i> Menu
-      </a>
+      </label>
     <!-- Nav -->
       <nav id="nav">
-        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
           <i class="fas fa-times"></i> Close
-        </a>
+        </label>
         <ul>
           <li><a href="index">Home</a></li>
           <li><a href="resume">Resume</a></li>
@@ -65,7 +64,6 @@
           </li>
         </ul>
       </nav>
-
 
     </header>
 
