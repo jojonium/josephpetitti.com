@@ -244,10 +244,12 @@ unix_sock_rw_perms = "0770"</code>
 :template_url: https://host.example.com:8443</code>
 
       <p>
-        Restart foreman-proxy so that it reloads the config files:
+        Add the foreman-proxy user to the libvirt group and restart the daemonso
+        that it reloads the config files:
       </p>
 
-      <code class="block"># systemctl restart foreman-proxy</code>
+      <code class="block"># gpasswd -a foreman-proxy libvirt
+# systemctl restart foreman-proxy</code>
 
       <p>
         Now if you look in <i>Infrastructure &gt; Smart Proxies</i> you should
@@ -301,8 +303,10 @@ unix_sock_rw_perms = "0770"</code>
       </figure>
 
       <p>
-        Finally, in the "Interfaces" tab edit the default interface it creates
-        and set virbr0 as the Network.
+        Configure the interface tab how you want for your environment. For my
+        setup I'm giving each VM two network interfaces: one for provisioning
+        attached to <code>virbr0</code> and Libvirt's DHCP, and a primary one
+        attached to <code>br0</code> and my physical router's DHCP.
       </p>
 
       <p>
