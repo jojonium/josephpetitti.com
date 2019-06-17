@@ -1,34 +1,47 @@
 <!doctype html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
-		<title>Checkers</title>
-		<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
-		<link rel="stylesheet" href="styles/brands.css" type="text/css">
-		<script src="scripts/jquery-3.3.1.min.js"></script>
-		<script src="scripts/checkers.js"></script>
-	</head>
-	<body>
-	
-	<!-- Header -->
-		<header>
-			<h1>Checkers</h1>
-		</header>
-		
-	<!-- Nav -->
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Checkers</title>
+
+    <meta name="description" content="Play checkers against a human or AI opponent" />
+    <meta property="og:title" content="Checkers" />
+    <meta property="og:description" content="Play checkers against a human or AI opponent" />
+    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/checkers" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/dark.css?v=1.0.1" type="text/css">
+
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/checkers.js"></script>
+  </head>
+  <body>
+  
+  <!-- Header -->
+    <header>
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </label>
+  <!-- Nav -->
       <nav id="nav">
-        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
           <i class="fas fa-times"></i> Close
-        </a>
+        </label>
         <ul>
           <li><a href="index">Home</a></li>
           <li><a href="resume">Resume</a></li>
           <li><a href="projects">Projects</a>
             <ul>
-			  <li><a href="traffic-classifier">Traffic Classifier</a></li>
-			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
+              <li><a href="traffic-classifier">Traffic Classifier</a></li>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
               <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
               <li><a href="this-website">This Website</a></li>
               <li><a href="http-server-client">HTTP Server & Client</a></li>
@@ -53,126 +66,200 @@
         </ul>
       </nav>
 
+    </header>
 
+  <!-- Main -->
+    <main id="main">
+      <h1 class="title">CHECKERS</h1>
 
+      
+      <p>
+        AI Difficulty: <input type="text" id="difficulty" value="6">
+        <span style="font-size: .5em"> Note: increasing difficulty will
+        exponentially increase the length of the AI's turns</span>
+      </p>
+      
+      <div style="display: flex;">
+        <div id="output">
+          <span id="computer-says">Computer says:</span>
+          <div id="log">
 
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <button id="2-players">Two Players</button>
+            <button id="1-player-red" style="width: 130px">One Player (Red)</button>
+            <button id="1-player-white" style="width: 130px">One Player (White)</button>
+            <button id="play-again">Play again?</button>
+          </div>
+          </div>
+        </div>
 
+        <div id="canvas-holder"></div>
+      </div>
 
+      <h2>Note</h2>
 
+      <p>
+        This was mostly an experiment to see if the MiniMax algorithm I used for
+        <a href="tic-tac-toe">Tic-Tac-Toe</a> could be translated to a more
+        complex game like Checkers. Apparently it cannot. If you play with any
+        degree of strategy you will likely win against the AI, and setting the
+        difficulty much higher results in AI turns taking unbearably long.
+        Still, it was fun to make and can still exist as a fun experiment.
+      </p>
+      
+      <h2>Rules</h2>
 
+      <p>
+        (From <a
+          href="https://en.wikipedia.org/wiki/English_draughts#Rules">Wikipedia</a>)
+        Each player starts with 12 men on the dark squares of the three rows
+        closest to that player's side. The row closest to each player is called
+        the <i>king's row</i>. The player with the darker-colored pieces moves
+        first.
+      </p>
 
+      <p>There are two different ways to move:</p>
 
-		
-	<!-- Main -->
-		<main>
-			<div id="output">
-				<span id="computer-says">Computer says:</span>
-					<div id="log"></div>
-				<button id="2-players">Two Players</button>
-				<button id="1-player-red" style="width: 130px">One Player (Red)</button>
-				<button id="1-player-white" style="width: 130px">One Player (White)</button>
-				<button id="play-again">Play again?</button>
-			</div>
-			
-			<p>AI Difficulty: <input type="text" id="difficulty" value="6"></input><span style="font-size: .5em"> Note: increasing difficulty will exponentially increase the length of the AI's turns</span></p>
-			
-			<div id="canvas-holder"></div>
-			
-			<h2>Rules</h2>
-			<p>(From <a href="https://en.wikipedia.org/wiki/English_draughts#Rules">Wikipedia</a>) Each player starts with 12 men on the dark squares of the three rows closest to that player's side. The row closest to each player is called the <i>king's row</i>. The player with the darker-colored pieces moves first.</p>
-			<p>There are two different ways to move:</p>
-			<ol>
-				<li><i>Simple move:</i> A simple move consists of moving a piece one square diagonally to an adjacent unoccupied dark square. Men can move diagonally forward only; kings can move in any diagonal direction.</li>
-				<li><i>Jump:</i> A jump consists of moving a piece that is diagonally adjacent an opponent's piece, to an empty square immediately beyond it in the same direction. (Thus "jumping over" the opponent's piece.) Men can jump diagonally forward only; kings can jump in any diagonal direction. A jumped piece is considered "captured" and removed from the game. Any piece, king or man, can jump a king.</li>
-			</ol>
-			<p><i>Multiple jumps</i> are possible, if after one jump another piece is immediately eligible to be jumped—even if that jump is in a different diagonal direction. If more than one multi-jump is available, the player can choose which piece to jump with, and which sequence of jumps to make. The sequence chosen is not required to be the one that maximizes the number of jumps in the turn; however, a player must make all available jumps in the sequence chosen.</p>
-			<p>Jumping is always mandatory: if a player has the option to jump, he must take it, even if doing so results in disadvantage for the jumping player. For example, a mandated single jump might set up the player such that the opponent has a multi-jump in reply.</p>
-			<p>If a man moves into the kings row on the opponent's side of the board, it is crowned as a king and gains the ability to move both forward and backward.</p>
-			<p>A player wins by capturing all of the opponent's pieces.</p>
-		</main>
-		
-		<style>
-		input {
-			font-size: 1.125em;
-			width: 50px;
-		}
-		#play-again {
-			display: none;
-		}
+      <ol>
+        <li>
+          <i>Simple move:</i> A simple move consists of moving a piece one
+          square diagonally to an adjacent unoccupied dark square. Men can move
+          diagonally forward only; kings can move in any diagonal direction.
+        </li>
 
-		.square {
-			height: 60px;
-			width: 60px;
-			display: inline-block;
-		}
-		
-		.black {
-			background-color: grey
-		}
-		
-		.row {
-			height: 60px;
-			
-		}
-		
-		#board {
-			width: 480px;
-			border: 1px solid black;
-		}
-		
-		#output {
-			float: right;
-			width: 500px;
-			height: 500px;
-			margin-top: 20px;
-		}
+        <li>
+          <i>Jump:</i> A jump consists of moving a piece that is diagonally
+          adjacent an opponent's piece, to an empty square immediately beyond it
+          in the same direction. (Thus "jumping over" the opponent's piece.) Men
+          can jump diagonally forward only; kings can jump in any diagonal
+          direction. A jumped piece is considered "captured" and removed from
+          the game. Any piece, king or man, can jump a king.
+        </li>
+      </ol>
 
-		#log {
-			overflow: auto;
-			width: 100%;
-			height: 400px;
-			padding-top: 12px;
-		}
+      <p>
+        <i>Multiple jumps</i> are possible, if after one jump another piece is
+        immediately eligible to be jumped—even if that jump is in a different
+        diagonal direction. If more than one multi-jump is available, the player
+        can choose which piece to jump with, and which sequence of jumps to
+        make. The sequence chosen is not required to be the one that maximizes
+        the number of jumps in the turn; however, a player must make all
+        available jumps in the sequence chosen.
+      </p>
 
-		#computer-says {
-			font-size: 1.375em;
-		}
+      <p>
+        Jumping is always mandatory: if a player has the option to jump, he must
+        take it, even if doing so results in disadvantage for the jumping
+        player. For example, a mandated single jump might set up the player such
+        that the opponent has a multi-jump in reply.
+      </p>
 
-		#log p {
-			font-size: 1.125em;
-			margin: 10px 0;
-			padding-left: 20px;
-		}
-		</style>
-		
-	<!-- Footer -->
-		<footer id="footer">
-			<section class="about">
-				<h2>About this website</h2>
-				<p>I created this website as a personal project in my free time to learn more about web design,
-				   CSS, HTML, and JavaScript.</p>
-				<p>All portions of this website written by me are released under the <a href="license.txt">
-				   MIT License</a>. Other scripts and resources are licensed under free licenses by their
-				   respective owners. All source code is available on
-				   <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.</p>
-			</section>
-			<section class="contact">
-				<h2>Contact Information</h2>
-				<dl>
-					<dt>Address</dt>
-						<dd>100 Institute Road, Mailbox #2658 Worcester, MA 01609</dd>
-					<dt>Phone</dt>
-						<dd>(518) 545-1984</dd>
-					<dt>Email</dt>
-						<dd><a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a></dd>
-				</dl>
-				<ul class="icons">
-					<li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
-					<li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
-					<li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
-					<li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
-				</ul>
-			</section>
-		</footer>
-	</body>
+      <p>
+        If a man moves into the kings row on the opponent's side of the board,
+        it is crowned as a king and gains the ability to move both forward and
+        backward.
+      </p>
+
+      <p>A player wins by capturing all of the opponent's pieces.</p>
+
+    </main>
+    
+    <style>
+    input {
+      font-size: 1.125em;
+      width: 50px;
+    }
+    #play-again {
+      display: none;
+    }
+
+    .square {
+      height: 60px;
+      width: 60px;
+      display: inline-block;
+    }
+    
+    .black {
+      background-color: grey
+    }
+    
+    .row {
+      height: 60px;
+    }
+    
+    #board {
+      width: 480px;
+      border: 1px solid black;
+    }
+    
+    #output {
+      width: 300px;
+      height: 300px;
+      margin-top: 20px;
+    }
+
+    #log {
+      overflow: auto;
+      width: 100%;
+      height: 400px;
+      padding-top: 12px;
+    }
+
+    #computer-says {
+      font-size: 1.375em;
+    }
+
+    #log p {
+      font-size: 1.125em;
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    </style>
+
+    <!-- Footer -->
+      <footer id="footer">
+        <section class="about">
+          <h2>About this website</h2>
+
+          <p>
+            I created this website as a personal project in my free time
+            to learn more about web design, CSS, HTML, and JavaScript.
+          </p>
+
+          <p>
+            All portions of this website written by me are
+            released under the <a href="license.txt"> MIT License</a>.
+            Other scripts and resources are licensed under free licenses
+            by their respective owners. All source code is available on
+            <a href="https://github.com/jojonium/josephpetitti.com">
+            GitHub</a>.
+          </p>
+        </section>
+
+        <section class="contact">
+          <h2>Contact Information</h2>
+          <dl>
+            <dt>Address</dt>
+              <dd>
+                100 Institute Road, Mailbox #2658 Worcester, MA
+                01609
+              </dd>
+            <dt>Phone</dt>
+              <dd>(518) 545-1984</dd>
+            <dt>Email</dt>
+              <dd>
+                <a href="mailto:jppetitti@wpi.edu">
+                  jppetitti@wpi.edu
+                </a>
+              </dd>
+          </dl>
+          <ul class="icons">
+            <li><a href="https://github.com/jojonium" target="_blank"><span class="fab fa-github" title="GitHub"></a></li>
+            <li><a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank"><span class="fab fa-linkedin" title="LinkedIn"></a></li>
+            <li><a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank"><span class="fab fa-steam" title="Steam"></a></li>
+            <li><a href="https://t.me/jojonium" target="_blank"><span class="fab fa-telegram" title="Telegram"></a></li>
+          </ul>
+        </section>
+      </footer>
+  </body>
 </html>

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How to toggle styles on click in pure CSS</title>
+    <meta name="description" content="There are plenty of times in front-end web development where you want to toggle between two different CSS rules when an element is clicked. Maybe you want a custom menu to drop down, or a set of tabs to show different information. Either way, you could do this with some simple JavaScript. Or, you could use a CSS hack to do it without any scripts at all." />
+    <meta property="og:title" content="How to toggle styles on click with in pure css" />
+    <meta property="og:description" content="There are plenty of times in front-end web development where you want to toggle between two different CSS rules when an element is clicked. Maybe you want a custom menu to drop down, or a set of tabs to show different information. Either way, you could do this with some simple JavaScript. Or, you could use a CSS hack to do it without any scripts at all." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/css-tabs.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/how-to-toggle-styles-on-click-in-pure-css" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.1" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-06-13">June 13, 2019</span>
+
+      <h1 class="title">How to toggle styles on click in pure CSS</h1>
+
+      <h2 id="why-would-i-want-this">Why would I want this?</h2>
+
+      <p>
+        There are plenty of times in front-end web development where you want to
+        toggle between two different CSS rules when an element is clicked. Maybe
+        you want a custom menu to drop down, or a set of tabs to show different
+        information. Either way, you could do this with some simple JavaScript.
+        <i>Or</i>, you could use a CSS hack to do it without any scripts at all.
+      </p>
+
+      <h2 id="the-hack">The hack</h2>
+
+      <p>
+        This CSS trick involves an invisible checkbox and an abuse of the
+        general sibling combinator (<code>~</code>). As you know, you can assign
+        specific styles to checkboxes depending on whether or not they are
+        "checked," like so:
+      </p>
+
+      <div style="display: flex; flex-wrap: wrap;">
+        <code style="flex: 1 0 70%" class="block">input[type=checkbox]#cb1:checked {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { 
+  transform:rotate(360deg); 
+} }</code>
+        <div style="flex: 1 0 50%; padding: 15px;">
+          <h3 style="margin: 5px">Try it</h3>
+          <label for="cb1">Click me</label> <input type="checkbox" id="cb1">
+        </div>
+      </div>
+      <style>
+        input[type="checkbox"]#cb1:checked {
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform:rotate(360deg); } }
+      </style>
+
+      <p>
+        Note that the "click me" text is a <code>&lt;label&gt;</code> element,
+        so when you click it the checkbox is toggled.
+      </p>
+
+      <p>
+        Just styling checkboxes isn't very fun or impressive, but we can use
+        some sneaky selectors to do some more interesting things.
+      </p>
+
+        <code class="block">input[type="checkbox"] {
+  display: none;
+}</code>
+      <figcaption>Make the checkbox invisible</figcaption>
+
+      <p>
+        <code>&lt;label&gt;</code> elements don't actually have to be next to
+        the input they're labelling; they can be anywhere. And if you can click
+        the label to toggle them, you don't need to see the checkbox at all.
+        those checkboxes can be made invisible with the code above.
+      </p>
+
+      <p>
+        The last piece of the puzzle is how to style arbitrary content. CSS
+        provides a convenient sibling selector that allows this. The general
+        sibling combinator (<code>~</code>) selects an element that is at the
+        same level as this one, a child of the same parent. Since the checkbox
+        is invisible, we can choose to place it as a sibling to the element we
+        want to style.
+      </p>
+
+      <p>
+        Here's an example of one of the many ways to use this trick:
+      </p>
+
+      <div id="tabs-parent">
+        <div class="tab">
+          <input type="radio" id="radio-1" name="tabs" checked>
+          <label class="tab-heading" for="radio-1"><h4>HTML</h4></label>
+          <div class="tab-content" id="tab-one">
+            <h3>HTML structure</h3>
+            <code class="block">&lt;div id="tabs-parent"&gt;
+  &lt;div class="tab"&gt;
+    &lt;input type="radio" id="radio-1" name="tabs" checked&gt;
+    &lt;label class="tab-heading" for="radio-1"&gt;&lt;h4&gt;HTML&lt;/h4&gt;&lt;/label&gt;
+    &lt;div class="tab-content" id="tab-one"&gt;
+      &lt;h3&gt;Text in one&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="tab"&gt;
+    &lt;input type="radio" id="radio-2" name="tabs"&gt;
+    &lt;label class="tab-heading" for="radio-2" id="radio-2-label"&gt;&lt;h4&gt;CSS&lt;/h4&gt;&lt;/label&gt;
+    &lt;div class="tab-content" id="tab-two"&gt;
+      &lt;h3&gt;Text in two&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="tab"&gt;
+    &lt;input type="radio" id="radio-3" name="tabs"&gt;
+    &lt;label class="tab-heading" for="radio-3"&gt;&lt;h4&gt;Info&lt;/h4&gt;&lt;/label&gt;
+    &lt;div class="tab-content" id="tab-three"&gt;
+      &lt;h3&gt;Text in three&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="radio-2" name="tabs">
+          <label class="tab-heading" for="radio-2" id="radio-2-label"><h4>CSS</h4></label>
+          <div class="tab-content" id="tab-two">
+            <h3>Styles used in this example</h3>
+            <code class="block">div#tabs-parent {
+  width: 100%;
+  position: relative;
+  height: 400px;
+}
+
+input[type=radio], div.tab-content {
+  display: none;
+}
+
+div.tab-content {
+  position: absolute;
+  left: 0;
+  top: 33px;
+  background-color: #005377;
+  z-index: 1;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+}
+
+label.tab-heading {
+  position: relative;
+  background-color: #3f2073;
+  text-align: center;
+  cursor: pointer;
+  width: 150px;
+  float: left;
+  z-index: 2;
+}
+
+label.tab-heading h4 {
+  margin: 0;
+  padding: 5px 10px;
+}
+
+label.tab-heading:hover {
+  background-color: #4ea5d9;
+}
+
+label.tab-heading#radio-2-label {
+  border-left: 2px solid #1f0053;
+  border-right: 2px solid #1f0053;
+}
+
+input[type=radio]:checked ~ label {
+  background-color: #005377;
+}
+
+input[type=radio]:checked ~ div.tab-content {
+  display: block;
+}</code>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="radio-3" name="tabs">
+          <label class="tab-heading" for="radio-3"><h4>Conclusion</h4></label>
+          <div class="tab-content" id="tab-three">
+            <h3>Conclusion</h3>
+
+            <p>
+              This implementation actually uses radio inputs instead of
+              checkboxes, but the main idea is still the same.
+            </p>
+
+            <p>
+              Keep in mind that this page uses absolutely no JavaScript. It just
+              goes to show how powerful CSS is, and how much advanced
+              functionality you can achieve without using scripts.
+            </p>
+
+            <p>
+              Now, is this good practice? Probably not. It's a convoluted,
+              opaque way of achieving something that could be done with a couple
+              lines of JavaScript. But if you need to support users who have
+              JavaScript disabled, or just enjoy hacking CSS to do things it
+              wasn't meant to do, this is a good way to do it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+<style>
+  div#tabs-parent {
+    width: 100%;
+    position: relative;
+    height: 400px;
+  }
+
+  input[type=radio], div.tab-content {
+    display: none;
+  }
+
+  div.tab-content {
+    position: absolute;
+    left: 0;
+    top: 33px;
+    background-color: #005377;
+    z-index: 1;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: auto;
+  }
+
+  label.tab-heading {
+    position: relative;
+    background-color: #3f2073;
+    text-align: center;
+    cursor: pointer;
+    width: 150px;
+    float: left;
+    z-index: 2;
+  }
+
+  label.tab-heading h4 {
+    margin: 0;
+    padding: 5px 10px;
+  }
+
+  label.tab-heading:hover {
+    background-color: #4ea5d9;
+  }
+
+  label.tab-heading#radio-2-label {
+    border-left: 2px solid #1f0053;
+    border-right: 2px solid #1f0053;
+  }
+
+  input[type=radio]:checked ~ label {
+    background-color: #005377;
+  }
+
+  input[type=radio]:checked ~ div.tab-content {
+    display: block;
+  }
+</style>
+
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time to learn
+          more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+          All portions of this website written by me are released under the 
+          <a href="../license.txt"> MIT License</a>.  Other scripts and resources
+          are licensed under free licenses by their respective owners. All
+          source code is available on 
+          <a href="https://github.com/jojonium/josephpetitti.com"> GitHub</a>.
+        </p>
+      </section>
+
+  </body>
+</html>

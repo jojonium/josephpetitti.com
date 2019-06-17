@@ -68,5 +68,14 @@
 			<pubDate>Wed, 5 June 2019 21:25:00 EDT</pubDate>
 			<guid>https://josephpetitti.com/blog/adventures-in-system-administration-part-2</guid>
 		</item>
+
+		<item>
+			<title>How to toggle styles on click in pure CSS</title>
+			<link>https://josephpetitti.com/blog/how-to-toggle-styles-on-click-in-pure-css</link>
+			<description>There are plenty of times in front-end web development where you want to toggle between two different CSS rules when an element is clicked. Maybe you want a custom menu to drop down, or a set of tabs to show different information. Either way, you could do this with some simple JavaScript. Or, you could use a CSS hack to do it without any scripts at all.</description>
+			<pubDate>Thu, 13 June 2019 13:11:00 EDT</pubDate>
+			<guid>https://josephpetitti.com/blog/how-to-toggle-styles-on-click-in-pure-css</guid>
+		</item>
+					
 	</channel>
 </rss>

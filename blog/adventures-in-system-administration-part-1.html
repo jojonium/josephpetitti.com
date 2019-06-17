@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
-    <link href="../styles/dark.css" rel="stylesheet" type="text/css">
+    <link href="../styles/dark.css?v=1.0.1" rel="stylesheet" type="text/css">
     <link href="../styles/blog.css" rel="stylesheet" type="text/css">
   </head>
   <body>
@@ -136,11 +136,9 @@ libguestfs-tools virt-install</code>
         their virtual network, so we need to set up a network bridge for them.
         By default KVM sets up a NAT'd private network for VMs, which can be
         seen with <code>virsh net-dumpxml default</code>. We don't want our VMs
-        to be hiding behind NAT, so we can go ahead and get rid of that.
+        to be hiding behind NAT, so you can just leave that alone for now.
       </p>
 
-      <code class="block"># virsh net-destroy default
-# virsh net-undefine default</code>
 
       <p>
         CentOS 7 uses NetworkManager, wich supports network bridges. We still
@@ -187,6 +185,7 @@ DELAY=0
 IPADDR=192.168.1.25
 NETMASK=255.255.255.0
 GATEWAY=192.168.1.1
+DNS1=192.168.1.1
 
 IPV6INIT=yes
 IPV6_AUTOCONF=no
@@ -207,7 +206,8 @@ nmcli connection up em1</code>
         You might want to reboot the machine as well to make sure everything
         comes back up correctly.  You can verify that everything worked by
         running <code>brctl show</code>. You should see a bridge named
-        <code>br0</code>.
+        <code>br0</code> and one called <code>virbr0</code>. The latter is the
+        bridge Libvirt created for its default network.
       </p>
 
       <p>
@@ -294,9 +294,16 @@ The full log is at /var/log/foreman-installer/foreman.log</code>
         correct ports are open on your server:
       </p>
 
-      <code class="block"># firewall-cmd --zone=public --add-port 80/tcp --permanent</code>
+      <code class="block"># firewall-cmd --zone=public --add-service http --permanent
+# firewall-cmd --zone=public --add-service https --permanent</code>
 
-      <p>Repeat for each needed port.</p>
+      <p>
+        There are also a few <a href="https://theforeman.org/manuals/1.22/index.html#3.1.5FirewallConfiguration">other
+        ports</a> Foreman needs you to have open:
+      </p>
+
+      <code class="block"># firewall-cmd --zone=public --add-port 69/udp --permanent 
+# firewall-cmd --zone=public --add-port 8140/tcp --permanent</code>
 
       <p>
         Now, if you log in to the Foreman web interface with the credentials you
@@ -310,6 +317,12 @@ The full log is at /var/log/foreman-installer/foreman.log</code>
         for today. Next time we'll get into provisioning our virtual machines
         and setting up fun stuff like LDAP and DHCP.
       </p>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <a href="adventures-in-system-administration-part-2">
+          <button>Next</button>
+        </a>
+      </div>
 
     </main>
 

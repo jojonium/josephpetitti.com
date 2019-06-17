@@ -105,6 +105,7 @@ div.code, code.block {
   border-radius: 0 5px 5px 0;
   border-left: 4px solid #f1a208;
   width: 100%;
+  box-sizing: border-box;
   overflow-x: auto;
   display: block;
 }
@@ -143,11 +144,16 @@ header {
   background-color: #005377;
 }
 
-header a#mobile-nav, header a#mobile-nav-close {
+header input[type=checkbox]#toggle-menu {
   display: none;
 }
 
-header a {
+header label#mobile-nav, header label#mobile-nav-close {
+  display: none;
+  cursor: pointer;
+}
+
+header a, header label {
   color: #eee;
   display: block;
   padding: 12px;
@@ -156,7 +162,7 @@ header a {
   text-decoration: none;
 }
 
-header a:hover {
+header a:hover, header label:hover {
   text-shadow: none;
   color: #eee;
   transition: .2s;
@@ -282,7 +288,7 @@ figure.full-width {
   margin-inline-end: 0;
 }
 
-figure figcaption {
+figcaption {
   font-size: 13pt;
   text-align: center;
   color: #99aabb;
@@ -319,7 +325,7 @@ button, .button-like {
   padding: 10px;
   border: none;
   box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  transition: .2s;
+  transition: background-color .2s, box-shadow .2s;
   margin: 5px;
 }
 
@@ -422,7 +428,7 @@ footer section ul.icons li {
     white-space: nowrap;
   }
 
-  header nav.shown {
+  input[type=checkbox]:checked ~ nav {
     width: 100%;
   }
 
@@ -459,11 +465,12 @@ footer section ul.icons li {
     background-color: transparent;
   }
 
-  header a#mobile-nav {
+  header label#mobile-nav {
     display: inline-block;
     max-width: 6em;
   }
-  header nav a#mobile-nav-close {
+
+  header nav label#mobile-nav-close {
     display: inline-block;
     margin-bottom: 1em;
   }

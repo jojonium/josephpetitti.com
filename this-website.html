@@ -16,14 +16,12 @@
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="styles/dark.css?v=1.0.1" type="text/css">
 
-    <script src="scripts/common.js"></script>
     <script src="scripts/seen.min.js"></script>
     <script src="scripts/coffee-script.min.js"></script>
   </head>
   <body>
-
 
   <style>
     @media screen and (max-width: 1000px) { canvas { max-width: 100%; } }
@@ -31,21 +29,22 @@
 
   <!-- Header -->
     <header>
-      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
         <i class="fas fa-bars"></i> Menu
-      </a>
+      </label>
     <!-- Nav -->
       <nav id="nav">
-        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
           <i class="fas fa-times"></i> Close
-        </a>
+        </label>
         <ul>
           <li><a href="index">Home</a></li>
           <li><a href="resume">Resume</a></li>
           <li><a href="projects">Projects</a>
             <ul>
-			  <li><a href="traffic-classifier">Traffic Classifier</a></li>
-			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
+              <li><a href="traffic-classifier">Traffic Classifier</a></li>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
               <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
               <li><a href="this-website">This Website</a></li>
               <li><a href="http-server-client">HTTP Server & Client</a></li>
@@ -354,13 +353,12 @@
         In desktop mode, the navigation bar remains mostly the same since the
         previous version, but gains some fancy new transition animations.
         However, in mobile mode it changes into an expanding side-menu with a
-        <span class="code">@media</span> CSS selector. The only JavaScript
-        included in every page adds a class, <span class="code">shown</span>, to
-        the <span class="code">nav</span> element when the menu button is
-        clicked, and removes it when the close button is clicked.
+        <span class="code">@media</span> CSS selector. Originally this behavior
+        was implemented with JavaScript, but I wanted my site to be navigable
+        with scripts disabled, so I replaced this mechanism with pure CSS.
       </p>
 
-      <figure class="float left">
+      <figure class="float right">
         <img src="images/new-mobile-view.png" alt="New mobile version"
         style="box-shadow: 0 0 2px 1px #667788">
         <figcaption>
@@ -369,12 +367,18 @@
       </figure>
 
       <p>
-        The <span class="code">@media</span> selector makes the site dynamically
-        adjust as the viewport width is changed. The animation the shows the
-        nav-bar opening is just a CSS transition:
+        It works through a well-known CSS hack, involving an invisible checkbox
+        and abuse of the "<code>~</code>" sibling selector. An invisible
+        checkbox element lurks out of sight on every page, while its
+        <code>label</code> elements wrap the "Menu" and "Close" buttons. When
+        you click the label of a checkbox, it toggles the actual element's
+        checked status. The label doesn't have to be anywhere near the actual
+        checkbox, and the checkbox itself can be invisible, allowing you to
+        toggle styling of arbitrary elements using pure CSS with a selector like
+        this:
       </p>
 
-      <div class="code">header nav {
+      <code class="block" style="width: auto">nav {
   height: 100%;
   position: fixed;
   left: 0;
@@ -387,9 +391,21 @@
   white-space: nowrap;
 }
 
-header nav.shown {
+input[type=checkbox]:checked ~ nav {
   width: 100%;
-}</div>
+}</code>
+
+      <p>
+        The invisible checkbox is right next to the <code>nav</code>, so we can
+        use the general sibling combinator (<code>~</code>) to style it.
+      </p>
+
+
+      <p>
+        The <span class="code">@media</span> selector makes the site dynamically
+        adjust as the viewport width is changed. The animation the shows the
+        nav-bar opening is just a CSS transition:
+      </p>
 
       <h3 id="heading-background">Heading Background</h3>
 
@@ -432,7 +448,11 @@ header nav.shown {
       <p>
         For the background of the <a href="index">index</a> page I used
         <a href="https://vincentgarreau.com/particles.js/">particles.js</a>, a
-        lightweight, free JavaScript library for creating particle effects.
+        lightweight, free JavaScript library for creating particle effects. It's
+        configured with a simple JSON file and sits on top of a
+        <code>::before</code> pseudo-element with a slightly lighter background
+        color that fades to the standard background color with a linear
+        gradient. 
       </p>
 
     </main>

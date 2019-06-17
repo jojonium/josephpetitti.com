@@ -16,13 +16,11 @@
     <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
-    <link href="styles/dark.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="styles/dark.css?v=1.0.1" type="text/css">
 
-    <script src="scripts/common.js"></script>
     <script src="scripts/seen.min.js"></script>
   </head>
   <body>
-
 
   <style>
     canvas {
@@ -47,21 +45,22 @@
 
   <!-- Header -->
     <header>
-      <a id="mobile-nav" href="javascript:showNav()" title="Navigation">
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
         <i class="fas fa-bars"></i> Menu
-      </a>
+      </label>
     <!-- Nav -->
       <nav id="nav">
-        <a id="mobile-nav-close" href="javascript:closeNav()" title="Close">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
           <i class="fas fa-times"></i> Close
-        </a>
+        </label>
         <ul>
           <li><a href="index">Home</a></li>
           <li><a href="resume">Resume</a></li>
           <li><a href="projects">Projects</a>
             <ul>
-			  <li><a href="traffic-classifier">Traffic Classifier</a></li>
-			  <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
+              <li><a href="traffic-classifier">Traffic Classifier</a></li>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
               <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
               <li><a href="this-website">This Website</a></li>
               <li><a href="http-server-client">HTTP Server & Client</a></li>
