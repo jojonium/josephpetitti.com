@@ -151,12 +151,14 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
         partition table with this OS.
       </p>
 
-      <h3 id="setting-up-dhcp-and-dns">Setting up DHCP and DNS</h3>
-
       <p>
-        <b>Note:</b> only do this step if you want to use Libvirt's network for
-        DHCP and DNS. I chose not to for my setup.
+        Foreman connects to the Libvirt API with the <code>ruby-libvirt</code>
+        gem, which we need to install.
       </p>
+
+      <code class="block"># yum install rubygem-ruby-libvirt</code>
+
+      <h3 id="setting-up-dhcp-and-dns">Setting up DHCP and DNS</h3>
 
       <p>
         Our next step is to set up a DHCP server for our virtual network, using
@@ -173,27 +175,14 @@ foreman@box$ ssh-copy-id root@host.example.com</code>
   &lt;dns&gt;
   &lt;/dns&gt;
   &lt;mac address='52:54:00:7e:be:1c'/&gt;
-  &lt;ip address='192.168.122.1' netmask='255.255.255.0'&gt;
-    &lt;tftp root='var/tftproot' /&gt;
+  &lt;ip address='10.0.0.1' netmask='255.255.0.0'&gt;
+    &lt;tftp root='var/lib/tftpboot' /&gt;
     &lt;dhcp&gt;
-      &lt;range start='192.168.122.2' end='192.168.122.254'/&gt;
+      &lt;range start='10.0.0.2' end='10.0.254.254'/&gt;
       &lt;bootp file='pxelinux.0' /&gt;
     &lt;/dhcp&gt;
   &lt;/ip&gt;
 &lt;/network&gt;</code>
-
-      <p>
-        Make a TFTP root directory, make sure it is writeable by the 
-        <code>foreman-proxy</code> user and accessible to the accoung dnsmasq is
-        running on (<code>nobody</code>), set the gid flag for newly copied
-        files and copy necessary files to the new TFTP root directory:
-      </p>
-
-      <code class="block"># mkdir -p /var/tftproot/{boot,pxelinux.cfg}
-# yum -y install syslinux
-# cp /usr/share/syslinux/{pxelinux.0,menu.c32,chain.c32} /var/tftproot
-# chown -R foreman-proxy:nobody /var/tftproot
-# find /var/tftproot/ -type d | xargs chmod g+s</code>
 
       <p>
         Next, edit <code>/etc/libvirt/libvirtd.conf</code> and uncomment these
