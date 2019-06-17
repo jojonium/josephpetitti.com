@@ -47,7 +47,7 @@ div.rule-radio-wrapper label {
 
 div.rule-radio-wrapper label:hover {
   background-color: #4ea5d9;
-  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, .75);
 }
 
 div.rule-radio-wrapper input[type=radio]:checked + label {
@@ -90,7 +90,13 @@ div#url-box button {
   flex: 0 1 100px;
 }
 
-div#url-box input[type=textarea] {
+div#url-box textarea {
   flex: 1 1 100%;
   margin: 0 10px;
+  font-family: monospace;
+  word-break: break-all;
+  display: block;
+  resize: none;
+  color: #bbccdd;
+  background-color: #2b2b2b;
 }
