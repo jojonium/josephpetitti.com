@@ -103,8 +103,9 @@
       </div>
 
       <div id="canvas-holder" width="100%">
-        <p id="iteration"></p>
       </div>
+
+      <p id="iteration"></p>
 
       <div id="input-container">
         <div id="rule-box" class="box">
@@ -132,6 +133,16 @@
         </div>
       </div>
 
+      <h2 id="limitations">Limitations</h2>
+
+      <p>
+        You can't remove rules while the simulation is running. This is
+        impossible because what should happen to an ant sitting on a square that
+        is the color of a removed rule? You can change the color of rules while
+        it's running, but this doesn't retroactively replace the old color.
+        Instead, squares with the old color are just treated as if they were the
+        new color.
+      </p>
     </main>
 
   <!-- Footer -->

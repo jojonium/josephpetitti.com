@@ -38,12 +38,9 @@ let BOARD = {
 		for (let i = 0; i < this.height; ++i) {
 			this.grid[i] = new Array(this.width);
 			for (let j = 0; j < this.width; ++j) {
-				this.grid[i][j] = 0;
+				this.grid[i][j] = Object.keys(BOARD.rules)[0];
 			}
 		}
-
-		// initialize the UI canvas
-		//UI.initializeCanvas();
 
 		this.paused = false;
 		this.simulate();
@@ -72,6 +69,7 @@ let BOARD = {
 				t.j = t.y;
 
 				let squareColor = this.grid[t.x][t.y];
+
 
 				// turn to follow the rule at this location
 				if (this.rules[squareColor].d === 'r') {
@@ -120,7 +118,7 @@ let BOARD = {
 
 				// increment grid[t.i][t.j] to the next valid rule
 				let newCol = (oldCol + 1) % validRules.length;
-				this.grid[t.i][t.j] = newCol;
+				this.grid[t.i][t.j] = validRules[newCol];
 
 				// draw the new color on that spot
 				UI.drawSquare(t.i, t.j);
@@ -129,14 +127,17 @@ let BOARD = {
 				if (t.s)
 					antCount++;
 				else
-					this.ants[a] = undefined;
+					delete this.ants[a];
 			}
 		}
 
 		this.iteration++;
 		UI.updateIteration();
 
-		if (!this.paused && antCount > 0) {
+		// stop if there are no more ants remaining
+		if (antCount < 1) {
+			UI.pause();
+		} else if (!this.paused) {
 			// 1ms interval gives canvas time to draw
 			setTimeout(() => this.simulate(), 1); 
 		}
@@ -174,9 +175,6 @@ let UI = {
 	 * @return this, so it can be chained, or undefined if it failed
 	 */
 	swatchChange(number, color) {
-		console.log('swatchChange');
-		UI.pause();
-
 		// validate input
 		if (typeof number !== 'number' || number >= rules.length || number < 0) {
 			throw 'swatchChange: illegal ID number: ' + number;
@@ -189,8 +187,7 @@ let UI = {
 
 		BOARD.rules[number].c = color;
 
-		UI.updateURL();
-		UI.initializePixels();
+		UI.initializePixels().updateURL();
 
 		return this;
 	},
@@ -205,7 +202,7 @@ let UI = {
 	 * @return this, so it can be chained, or undefined if it failed
 	 */
 	dirChange(number, dir) {
-		UI.pause();
+		//UI.pause();
 
 		// validate input
 		if (typeof number !== 'number' || number >= rules.length || number < 0) {
@@ -288,7 +285,6 @@ let UI = {
 		$('#swatch-' + id).change(function() {
 			UI.swatchChange(id, $('#swatch-' + id).val());
 		});
-		console.log('swatchChange listener added');
 
 		// add dirChange listener to the radio buttons
 		$('input[type=radio][name=rule-' + id + ']').change(function() {
@@ -351,20 +347,32 @@ let UI = {
 
 		// add to DOM
 		$('#ants-inner').append(`<div class="an-ant box" id="ant-${id}">
-				<i class="fas fa-times" title="Delete ant" id="delete-ant-${id}"></i>
+				<i class="fas fa-times" title="Delete ant" 
+						id="delete-ant-${id}">
+				</i>
 				<h3>Ant ${id}</h3>
 				<label for="ant-${id}-x">Start x position</label>
-				<input type="number" id="ant-${id}-x" value="${startX}">
+				<input type="number" id="ant-${id}-x" class='x-input' 
+						value="${startX}">
 				<br>
 				<label for="ant-${id}-y">Start y position</label>
-				<input type="number" id="ant-${id}-y" value="${startY}">
+				<input type="number" id="ant-${id}-y" class='y-input'
+						value="${startY}">
 				<br>
 				<label for="ant-${id}-dir">Starting dir.</label>
-				<select id="ant-${id}-dir">
-					<option value="u" ${(startDir === 'u') ? 'selected' : ''}>Up</option>
-					<option value="d" ${(startDir === 'd') ? 'selected' : ''}>Down</option>
-					<option value="l" ${(startDir === 'l') ? 'selected' : ''}>Left</option>
-					<option value="r" ${(startDir === 'r') ? 'selected' : ''}>Right</option>
+				<select id="ant-${id}-dir" class='d-input'>
+					<option value="u" ${(startDir === 'u') ? 'selected' : ''}>
+						Up
+					</option>
+					<option value="d" ${(startDir === 'd') ? 'selected' : ''}>
+						Down
+					</option>
+					<option value="l" ${(startDir === 'l') ? 'selected' : ''}>
+						Left
+					</option>
+					<option value="r" ${(startDir === 'r') ? 'selected' : ''}>
+						Right
+					</option>
 				</select>
 			</div>`
 		);
@@ -425,7 +433,7 @@ let UI = {
 		}
 		
 		// remove from BOARD
-		BOARD.ants[id] = undefined;
+		delete BOARD.ants[id];
 
 		// remove deleted DOM elements
 		$('#ant-' + id).slideUp(400, () => $('#ant-' + id).remove());
@@ -449,7 +457,7 @@ let UI = {
 		if (!BOARD.rules[id]) {
 			throw 'deleteRule: illegal ID: ' + id;
 		}
-		BOARD.rules[id] = undefined;
+		delete BOARD.rules[id];
 
 		// remove deleted DOM elements
 		$('#rule-' + id).slideUp(400, () => $('#rule-' + id).remove());
@@ -493,13 +501,22 @@ let UI = {
 
 
 	/**
-	 * Encodes the BOARD.ants object in base64. There's nothing fancy here, and
-	 * it could probably be more efficient. That's something to consider in the
-	 * future.
+	 * Encodes the ants visible in the UI in base64. There's nothing fancy here,
+	 * and it could probably be more efficient. That's something to consider in
+	 * the future.
 	 * @return the stringified BOARD.ants object encoded in base64.
 	 */
 	encodeAnts() {
-		return btoa(JSON.stringify(BOARD.ants));
+		let uiAnts = {};
+		$('.an-ant').each((i, el) => {
+			uiAnts[i] = {
+				x: $(el).find('.x-input').val(),
+				y: $(el).find('.y-input').val(),
+				d: $(el).find('.d-input').val()
+			};
+		});
+
+		return btoa(JSON.stringify(uiAnts));
 	},
 
 
@@ -580,7 +597,8 @@ let UI = {
 	 */
 	encodeOne(num) {
 		num = parseInt(num, 2);
-		return 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'[num];
+		return 
+		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'[num];
 	},
 
 
@@ -590,7 +608,8 @@ let UI = {
 	 * @return a single six-bit binary string, or undefined if invalid input
 	 */
 	decodeOne(char) {
-		const s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+		const s = 
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 		if (char.length !== 1 || s.indexOf(char) < 0)
 			throw 'illegal character: ' + char;
 		else
@@ -610,12 +629,13 @@ let UI = {
 			try {
 				const newAnts = JSON.parse(atob(b64Ants));
 				for (const a in newAnts) {
-					UI.addAnt(newAnts[a].x, newAnts[a].y, newAnts[a].d);
+					UI.addAnt(+newAnts[a].x, +newAnts[a].y, newAnts[a].d);
 				}
 			} catch (err) {
 				console.error('something went wrong: ' + err);
 			}
 		} else {
+			console.error('failed to read ant');
 			UI.addAnt(BOARD.width / 2, BOARD.height / 2, 'u');
 		}
 
@@ -625,8 +645,7 @@ let UI = {
 
 	/**
 	 * Checks the query string and tries to decode a set of rules from it. If it
-	 * can't, it generates two rules randomly. Because this sets colors, it
-	 * needs to call initializePixels()
+	 * can't, it generates two rules randomly.
 	 * @return this, so it can be chained.
 	 */
 	decodeRules() {
@@ -685,7 +704,7 @@ let UI = {
 			this.addRule('#ffffff', 'r').addRule('#000000', 'l');
 		}
 
-		this.initializePixels().updateURL();
+		this.initializePixels();
 
 		return this;
 	},
@@ -699,8 +718,6 @@ let UI = {
 	 * squareSize: 4
 	 * wrap: false
 	 * Also sets the values of the UI inputs.
-	 * Because this changes the canvas dimensions, initializeCanvas() needs to
-	 * be called afterward
 	 * @return this, so it can be chained
 	 */
 	decodeMain() {
@@ -725,8 +742,8 @@ let UI = {
 
 
 	/**
-	 * Removes start button and replaces it with pause and reset, then calls
-	 * BOARD.start()
+	 * Removes start button and replaces it with pause and reset, removes rule X
+	 * buttons, then calls BOARD.start()
 	 * @return this, so it can be chained
 	 */
 	start() {
@@ -736,6 +753,10 @@ let UI = {
 		$('#start').fadeOut(200, () => {
 			$('#pause').fadeIn(200);
 		});
+
+		// set rule X's to visibility: hidden so they're invisible but still
+		// take up space
+		$('#rule-box i.fa-times').off('click').css('visibility', 'hidden');
 
 		BOARD.start();
 		return this;
@@ -764,7 +785,7 @@ let UI = {
 	/**
 	 * Removes an existing canvas, if there is one, and creates a new one based
 	 * on BOARD's dimensions.
-	 * This should be called any time the dimensions or square size changes,
+	 * This should be called only when the dimensions or square size changes,
 	 * because that requires a new canvas
 	 * @return this, so it can be chained
 	 */
@@ -777,8 +798,8 @@ let UI = {
 			width="${BOARD.width * BOARD.squareSize}"
 			height="${BOARD.height * BOARD.squareSize}"></canvas>`
 		);
-		let canv = document.getElementById('canvas');
-		this.ctx = canv.getContext('2d');
+
+		this.initializePixels();
 
 		return this;
 	},
@@ -791,10 +812,16 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	initializePixels() {
-		console.log('initializePixels()');
+		// make sure the canvas already exists. Create it if not
+		let canv = document.getElementById('canvas');
+		if (!canv) {
+			this.initializeCanvas();
+			return;
+		}
+		this.ctx = canv.getContext('2d');
+
 		let temp;
 		this.pixels = {};
-
 		for (let r in BOARD.rules) {
 			if (typeof BOARD.rules[r] !== 'undefined') {
 				// create an image data object representing a square of the
@@ -820,9 +847,9 @@ let UI = {
 		}
 
 		// fill canvas with first color
-		if (!this.started) {
-			this.ctx.fillStyle = this.hexToRGB(BOARD.rules[0].c);
-			let canv = document.getElementById('canvas');
+		let fc = Object.keys(BOARD.rules)[0]; // first valid color
+		if (!this.started && BOARD.rules[fc]) {
+			this.ctx.fillStyle = this.hexToRGB(BOARD.rules[fc].c);
 			this.ctx.fillRect(0, 0, canv.width, canv.height);
 		}
 
@@ -861,9 +888,7 @@ let UI = {
 	pause() {
 		BOARD.paused = true;
 
-		if (this.started) {
 			$('#pause').fadeOut(200, () => { $('#resume').fadeIn(200) });
-		}
 	},
 
 	
@@ -932,6 +957,7 @@ $(document).ready(() => {
 		if (newW < 1 || newW > 10000) newW = 100;
 		$('#width').val(newW);
 		BOARD.width = $('#width').val();
+		UI.started = false;
 		UI.initializeCanvas().updateURL();
 	});
 	$('#height').change(() => {
@@ -940,6 +966,7 @@ $(document).ready(() => {
 		if (newH < 1 || newH > 10000) newH = 100;
 		$('#height').val(newH);
 		BOARD.height = $('#height').val();
+		UI.started = false;
 		UI.initializeCanvas().updateURL();
 	});
 	$('#square-size').change(() => {
@@ -948,19 +975,17 @@ $(document).ready(() => {
 		if (newS < 1 || newS > 1000) newS = 4;
 		$('#square-size').val(newS);
 		BOARD.squareSize = $('#square-size').val();
+		UI.started = false;
 		UI.initializeCanvas().updateURL();
 	});
 	$('#wrap').change(() => {
-		UI.pause();
 		BOARD.wrap = $('#wrap').prop('checked');
 		UI.updateURL();
 	});
 
 	// parse rules, ants, and main inputs from query string
-	UI.decodeMain().decodeRules().decodeAnts();
+	UI.decodeMain().decodeRules().decodeAnts().updateURL();
 		
-	UI.updateURL();
-
 	// enable start
 	$('#start').click(() => { UI.start() });
 });

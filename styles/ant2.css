@@ -220,3 +220,10 @@ div#main-inputs div#button-holder button {
   box-sizing: border-box;
   margin: 0;
 }
+
+#canvas-holder {
+  display: flex;
+}
+#canvas {
+  margin: auto;
+}
