@@ -12,7 +12,147 @@ let BOARD = {
 	ants: {},
 	nextAntID: 0,
 	width: 100,
-	height: 100
+	height: 100,
+	squareSize: 4,
+	wrap: false,
+	paused: true,
+	iteration: 0,
+	grid: undefined,
+	dirs: {
+		'u': {dx: 0, dy: -1},
+		'r': {dx: 1, dy: 0},
+		'd': {dx: 0, dy: 1},
+		'l': {dx: -1, dy: 0}
+	},
+
+
+	/**
+	 * Initializes the grid, canvas, and pixels, the calls simulate
+	 * @return this, so it can be chained
+	 */
+	start() {
+		this.iteration = 0;
+
+		// initialize grid
+		this.grid = new Array(this.height);
+		for (let i = 0; i < this.height; ++i) {
+			this.grid[i] = new Array(this.width);
+			for (let j = 0; j < this.width; ++j) {
+				this.grid[i][j] = 0;
+			}
+		}
+
+		// initialize the UI canvas
+		//UI.initializeCanvas();
+
+		this.paused = false;
+		this.simulate();
+
+		return this;
+	},
+
+
+	/**
+	 * Runs one step of the simulation, applying the rules to each ant. It moves
+	 * each ant before changing and color squares to make sure the order of the
+	 * ants doesn't matter. If there are still ants alive and the simulation is
+	 * not paused it calls itself again.
+	 * @return the number of ants still alive
+	 */
+	simulate() {
+		// iterate over ants
+		let t;
+		for (let a in this.ants) {
+			if (typeof this.ants[a] !== 'undefined') {
+				t = this.ants[a];
+
+				// remember the previous location so we can update the square it
+				// left after all ants have moved
+				t.i = t.x;
+				t.j = t.y;
+
+				let squareColor = this.grid[t.x][t.y];
+
+				// turn to follow the rule at this location
+				if (this.rules[squareColor].d === 'r') {
+					// turn right by adding 1
+					let temp = ('urdl'.indexOf(t.d) + 1) % 4
+					t.d = 'urdl'[('urdl'.indexOf(t.d) + 1) % 4];
+				} else if (this.rules[squareColor].d === 'l') {
+					// turn left by subtracting 1
+					t.d = 'urdl'[('urdl'.indexOf(t.d) + 3) % 4];
+				} else if (this.rules[squareColor].d === 'u') {
+					// make a U-turn by adding 2
+					t.d = 'urdl'[('urdl'.indexOf(t.d) + 2) % 4];
+				}
+				// otherwise this.rules[squareColor].d is 'c', continue
+				// straight, so we don't need to change the direction
+
+				// move forward
+				t.x += this.dirs[t.d].dx;
+				t.y += this.dirs[t.d].dy;
+
+				// if wrap is on, wrap ant positions
+				if (this.wrap) {
+					if (t.x < 0) t.x = this.width - 1;    // left bound
+					else if (t.x >= this.width) t.x = 0;  // right bound
+					if (t.y < 0) t.y = this.height - 1;   // top bound
+					else if (t.y >= this.height) t.y = 0; // bottom bound
+				}
+
+				// sanity check
+				t.s = !(t.x < 0 || t.x >= this.width 
+					|| t.y < 0 || t.y >= this.height);
+			}
+		}
+
+		let antCount = 0;
+
+		// now that all ants have moved, iterate through them again, update the
+		// colors of the squares they left, and remove any that are out of
+		// bounds
+		for (let a in this.ants) {
+			if (typeof this.ants[a] !== 'undefined') {
+				t = this.ants[a];
+				let oldCol = this.grid[t.i][t.j];
+				let validRules =  // strip out undefined keys
+					Object.keys(this.rules).filter((el) => el != undefined);
+
+				// increment grid[t.i][t.j] to the next valid rule
+				let newCol = (oldCol + 1) % validRules.length;
+				this.grid[t.i][t.j] = newCol;
+
+				// draw the new color on that spot
+				UI.drawSquare(t.i, t.j);
+
+				// count sane ants and kill insane ones
+				if (t.s)
+					antCount++;
+				else
+					this.ants[a] = undefined;
+			}
+		}
+
+		this.iteration++;
+		UI.updateIteration();
+
+		if (!this.paused && antCount > 0) {
+			// 1ms interval gives canvas time to draw
+			setTimeout(() => this.simulate(), 1); 
+		}
+
+		return antCount;
+	},
+
+
+	/**
+	 * Sets paused to false, reloads UI's pixels and calls simulate again
+	 * @return this so it can be chained
+	 */
+	resume() {
+		this.paused = false;
+		this.simulate();
+	}
 };
 
 
@@ -21,15 +161,22 @@ let BOARD = {
  * including buttons, inputs, and the canvas.
  */
 let UI = {
+	ctx: undefined,
+	pixels: {},
+	started: false,
+
 	/**
 	 * Sets the background-color of the appropriate swatch-wrapper whenever the
-	 * interior color input is changed. Also updates the BOARD rules array and
-	 * the URL.
+	 * interior color input is changed. Also updates the BOARD rules array, the
+	 * pixels, and the URL.
 	 * @param number the ID number of the swatch being changed, required
 	 * @param color the color to change it to, in the form #123abc, required
 	 * @return this, so it can be chained, or undefined if it failed
 	 */
 	swatchChange(number, color) {
+		console.log('swatchChange');
+		UI.pause();
+
 		// validate input
 		if (typeof number !== 'number' || number >= rules.length || number < 0) {
 			throw 'swatchChange: illegal ID number: ' + number;
@@ -41,7 +188,9 @@ let UI = {
 		$('#swatch-wrapper-' + number).css('background-color', color);
 
 		BOARD.rules[number].c = color;
+
 		UI.updateURL();
+		UI.initializePixels();
 
 		return this;
 	},
@@ -49,12 +198,15 @@ let UI = {
 
 	/**
 	 * Updates BOARD.rules to reflect a new direction for a particular rule.
-	 * Should be called when the direction radio buttons are clicked.
+	 * Should be called when the direction radio buttons are clicked. Also
+	 * updates the URL.
 	 * @param number the ID number of the rule being changed, required.
 	 * @param dir the new direction. Must be of the form /^[lrcu]$/, required.
 	 * @return this, so it can be chained, or undefined if it failed
 	 */
 	dirChange(number, dir) {
+		UI.pause();
+
 		// validate input
 		if (typeof number !== 'number' || number >= rules.length || number < 0) {
 			throw 'dirChange: illegal ID number: ' + number;
@@ -73,7 +225,7 @@ let UI = {
 
 	/**
 	 * Adds a randomized rule, both to the UI and to the rule list. Updates the
-	 * URL afterward.
+	 * URL afterward, and the array of pixels. 
 	 * @param color: the color for this rule in the form #123abc. Generates a
 	 * random color if omitted or illegal
 	 * @param rule: one of ['l', 'r', 'c', 'u']. Generates a random rule if
@@ -136,6 +288,7 @@ let UI = {
 		$('#swatch-' + id).change(function() {
 			UI.swatchChange(id, $('#swatch-' + id).val());
 		});
+		console.log('swatchChange listener added');
 
 		// add dirChange listener to the radio buttons
 		$('input[type=radio][name=rule-' + id + ']').change(function() {
@@ -150,7 +303,7 @@ let UI = {
 		// add the new rule to BOARD.rules
 		BOARD.rules[id] = {c: col, d: newRule};
 
-		UI.updateURL();
+		UI.initializePixels().updateURL();
 
 		return this;
 	},
@@ -197,7 +350,7 @@ let UI = {
 		BOARD.ants[id] = { x: startX, y: startY, d: startDir };
 
 		// add to DOM
-		$('#ants').append(`<div class="an-ant box" id="ant-${id}">
+		$('#ants-inner').append(`<div class="an-ant box" id="ant-${id}">
 				<i class="fas fa-times" title="Delete ant" id="delete-ant-${id}"></i>
 				<h3>Ant ${id}</h3>
 				<label for="ant-${id}-x">Start x position</label>
@@ -243,6 +396,8 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	updateAnt(id) {
+		UI.pause();
+
 		if (!BOARD.ants[id]) {
 			throw 'updateAnt: Illegal ID: ' + id;
 		}
@@ -254,6 +409,7 @@ let UI = {
 
 		return this;
 	},
+
 
 	/**
 	 * Deletes the ant with the given ID from BOARD.ants, and removes its
@@ -280,10 +436,11 @@ let UI = {
 		return this;
 	},
 
+
 	/**
 	 * Deletes the rule with the given ID from BOARD.rules, and removes its
 	 * display from the DOM. Note that this doesn't change the HTML ID's of
-	 * existing HTML elements. Also updates URL.
+	 * existing HTML elements. Also updates URL and pixels.
 	 * @param id the ID of the rule to delete
 	 * @return this, so it can be chained
 	 */
@@ -297,8 +454,8 @@ let UI = {
 		// remove deleted DOM elements
 		$('#rule-' + id).slideUp(400, () => $('#rule-' + id).remove());
 
-		// update url
-		this.updateURL();
+		// update url and pixels
+		this.initializePixels().updateURL();
 
 		return this;
 	},
@@ -324,7 +481,11 @@ let UI = {
 	updateURL() {
 		const newURL = window.location.href.split('?')[0] 
 			+ '?r=' + UI.encodeRules()
-			+ '&a=' + UI.encodeAnts();
+			+ '&a=' + UI.encodeAnts()
+			+ '&w=' + BOARD.width
+			+ '&h=' + BOARD.height
+			+ '&s=' + BOARD.squareSize
+			+ ((BOARD.wrap) ? '&p' : '');
 		$('#url-text').html(newURL);
 
 		return newURL;
@@ -445,7 +606,6 @@ let UI = {
 	decodeAnts() {
 		const urlParams = new URLSearchParams(window.location.search);
 		let b64Ants = urlParams.get('a');
-		console.log(b64Ants);
 		if (b64Ants) {
 			try {
 				const newAnts = JSON.parse(atob(b64Ants));
@@ -456,15 +616,17 @@ let UI = {
 				console.error('something went wrong: ' + err);
 			}
 		} else {
-			console.log('here')
 			UI.addAnt(BOARD.width / 2, BOARD.height / 2, 'u');
 		}
+
+		return this;
 	},
 
 
 	/**
 	 * Checks the query string and tries to decode a set of rules from it. If it
-	 * can't, it generates two rules randomly.
+	 * can't, it generates two rules randomly. Because this sets colors, it
+	 * needs to call initializePixels()
 	 * @return this, so it can be chained.
 	 */
 	decodeRules() {
@@ -523,10 +685,227 @@ let UI = {
 			this.addRule('#ffffff', 'r').addRule('#000000', 'l');
 		}
 
-		this.updateURL();
+		this.initializePixels().updateURL();
+
+		return this;
+	},
+
+
+	/**
+	 * Decodes the height, width, square size, and wrap settings from the query
+	 * string. If it can't decode any of these, it sets the defaults as follows:
+	 * width: 100
+	 * height: 100
+	 * squareSize: 4
+	 * wrap: false
+	 * Also sets the values of the UI inputs.
+	 * Because this changes the canvas dimensions, initializeCanvas() needs to
+	 * be called afterward
+	 * @return this, so it can be chained
+	 */
+	decodeMain() {
+		const urlParams = new URLSearchParams(window.location.search);
+		let tempH = urlParams.get('h');
+		let tempW = urlParams.get('w');
+		let tempS = urlParams.get('s');
+		let tempWrap = urlParams.get('p');
+		BOARD.height = (tempH > 0) ? tempH : 100;
+		BOARD.width = (tempW > 0) ? tempW : 100;
+		BOARD.squareSize = (tempS > 0) ? tempS : 4;
+		BOARD.wrap = (tempWrap === ""); // `p' query param is present but empty
+		$('#height').val(BOARD.height);
+		$('#width').val(BOARD.width);
+		$('#square-size').val(BOARD.squareSize);
+		$('#wrap').prop('checked', BOARD.wrap);
+
+		this.initializeCanvas();
+
+		return this;
+	},
+
+
+	/**
+	 * Removes start button and replaces it with pause and reset, then calls
+	 * BOARD.start()
+	 * @return this, so it can be chained
+	 */
+	start() {
+		this.started = true;
+
+		$('#resume').fadeOut(200);
+		$('#start').fadeOut(200, () => {
+			$('#pause').fadeIn(200);
+		});
+
+		BOARD.start();
+		return this;
+	},
+
+
+	/**
+	 * Helper function that converts a hex color, e.g. #123abc to RGB, e.g.
+	 * rgb(124, 48, 202)
+	 * @param hex the hex color, in the form #123abc, required
+	 * @return a string representing the RGB equivalent
+	 */
+	hexToRGB(hex) {
+		// validate input
+		if (!/^#[0-9A-F]{6}$/i.test(hex)) {
+			throw 'hexToRGB: Illegal hex color: ' + hex;
+		}
+
+		// uses `+()' as type coercion to convert hex to decimal
+		return 'rgb(' + +('0x' + hex[1] + hex[2]) +
+				', ' + +('0x' + hex[3] + hex[4]) +
+				', ' + +('0x' + hex[5] + hex[6]) + ')';
+	},
+
+	
+	/**
+	 * Removes an existing canvas, if there is one, and creates a new one based
+	 * on BOARD's dimensions.
+	 * This should be called any time the dimensions or square size changes,
+	 * because that requires a new canvas
+	 * @return this, so it can be chained
+	 */
+	initializeCanvas() {
+		// remove existing canvas
+		$('#canvas').remove();
+
+		// insert new one
+		$('#canvas-holder').prepend(`<canvas id="canvas" 
+			width="${BOARD.width * BOARD.squareSize}"
+			height="${BOARD.height * BOARD.squareSize}"></canvas>`
+		);
+		let canv = document.getElementById('canvas');
+		this.ctx = canv.getContext('2d');
+
+		return this;
+	},
+
+
+	/**
+	 * Resets UI's pixels object and recreates each entry based on BOARD's
+	 * rules. Fills the canvas with the first color if it hasn't been already.
+	 * This should only need to be called when the colors are changed.
+	 * @return this, so it can be chained
+	 */
+	initializePixels() {
+		console.log('initializePixels()');
+		let temp;
+		this.pixels = {};
+
+		for (let r in BOARD.rules) {
+			if (typeof BOARD.rules[r] !== 'undefined') {
+				// create an image data object representing a square of the
+				// correct size and color for each existing rule
+				temp = this.ctx.createImageData(BOARD.squareSize, 
+					BOARD.squareSize);
+				for (let i = 0; i < temp.data.length; i += 4) {
+					// This wizardry involves extracting two digits of the hex
+					// color at a time and converting them hex number strings,
+					// then converting them to decimal. The point is that every
+					// set of four values in temp.data is a single rgba color.
+					// There's probably a better way to do this...
+					temp.data[i] = 
+						+('0x' + BOARD.rules[r].c[1] + BOARD.rules[r].c[2]);
+					temp.data[i + 1] = 
+						+('0x' + BOARD.rules[r].c[3] + BOARD.rules[r].c[4]);
+					temp.data[i + 2] = 
+						+('0x' + BOARD.rules[r].c[5] + BOARD.rules[r].c[6]);
+					temp.data[i + 3] = 255;
+				}
+				this.pixels[r] = temp;
+			}
+		}
+
+		// fill canvas with first color
+		if (!this.started) {
+			this.ctx.fillStyle = this.hexToRGB(BOARD.rules[0].c);
+			let canv = document.getElementById('canvas');
+			this.ctx.fillRect(0, 0, canv.width, canv.height);
+		}
+
+		return this;
+	},
+
+
+	/**
+	 * Displays the current iteration on the DOM
+	 * @return this, so it can be chained
+	 */
+	updateIteration() {
+		$('#iteration').html('Iteration ' + BOARD.iteration);
+	},
+
+
+	/**
+	 * Colors in the square at x, y with the correct color based on the data in
+	 * BOARD.grid
+	 * @param x x coordinate, required
+	 * @param y y coordinate, required
+	 * @return this, so it can be chained
+	 */
+	drawSquare(x, y) {
+		this.ctx.putImageData(this.pixels[BOARD.grid[x][y]],
+			x * BOARD.squareSize,
+			y * BOARD.squareSize);
+		return this;
+	},
+
+	/**
+	 * Sets BOARD.paused to true and changes the 'Pause' button to the 'Resume'
+	 * button
+	 * @return this, so it can be chained
+	 */
+	pause() {
+		BOARD.paused = true;
+
+		if (this.started) {
+			$('#pause').fadeOut(200, () => { $('#resume').fadeIn(200) });
+		}
+	},
+
+	
+	/**
+	 * Hides 'Resume' button, shows 'Pause button, and calls BOARD.resume()
+	 * @return this, so it can be chained
+	 */
+	resume() {
+		$('#resume').fadeOut(200, () => { $('#pause').fadeIn(200) });
+		BOARD.resume();
+	},
+
+
+	/**
+	 * Clears BOARD.ants, BOARD.rules, and removes the canvas. Hides all buttons
+	 * but 'Start' and 'Reset'. Then reads in rules from the query string again
+	 * @return this, so it can be chained
+	 */
+	reset() {
+		BOARD.rules = {};
+		BOARD.nextRuleID = 0;
+		BOARD.ants = {};
+		BOARD.nextAntID = 0;
+		BOARD.paused = true;
+		BOARD.iteration = 0;
+		BOARD.grid = undefined;
+		this.cts = undefined;
+		this.pixels = {};
+		this.started = false;
+		$('#canvas').remove();
+		$('#pause, #resume').fadeOut(200, () => {
+			$('#start, #reset').fadeIn(200);
+		});
+
+		$('.an-ant, .a-rule').slideUp(400, () => { 
+			$('.an-ant, .a-rule').remove();
+			UI.decodeMain().decodeRules().decodeAnts().updateURL();
+		});
 
 		return this;
 	}
+
 }
 
 
@@ -535,22 +914,55 @@ let UI = {
  * document is fully loaded and ready.
  */
 $(document).ready(() => {
+	// buttons
 	$('#add-rule').click(() => { UI.addRule() });
-
 	$('#add-ant').click(() => { UI.addAnt() });
-
+	$('#pause').click(() => { UI.pause() });
+	$('#resume').click(() => { UI.resume() });
+	$('#reset').click(() => { UI.reset() });
 	$('#copy-url').click(() => {
 		document.getElementById('url-text').select();
 		document.execCommand('copy');
 	});
 
-	// parse rules from query string
-	UI.decodeRules();
+	// main input listeners
+	$('#width').change(() => {
+		UI.pause();
+		let newW = Math.floor($('#width').val());
+		if (newW < 1 || newW > 10000) newW = 100;
+		$('#width').val(newW);
+		BOARD.width = $('#width').val();
+		UI.initializeCanvas().updateURL();
+	});
+	$('#height').change(() => {
+		UI.pause();
+		let newH = Math.floor($('#height').val());
+		if (newH < 1 || newH > 10000) newH = 100;
+		$('#height').val(newH);
+		BOARD.height = $('#height').val();
+		UI.initializeCanvas().updateURL();
+	});
+	$('#square-size').change(() => {
+		UI.pause();
+		let newS = Math.floor($('#square-size').val());
+		if (newS < 1 || newS > 1000) newS = 4;
+		$('#square-size').val(newS);
+		BOARD.squareSize = $('#square-size').val();
+		UI.initializeCanvas().updateURL();
+	});
+	$('#wrap').change(() => {
+		UI.pause();
+		BOARD.wrap = $('#wrap').prop('checked');
+		UI.updateURL();
+	});
 
-	// parse ants from query string
-	UI.decodeAnts();
+	// parse rules, ants, and main inputs from query string
+	UI.decodeMain().decodeRules().decodeAnts();
+		
+	UI.updateURL();
 
-	//UI.addAnt().addAnt();
+	// enable start
+	$('#start').click(() => { UI.start() });
 });
 
 

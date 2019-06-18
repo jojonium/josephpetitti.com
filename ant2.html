@@ -73,6 +73,39 @@
 
       <h1 class="title">LANGTON'S ANT</h1>
 
+      <div id="main-inputs">
+        <div>
+          <label for="height">Height</label>
+          <input type="number" id="height" value="100">
+        </div>
+
+        <div>
+          <label for="width">Width</label>
+          <input type="number" id="width" value="100">
+        </div>
+
+        <div>
+          <label for="square-size">Square size</label>
+          <input type="number" id="square-size" value="4">
+        </div>
+
+        <div>
+          <label for="wrap">Wrap</label>
+          <input type="checkbox" id="wrap">
+        </div>
+
+        <div id="button-holder">
+          <button id="start">Start</button>
+          <button id="pause" style="display: none;">Pause</button>
+          <button id="resume" style="display: none;">Resume</button>
+          <button id="reset">Reset</button>
+        </div>
+      </div>
+
+      <div id="canvas-holder" width="100%">
+        <p id="iteration"></p>
+      </div>
+
       <div id="input-container">
         <div id="rule-box" class="box">
           <h2>Rules</h2>
@@ -82,11 +115,9 @@
         </div>
 
         <div id="ant-box">
+          <div id="ants-inner"></div>
           <div id="ant-header">
-            <h2>Ants</h2>
             <button id="add-ant">Add Ant</button>
-          </div>
-          <div id="ants">
           </div>
         </div>
       </div>
