@@ -7,7 +7,12 @@
  * rules, and board. Contains no UI methods.
  */
 let BOARD = {
-	rules: []
+	rules: {},
+	nextRuleID: 0,
+	ants: {},
+	nextAntID: 0,
+	width: 100,
+	height: 100
 };
 
 
@@ -27,12 +32,10 @@ let UI = {
 	swatchChange(number, color) {
 		// validate input
 		if (typeof number !== 'number' || number >= rules.length || number < 0) {
-			console.error('swatchChange: illegal ID number: ' + number);
-			return;
+			throw 'swatchChange: illegal ID number: ' + number;
 		}
-		if (!color || !/^#[0-9A-Fa-f]{6}$/i.test(color)) {
-			console.error('swatchChange: illegal color: ' + color);
-			return;
+		if (!color || !/^#[0-9A-F]{6}$/i.test(color)) {
+			throw 'swatchChange: illegal color: ' + color;
 		}
 
 		$('#swatch-wrapper-' + number).css('background-color', color);
@@ -54,12 +57,11 @@ let UI = {
 	dirChange(number, dir) {
 		// validate input
 		if (typeof number !== 'number' || number >= rules.length || number < 0) {
-			console.lerror('dirChange: illegal ID number: ' + number);
+			throw 'dirChange: illegal ID number: ' + number;
 			return;
 		}
 		if (!dir || !/^[lrcu]$/i.test(dir)) {
-			console.error('dirChange: illegal direction: ' + dir);
-			return;
+			throw 'dirChange: illegal direction: ' + dir;
 		}
 
 		BOARD.rules[number].d = dir;
@@ -79,10 +81,10 @@ let UI = {
 	 * @return this, so it can be chained.
 	 */
 	addRule(color, rule) {
-		let id = BOARD.rules.length, newRule;
+		let id = BOARD.nextRuleID++, newRule;
 
 		// if color isn't a valid HTML color generate a new one
-		let col = (/^#[0-9A-Fa-f]{6}$/i.test(color)) ? color : this.randColor();
+		let col = (/^#[0-9A-F]{6}$/i.test(color)) ? color : this.randColor();
 
 		// if rule isn't a valid rule generate a new one
 		if ('lrcu'.indexOf(rule) > -1 && rule.length === 1) {
@@ -100,7 +102,7 @@ let UI = {
 		}
 
 		// create HTML element showing this rule and append it to div#rules
-		$('#rules').append(`<div class="a-rule">
+		$('#rules').append(`<div class="a-rule" id="rule-${id}">
 			<div class="swatch-wrapper" id="swatch-wrapper-${id}" 
 				 title="Select color" style="background-color: ${col}">
 			<input class="swatch" id="swatch-${id}" value="${col}" type="color">
@@ -121,9 +123,14 @@ let UI = {
 			<input type="radio" name="rule-${id}" id="rule-${id}-u" value="u"
 					${newRule === 'u' ? 'checked' : ''}>
 			<label for="rule-${id}-u" title="Make a U-turn">U</label>
+			<i class="fas fa-times" title="Delete rule" id="delete-rule-${id}"></i>
 			</div>
 			</div>`
 		);
+
+		// animate
+		$('#rule-' + id).hide();
+		$('#rule-' + id).slideDown();
 
 		// add swatchChange listener to the swatch input
 		$('#swatch-' + id).change(function() {
@@ -135,8 +142,13 @@ let UI = {
 			UI.dirChange(id, this.value);
 		});
 
+		// add deleteRule listener to the X button
+		$('#delete-rule-' + id).click(function() {
+			UI.deleteRule(id);
+		});
+
 		// add the new rule to BOARD.rules
-		BOARD.rules.push({c: col, d: newRule});
+		BOARD.rules[id] = {c: col, d: newRule};
 
 		UI.updateURL();
 
@@ -144,6 +156,153 @@ let UI = {
 	},
 
 
+	/**
+	 * Adds a randomized ant, both to the UI and to the ant list. Updates the
+	 * URL afterward.
+	 * @param startX the starting x position of this ant, in squares from the
+	 * left wall. Random if omitted or invalid.
+	 * @param startY the starting y position of this ant, in squares from the
+	 * top wall. Random if omitted or invalid.
+	 * @param startDir the starting direction of this ant, in the form
+	 * /^[udlr]{1}$/. Random if omitted or invalid.
+	 * @return this, so it can be chained.
+	 */
+	addAnt(startX, startY, startDir) {
+		let id = BOARD.nextAntID++;
+
+		// validate input
+		if (isNaN(startX) || startX < 1 || startX > BOARD.width) {
+			var startX = Math.random() * BOARD.width;
+		}
+		if (isNaN(startY) || startY < 1 || startY > BOARD.height) {
+			var startY = Math.random() * BOARD.height;
+		}
+
+		startX = Math.floor(startX);
+		startY = Math.floor(startY);
+
+		if (!/^[udlr]{1}$/i.test(startDir)) {
+			let z = Math.random();
+			if (z < 0.25)
+				startDir = 'u';
+			else if (z < 0.5)
+				startDir = 'd';
+			else if (z < 0.75)
+				startDir = 'l';
+			else
+				startDir = 'r';
+		}
+
+		// add to BOARD.ants
+		BOARD.ants[id] = { x: startX, y: startY, d: startDir };
+
+		// add to DOM
+		$('#ants').append(`<div class="an-ant box" id="ant-${id}">
+				<i class="fas fa-times" title="Delete ant" id="delete-ant-${id}"></i>
+				<h3>Ant ${id}</h3>
+				<label for="ant-${id}-x">Start x position</label>
+				<input type="number" id="ant-${id}-x" value="${startX}">
+				<br>
+				<label for="ant-${id}-y">Start y position</label>
+				<input type="number" id="ant-${id}-y" value="${startY}">
+				<br>
+				<label for="ant-${id}-dir">Starting dir.</label>
+				<select id="ant-${id}-dir">
+					<option value="u" ${(startDir === 'u') ? 'selected' : ''}>Up</option>
+					<option value="d" ${(startDir === 'd') ? 'selected' : ''}>Down</option>
+					<option value="l" ${(startDir === 'l') ? 'selected' : ''}>Left</option>
+					<option value="r" ${(startDir === 'r') ? 'selected' : ''}>Right</option>
+				</select>
+			</div>`
+		);
+
+		// animate
+		$('#ant-' + id).hide();
+		$('#ant-' + id).slideDown();
+
+		// add update listeners to inputs
+		$(`#ant-${id}-x, #ant-${id}-y, #ant-${id}-dir`).change(function() {
+			UI.updateAnt(id);
+		});
+
+		// add deleteAnt listener to X button
+		$('#delete-ant-' + id).click(function() {
+			UI.deleteAnt(id);
+		});
+
+		UI.updateURL();
+
+		return this;
+	},
+
+
+	/**
+	 * Updates a given ant in BOARD.ants based on the info in the DOM inputs.
+	 * Also updates URL.
+	 * @param id the ID of the ant to change, required.
+	 * @return this, so it can be chained
+	 */
+	updateAnt(id) {
+		if (!BOARD.ants[id]) {
+			throw 'updateAnt: Illegal ID: ' + id;
+		}
+		BOARD.ants[id].x = parseInt($(`#ant-${id}-x`).val());
+		BOARD.ants[id].y = parseInt($(`#ant-${id}-y`).val());
+		BOARD.ants[id].d = $(`#ant-${id}-dir`).val();
+
+		UI.updateURL();
+
+		return this;
+	},
+
+	/**
+	 * Deletes the ant with the given ID from BOARD.ants, and removes its
+	 * display from the DOM. Note that this doesn't change the HTML ID's of
+	 * existing HTML elements. Also updates URL.
+	 * @param id the ID of the rule to delete
+	 * @return this, so it can be chained
+	 */
+	deleteAnt(id) {
+		// validate input
+		if (!BOARD.ants[id]) {
+			throw 'deleteAnt: illegal ID: ' + id;
+		}
+		
+		// remove from BOARD
+		BOARD.ants[id] = undefined;
+
+		// remove deleted DOM elements
+		$('#ant-' + id).slideUp(400, () => $('#ant-' + id).remove());
+
+		// update url
+		this.updateURL();
+
+		return this;
+	},
+
+	/**
+	 * Deletes the rule with the given ID from BOARD.rules, and removes its
+	 * display from the DOM. Note that this doesn't change the HTML ID's of
+	 * existing HTML elements. Also updates URL.
+	 * @param id the ID of the rule to delete
+	 * @return this, so it can be chained
+	 */
+	deleteRule(id) {
+		// validate input
+		if (!BOARD.rules[id]) {
+			throw 'deleteRule: illegal ID: ' + id;
+		}
+		BOARD.rules[id] = undefined;
+
+		// remove deleted DOM elements
+		$('#rule-' + id).slideUp(400, () => $('#rule-' + id).remove());
+
+		// update url
+		this.updateURL();
+
+		return this;
+	},
+		
 	/**
 	 * Generates a random HTML color
 	 * @return a color string in the form #123abc.
@@ -164,10 +323,22 @@ let UI = {
 	 */
 	updateURL() {
 		const newURL = window.location.href.split('?')[0] 
-			+ '?r=' + UI.encodeRules();
+			+ '?r=' + UI.encodeRules()
+			+ '&a=' + UI.encodeAnts();
 		$('#url-text').html(newURL);
 
 		return newURL;
+	},
+
+
+	/**
+	 * Encodes the BOARD.ants object in base64. There's nothing fancy here, and
+	 * it could probably be more efficient. That's something to consider in the
+	 * future.
+	 * @return the stringified BOARD.ants object encoded in base64.
+	 */
+	encodeAnts() {
+		return btoa(JSON.stringify(BOARD.ants));
 	},
 
 
@@ -189,22 +360,24 @@ let UI = {
 		let out = '';
 		let dirs, binString;
 
-		for (let r = 0; r < BOARD.rules.length; ++r) {
-			binString = '';
-			// convert color to binary string
-			for (let i = 1; i < 7; i += 2) { // start at 1 to remove '#'
-				binString += parseInt(BOARD.rules[r].c.substring(i, i + 2), 16)
-					.toString(2).padStart(8, '0');
-			}
+		for (const r in BOARD.rules) {
+			if (typeof BOARD.rules[r] !== 'undefined') {
+				binString = '';
+				// convert color to binary string
+				for (let i = 1; i < 7; i += 2) { // start at 1 to remove '#'
+					binString += parseInt(BOARD.rules[r].c
+						.substring(i, i + 2), 16).toString(2).padStart(8, '0');
+				}
 
-			// convert binary string to base64 string
-			for (let i = 0; i < binString.length; i += 6) {
-				out += this.encodeOne(binString.substring(i, i + 6));
-			}
+				// convert binary string to base64 string
+				for (let i = 0; i < binString.length; i += 6) {
+					out += this.encodeOne(binString.substring(i, i + 6));
+				}
 
-			// convert directions to binary
-			dirBits += 'lrcu'.indexOf(BOARD.rules[r].d)
-				.toString(2).padStart(2, '0');
+				// convert directions to binary
+				dirBits += 'lrcu'.indexOf(BOARD.rules[r].d)
+					.toString(2).padStart(2, '0');
+			}
 		}
 
 		out += '|';
@@ -265,60 +438,92 @@ let UI = {
 
 
 	/**
+	 * Checks the query string and tries to decode a set of ants from it. If it
+	 * can't, it generates one ant in the center of the board.
+	 * @return this, so it can be chained
+	 */
+	decodeAnts() {
+		const urlParams = new URLSearchParams(window.location.search);
+		let b64Ants = urlParams.get('a');
+		console.log(b64Ants);
+		if (b64Ants) {
+			try {
+				const newAnts = JSON.parse(atob(b64Ants));
+				for (const a in newAnts) {
+					UI.addAnt(newAnts[a].x, newAnts[a].y, newAnts[a].d);
+				}
+			} catch (err) {
+				console.error('something went wrong: ' + err);
+			}
+		} else {
+			console.log('here')
+			UI.addAnt(BOARD.width / 2, BOARD.height / 2, 'u');
+		}
+	},
+
+
+	/**
 	 * Checks the query string and tries to decode a set of rules from it. If it
 	 * can't, it generates two rules randomly.
 	 * @return this, so it can be chained.
 	 */
 	decodeRules() {
-		let binString = '';
-		let colors = [];
-		let dirs;
-		let tempCol = '#';
 		const urlParams = new URLSearchParams(window.location.search);
 		let b64Rules = urlParams.get('r');
-		b64Rules = b64Rules.split('|');
-		const c = b64Rules[0];
-		const d = b64Rules[1];
-
-		try {
-			// convert colors to binary string
-			for (let i = 0; i < c.length; ++i) {
-				binString += this.decodeOne(c[i]);
-			}
-
-			// convert binary string back to #123abc style colors
-			for (let i = 0; i < binString.length; i += 8) {
-				tempCol += parseInt(binString.substring(i, i + 8), 2)
-					.toString(16).padStart(2, '0');
-				if (tempCol.length >= 7) {
-					colors.push(tempCol);
-					tempCol = '#';
+		if (b64Rules) {
+			try {
+				let binString = '';
+				let colors = [];
+				let dirs;
+				let tempCol = '#';
+				b64Rules = b64Rules.split('|');
+				const c = b64Rules[0];
+				const d = b64Rules[1];
+				// convert colors to binary string
+				for (let i = 0; i < c.length; ++i) {
+					binString += this.decodeOne(c[i]);
 				}
-			}
 
-			// convert directions to binary string
-			binString = '';
-			for (let i = 0; i < d.length; ++i) {
-				binString += this.decodeOne(d[i]);
-			}
+				// convert binary string back to #123abc style colors
+				for (let i = 0; i < binString.length; i += 8) {
+					tempCol += parseInt(binString.substring(i, i + 8), 2)
+						.toString(16).padStart(2, '0');
+					if (tempCol.length >= 7) {
+						colors.push(tempCol);
+						tempCol = '#';
+					}
+				}
 
-			// convert binary string to a 'l', 'r', 'c', or 'u'
-			dirs = new Array(colors.length);
-			for (let i = 0; i < colors.length * 2; i += 2) { // directions are 2-bit
-				dirs[Math.floor(i / 2)] = 
-					'lrcu'[parseInt(binString.substring(i, i + 2), 2)];
-			}
+				// convert directions to binary string
+				binString = '';
+				for (let i = 0; i < d.length; ++i) {
+					binString += this.decodeOne(d[i]);
+				}
 
-			// add the decoded rules
-			for (let i = 0; i < colors.length; ++i) {
-				this.addRule(colors[i], dirs[i]);
-			}
+				// convert binary string to a 'l', 'r', 'c', or 'u'
+				dirs = new Array(colors.length);
+				// remember that directions are 2 bits
+				for (let i = 0; i < colors.length * 2; i += 2) {
+					dirs[Math.floor(i / 2)] = 
+						'lrcu'[parseInt(binString.substring(i, i + 2), 2)];
+				}
 
-		} catch (err) {
-			// something went wrong, let's just make two random rules
-			console.error('something went wrong: ' + err);
-			this.addRule().addRule();
+				// add the decoded rules
+				for (let i = 0; i < colors.length; ++i) {
+					this.addRule(colors[i], dirs[i]);
+				}
+
+			} catch (err) {
+				// something went wrong, let's just make two random rules
+				console.error('something went wrong: ' + err);
+				this.addRule().addRule();
+			}
+		} else {
+			// no query string, make two starting rules
+			this.addRule('#ffffff', 'r').addRule('#000000', 'l');
 		}
+
+		this.updateURL();
 
 		return this;
 	}
@@ -332,6 +537,8 @@ let UI = {
 $(document).ready(() => {
 	$('#add-rule').click(() => { UI.addRule() });
 
+	$('#add-ant').click(() => { UI.addAnt() });
+
 	$('#copy-url').click(() => {
 		document.getElementById('url-text').select();
 		document.execCommand('copy');
@@ -339,6 +546,11 @@ $(document).ready(() => {
 
 	// parse rules from query string
 	UI.decodeRules();
+
+	// parse ants from query string
+	UI.decodeAnts();
+
+	//UI.addAnt().addAnt();
 });
 
 
