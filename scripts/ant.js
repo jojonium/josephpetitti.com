@@ -717,7 +717,7 @@ let UI = {
 				let colors = [];
 				let dirs;
 				let tempCol = '#';
-				if (b64Rules.contains('|')
+				if (b64Rules.includes('|'))
 					b64Rules = b64Rules.split('|');
 				else
 					b64Rules = b64Rules.split('-');
