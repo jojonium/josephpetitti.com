@@ -597,7 +597,7 @@ let UI = {
 		}
 		
 
-		out += '|';
+		out += '-';
 
 		// pad out direction bits and convert to base64
 		while (dirBits.length % 6 != 0) dirBits += '0';
@@ -717,7 +717,10 @@ let UI = {
 				let colors = [];
 				let dirs;
 				let tempCol = '#';
-				b64Rules = b64Rules.split('|');
+				if (b64Rules.contains('|')
+					b64Rules = b64Rules.split('|');
+				else
+					b64Rules = b64Rules.split('-');
 				const c = b64Rules[0];
 				const d = b64Rules[1];
 				// convert colors to binary string
