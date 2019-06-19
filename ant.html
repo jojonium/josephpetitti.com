@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="styles/dark.css?v=1.0.1?v=1.0" type="text/css">
 
     <link rel="stylesheet" href="styles/ant.css" type="text/css">
+    <script src="scripts/jquery-3.3.1.min.js"></script>
   </head>
   <body>
 
@@ -72,55 +73,68 @@
 
       <h1 class="title">LANGTON'S ANT</h1>
 
-      <form id="rule-form" style="float: right; width: 140px;">
+      <div id="main-inputs">
         <div>
-          <h2 class="color-rules">Rules</h2>
-          <div class="rule-flex" id="color-rules">
-            <div class="swatch-wrapper" id="color-wrapper-1" style="background-color: #ffffff"><input class="swatch" id="color-1" value="#ffffff" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-1" value="R">
-            
-            <div class="swatch-wrapper" id="color-wrapper-2" style="background-color: #000000"><input class="swatch" id="color-2" value="#000000" type="color" onchange="swatchChange(this.id)"></input></div><input type="text" id="rule-2" value="L">
-          </div>
+          <label for="height">Height</label>
+          <input type="number" id="height" value="100">
         </div>
-        <button id="add-rule" type="button" style="display: block;">Add Rule</button>
-      </form>
-      
-      <form id="inputs">
-        Grid Size: <input type="text" id="grid-size" name="grid-size" value="100">
-        Pixel Size: <input type="text" id="pixel-size" name="pixel-size" value="4">
-        Interval: <input type="text" id="interval" name="interval" value="4">
-      </form>
 
-      <form id="input-ants">
-        <div class="an-ant" id="original-ant">
-          <h2>Ant 1</h2>
-          <div class="an-ant-flex">
-            <span>Start X Position: </span><input type="text" id="start-x-1" value="50">
-            <span>Start Y Position: </span><input type="text" id="start-y-1" value="50">
-            <span>Direction (0-3): </span><input type="text" id="direction-1" value="0">
+        <div>
+          <label for="width">Width</label>
+          <input type="number" id="width" value="100">
+        </div>
+
+        <div>
+          <label for="square-size">Square size</label>
+          <input type="number" id="square-size" value="4">
+        </div>
+
+        <div>
+          <label for="wrap">Wrap</label>
+          <input type="checkbox" id="wrap">
+        </div>
+
+        <div id="button-holder">
+          <button id="start">Start</button>
+          <button id="pause" style="display: none;">Pause</button>
+          <button id="resume" style="display: none;">Resume</button>
+          <button id="reset">Reset</button>
+        </div>
+      </div>
+
+      <div id="canvas-holder" width="100%">
+      </div>
+
+      <p id="iteration"></p>
+
+      <div id="input-container">
+        <div id="rule-box" class="box">
+          <h2>Rules</h2>
+          <div id="rules">
+          </div>
+          <button id="add-rule">Add Rule</button>
+        </div>
+
+        <div id="ant-box">
+          <div id="ants-inner"></div>
+          <div id="ant-header">
+            <button id="add-ant">Add Ant</button>
           </div>
         </div>
-      </form>
-      
-      <button id="add-ant" type="button">Add Ant</button>
-      
-      <form id="buttons">
-        <button id="go" type="button" style="width: 80px; background-color: #f1a208">Go!</button>
-        <button id="pause" type="button">Pause</button>
-        <button id="clear" type="button">Clear</button>
-        <button id="bonus" type="button">I'm feeling lucky</button>
-        <span id="wrap-button", class="button-like">
-          <input id="wrap" type="checkbox" value="wrap" style="width: 20px">
-            <span style="cursor: default">Wrap Around</span>
-          </input>
-        </span>
-      </form>
-      
-      <p>Iteration: <span id="counter"></span></p>
-      
-      <div id="canvas-holder" width="100%"></div>
-      
-      <h2>How does it work?</h2>
-      
+      </div>
+
+      <div class="box">
+        <p style="margin-block-start: .5em; margin-block-end: .5em;">
+          Copy this magic link to share this set of rules with a friend
+        </p>
+        <div id="url-box">
+          <button id="copy-url">Copy</button>
+          <textarea id="url-text" rows="4" cols="90" readonly></textarea>
+        </div>
+      </div>
+
+      <h2 id="about">About</h2>
+
       <p>
         This page is a customizable implementation of 
         <a href="https://en.wikipedia.org/wiki/Langton's_ant">Langton's Ant</a>,
@@ -131,7 +145,7 @@
         its most basic form the simulation creates a single ant, which follows
         these rules:
       </p>
-         
+
       <ul>
         <li>
           At a white square, turn 90° right, change the color of the square to
@@ -142,7 +156,7 @@
           white, then move forward one square
         </li>
       </ul>
-      
+
       <figure class="float right">
         <img src="images/basic-ant.png" alt="Image of a single ant after 11,669 iterations"></img>
         <figcaption>
@@ -150,9 +164,7 @@
           "highway" off the board
         </figcaption>
       </figure>
-      
-      <p>You can try this basic configuration now by pressing "Go!"</p>
-      
+
       <p>
         At first, the ant's movement appears to be essentially random, retracing
         its steps many times and turning in unpredictable ways. However, after
@@ -173,7 +185,7 @@
         show how multiple ants interact with each other and give rise to
         different ordered patterns.
       </p>
-      
+
       <figure class="float left">
         <img src="images/advanced-ant.png" alt="Image of a 4 ants with advanced rules after 3,973 iterations"></img>
         <figcaption>
@@ -203,84 +215,25 @@
         different combinations of rules and ants. The next section explains how
         to use the provided options to do just that.
       </p>
-      
-      <h2>How to use this page</h2>
-      
-      <p>
-        The first three options (Grid Size, Pixel Size, and Interval) are global
-        variables that affect how the simulation is displayed. Grid size is the
-        size of the length and width of the simulation board (it's square, so
-        one input sets both).  Pixel size is the size of the simulation squares
-        in pixels. The Interval is the amount of time between each iteration, in
-        milliseconds. Any invalid inputs in these fields will be replaced by the
-        default values.
-      </p>
-      
-      <p>
-        To add more ants, click the "Add Ant" button. Each ant has three
-        attributes you can set: its starting X position, measued in number of
-        squares to the right of the left side of the board; starting Y position,
-        measured in number of squares below the top of the board, and starting
-        direction. Direction is a number from 0 to 3, representing which the ant
-        is facing when the simulation begins:
-      </p>
 
-      <ul>
-        <li>0: facing right</li>
-        <li>1: facing up</li>
-        <li>2: facing left</li>
-        <li>3: facing right</li>
-      </ul>
+      <h2 id="limitations">Limitations</h2>
 
       <p>
-        Any invalid input in these fields will be replaced by a random value
-        within the confines of the simulation board.
+        You can't remove rules while the simulation is running. This is
+        impossible because what should happen to an ant sitting on a square that
+        is the color of a removed rule? You can change the color of rules while
+        it's running, but this doesn't retroactively replace the old color.
+        Instead, squares with the old color are just treated as if they were the
+        new color.
       </p>
 
-      <p>
-        The box on the right allows you to define any number of custom rules.
-        Each entry in the rules box has a color and a letter, representing what
-        an ant does on a square of that color. There are four valid rule
-        letters:
-      </p>
-
-      <ul>
-        <li>R: turn 90° <b>R</b>ight</li>
-        <li>L: turn 90° <b>L</b>eft</li>
-        <li>C: don't turn (<b>C</b>ontinue straight)</li>
-        <li>U: turn 180° (make a <b>U</b>-turn)</li>
-      </ul>
+      <h2 id="interesting-patterns">Interesting Patterns</h2>
 
       <p>
-        You can also customize the colors by clicking on the colored box to the
-        left of the rule letter.
-      </p>
-      
-      <p>
-        At the start of each iteration the ant will follow the rule for the
-        color of the square it's on, the cycle the color of the square it's on
-        to the next color in the list of rules, then move one unit in whichever
-        direction it's facing. Any invalid input will be replaced by a random
-        valid rule.
-      </p>
-      
-      <p>
-        If "Wrap Around" is checked, when ants reach one of the borders of the
-        board they wrap around to the other side. If this option is turned off
-        ants simply stop moving once they reach the edge of the board. The
-        "Clear" button clears all input options and reloads the page. The
-        "Pause" button can be used to pause the simulation and observe a single
-        iteration.
-      </p>
-      
-      <p>
-        Finally, the "Go!" button starts the simulation. Please note that none
-        of the options can be changed after the simulation has started.
-      </p>
-      
-      <script src="scripts/ant.js"></script>
+        <a href="https://petitti.org/ant.html?r=////AAAA|Q&a=ByDkByCuBWCtBWDn&m=BkBkAE">Here</a>
+        is an interesting configuration I found that repeats infinitely while
+        occupying a finite amount of space.
     </main>
-
 
   <!-- Footer -->
     <footer id="footer">
@@ -328,4 +281,5 @@
       </section>
     </footer>
   </body>
+  <script src="scripts/ant.js"></script>
 </html>

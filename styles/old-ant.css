@@ -1,0 +1,93 @@
+/* (c) 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
+
+button:disabled, .disabled {
+    background-color: #d3d3d3 !important;
+    color: #eeeeee !important;
+    border-color: #bbbbbb !important;
+}
+
+.an-ant {
+    display: inline-block;
+    width: 280px;
+    margin: 4px;
+    padding: 5px;
+    background-color: #005377;
+    border: 2px solid #1f0053;
+    border-radius: 6px;
+}
+
+.an-ant-flex {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#canvas-holder {
+    overflow: auto;
+    max-height: 975px;
+}
+
+#globalCanvas {	border: 1px solid black;	}
+
+form#rule-form {
+    background-color: #005377;
+    float: right;
+    width: 140px;
+    border: 2px solid #1f0053;
+    border-radius: 6px;
+}
+.swatch {
+    display: inline-block;
+    border: none;
+    opacity: 0;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    width: 25px;
+    height: 100%;
+}
+
+input#wrap {
+  margin: 0;
+}
+
+
+.swatch-wrapper {
+    border: 1px solid black;
+    flex-shrink: 0;
+    margin: 2px;
+    width: 25px;
+    box-sizing: border-box;
+}
+
+.rule-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#color-rules input[type=text] {
+    flex-grow: 1;
+    margin: 2px;
+}
+
+h2.color-rules, .an-ant h2 {
+    text-align: center;
+    margin: 0;
+    padding: 14px 0;
+}
+
+body button {
+    width: auto;
+    /*margin: 2px 0;*/
+}
+
+form { margin: 10px 0; }
+
+input { width: 100px; }
+
+#add-rule { margin: 6px auto; }
+
+figure.float {
+    width: 30%;
+}
