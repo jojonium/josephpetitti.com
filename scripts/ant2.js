@@ -108,7 +108,9 @@ let BOARD = {
 
 		// now that all ants have moved, iterate through them again, update the
 		// colors of the squares they left, and remove any that are out of
-		// bounds
+		// bounds. This prevents an issue where multiple ants collide, causing
+		// all ants after the first to follow a different rule than the one they
+		// would have otherwise.
 		for (let a in this.ants) {
 			if (typeof this.ants[a] !== 'undefined') {
 				t = this.ants[a];
@@ -766,8 +768,8 @@ let UI = {
 
 		// can't change ant initial positions and starting directions, height,
 		// width, or square size after it starts
-		$('.an-ant input, .an-ant select').prop('disabled', true);
-		$('#height, #width, #square-size').prop('disabled', true);
+		$('.an-ant input, .an-ant select').prop('disabled', 'disabled');
+		$('#height, #width, #square-size').prop('disabled', 'disabled');
 
 		BOARD.start();
 		return this;
@@ -830,31 +832,6 @@ let UI = {
 			return;
 		}
 		this.ctx = canv.getContext('2d');
-
-		let temp;
-		for (let r in BOARD.rules) {
-			if (typeof BOARD.rules[r] !== 'undefined') {
-				// create an image data object representing a square of the
-				// correct size and color for each existing rule
-				temp = this.ctx.createImageData(BOARD.squareSize, 
-					BOARD.squareSize);
-				for (let i = 0; i < temp.data.length; i += 4) {
-					// This wizardry involves extracting two digits of the hex
-					// color at a time and converting them hex number strings,
-					// then converting them to decimal. The point is that every
-					// set of four values in temp.data is a single rgba color.
-					// There's probably a better way to do this...
-					temp.data[i] = 
-						+('0x' + BOARD.rules[r].c[1] + BOARD.rules[r].c[2]);
-					temp.data[i + 1] = 
-						+('0x' + BOARD.rules[r].c[3] + BOARD.rules[r].c[4]);
-					temp.data[i + 2] = 
-						+('0x' + BOARD.rules[r].c[5] + BOARD.rules[r].c[6]);
-					temp.data[i + 3] = 255;
-				}
-				BOARD.rules[r].p = temp;
-			}
-		}
 
 		// fill canvas with first color
 		let fc = Object.keys(BOARD.rules)[0]; // first valid color
