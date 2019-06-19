@@ -38,7 +38,7 @@ let BOARD = {
 		for (let i = 0; i < this.height; ++i) {
 			this.grid[i] = new Array(this.width);
 			for (let j = 0; j < this.width; ++j) {
-				this.grid[i][j] = Object.keys(BOARD.rules)[0];
+				this.grid[i][j] = Object.keys(BOARD.rules)[0]; // first rule
 			}
 		}
 
@@ -69,7 +69,6 @@ let BOARD = {
 				t.j = t.y;
 
 				let squareColor = this.grid[t.x][t.y];
-
 
 				// turn to follow the rule at this location
 				if (this.rules[squareColor].d === 'r') {
@@ -105,6 +104,7 @@ let BOARD = {
 		}
 
 		let antCount = 0;
+		t = undefined;
 
 		// now that all ants have moved, iterate through them again, update the
 		// colors of the squares they left, and remove any that are out of
@@ -113,21 +113,25 @@ let BOARD = {
 			if (typeof this.ants[a] !== 'undefined') {
 				t = this.ants[a];
 				let oldCol = this.grid[t.i][t.j];
-				let validRules =  // strip out undefined keys
-					Object.keys(this.rules).filter((el) => el != undefined);
+				let validRules = Object.keys(this.rules).filter((el) =>
+					typeof el !== 'undefined'); // strip out undefined rules
+				let oldNum = validRules.indexOf(oldCol); // index in validRules
+				let newNum = (oldNum + 1) % validRules.length // ^^ ditto
+				let newCol = validRules[newNum];
 
-				// increment grid[t.i][t.j] to the next valid rule
-				let newCol = (oldCol + 1) % validRules.length;
-				this.grid[t.i][t.j] = validRules[newCol];
-
-				// draw the new color on that spot
+				// update old position
+				this.grid[t.i][t.j] = newCol;
+				// color old position
 				UI.drawSquare(t.i, t.j);
 
 				// count sane ants and kill insane ones
-				if (t.s)
+				if (t.s) {
 					antCount++;
-				else
+				} else {
+					// show in the UI that the ant is dead
+					$('#ant-' + a).find('h3').html('Ant ' + a + ' (Dead)');
 					delete this.ants[a];
+				}
 			}
 		}
 
@@ -136,7 +140,9 @@ let BOARD = {
 
 		// stop if there are no more ants remaining
 		if (antCount < 1) {
-			UI.pause();
+			UI.paused = true;
+			$('#pause').fadeOut(200);
+			
 		} else if (!this.paused) {
 			// 1ms interval gives canvas time to draw
 			setTimeout(() => this.simulate(), 1); 
@@ -163,7 +169,6 @@ let BOARD = {
  */
 let UI = {
 	ctx: undefined,
-	pixels: {},
 	started: false,
 
 	/**
@@ -222,7 +227,7 @@ let UI = {
 
 	/**
 	 * Adds a randomized rule, both to the UI and to the rule list. Updates the
-	 * URL afterward, and the array of pixels. 
+	 * URL afterward, and the pixels. 
 	 * @param color: the color for this rule in the form #123abc. Generates a
 	 * random color if omitted or illegal
 	 * @param rule: one of ['l', 'r', 'c', 'u']. Generates a random rule if
@@ -404,11 +409,9 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	updateAnt(id) {
-		UI.pause();
-
-		if (!BOARD.ants[id]) {
-			throw 'updateAnt: Illegal ID: ' + id;
-		}
+		// create this ant if it doesn't already exist
+		if (!BOARD.ants[id])
+			BOARD.ants[id] = {x: undefined, y: undefined, d: undefined};
 		BOARD.ants[id].x = parseInt($(`#ant-${id}-x`).val());
 		BOARD.ants[id].y = parseInt($(`#ant-${id}-y`).val());
 		BOARD.ants[id].d = $(`#ant-${id}-dir`).val();
@@ -557,6 +560,7 @@ let UI = {
 					.toString(2).padStart(2, '0');
 			}
 		}
+		
 
 		out += '|';
 
@@ -597,8 +601,9 @@ let UI = {
 	 */
 	encodeOne(num) {
 		num = parseInt(num, 2);
-		return 
-		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'[num];
+		const s = 
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+		return s[num];
 	},
 
 
@@ -650,7 +655,8 @@ let UI = {
 	 */
 	decodeRules() {
 		const urlParams = new URLSearchParams(window.location.search);
-		let b64Rules = urlParams.get('r');
+		// urlParams.get() replaces '+' with ' ', so we have to replace it back
+		let b64Rules = urlParams.get('r').replace(' ', '+');
 		if (b64Rules) {
 			try {
 				let binString = '';
@@ -743,7 +749,7 @@ let UI = {
 
 	/**
 	 * Removes start button and replaces it with pause and reset, removes rule X
-	 * buttons, then calls BOARD.start()
+	 * buttons, disables Ant starting inputs, then calls BOARD.start()
 	 * @return this, so it can be chained
 	 */
 	start() {
@@ -756,7 +762,12 @@ let UI = {
 
 		// set rule X's to visibility: hidden so they're invisible but still
 		// take up space
-		$('#rule-box i.fa-times').off('click').css('visibility', 'hidden');
+		$('#rule-box i.fa-times').css('visibility', 'hidden');
+
+		// can't change ant initial positions and starting directions, height,
+		// width, or square size after it starts
+		$('.an-ant input, .an-ant select').prop('disabled', true);
+		$('#height, #width, #square-size').prop('disabled', true);
 
 		BOARD.start();
 		return this;
@@ -821,7 +832,6 @@ let UI = {
 		this.ctx = canv.getContext('2d');
 
 		let temp;
-		this.pixels = {};
 		for (let r in BOARD.rules) {
 			if (typeof BOARD.rules[r] !== 'undefined') {
 				// create an image data object representing a square of the
@@ -842,7 +852,7 @@ let UI = {
 						+('0x' + BOARD.rules[r].c[5] + BOARD.rules[r].c[6]);
 					temp.data[i + 3] = 255;
 				}
-				this.pixels[r] = temp;
+				BOARD.rules[r].p = temp;
 			}
 		}
 
@@ -862,7 +872,12 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	updateIteration() {
-		$('#iteration').html('Iteration ' + BOARD.iteration);
+		if (BOARD.iteration > 0) {
+			$('#iteration').html('Iteration ' + BOARD.iteration);
+		} else {
+			$('#iteration').html();
+		}
+
 	},
 
 
@@ -874,9 +889,9 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	drawSquare(x, y) {
-		this.ctx.putImageData(this.pixels[BOARD.grid[x][y]],
-			x * BOARD.squareSize,
-			y * BOARD.squareSize);
+		this.ctx.fillStyle = BOARD.rules[BOARD.grid[x][y]].c;
+		this.ctx.fillRect(x * BOARD.squareSize, y * BOARD.squareSize, 
+			BOARD.squareSize, BOARD.squareSize);
 		return this;
 	},
 
@@ -886,9 +901,10 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	pause() {
-		BOARD.paused = true;
-
+		if (!BOARD.paused) {
+			BOARD.paused = true;
 			$('#pause').fadeOut(200, () => { $('#resume').fadeIn(200) });
+		}
 	},
 
 	
@@ -903,30 +919,53 @@ let UI = {
 
 
 	/**
-	 * Clears BOARD.ants, BOARD.rules, and removes the canvas. Hides all buttons
-	 * but 'Start' and 'Reset'. Then reads in rules from the query string again
+	 * Clears the canvas and grid, sets iteration to 0, re-enables inputs that
+	 * were disabled by UI.start(), and resets ants to their starting positions
 	 * @return this, so it can be chained
 	 */
 	reset() {
-		BOARD.rules = {};
-		BOARD.nextRuleID = 0;
-		BOARD.ants = {};
-		BOARD.nextAntID = 0;
 		BOARD.paused = true;
-		BOARD.iteration = 0;
-		BOARD.grid = undefined;
-		this.cts = undefined;
-		this.pixels = {};
-		this.started = false;
-		$('#canvas').remove();
-		$('#pause, #resume').fadeOut(200, () => {
-			$('#start, #reset').fadeIn(200);
-		});
+		// 2 ms timeout allows pending step to finish if still running
+		setTimeout(function() {
+			UI.started = false;
 
-		$('.an-ant, .a-rule').slideUp(400, () => { 
-			$('.an-ant, .a-rule').remove();
-			UI.decodeMain().decodeRules().decodeAnts().updateURL();
-		});
+			// remove canvas
+			$('#canvas').remove();
+
+			// make new canvas
+			UI.initializeCanvas();
+
+			// reset ants to starting positions
+			$('.an-ant').each((i, el) => {
+				const id = $(el).attr('id').substring(4);
+				UI.updateAnt(id);
+				// remove `(Dead)' from UI
+				$(el).find('h3').html('Ant ' + id);
+			});
+
+			// reset iteration count
+			BOARD.iteration = 0;
+			UI.updateIteration();
+
+			// make rule X's visible again
+			$('#rule-box i.fa-times').css('visibility', 'visible');
+
+			// re-enable main inputs and ant inputs
+			$('.an-ant input, .an-ant select').prop('disabled', false);
+			$('#height, #width, #square-size').prop('disabled', false);
+
+			// show correct buttons
+			if ($('#pause').is(':visible')) {
+				$('#pause').fadeOut(200, () => {
+					$('#start').fadeIn(200)
+				});
+			} else {
+				$('#resume').fadeOut(200, () => {
+					$('#start').fadeIn(200)
+				});
+			}
+			
+		}, 2);
 
 		return this;
 	}
@@ -952,7 +991,6 @@ $(document).ready(() => {
 
 	// main input listeners
 	$('#width').change(() => {
-		UI.pause();
 		let newW = Math.floor($('#width').val());
 		if (newW < 1 || newW > 10000) newW = 100;
 		$('#width').val(newW);
@@ -961,7 +999,6 @@ $(document).ready(() => {
 		UI.initializeCanvas().updateURL();
 	});
 	$('#height').change(() => {
-		UI.pause();
 		let newH = Math.floor($('#height').val());
 		if (newH < 1 || newH > 10000) newH = 100;
 		$('#height').val(newH);
@@ -970,7 +1007,6 @@ $(document).ready(() => {
 		UI.initializeCanvas().updateURL();
 	});
 	$('#square-size').change(() => {
-		UI.pause();
 		let newS = Math.floor($('#square-size').val());
 		if (newS < 1 || newS > 1000) newS = 4;
 		$('#square-size').val(newS);
