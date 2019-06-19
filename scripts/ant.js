@@ -432,11 +432,6 @@ let UI = {
 	 * @return this, so it can be chained
 	 */
 	deleteAnt(id) {
-		// validate input
-		if (!BOARD.ants[id]) {
-			throw 'deleteAnt: illegal ID: ' + id;
-		}
-		
 		// remove from BOARD
 		delete BOARD.ants[id];
 
