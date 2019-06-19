@@ -133,9 +133,89 @@
         </div>
       </div>
 
+      <h2 id="about">About</h2>
+
       <p>
-        <a href="file:///C:/Users/JosephPetitti/Documents/josephpetitti.com/ant2.html?r=////AAAA|Q&a=eyIwIjp7IngiOiI1NyIsInkiOiI1NyIsImQiOiJ1In0sIjEiOnsieCI6IjU3IiwieSI6IjQzIiwiZCI6ImwifSwiMiI6eyJ4IjoiNDMiLCJ5IjoiNDMiLCJkIjoiZCJ9LCIzIjp7IngiOiI0MyIsInkiOiI1NyIsImQiOiJyIn19&w=100&h=100&s=4">I'm feeling lucky</a>
+        This page is a customizable implementation of 
+        <a href="https://en.wikipedia.org/wiki/Langton's_ant">Langton's Ant</a>,
+        a cellular automaton invented by Chris Langton in 1986. Langton's Ant is
+        interesting because its very simple set of rules can lead to very
+        complex emergent behavior. The simulation deals with computerized "ants"
+        whose movements are controlled by a set of rules decided by the user. In
+        its most basic form the simulation creates a single ant, which follows
+        these rules:
       </p>
+
+      <ul>
+        <li>
+          At a white square, turn 90° right, change the color of the square to
+          black, then move forward one square
+        </li>
+        <li>
+          At a black square, turn 90° left, change the color of the square to
+          white, then move forward one square
+        </li>
+      </ul>
+
+      <figure class="float right">
+        <img src="images/basic-ant.png" alt="Image of a single ant after 11,669 iterations"></img>
+        <figcaption>
+          The ant will always eventually get caught in a loop, making a
+          "highway" off the board
+        </figcaption>
+      </figure>
+
+      <p>
+        At first, the ant's movement appears to be essentially random, retracing
+        its steps many times and turning in unpredictable ways. However, after
+        about 10,000 iterations the ant begins moving in a pattern. It
+        constructs a repeating "highway" in one direction, eventually reaching
+        the edge of the grid. This is the really fascinating aspect of Langton's
+        Ant: order arising out of chaos.
+      </p>
+      
+      <h2>Extensions</h2>
+      
+      <p>
+        The basic implementation of Langton's Ant is cool, but it does the same
+        thing every time, which gets boring. Several ways to extend the
+        functionality of the ant have been suggested over the years. For
+        example, multiple ants can be simulated by pressing the "Add Ant"
+        button, each with a unique starting position and direction. This can
+        show how multiple ants interact with each other and give rise to
+        different ordered patterns.
+      </p>
+
+      <figure class="float left">
+        <img src="images/advanced-ant.png" alt="Image of a 4 ants with advanced rules after 3,973 iterations"></img>
+        <figcaption>
+          This image is the result of four ants following 20 different rules for
+          3,973 iterations
+        </figcaption>
+      </figure>
+      
+      <p>
+        Another way to extend Langton's Ant is to add more colors, and more
+        rules. By clicking the "Add Rule" button you can define any number of
+        rules for the ants to obey. In addition to the basic "turn right" (R)
+        and "turn left" (L), ants can also continue straight ahead (C) or turn
+        180° around (U).
+      </p>
+      
+      <p>
+        The combination of these extensions can lead to some very interesting
+        and unpredictable outcomes. Sometimes ordered patterns arise out of
+        chaos, and sometimes symmetry and repetition degenerates into
+        randomness. Unpredictable patterns often emerge from these simple
+        rules.
+      </p>
+      
+      <p>
+        The point of this page is to make it easy to experiment and play with
+        different combinations of rules and ants. The next section explains how
+        to use the provided options to do just that.
+      </p>
+
       <h2 id="limitations">Limitations</h2>
 
       <p>
@@ -146,6 +226,13 @@
         Instead, squares with the old color are just treated as if they were the
         new color.
       </p>
+
+      <h2 id="interesting-patterns">Interesting Patterns</h2>
+
+      <p>
+        <a href="https://petitti.org/ant.html?r=////AAAA|Q&a=ByDkByCuBWCtBWDn&m=BkBkAE">Here</a>
+        is an interesting configuration I found that repeats infinitely while
+        occupying a finite amount of space.
     </main>
 
   <!-- Footer -->

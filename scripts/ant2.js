@@ -34,10 +34,10 @@ let BOARD = {
 		this.iteration = 0;
 
 		// initialize grid
-		this.grid = new Array(this.height);
-		for (let i = 0; i < this.height; ++i) {
-			this.grid[i] = new Array(this.width);
-			for (let j = 0; j < this.width; ++j) {
+		this.grid = new Array(this.width);
+		for (let i = 0; i < this.width; ++i) {
+			this.grid[i] = new Array(this.height);
+			for (let j = 0; j < this.height; ++j) {
 				this.grid[i][j] = Object.keys(BOARD.rules)[0]; // first rule
 			}
 		}
@@ -358,15 +358,15 @@ let UI = {
 						id="delete-ant-${id}">
 				</i>
 				<h3>Ant ${id}</h3>
-				<label for="ant-${id}-x">Start x position</label>
+				<label for="ant-${id}-x">Initial x position</label>
 				<input type="number" id="ant-${id}-x" class='x-input' 
 						value="${startX}">
 				<br>
-				<label for="ant-${id}-y">Start y position</label>
+				<label for="ant-${id}-y">Initial y position</label>
 				<input type="number" id="ant-${id}-y" class='y-input'
 						value="${startY}">
 				<br>
-				<label for="ant-${id}-dir">Starting dir.</label>
+				<label for="ant-${id}-dir">Initial direction</label>
 				<select id="ant-${id}-dir" class='d-input'>
 					<option value="u" ${(startDir === 'u') ? 'selected' : ''}>
 						Up
@@ -462,6 +462,12 @@ let UI = {
 		if (!BOARD.rules[id]) {
 			throw 'deleteRule: illegal ID: ' + id;
 		}
+
+		// make sure the user isn't deleting the last rule
+		if (Object.keys(BOARD.rules).length <= 1) {
+			return;
+		}
+
 		delete BOARD.rules[id];
 
 		// remove deleted DOM elements
@@ -489,15 +495,26 @@ let UI = {
 	/**
 	 * Updates the URL text area with a URL that will recreate the current set
 	 * up rules.
+	 * Main inputs are encoded as 12-bit unsigned ints converted to base64
 	 * @return the new URL
 	 */
 	updateURL() {
+		// convert main inputs to binary
+		let encodedW = (+BOARD.width).toString(2).padStart(12, '0');
+		let encodedH = (+BOARD.height).toString(2).padStart(12, '0');
+		let encodedS = (+BOARD.squareSize).toString(2).padStart(12, '0');
+		// convert to b64
+		let encodedMain = this.encodeOne(encodedH.substring(0, 6)) 
+			+ this.encodeOne(encodedH.substring(6, 12))
+			+ this.encodeOne(encodedW.substring(0, 6)) 
+			+ this.encodeOne(encodedW.substring(6, 12))
+			+ this.encodeOne(encodedS.substring(0, 6)) 
+			+ this.encodeOne(encodedS.substring(6, 12));
+
 		const newURL = window.location.href.split('?')[0] 
 			+ '?r=' + UI.encodeRules()
 			+ '&a=' + UI.encodeAnts()
-			+ '&w=' + BOARD.width
-			+ '&h=' + BOARD.height
-			+ '&s=' + BOARD.squareSize
+			+ '&m=' + encodedMain
 			+ ((BOARD.wrap) ? '&p' : '');
 		$('#url-text').html(newURL);
 
@@ -506,22 +523,43 @@ let UI = {
 
 
 	/**
-	 * Encodes the ants visible in the UI in base64. There's nothing fancy here,
-	 * and it could probably be more efficient. That's something to consider in
-	 * the future.
-	 * @return the stringified BOARD.ants object encoded in base64.
+	 * Encodes the ant starting positions visible in the UI in base64. 
+	 * Each ant is represented as a 24-bit binary string. The first 11 bits are
+	 * an unsigned integer representing the initial X position of the ant
+	 * (giving a maximum of 2047). Likewise, the next 11 bits are the initial Y
+	 * position of the ant. The final two bits represent which direction the ant
+	 * is facing: 00 for up, 01 for down, 10 for left, and 11 for right.
+	 * @return the base64-encoded string representing the ants in the UI
 	 */
 	encodeAnts() {
-		let uiAnts = {};
+		// get ant info from UI
+		let uiAnts = [];
 		$('.an-ant').each((i, el) => {
-			uiAnts[i] = {
+			uiAnts.push({
 				x: $(el).find('.x-input').val(),
 				y: $(el).find('.y-input').val(),
 				d: $(el).find('.d-input').val()
-			};
+			});
 		});
 
-		return btoa(JSON.stringify(uiAnts));
+		// convert ant objects to binary string. 
+		let bin = '';
+		for (let i = 0; i < uiAnts.length; ++i) {
+			// x coord as 11-bit unsigned int
+			bin += (+uiAnts[i].x).toString(2).padStart(11, '0');
+			// y coord as 11-bit unsigned int
+			bin += (+uiAnts[i].y).toString(2).padStart(11, '0');
+			// 2-bit direction
+			bin += 'udlr'.indexOf(uiAnts[i].d).toString(2).padStart(2, '0');
+		}
+
+		// convert binary string to base64
+		let out = '';
+		for (let i = 0; i < bin.length; i += 6) {
+			out += this.encodeOne(bin.substring(i, i + 6));
+		}
+
+		return out;
 	},
 
 
@@ -590,7 +628,7 @@ let UI = {
 
 		let out = '';
 		for (let i = 0; i < binary.length; i += 6) {
-			out += encodeOne(parseInt(bitString.substring(i, i + 6), 2));
+			out += this.encodeOne(parseInt(bitString.substring(i, i + 6), 2));
 		}
 		return out;
 	},
@@ -633,16 +671,34 @@ let UI = {
 		const urlParams = new URLSearchParams(window.location.search);
 		let b64Ants = urlParams.get('a');
 		if (b64Ants) {
+			// urlParams.get() replaces '+' with ' ', so we replace it back
+			b64Ants = b64Ants.replace(/ /g, '+');
 			try {
-				const newAnts = JSON.parse(atob(b64Ants));
-				for (const a in newAnts) {
-					UI.addAnt(+newAnts[a].x, +newAnts[a].y, newAnts[a].d);
+				// convert b64Ants to binary
+				let binString = '';
+				for (let i = 0; i < b64Ants.length; ++i) {
+					binString += this.decodeOne(b64Ants[i]);
+				}
+
+				// decode binary string, 24 bits at a time
+				for (let i = 0; i < binString.length; i += 24) {
+					// first 11 bits: X coord
+					let newX = parseInt(binString.substring(i, i + 11), 2);
+					// second 11 bits: Y coord
+					let newY = parseInt(binString.substring(i + 11, i + 22), 2);
+					// last 2 bits: direction
+					let newD = 'udlr'[parseInt(
+						binString.substring(i + 22, i + 24), 2)];
+					
+					// add to UI
+					UI.addAnt(newX, newY, newD);
 				}
 			} catch (err) {
 				console.error('something went wrong: ' + err);
+				console.log('Failed to read ants from query string');
 			}
 		} else {
-			console.error('failed to read ant');
+			// no ant query string, generate a basic ant instead
 			UI.addAnt(BOARD.width / 2, BOARD.height / 2, 'u');
 		}
 
@@ -657,9 +713,10 @@ let UI = {
 	 */
 	decodeRules() {
 		const urlParams = new URLSearchParams(window.location.search);
-		// urlParams.get() replaces '+' with ' ', so we have to replace it back
-		let b64Rules = urlParams.get('r').replace(' ', '+');
+		let b64Rules = urlParams.get('r');
 		if (b64Rules) {
+			// urlParams.get() replaces '+' with ' ', so we replace it back
+			b64Rules = b64Rules.replace(/ /g, '+');
 			try {
 				let binString = '';
 				let colors = [];
@@ -730,21 +787,45 @@ let UI = {
 	 */
 	decodeMain() {
 		const urlParams = new URLSearchParams(window.location.search);
-		let tempH = urlParams.get('h');
-		let tempW = urlParams.get('w');
-		let tempS = urlParams.get('s');
+		let tempH, tempW, tempS;
+		let tempM = urlParams.get('m');
 		let tempWrap = urlParams.get('p');
-		BOARD.height = (tempH > 0) ? tempH : 100;
-		BOARD.width = (tempW > 0) ? tempW : 100;
-		BOARD.squareSize = (tempS > 0) ? tempS : 4;
-		BOARD.wrap = (tempWrap === ""); // `p' query param is present but empty
-		$('#height').val(BOARD.height);
-		$('#width').val(BOARD.width);
-		$('#square-size').val(BOARD.squareSize);
+
+		if (tempM) {
+			try {
+				// urlParams.get() replaces '+' with ' ', so we replace it back
+				tempM = tempM.replace(/ /g, '+');
+				// convert to decimal
+				tempH = parseInt(this.decodeOne(tempM[0]) 
+					+ this.decodeOne(tempM[1]), 2);
+				tempW = parseInt(this.decodeOne(tempM[2]) 
+					+ this.decodeOne(tempM[3]), 2);
+				tempS = parseInt(this.decodeOne(tempM[4]) 
+					+ this.decodeOne(tempM[5]), 2);
+			} catch (err) {
+				console.log('Failed to read main inputs from query string');
+				tempH = 100;
+				tempW = 100;
+				tempS = 4;
+				tempWrap = false;
+			}
+
+		} else {
+			// no query string
+			tempH = 100;
+			tempW = 100;
+			tempS = 4;
+			tempWrap = false;
+		}
+
+		// set values and fire the .change() listener, which changes the
+		// BOARD values
+		$('#height').val(tempH).change();
+		$('#width').val(tempW).change();
+		$('#square-size').val(tempS).change();
 		$('#wrap').prop('checked', BOARD.wrap);
 
 		this.initializeCanvas();
-
 		return this;
 	},
 
@@ -969,26 +1050,29 @@ $(document).ready(() => {
 	// main input listeners
 	$('#width').change(() => {
 		let newW = Math.floor($('#width').val());
-		if (newW < 1 || newW > 10000) newW = 100;
+		// enforce upper and lower bounds
+		if (newW < 1) newW = 1;
+		if (newW > 2047) newW = 2047;
 		$('#width').val(newW);
 		BOARD.width = $('#width').val();
-		UI.started = false;
 		UI.initializeCanvas().updateURL();
 	});
 	$('#height').change(() => {
 		let newH = Math.floor($('#height').val());
-		if (newH < 1 || newH > 10000) newH = 100;
+		// enforce upper and lower bounds
+		if (newH < 1) newH = 1;
+		if (newH > 2047) newH = 2047;
 		$('#height').val(newH);
 		BOARD.height = $('#height').val();
-		UI.started = false;
 		UI.initializeCanvas().updateURL();
 	});
 	$('#square-size').change(() => {
 		let newS = Math.floor($('#square-size').val());
-		if (newS < 1 || newS > 1000) newS = 4;
+		// enforce upper and lower bounds
+		if (newS < 1) newS = 1;
+		if (newS > 2047) newS = 2047;
 		$('#square-size').val(newS);
 		BOARD.squareSize = $('#square-size').val();
-		UI.started = false;
 		UI.initializeCanvas().updateURL();
 	});
 	$('#wrap').change(() => {
