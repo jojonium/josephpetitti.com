@@ -510,7 +510,7 @@ let UI = {
 			+ '?r=' + UI.encodeRules()
 			+ '&a=' + UI.encodeAnts()
 			+ '&m=' + encodedMain
-			+ ((BOARD.wrap) ? '&p' : '');
+			+ ((BOARD.wrap) ? '&p=' : '');
 		$('#url-text').html(newURL);
 
 		return newURL;
@@ -787,7 +787,8 @@ let UI = {
 		const urlParams = new URLSearchParams(window.location.search);
 		let tempH, tempW, tempS;
 		let tempM = urlParams.get('m');
-		let tempWrap = urlParams.get('p');
+		let tempWrap = (urlParams.get('p') === ''); // param exists
+		console.log(tempWrap);
 
 		if (tempM) {
 			try {
@@ -821,7 +822,7 @@ let UI = {
 		$('#height').val(tempH).change();
 		$('#width').val(tempW).change();
 		$('#square-size').val(tempS).change();
-		$('#wrap').prop('checked', BOARD.wrap);
+		$('#wrap').prop('checked', tempWrap).change();
 
 		this.initializeCanvas();
 		return this;
