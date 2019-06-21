@@ -132,6 +132,7 @@ div#url-box textarea {
 }
 
 div#input-container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
@@ -235,3 +236,61 @@ div#main-inputs div#button-holder button {
 #canvas {
   margin: auto;
 }
+
+@media screen and (max-width: 800px) {
+  div#input-container {
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  div.rule-radio-wrapper i, div.an-ant i {
+    opacity: 1;
+  }
+
+  div.a-rule, div.rule-radio-wrapper {
+    justify-content: space-around;
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  div.rule-radio-wrapper label, div.rule-radio-wrapper i {
+    margin: 0 2%;
+  }
+
+  div.a-rule {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  div#rule-box {
+    margin: 0;
+    flex: 1 1 10px;
+    min-width: 150px;
+  }
+
+  div#ant-box {
+    flex: 2 1 10px;
+  }
+
+  div.an-ant {
+    flex: 0 1 98%;
+    min-width: 210px;
+  }
+
+  div#main-inputs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  div#main-inputs div {
+    margin: .25em 1em;
+  }
+
+  div#main-inputs div#button-holder {
+    width: auto;
+  }
+  div#main-inputs div#button-holder button {
+    width: auto;
+  }
+} 
