@@ -13,19 +13,8 @@
   width: 100%;
 }
 
-@media screen and (max-width: 1000px) {
-  #top-lvl-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #buttons {
-    margin: 1em 0;
-  }
-}
-
 #output {
-	width: 300px;
+	width: 350px;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -43,6 +32,7 @@
 	height: 300px;
     box-sizing: border-box;
     background-color: #2b2b2b;
+    padding: 0 1em;
 }
 
 h2#computer-says {
@@ -51,8 +41,7 @@ h2#computer-says {
 
 #log p {
 	font-size: 1.125em;
-	margin: 10px 0;
-	padding-left: 20px;
+    margin: .5em 0;
 }
 
 #log p::before {
@@ -127,4 +116,20 @@ h2#computer-says {
 #sq_9 {
 	border-left: 2px solid #1f0053;
 	border-top: 2px solid #1f0053;
+}
+
+@media screen and (max-width: 1000px) {
+  #top-lvl-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #buttons {
+    margin: 1em 0;
+  }
+
+  #output, #log {
+    width: 100%;
+  }
+
 }
