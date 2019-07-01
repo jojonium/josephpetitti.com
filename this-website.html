@@ -80,7 +80,7 @@
       <div class="main-links-holder">
         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank">
           <button class="long">
-            <i class="fab fa-github"></i> Source Code
+            <i class="fab fa-github"></i> View Source
           </button>
         </a>
       </div>
@@ -93,15 +93,14 @@
       <h2 id="about">About</h2>
 
       <p>
-        This website is written almost entirely in HTML and CSS. The point of
-        this website is to help teach myself web design, and make a personal
+        This website is written almost entirely in plain HTML and CSS. The point
+        of this website is to help teach myself web design, and make a personal
         website that looks good enough to show off to employers and friends. The
-        design of the site has evolved over several months as I learned of new
-        ways to do things and thought of more elements that would look cool. I
-        also sometimes use the site to host pieces of projects for classes. To
-        see the history of changes I've made to the site, check out my
-        <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>
-        page.
+        design of the site has evolved over many months as I learned of new ways
+        to do things and thought of more elements that would look cool. I also
+        sometimes use the site to host pieces of projects for classes. To see
+        the history of changes I've made to the site, check out the
+        <a href="https://github.com/jojonium/josephpetitti.com">git repository</a>.
       </p>
 
       <p>
@@ -117,7 +116,7 @@
 
       <p>
         Unfortunately, one of the issues I've run into is that I don't know what
-        to actually write!  It turns out that creating good-looking pages is a
+        to actually write! It turns out that creating good-looking pages is a
         lot easier than coming up with interesting content to put on them.
       </p>
 
@@ -133,6 +132,10 @@
       <div class="fade-box">
         <h1 class="title">FADES ARE COOL</h1>
       </div>
+
+      <p>
+        Keep reading for details on some specific elements of the site.
+      </p>
 
       <hr>
 
@@ -172,19 +175,19 @@
       <h2 id="seen.js">seen.js</h2>
 
       <p>
-        However, it's not all HTML and CSS. The visualization on the
-        <a href="index">front page</a> was created using
+        Although I want my websites to be completely usable without JavaScript,
+        I still use some here and there, for eye candy or simple games and
+        projects. The visualizations on the <a href="projects">projects</a> and 
+        <a href="other">other</a> pages were created using
         <a href="http://seenjs.io">seen.js</a>, a JavaScript framework for
-        rendering 3D scenes into an SVG or HTML5 canvas. The scenes are written
-        in <a href="http://coffeescript.org">CoffeeScript</a>, a cleaner and
-        simpler language that compiles into JavaScript.
+        rendering 3D scenes into an SVG or HTML5 canvas.
       </p>
 
       <p>
-        The <a href="projects">projects</a> and <a href="other">other</a> pages
-        contain simple seen.js canvases as eye candy to make these pages more
-        visually appealing. Making these seen.js scenes also helped me learn
-        JavaScript in 2018.
+        These visualizations are not necessary for navigating the site, so I
+        consider them an acceptable use of JavaScript. They add a bit of
+        flavor and color to the pages while using less bandwidth and loading
+        faster than images.
       </p>
 
       <hr>
@@ -208,24 +211,16 @@
 
       <p>
         My personal logo, shown on the left, is a design I came up with as a
-        kid. The color scheme is completely arbitrary (being color blind and
-        knowing nothing about graphic design makes it better to just pick colors
-        out of a hat than try to figure out what matches what).
+        kid. I'm red-green colorblind, so I find it easier to just pick colors
+        randomly than to try spend time trying to figure out what looks good
+        together. As a result, the color scheme is completely arbitrary.
       </p>
 
       <p>
-        I made the original digital version of the logo years ago in Microsoft
-        PowerPoint and exported it as a PNG. However, at some point I lost the
-        original file. Because the PNG was small and didn't scale very well I
-        decided to remake the logo as an
-        <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">
-          SVG</a>.
-      </p>
-
-      <p>
-        Still knowing nothing about graphic design, I painstakingly wrote the
-        code for the SVG by hand, and it is reproduced in all its glory
-        below:
+        To make it load fast and scale well on different-sized screens, I made
+        the logo an <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>.
+        Knowing nothing about graphic design, I painstakingly wrote the code for
+        the SVG by hand, and it is reproduced in all its glory below:
       </p>
 
       <div class="code">&lt;svg height="160" width="160" "style"="float: left;"&gt;
@@ -249,7 +244,7 @@
 
       <p>
         In July of 2018 I decided to stop relying on Github Pages and host the
-        website on my own server.  This decision came for several reasons.
+        website on my own server. This decision came for several reasons.
         GitHub Pages was a nice service, but it doesn't have good support for
         HTTPS. Also, if I ever want my website to be anything but static HTML
         pages and client-side scripts GitHub Pages won't work for my needs any
@@ -272,20 +267,24 @@
         proxy so I could have multiple servers with different domains running on
         the same machine. I acquired an SSL certificate from
         <a href="https://letsencrypt.org">Let's Encrypt</a>, and set an nginx
-         rule to rewrite all HTTP requests to HTTPS. With this and other
-         security measures in place, I cloned the website from GitHub and
-         changed the A records in my domain name registrar to point to the
-         server, and now my little server is broadcasting to the whole world. I
-         even added a cron job to the server to automatically pull from GitHub
-         every ten minutes to keep the site up to date.
+        rule to rewrite all HTTP requests to HTTPS. With this and other security
+        measures in place, I cloned the website from GitHub and changed my DNS
+        records, and now I was hosting my very own piece of the world wide web.
       </p>
 
       <p>
-        Having little GNU/Linux, and even less command line experience before
-        hand, this process was slow, confusing, and frustrating at times. Almost
-        everything that could go wrong while setting up nginx did go wrong. But
-        it definitely taught me a lot about networking, GNU/Linux, and web
-        development.
+        Before this point I had very little GNU/Linux experience, and had never
+        interacted with a computer purely through the command line interface.
+        The process of learning everything was slow and frustrating at first. As
+        is often the case with these things, nearly everything that could go
+        wrong did go wrong. But I got it working in the end, and learned a lot
+        about GNU/Linux and system administration along the way.
+      </p>
+
+      <p>
+        This setup lasted for almost a year. But by May 2019 the original server
+        was starting to show its age and it was time to upgrade to something
+        more powerful. Read more about it <a href="#getting-an-upgrade">below</a>.
       </p>
 
       <hr>
@@ -452,7 +451,84 @@ input[type=checkbox]:checked ~ nav {
         configured with a simple JSON file and sits on top of a
         <code>::before</code> pseudo-element with a slightly lighter background
         color that fades to the standard background color with a linear
-        gradient. 
+        gradient. It creates a neat effect without being obtrusive, and if you
+        have JavaScript disabled it doesn't break any important functionality.
+      </p>
+
+      <hr>
+
+      <h2 id="getting-an-upgrade">Getting an Upgrade</h2>
+
+      <p>
+        By May of 2018 the old HP EliteDesk I had been using as a server was
+        starting to get sluggish. The number of services I was running had
+        steadily increased over the ten months it was active, and the server
+        could no longer keep up. It was also horribly insecure, and the
+        accumulation of cruft made it hard to add anything new.
+      </p>
+
+      <figure class="float left">
+        <a href="images/poweredge-r710.jpg">
+          <img src="images/th_poweredge-r710.jpg" alt="A Dell PowerEdge R710">
+        </a>
+      </figure>
+
+      <p>
+        For better security and performance, I decided to switch to a virtual
+        environment running on real enterprise-level server hardware. Building a
+        custom network of virtual machines would allow me to split up the
+        various services I was running and learn more about system
+        administration and networking.
+      </p>
+
+      <p>
+        I could have just used <a href="https://aws.amazon.com/">AWS</a> for
+        this task, but I wanted to set things up manually so I could learn the
+        process. I also didn't want to have to rely on an external provider,
+        whose prices could increase in the future. I purchased a used Dell
+        PowerEdge R710 for the task, along with a new RAID card and some new
+        hard drives.
+      </p>
+
+      <p>
+        This time around I had a lot more GNU/Linux experience, and felt more
+        confident in my abilities. I chose 
+        <a href="https://www.centos.org/">CentOS</a> as the OS to run on bare
+        metal, and set up <a href="https://libvirt.org/">libvirt</a> with
+        <a href="https://www.qemu.org/">QEMU</a> for virtualization. For
+        high-level VM management I used 
+        <a href="https://theforeman.org/">Foreman</a>, which allows me to easily
+        provision and manage hosts on my network. With these tools, I can create
+        a new virtual machine, have it PXE boot into an installer image, install
+        a GNU/Linux operating system, update and install necessary packages,
+        configure a network interface for my virtual and physical networks,
+        automatically create entries for my internal DNS server, set up users
+        and remote execution SSH keys, and register them with 
+        <a href="https://puppet.com/">Puppet</a>, all completely unattended.
+        Admittedly, it took a long time to get all of these services to work
+        together nicely, but it was worth it in the end.
+      </p>
+
+      <p>
+        For the virtual servers I chose to run Fedora 30. One of them runs nginx
+        as a reverse proxy and serves the static pages of this websites, while
+        others provide other services, each neatly compartmentalized and
+        separated. 
+        <a href="https://selinuxproject.org/page/Main_Page">SELinux</a> and 
+        <a href="https://firewalld.org/">firewalld</a> allow only what each
+        server needs to function.
+      </p>
+
+      <p>
+        Once again, almost everything that could go wrong did go wrong in this
+        process. Because I couldn't find an up-to-date guide to installing
+        Foreman and libvirt I created my own, 
+        <a href="blog/adventures-in-system-administration-part-1">here</a> and
+        <a href="blog/adventures-in-system-administration-part-2">here</a>. It
+        took over a month between when I bought the new server and when it was
+        fully operational, but I learned a lot in that time. If I had to start
+        over from scratch I could probably recreate the entire network in a day
+        at this point.
       </p>
 
     </main>
