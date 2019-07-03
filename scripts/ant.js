@@ -284,6 +284,10 @@ let UI = {
 			</div>`
 		);
 
+		// hide the X button
+		if (!BOARD.started)
+			$('#rule-box i.fa-times').css('visibility', 'hidden');
+
 		// animate
 		$('#rule-' + id).hide();
 		$('#rule-' + id).slideDown();
