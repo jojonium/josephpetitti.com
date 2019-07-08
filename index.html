@@ -129,15 +129,17 @@
         </li>
         <li>
           <span class="icon fab fa-github"></span>
-          Commits in past year <strong>906</strong>
+          Commits in past year <strong>987</strong>
         </li>
         <li>
           <span class="icon fas fa-server"></span>
-          Server uptime hours <strong id="uptime-hours">677</strong>
+          Server uptime hours <strong id="uptime-hours">
+            <!--UPTIME-->4<!--/UPTIME-->
+          </strong>
         </li>
         <li>
           <span class="icon fas fa-film"></span>
-          Films watched <strong>1,107</strong>
+          Films watched <strong>1,118</strong>
         </li>
       </ul>
 
@@ -169,7 +171,6 @@
         <a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>.
       </p>
 
-      <script>fadein()</script>
     </main>
 
   <!-- Footer -->
@@ -222,13 +223,10 @@
     <div id="particles-after"></div>
 
     <script type="text/javascript">
-      // get time since April 22 2019 in hours
-      var interval = Math.floor((new Date() - new Date(1559584526000)) / 3600000);
-      document.getElementById("uptime-hours").innerHTML = interval;
-      
       window.onload = function() {
         particlesJS.load('particles-js', 'https://' + document.domain + '/assets/particle-cfg.json');
       }
+      fadein();
     </script>
 
     <style>
