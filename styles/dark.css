@@ -289,9 +289,10 @@ figure.full-width {
 }
 
 figcaption {
-  font-size: 13pt;
+  font-size: .875em;
   text-align: center;
   color: #99aabb;
+  margin-top: .25em;
 }
 
 video {
