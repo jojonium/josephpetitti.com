@@ -134,6 +134,10 @@ figure p.quote {
 p.quote::before { content: "“" }
 p.quote::after { content: "”" }
 
+span.gpg {
+  font-size: .65em;
+}
+
 
 /* Header */
 header {

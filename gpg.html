@@ -2,13 +2,10 @@
 <html lang="en-US">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Color Match</title>
-    <meta name="description" content="A simple color-matching puzzle game" />
-    <meta property="og:title" content="Color Match" />
-    <meta property="og:description" content="A simple color matching puzzle game" />
-    <meta property="og:image" content="https://josephpetitti.com/images/color-match.png" />
-    <meta property="og:type" content="game" />
-    <meta property="og:url" content="https://josephpetitti.com/match" />
+    <title>GPG Key</title>
+    <meta property="og:title" content="GPG Key" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/gpg" />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
     <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
 
@@ -17,9 +14,6 @@
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link rel="stylesheet" href="styles/dark.css?v=1.0.2" type="text/css">
-
-    <script src="scripts/jquery-3.3.1.min.js"></script>
-    <script src="scripts/match.js"></script>
   </head>
   <body>
 
@@ -67,74 +61,34 @@
 
 
     </header>
-  
+
   <!-- Main -->
-    <main>
-      <h1 class="title">COLOR MATCH</h1>
+    <main id="main">
 
-      <div id="message"></div>
+      <h1 class="title">GPG KEY</h1>
 
-      <center id="canvas-holder"></center>
-      
-      <center id="score-holder">
-      <h2>Score: <span id="score"></span></h2>
-      <h2 id="game-over"></h2>
-      <button id="play-again" style="display: none" onclick="location.reload()">Play Again?</button>
-      </center>
-      
-      <h2>Instructions</h2>
-      
       <p>
-        Click colored squares to play. When you click a square, all connected
-        squares of the same color are cleared, and you score points. You score
-        more points the more squares you clear in a single move, so use strategy
-        to set up big groups and eliminate them all at once.
-      </p>
-         
-      <p>
-        The green circles on the right show how many moves you have left until a
-        new row appears at the bottom. As the game goes on new rows appear
-        faster, and new colors are introduced, so stay sharp.
+        Here is the fingerprint of my GPG key:
       </p>
 
+      <code class="block">pub   rsa2048 2019-07-10
+      C5C0CFB062CC4D28321D2978A6C48AE0ADF72094
+uid           Joseph Petitti &lt;jppetitti@wpi.edu&gt;
+sub   rsa2048 2019-07-10</code>
+
+      <p>
+        Download the actual key <a href="assets/jppetitti.asc">here</a>.
+      </p>
+
+      <p>
+        Of course, you'll have to get the fingerprint from me in person or
+        follow a chain of trusted signatures to really verify which key is mine.
+      </p>
+
+      <p>
+        I don't use keyservers, so any key claiming to be mine on there is fake.
+      </p>
     </main>
-    
-    <style>
-      #canvas {
-        border: 1px solid black;
-        margin: 15px;
-      }
-      
-      #bar {
-        margin: 15px;
-      }
-      
-      #canvas-holder {
-        overflow: auto;
-        max-height: 800px;
-        min-height: 400px;
-      }
-      
-      #message {
-        font-size: 80px;
-        color: #333333;
-        font-weight: 700;
-        position: absolute;
-        width: 20%;
-        left: 40%;
-        top: 400px;
-        transform: rotate(-15deg);
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        user-select: none;
-      }
-      
-      #score-holder {
-        position: relative;
-        top: -20px;
-        margin: 0, 0, 0, 0;
-      }
-      
-    </style>
 
   <!-- Footer -->
     <footer id="footer">
@@ -183,4 +137,5 @@
       </section>
     </footer>
   </body>
+  <script src="scripts/ant.js?v=2.5"></script>
 </html>
