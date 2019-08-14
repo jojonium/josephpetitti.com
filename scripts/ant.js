@@ -285,7 +285,7 @@ let UI = {
 		);
 
 		// hide the X button
-		if (!BOARD.started)
+		if (UI.started)
 			$('#rule-box i.fa-times').css('visibility', 'hidden');
 
 		// animate

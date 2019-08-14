@@ -172,13 +172,11 @@ div.an-ant input {
   text-align: left;
   width: 65px;
   float: right;
-  height: 1.25em;
   box-sizing: border-box;
 }
 
  div.an-ant select {
    float: right;
-   width: 65px;
  }
 
 div#ant-box h2, div.an-ant h3 {
@@ -241,7 +239,7 @@ div#main-inputs div#button-holder button {
   div#input-container {
     width: 100%;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
   }
 
   div.rule-radio-wrapper i, div.an-ant i {
