@@ -70,16 +70,8 @@
 
   <!-- Main -->
     <main id="main">
-      <div style="display: flex; justify-content: center;">
-        <svg height="160" width="160" id="logo">
-          <circle cx="80" cy="80" r="60" fill="#e37682" />
-          <path id="top-line" d="M 40 50 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
-          <path id="p-curve" d="M 100 50 C 130 50, 130 85, 100 85" style="fill:none;stroke:yellow;stroke-width:9" />
-          <path id="vertical-center" d="M 85 50 V 105" style="fill:none;stroke:yellow;stroke-width:9" />
-          <path id="p-lower" d="M 85 85 H 100" style="fill:none;stroke:yellow;stroke-width:9" />
-          <path id="j-curve" d="M 85 105 C 85 130, 45 130, 45 98" style="fill:none;stroke:yellow;stroke-width:9" />
-          Your browser does not support inline SVG
-        </svg>
+      <div style="display: flex; justify-content: center; padding: 1em 0;">
+        <img id="logo" src="assets/logo.svg" alt="My personal logo">
       </div>
 
       <h1 class="title" style="margin-top: .5em">JOSEPH PETITTI</h1>
@@ -248,6 +240,9 @@
     </noscript>
 
     <style>
+      img#logo {
+        max-width: 150px;
+      }
       main::before {
         background-image: none;
         height: 0;
