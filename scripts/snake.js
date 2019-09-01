@@ -14,26 +14,22 @@ const dirsEnum = Object.freeze({
   upRight: 5,
   downRight: 6,
   downLeft: 7,
-  upleft: 8
+  upLeft: 8
 });
+
+/**
+ * This is basically a magic number table that can be used to look up turn
+ * directions. Use like `turnTable[nextDirection][previousDirection]`
+ */
+const turnTable = [[1, 8, 0, 5], [6, 2, 5, 0], [0, 7, 3, 6], [7, 0, 8, 4]];
 
 /**
  * Returns the number of radians you need to rotate an image from pointing up
  * @param {Direction} dir the direction of a snake part
  * @return {number} the amount of rotation needed in radians
  */
-const dirToRad = dir => {
-  switch (dir) {
-    case dirsEnum.up:
-      return 0;
-    case dirsEnum.right:
-      return Math.PI / 2;
-    case dirsEnum.down:
-      return Math.PI;
-    case dirsEnum.left:
-      return Math.PI * 1.5;
-  }
-};
+const dirToRad = dir => ((dir - 1) * Math.PI) / 2;
+
 class Point {
   /**
    * Represents a single point on the board
@@ -102,15 +98,21 @@ class Board {
     this.snakeBodies = [
       // TODO reset to []
       new SnakePoint(
-        this.width / 2,
+        Math.floor(this.width / 2),
         Math.floor(this.height / 2) - 1,
         "blue",
         dirsEnum.down
+      ),
+      new SnakePoint(
+        Math.floor(this.width / 2),
+        Math.floor(this.height / 2) - 2,
+        "green",
+        dirsEnum.downLeft
       )
     ];
 
     // initialize score
-    this.score = 2; // TODO reset to 1
+    this.score = 3; // TODO reset to 1
 
     // initialize fruit
     /** @type Array<FruitPoint> */
@@ -294,7 +296,11 @@ class Board {
     // TODO make this look better
     // draw each segment with the right color
     this.snakeBodies.map(s => {
-      this.drawImage(s.x, s.y, "snake-segment", s.dir, s.color);
+      let imgID = "snake-segment";
+      if (s.dir > dirsEnum.left) {
+        imgID = "snake-segment-turning";
+      }
+      this.drawImage(s.x, s.y, imgID, s.dir, s.color);
     });
   }
 
@@ -340,7 +346,100 @@ class Board {
 
     return this;
   }
+
+  slither() {
+    // see if the snake is on top of a fruit, if so it eats it
+    let ate = false;
+    let newColor = this.snakeHead.color;
+    // iterate backwards through fruits so we can remove one while traversing
+    for (let i = this.fruits.length - 1; i >= 0; --i) {
+      if (
+        this.fruits[i].x === this.snakeHead.x &&
+        this.fruits[i].y === this.snakeHead.y
+      ) {
+        this.score++; // add a score for eating it
+        newColor = this.fruits[i].color; // remember the color for later
+        this.fruits.splice(i, 1); // remove this fruit from reality
+        ate = true; // remember that we just ate
+        break; // there can only be one fruit per space (hopefully)
+      }
+    }
+
+    // by default keep moving in the same direction
+    let nextDirection = this.snakeHead.dir;
+    // get the next move from the moveQueue if possible
+    if (moveQueue.length > 0) {
+      const nextInput = moveQueue.pop();
+      // snakes can't turn 180 degrees in one slither, so only set the input as
+      // the next direction if the snake is moving normally
+      if (!(nextInput % 2 === nextDirection % 2)) {
+        nextDirection = nextInput;
+      }
+    }
+
+    // the old head point now becomes a body as the snake moves on
+    // set the new direction of that point by looking it up in the turnTable
+    this.snakeHead.dir = turnTable[nextDirection][this.snakeHead.dir];
+    if (this.snakeHead.dir === 0) {
+      // this should never happen
+      throw new Error("Snake turned 180 degrees or something");
+    }
+    // add the old snakeHead to the snakeBody list
+    this.snakeBodies.push(this.snakeHead);
+    // make new snake head with new direction
+    let newX = this.snakeHead.x;
+    let newY = this.snakeHead.y;
+    switch (nextDirection) {
+      case dirsEnum.up:
+        --newY;
+        break;
+      case dirsEnum.right:
+        ++newX;
+        break;
+      case dirsEnum.down:
+        ++newY;
+        break;
+      case dirsEnum.left:
+        --newX;
+        break;
+    }
+    this.snakeHead = new SnakePoint(newX, newY, newColor, nextDirection);
+
+
+  }
 }
+
+// initialize moveQueue as a global so it persists beyond the board
+const moveQueue = [dirsEnum.up];
+
+// add event listeners to all keys
+document.addEventListener("keydown", e => {
+  if (e.which == 87 || e.which == 38 || e.which == 75) {
+    // up
+    if (e.which == 38) e.preventDefault(); // prevent arrow key default
+    moveQueue.unshift(dirsEnum.up);
+  } else if (e.which == 68 || e.which == 39 || e.which == 76) {
+    // right
+    moveQueue.unshift(dirsEnum.right);
+  } else if (e.which == 83 || e.which == 40 || e.which == 74) {
+    // down
+    if (e.which == 40) e.preventDefault(); // prevent arrow key default
+    moveQueue.unshift(dirsEnum.down);
+  } else if (e.which == 65 || e.which == 37 || e.which == 72) {
+    //left
+    moveQueue.unshift(dirsEnum.left);
+  } else if (e.which == 32) {
+    // pause
+    e.preventDefault();
+    // TODO implement pause
+  } else if (e.which == 82) {
+    // restart
+    e.preventDefault();
+    // TODO implement reset
+  }
+  // delete last move if longer than 2
+  if (moveQueue.length > 3) moveQueue.pop();
+});
 
 const b = new Board(10, 10, 40, 2);
 setInterval(() => {
