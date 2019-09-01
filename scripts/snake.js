@@ -3,12 +3,40 @@
 
 /**
  * Enumerated type for directions
- * @enum {number}
+ * @typedef {number} Direction
+ * @enum {Direction}
  */
-const dirsEnum = Object.freeze({ up: 1, right: 2, down: 3, left: 4 });
+const dirsEnum = Object.freeze({
+  up: 1,
+  right: 2,
+  down: 3,
+  left: 4,
+  upRight: 5,
+  downRight: 6,
+  downLeft: 7,
+  upleft: 8
+});
 
+/**
+ * Returns the number of radians you need to rotate an image from pointing up
+ * @param {Direction} dir the direction of a snake part
+ * @return {number} the amount of rotation needed in radians
+ */
+const dirToRad = dir => {
+  switch (dir) {
+    case dirsEnum.up:
+      return 0;
+    case dirsEnum.right:
+      return Math.PI / 2;
+    case dirsEnum.down:
+      return Math.PI;
+    case dirsEnum.left:
+      return Math.PI * 1.5;
+  }
+};
 class Point {
   /**
+   * Represents a single point on the board
    * @param {number} x x coordinate of this point
    * @param {number} y y coordinate of this point
    * @constructor
@@ -19,53 +47,75 @@ class Point {
   }
 }
 
-class SnakePoint extends Point {
+class FruitPoint extends Point {
+  /**
+   *
+   * @param {number} x x coordinate of this fruit
+   * @param {number} y y coordinate of this fruit
+   * @param {string} [color] color of this fruit
+   */
+  constructor(x, y, color = "red") {
+    super(x, y);
+    this.color = color;
+  }
+}
+
+class SnakePoint extends FruitPoint {
   /**
    * creates a point representing a portion of a snake
    * @param {number} x x coordinate of this point
    * @param {number} y y coordinate of this point
-   * @param {dirsEnum} dir
+   * @param {string} color the color of this snake segment
+   * @param {Direction} dir
    * @constructor
    */
-  constructor(x, y, dir) {
-    super(x, y);
+  constructor(x, y, color, dir) {
+    super(x, y, color);
     this.dir = dir;
   }
 }
 
 class Board {
   /**
-   * @param {number} w the width of the board, in cells
-   * @param {number} h the height of the board, in cells
-   * @param {number} s the size of each cell, in pixels
+   * @param {number} [w] the width of the board, in cells
+   * @param {number} [h] the height of the board, in cells
+   * @param {number} [s] the size of each cell, in pixels
+   * @param {number} [gap] the amount of space between drawn cells, in pixels
    * @constructor
    */
-  constructor(w, h, s) {
+  constructor(w = 10, h = 10, s = 50, gap = 3) {
     this.width = w;
     this.height = h;
     this.squareSize = s;
+    this.gapSize = gap;
 
     // initialize snake
     this.snakeHead = new SnakePoint(
-      Math.floor(this.width),
-      Math.floor(this.height),
-      dirsEnum.up
+      Math.floor(this.width / 2),
+      Math.floor(this.height / 2),
+      "red",
+      dirsEnum.down
     );
-    this.snakeTail = new SnakePoint(
-      this.snakeHead.x,
-      this.snakeHead.y,
-      dirsEnum.up
-    );
+    this.snakeTail = null;
+
     /** @type Array<SnakePoint> */
-    this.snakeBodies = [];
+    this.snakeBodies = [
+      // TODO reset to []
+      new SnakePoint(
+        this.width / 2,
+        Math.floor(this.height / 2) - 1,
+        "blue",
+        dirsEnum.down
+      )
+    ];
 
     // initialize score
-    this.score = 1;
+    this.score = 2; // TODO reset to 1
 
     // initialize fruit
-    /** @type Array<Point> */
+    /** @type Array<FruitPoint> */
     this.fruits = [];
-    // TODO placeFruit();
+    this.placeFruit();
 
     // create the canvas
     const canvas = document.createElement("canvas");
@@ -91,18 +141,27 @@ class Board {
 
     let occupied = true;
     let p;
-    while (occupied) {
+    genPointLoop: while (occupied) {
+      occupied = false;
       // generate a random point
-      p = new Point(
+      p = new FruitPoint(
         Math.floor(Math.random() * this.width),
         Math.floor(Math.random() * this.height)
       );
 
       // make sure this point isn't occupied by a snake
-      for (const s of this.snakeBodies) {
-        if (p.x === s.x && p.y === s.y) {
-          occupied = true;
-          break;
+      if (
+        (p.x === this.snakeHead.x && p.y === this.snakeHead.y) ||
+        (this.snakeTail && p.x === this.snakeTail.x && p.y === this.snakeTail.y)
+      ) {
+        occupied = true;
+      }
+      if (!occupied) {
+        for (const s of this.snakeBodies) {
+          if (p.x === s.x && p.y === s.y) {
+            occupied = true;
+            continue genPointLoop;
+          }
         }
       }
       if (!occupied) {
@@ -110,15 +169,180 @@ class Board {
         for (const f of this.fruits) {
           if (p.x === f.x && p.y === f.y) {
             occupied = true;
-            break;
+            continue genPointLoop;
           }
         }
       }
     }
 
+    p.color =
+      "rgb(" +
+      Math.floor(Math.random() * 200) +
+      ", " +
+      Math.floor(Math.random() * 200) +
+      ", " +
+      Math.floor(Math.random() * 200) +
+      ")";
     // add the point to the fruits list
     this.fruits.push(p);
 
     return this;
   }
+
+  /**
+   * Draws a single frame, including the background, fruits, and snake
+   * @return {Board} this, so it can be chained
+   */
+  drawFrame() {
+    // draw background
+    this.drawBackground();
+
+    // draw fruit
+    this.fruits.map(f => {
+      this.drawFruit(f);
+    });
+
+    // draw snake
+    this.drawSnakeHead().drawSnakeBody();
+
+    return this;
+  }
+
+  /**
+   * draws an image in cell x, y rotated by the given amount of radians and
+   * blended with the given color
+   * @param {number} x x coordinate of the cell to draw in
+   * @param {number} y y coordinate of the cell to draw in
+   * @param {string} id the ID of the HTML img element containing the image
+   * @param {Direction} dir the direction the image should be facing
+   * @param {string} [color] the color to blend with the image
+   * @return {Board} this, so it can be chained
+   */
+  drawImage(x, y, id, dir = dirsEnum.up, color = "red") {
+    // grab image from the DOM
+    const img = /** @type {HTMLImageElement} */ (document.getElementById(id));
+
+    // make temp canvas to do the rotation and blend operations
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = this.squareSize;
+    tempCanvas.height = this.squareSize;
+    const tempCtx = tempCanvas.getContext("2d");
+
+    // rotate the temp canvas, draw the image, then rotate back
+    const angle = dirToRad(dir);
+    tempCtx.fillStyle = color;
+    const center = this.squareSize * 0.5;
+    // rotate() rotates around the canvas origin by default, so we translate the
+    // origin to the center of the canvas
+    tempCtx.translate(center, center);
+    tempCtx.rotate(angle);
+    tempCtx.translate(-center, -center); // reset the translation
+    tempCtx.drawImage(
+      img,
+      this.gapSize,
+      this.gapSize,
+      this.squareSize - this.gapSize - this.gapSize,
+      this.squareSize - this.gapSize - this.gapSize
+    );
+    // we have to translate again to rotate back
+    tempCtx.translate(center, center);
+    tempCtx.rotate(-angle);
+    tempCtx.translate(-center, -center);
+
+    // blend with the color
+    tempCtx.globalCompositeOperation = "source-atop";
+    tempCtx.fillStyle = color;
+    tempCtx.fillRect(0, 0, this.squareSize, this.squareSize);
+    tempCtx.globalCompositeOperation = "source-in";
+    tempCtx.drawImage(tempCanvas, 0, 0);
+
+    // convert tempCanvas to bitmap and draw it into the normal canvas
+    const coloredImage = new Image();
+    coloredImage.src = tempCanvas.toDataURL("image/png");
+    this.ctx.save();
+    this.ctx.drawImage(coloredImage, x * this.squareSize, y * this.squareSize);
+    this.ctx.restore();
+    return this;
+  }
+
+  /**
+   * Draws the head of the snake on the canvas
+   * @return {Board} this, so it can be chained
+   */
+  drawSnakeHead() {
+    // TODO make this look better
+    // draw the face with the right color
+    this.drawImage(
+      this.snakeHead.x,
+      this.snakeHead.y,
+      "snake-head",
+      this.snakeHead.dir,
+      this.snakeHead.color
+    );
+    // draw the eyes yellow
+    this.drawImage(
+      this.snakeHead.x,
+      this.snakeHead.y,
+      "snake-head-eyes",
+      this.snakeHead.dir,
+      "yellow"
+    );
+    return this;
+  }
+
+  drawSnakeBody() {
+    // TODO make this look better
+    // draw each segment with the right color
+    this.snakeBodies.map(s => {
+      this.drawImage(s.x, s.y, "snake-segment", s.dir, s.color);
+    });
+  }
+
+  /**
+   * draws the background on the canvas object
+   * @return {Board} this, so it can be chained
+   */
+  drawBackground() {
+    // TODO make this look better
+    this.ctx.save();
+    this.ctx.fillStyle = "#999999";
+    this.ctx.fillRect(
+      0,
+      0,
+      this.width * this.squareSize,
+      this.height * this.squareSize
+    );
+    this.ctx.restore();
+
+    return this;
+  }
+
+  /**
+   * Draws a fruit
+   * @param {FruitPoint} p the fruit to draw
+   * @return {Board} this, so it can be chained
+   */
+  drawFruit(p) {
+    // TODO make this look better
+    this.ctx.fillStyle = p.color;
+    this.ctx.strokeStyle = "black";
+
+    this.ctx.lineWidth = 2;
+
+    const centerX = (p.x + 0.5) * this.squareSize;
+    const centerY = (p.y + 0.5) * this.squareSize;
+    const radius = (this.squareSize - 2 * this.gapSize) / 2;
+
+    this.ctx.beginPath();
+    this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    this.ctx.fill();
+    this.ctx.stroke();
+
+    return this;
+  }
 }
+
+const b = new Board(10, 10, 40, 2);
+setInterval(() => {
+  b.drawFrame().placeFruit();
+}, 400);

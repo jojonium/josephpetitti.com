@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link rel="stylesheet" href="styles/dark.css?v=1.0.2" type="text/css">
 
-    <script src="scripts/snake.js"></script>
   </head>
   <body>
 
@@ -69,6 +68,12 @@
 
   <!-- Main -->
     <main id="main">
+      <div style="display: none;">
+        <img src="images/snake-head.svg" id="snake-head">
+        <img src="images/snake-head-eyes.svg" id="snake-head-eyes">
+        <img src="images/snake-segment.svg" id="snake-segment">
+      </div>
+
       <h1 class="title">SNAKE</h1>
 
       <button id="small">Small</button>
@@ -163,5 +168,6 @@
         </ul>
       </section>
     </footer>
+    <script src="scripts/snake.js"></script>
   </body>
 </html>
