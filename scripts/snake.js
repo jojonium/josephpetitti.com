@@ -11,17 +11,32 @@ const dirsEnum = Object.freeze({
   right: 2,
   down: 3,
   left: 4,
-  upRight: 5,
-  downRight: 6,
-  downLeft: 7,
-  upLeft: 8
+  upToRight: 5,
+  downToRight: 6,
+  downToLeft: 7,
+  upToLeft: 8,
+  rightToUp: 9,
+  rightToDown: 10,
+  leftToDown: 11,
+  leftToUp: 12
 });
 
 /**
  * This is basically a magic number table that can be used to look up turn
- * directions. Use like `turnTable[nextDirection][previousDirection]`
+ * directions. Use like `turnTable[nextDirection - 1][previousDirection - 1]`
  */
-const turnTable = [[1, 8, 0, 5], [6, 2, 5, 0], [0, 7, 3, 6], [7, 0, 8, 4]];
+const turnTable = [[1, 12, 0, 9], [6, 2, 5, 0], [0, 11, 3, 10], [7, 0, 8, 4]];
+
+/**
+ * Another magic number table, this time used to look up tail positions. Use
+ * like `tailTable[oldDirection - 1]`
+ */
+const tailTable = [1, 2, 3, 4, 2, 2, 4, 4, 1, 3, 3, 1];
+
+// initialize as globals so they persist beyond the board
+const moveQueue = [dirsEnum.up];
+let paused = true;
+let lost = false;
 
 /**
  * Returns the number of radians you need to rotate an image from pointing up
@@ -90,29 +105,17 @@ class Board {
       Math.floor(this.width / 2),
       Math.floor(this.height / 2),
       "red",
-      dirsEnum.down
+      dirsEnum.up
     );
+
+    /** @type {SnakePoint} */
     this.snakeTail = null;
 
     /** @type Array<SnakePoint> */
-    this.snakeBodies = [
-      // TODO reset to []
-      new SnakePoint(
-        Math.floor(this.width / 2),
-        Math.floor(this.height / 2) - 1,
-        "blue",
-        dirsEnum.down
-      ),
-      new SnakePoint(
-        Math.floor(this.width / 2),
-        Math.floor(this.height / 2) - 2,
-        "green",
-        dirsEnum.downLeft
-      )
-    ];
+    this.snakeBodies = [];
 
     // initialize score
-    this.score = 3; // TODO reset to 1
+    this.score = 1;
 
     // initialize fruit
     /** @type Array<FruitPoint> */
@@ -204,8 +207,13 @@ class Board {
       this.drawFruit(f);
     });
 
-    // draw snake
+    // draw snake head and body
     this.drawSnakeHead().drawSnakeBody();
+
+    // draw tail if it exists
+    if (this.snakeTail) {
+      this.drawSnakeTail();
+    }
 
     return this;
   }
@@ -305,6 +313,23 @@ class Board {
   }
 
   /**
+   * Assumes that snakeTail exists and draws it on the canvas
+   * @return {Board} this, so it can be chained
+   */
+  drawSnakeTail() {
+    // TODO make this look better
+    this.drawImage(
+      this.snakeTail.x,
+      this.snakeTail.y,
+      "snake-tail",
+      this.snakeTail.dir,
+      this.snakeTail.color
+    );
+
+    return this;
+  }
+
+  /**
    * draws the background on the canvas object
    * @return {Board} this, so it can be chained
    */
@@ -347,24 +372,13 @@ class Board {
     return this;
   }
 
+  /**
+   * Moves the snake forward one unit based on the directions in moveQueue.
+   * Handles eating if the snake is on top of a fruit when it's called,
+   * including growing the snake if necessary
+   * @return {boolean} true if the snake ate, false otherwise
+   */
   slither() {
-    // see if the snake is on top of a fruit, if so it eats it
-    let ate = false;
-    let newColor = this.snakeHead.color;
-    // iterate backwards through fruits so we can remove one while traversing
-    for (let i = this.fruits.length - 1; i >= 0; --i) {
-      if (
-        this.fruits[i].x === this.snakeHead.x &&
-        this.fruits[i].y === this.snakeHead.y
-      ) {
-        this.score++; // add a score for eating it
-        newColor = this.fruits[i].color; // remember the color for later
-        this.fruits.splice(i, 1); // remove this fruit from reality
-        ate = true; // remember that we just ate
-        break; // there can only be one fruit per space (hopefully)
-      }
-    }
-
     // by default keep moving in the same direction
     let nextDirection = this.snakeHead.dir;
     // get the next move from the moveQueue if possible
@@ -379,13 +393,16 @@ class Board {
 
     // the old head point now becomes a body as the snake moves on
     // set the new direction of that point by looking it up in the turnTable
-    this.snakeHead.dir = turnTable[nextDirection][this.snakeHead.dir];
+    this.snakeHead.dir = turnTable[nextDirection - 1][this.snakeHead.dir - 1];
     if (this.snakeHead.dir === 0) {
       // this should never happen
       throw new Error("Snake turned 180 degrees or something");
     }
     // add the old snakeHead to the snakeBody list
-    this.snakeBodies.push(this.snakeHead);
+    if (this.score > 1) {
+      // cover edge case of one-unit snake
+      this.snakeBodies.push(this.snakeHead);
+    }
     // make new snake head with new direction
     let newX = this.snakeHead.x;
     let newY = this.snakeHead.y;
@@ -403,45 +420,135 @@ class Board {
         --newX;
         break;
     }
+    // see if the snake is on top of a fruit, if so it eats it
+    let ate = false;
+    let newColor = this.snakeHead.color;
+    // iterate backwards through fruits so we can remove one while traversing
+    for (let i = this.fruits.length - 1; i >= 0; --i) {
+      if (this.fruits[i].x === newX && this.fruits[i].y === newY) {
+        this.score++; // add a score for eating it
+        newColor = this.fruits[i].color; // remember the color for later
+        this.fruits.splice(i, 1); // remove this fruit from reality
+        ate = true; // remember that we just ate
+        break; // there can only be one fruit per space (hopefully)
+      }
+    }
+
     this.snakeHead = new SnakePoint(newX, newY, newColor, nextDirection);
 
+    // if we ate the tail stays the same so the snake grows
+    if (!ate || this.score === 2) {
+      // the first point in snakeBodies becomes the new tail
+      if (this.snakeBodies.length > 0) {
+        this.snakeTail = this.snakeBodies[0];
+        this.snakeTail.dir = tailTable[this.snakeTail.dir - 1];
+        this.snakeBodies.splice(0, 1);
+      }
+    }
 
+    return ate;
+  }
+
+  step() {
+    if (!lost && !paused) {
+      // slither forward
+      const ate = this.slither();
+
+      // update score
+      document.getElementById("score").innerHTML = "Score: " + this.score;
+
+      // check to see if you've won
+      if (this.score >= this.width * this.height) {
+        alert("You win!");
+        lost = true;
+        // TODO make this nicer
+      }
+
+      // check to see if you've gone out of bounds
+      // TODO make this cleaner
+      if (
+        // out of bounds
+        this.snakeHead.x >= this.width ||
+        this.snakeHead.y >= this.height ||
+        this.snakeHead.x < 0 ||
+        this.snakeHead.y < 0
+      ) {
+        lost = true;
+        alert("You hit a wall!");
+        return this;
+      }
+
+      // check to see if you've hit yourself
+      if (
+        this.snakeTail &&
+        this.snakeTail.x === this.snakeHead.x &&
+        this.snakeTail.y === this.snakeHead.y
+      ) {
+        lost = true;
+        alert("You hit your tail!");
+        return this;
+      }
+      for (const s of this.snakeBodies) {
+        if (this.snakeHead.x === s.x && this.snakeHead.y === s.y) {
+          lost = true;
+          alert("You hit your body");
+          return this;
+        }
+      }
+      if (ate) {
+        this.placeFruit();
+      }
+    }
   }
 }
-
-// initialize moveQueue as a global so it persists beyond the board
-const moveQueue = [dirsEnum.up];
 
 // add event listeners to all keys
 document.addEventListener("keydown", e => {
   if (e.which == 87 || e.which == 38 || e.which == 75) {
     // up
     if (e.which == 38) e.preventDefault(); // prevent arrow key default
+    paused = false;
     moveQueue.unshift(dirsEnum.up);
   } else if (e.which == 68 || e.which == 39 || e.which == 76) {
     // right
+    paused = false;
     moveQueue.unshift(dirsEnum.right);
   } else if (e.which == 83 || e.which == 40 || e.which == 74) {
     // down
     if (e.which == 40) e.preventDefault(); // prevent arrow key default
+    paused = false;
     moveQueue.unshift(dirsEnum.down);
   } else if (e.which == 65 || e.which == 37 || e.which == 72) {
     //left
+    paused = false;
     moveQueue.unshift(dirsEnum.left);
   } else if (e.which == 32) {
     // pause
     e.preventDefault();
-    // TODO implement pause
+    paused = !paused;
   } else if (e.which == 82) {
     // restart
     e.preventDefault();
+    paused = true;
     // TODO implement reset
   }
   // delete last move if longer than 2
   if (moveQueue.length > 3) moveQueue.pop();
 });
 
+// TODO add listeners to the buttons instead
 const b = new Board(10, 10, 40, 2);
+
+function update() {
+  if (b) {
+    b.drawFrame();
+  }
+  requestAnimationFrame(update);
+}
+
+requestAnimationFrame(update);
 setInterval(() => {
-  b.drawFrame().placeFruit();
-}, 400);
+  if (b) {
+    b.step();
+  }
+}, 100);
