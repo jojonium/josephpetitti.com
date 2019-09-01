@@ -408,7 +408,7 @@ footer section ul.icons li {
 .fadein.visible {
   opacity: 1;
   transform: translate(0, 0);
-}
+} 
 
 /* Mobile */
 @media screen and (max-width: 1000px) {
