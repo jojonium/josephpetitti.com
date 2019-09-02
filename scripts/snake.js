@@ -455,6 +455,7 @@ class Board {
         lost = true;
         document.getElementById("score").innerHTML =
           "Score: " + this.score + " &mdash; You lost by hitting a wall";
+        document.getElementById("play-again").style.display = "block";
         return this;
       }
 
@@ -467,6 +468,7 @@ class Board {
         lost = true;
         document.getElementById("score").innerHTML =
           "Score: " + this.score + " &mdash; You lost by hitting your tail";
+        document.getElementById("play-again").style.display = "block";
         return this;
       }
       for (const s of this.snakeBodies) {
@@ -474,6 +476,7 @@ class Board {
           lost = true;
           document.getElementById("score").innerHTML =
             "Score: " + this.score + " &mdash; You lost by hitting your body";
+          document.getElementById("play-again").style.display = "block";
           return this;
         }
       }
@@ -536,6 +539,7 @@ const cacheImages = (ss, gs) => {
  * @param {number} [h] input height of board in cells, optional
  */
 const setup = (w = 10, h = 10) => {
+  document.getElementById("play-again").style.display = "none";
   // set squareSize big enough to fill the body well
   gSquareSize = Math.floor(
     document.getElementById("main").clientWidth / (w * 1.15)
@@ -555,6 +559,7 @@ const setup = (w = 10, h = 10) => {
  * Resets the board, or sets up the default one if the board doesn't exist
  */
 const reset = () => {
+  document.getElementById("play-again").style.display = "none";
   paused = true;
   lost = false;
   // reset the board
