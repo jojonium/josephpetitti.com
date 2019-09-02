@@ -267,10 +267,8 @@ class Board {
     tempCtx.drawImage(tempCanvas, 0, 0);
 
     // convert tempCanvas to bitmap and draw it into the normal canvas
-    const coloredImage = new Image();
-    coloredImage.src = tempCanvas.toDataURL("image/png");
     this.ctx.save();
-    this.ctx.drawImage(coloredImage, x * this.squareSize, y * this.squareSize);
+    this.ctx.drawImage(tempCanvas, x * this.squareSize, y * this.squareSize);
     this.ctx.restore();
     return this;
   }
