@@ -531,7 +531,7 @@ let UI = {
 
     // add antString
     let antString = '';
-    const tempMap = {u: 'Up', d: 'Down', l: 'left', r: 'Right'};
+    let tempMap = {u: 'Up', d: 'Down', l: 'left', r: 'Right'};
 		$('.an-ant').each((i, el) => {
       if (antString === '') {
         // if there are no ants we don't want to add anything
@@ -548,13 +548,15 @@ let UI = {
 
     // add ruleString
     let ruleString = '';
+    let ruleMap = {l: 'TurnLeft', r: 'TurnRight', c: 'Continue', u: 'UTurn'}
 		for (const r in BOARD.rules) {
 			if (typeof BOARD.rules[r] !== 'undefined') {
         if (ruleString === '') {
           // if there are no rules we don't want to add anything
           ruleString += '-r "';
         }
-        ruleString += ['TurnLeft', 'TurnRight', 'Continue', 'UTurn'][r];
+        console.log(BOARD.rules[r]);
+        ruleString += ruleMap[BOARD.rules[r].d];
         ruleString += ' ';
       }
     }
