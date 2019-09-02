@@ -1,5 +1,16 @@
 /* (c) 2018, 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
+
 "use strict";
+
+const imgIDs = [
+  "snake-head",
+  "snake-head-eyes",
+  "snake-segment",
+  "snake-segment-turning",
+  "snake-tail"
+];
+
+let imgCache, gWidth, gHeight, gSquareSize, gGapSize, BOARD;
 
 /**
  * Enumerated type for directions
@@ -111,8 +122,8 @@ class Board {
     /** @type {SnakePoint} */
     this.snakeTail = null;
 
-    /** @type Array<SnakePoint> */
-    this.snakeBodies = [];
+    /** @type DoublyLinkedList<SnakePoint> */
+    this.snakeBodies = new DoublyLinkedList();
 
     // initialize score
     this.score = 1;
@@ -229,47 +240,17 @@ class Board {
    * @return {Board} this, so it can be chained
    */
   drawImage(x, y, id, dir = dirsEnum.up, color = "red") {
-    // grab image from the DOM
-    const img = /** @type {HTMLImageElement} */ (document.getElementById(id));
-
-    // make temp canvas to do the rotation and blend operations
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = this.squareSize;
-    tempCanvas.height = this.squareSize;
+    // get the right image from the cache
+    const tempCanvas = imgCache[id][(dir - 1) % 4];
     const tempCtx = tempCanvas.getContext("2d");
 
-    // rotate the temp canvas, draw the image, then rotate back
-    const angle = dirToRad(dir);
-    tempCtx.fillStyle = color;
-    const center = this.squareSize * 0.5;
-    // rotate() rotates around the canvas origin by default, so we translate the
-    // origin to the center of the canvas
-    tempCtx.translate(center, center);
-    tempCtx.rotate(angle);
-    tempCtx.translate(-center, -center); // reset the translation
-    tempCtx.drawImage(
-      img,
-      this.gapSize,
-      this.gapSize,
-      this.squareSize - this.gapSize - this.gapSize,
-      this.squareSize - this.gapSize - this.gapSize
-    );
-    // we have to translate again to rotate back
-    tempCtx.translate(center, center);
-    tempCtx.rotate(-angle);
-    tempCtx.translate(-center, -center);
-
     // blend with the color
-    tempCtx.globalCompositeOperation = "source-atop";
+    tempCtx.globalCompositeOperation = "source-in";
     tempCtx.fillStyle = color;
     tempCtx.fillRect(0, 0, this.squareSize, this.squareSize);
-    tempCtx.globalCompositeOperation = "source-in";
-    tempCtx.drawImage(tempCanvas, 0, 0);
 
     // convert tempCanvas to bitmap and draw it into the normal canvas
-    this.ctx.save();
     this.ctx.drawImage(tempCanvas, x * this.squareSize, y * this.squareSize);
-    this.ctx.restore();
     return this;
   }
 
@@ -301,13 +282,13 @@ class Board {
   drawSnakeBody() {
     // TODO make this look better
     // draw each segment with the right color
-    this.snakeBodies.map(s => {
+    for (const b of this.snakeBodies) {
       let imgID = "snake-segment";
-      if (s.dir > dirsEnum.left) {
+      if (b.dir > dirsEnum.left) {
         imgID = "snake-segment-turning";
       }
-      this.drawImage(s.x, s.y, imgID, s.dir, s.color);
-    });
+      this.drawImage(b.x, b.y, imgID, b.dir, b.color);
+    }
   }
 
   /**
@@ -334,7 +315,7 @@ class Board {
   drawBackground() {
     // TODO make this look better
     this.ctx.save();
-    this.ctx.fillStyle = "#999999";
+    this.ctx.fillStyle = "#bbbbbb";
     this.ctx.fillRect(
       0,
       0,
@@ -399,7 +380,7 @@ class Board {
     // add the old snakeHead to the snakeBody list
     if (this.score > 1) {
       // cover edge case of one-unit snake
-      this.snakeBodies.push(this.snakeHead);
+      this.snakeBodies.pushBack(this.snakeHead);
     }
     // make new snake head with new direction
     let newX = this.snakeHead.x;
@@ -437,10 +418,10 @@ class Board {
     // if we ate the tail stays the same so the snake grows
     if (!ate || this.score === 2) {
       // the first point in snakeBodies becomes the new tail
-      if (this.snakeBodies.length > 0) {
-        this.snakeTail = this.snakeBodies[0];
+      if (this.snakeBodies.first !== null) {
+        this.snakeTail = this.snakeBodies.first.data;
         this.snakeTail.dir = tailTable[this.snakeTail.dir - 1];
-        this.snakeBodies.splice(0, 1);
+        this.snakeBodies.remove(this.snakeBodies.first);
       }
     }
 
@@ -472,7 +453,8 @@ class Board {
         this.snakeHead.y < 0
       ) {
         lost = true;
-        alert("You hit a wall!");
+        document.getElementById("score").innerHTML =
+          "Score: " + this.score + " &mdash; You lost by hitting a wall";
         return this;
       }
 
@@ -483,13 +465,15 @@ class Board {
         this.snakeTail.y === this.snakeHead.y
       ) {
         lost = true;
-        alert("You hit your tail!");
+        document.getElementById("score").innerHTML =
+          "Score: " + this.score + " &mdash; You lost by hitting your tail";
         return this;
       }
       for (const s of this.snakeBodies) {
         if (this.snakeHead.x === s.x && this.snakeHead.y === s.y) {
           lost = true;
-          alert("You hit your body");
+          document.getElementById("score").innerHTML =
+            "Score: " + this.score + " &mdash; You lost by hitting your body";
           return this;
         }
       }
@@ -500,6 +484,88 @@ class Board {
   }
 }
 
+/**
+ * Creates a copy of each image that has an ID listed in imgIDs for each of the
+ * four possible rotations and saves them in a global object so they don't have
+ * to be recalculated every time. Access the imgCache object like
+ * `imgcache[imgID][dir - 1]`
+ * @param {number} ss squareSize, the total width of the image to cache
+ * @param {number} gs gapSize, the amount of space that should be left blank at
+ * the edges
+ * @return {{}} the imgCache object
+ */
+const cacheImages = (ss, gs) => {
+  let imgCache = {};
+  for (const iid of imgIDs) {
+    imgCache[iid] = new Array(4);
+    for (let i = 0; i < 4; ++i) {
+      const img = /** @type {HTMLImageElement} */ (document.getElementById(
+        iid
+      ));
+
+      // make temp canvas to do the rotation operations
+      const tempCanvas = document.createElement("canvas");
+      tempCanvas.width = ss;
+      tempCanvas.height = ss;
+      const tempCtx = tempCanvas.getContext("2d");
+
+      // rotate the temp canvas, draw the image, then rotate back
+      const angle = (i * Math.PI) / 2;
+      const center = ss * 0.5;
+      // rotate() rotates around the canvas origin by default, so we translate the
+      // origin to the center of the canvas
+      tempCtx.translate(center, center);
+      tempCtx.rotate(angle);
+      tempCtx.translate(-center, -center); // reset the translation
+      tempCtx.drawImage(img, gs, gs, ss - gs - gs, ss - gs - gs);
+      // we have to translate again to rotate back
+      tempCtx.translate(center, center);
+      tempCtx.rotate(-angle);
+      tempCtx.translate(-center, -center);
+
+      // store this canvas object in a global object for later
+      imgCache[iid][i] = tempCanvas;
+    }
+  }
+  return imgCache;
+};
+
+/**
+ * Sets up globals, caches images, and makes the board
+ * @param {number} [w] input width of board in cells, optional
+ * @param {number} [h] input height of board in cells, optional
+ */
+const setup = (w = 10, h = 10) => {
+  // set squareSize big enough to fill the body well
+  gSquareSize = Math.floor(
+    document.getElementById("main").clientWidth / (w * 1.15)
+  );
+  // set other globals
+  gWidth = w;
+  gHeight = h;
+  gGapSize = Math.ceil(gSquareSize / 30);
+  imgCache = cacheImages(gSquareSize, gGapSize);
+  // remove the existing canvas if there is one
+  const existingCanvas = document.getElementById("canvas");
+  if (existingCanvas) existingCanvas.remove();
+  BOARD = new Board(gWidth, gHeight, gSquareSize, gGapSize);
+};
+
+/**
+ * Resets the board, or sets up the default one if the board doesn't exist
+ */
+const reset = () => {
+  paused = true;
+  lost = false;
+  // reset the board
+  if (!BOARD) {
+    setup();
+  } else {
+    document.getElementById("canvas").remove();
+    BOARD = new Board(gWidth, gHeight, gSquareSize, gGapSize);
+  }
+};
+
 // add event listeners to all keys
 document.addEventListener("keydown", e => {
   if (e.which == 87 || e.which == 38 || e.which == 75) {
@@ -509,6 +575,7 @@ document.addEventListener("keydown", e => {
     moveQueue.unshift(dirsEnum.up);
   } else if (e.which == 68 || e.which == 39 || e.which == 76) {
     // right
+    if (e.which == 39) e.preventDefault(); // prevent arrow key default
     paused = false;
     moveQueue.unshift(dirsEnum.right);
   } else if (e.which == 83 || e.which == 40 || e.which == 74) {
@@ -519,6 +586,7 @@ document.addEventListener("keydown", e => {
   } else if (e.which == 65 || e.which == 37 || e.which == 72) {
     //left
     paused = false;
+    if (e.which == 37) e.preventDefault(); // prevent arrow key default
     moveQueue.unshift(dirsEnum.left);
   } else if (e.which == 32) {
     // pause
@@ -527,26 +595,47 @@ document.addEventListener("keydown", e => {
   } else if (e.which == 82) {
     // restart
     e.preventDefault();
-    paused = true;
-    // TODO implement reset
+    reset();
   }
+
   // delete last move if longer than 2
   if (moveQueue.length > 3) moveQueue.pop();
 });
 
-// TODO add listeners to the buttons instead
-const b = new Board(10, 10, 40, 2);
+// add listeners to the buttons
+document.getElementById("small").addEventListener("click", () => {
+  setup(10, 10);
+});
+document.getElementById("medium").addEventListener("click", () => {
+  setup(15, 15);
+});
+document.getElementById("large").addEventListener("click", () => {
+  setup(25, 20);
+});
+document.getElementById("huge").addEventListener("click", () => {
+  setup(30, 30);
+});
+document.getElementById("custom").addEventListener("click", () => {
+  const iw =
+    /** @type {HTMLInputElement} */
+    (document.getElementById("input-width"));
+  const ih =
+    /** @type {HTMLInputElement} */
+    (document.getElementById("input-height"));
+  setup(iw.valueAsNumber, ih.valueAsNumber);
+});
 
 function update() {
-  if (b) {
-    b.drawFrame();
+  if (BOARD) {
+    BOARD.drawFrame();
   }
   requestAnimationFrame(update);
 }
 
 requestAnimationFrame(update);
+
 setInterval(() => {
-  if (b) {
-    b.step();
+  if (BOARD) {
+    BOARD.step();
   }
 }, 100);
