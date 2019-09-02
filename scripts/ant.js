@@ -493,7 +493,7 @@ let UI = {
 
 	/**
 	 * Updates the URL text area with a URL that will recreate the current set
-	 * up rules.
+	 * up rules. Also calls updateHaskell()
 	 * Main inputs are encoded as 12-bit unsigned ints converted to base64
 	 * @return the new URL
 	 */
@@ -515,11 +515,65 @@ let UI = {
 			+ '&a=' + UI.encodeAnts()
 			+ '&m=' + encodedMain
 			+ ((BOARD.wrap) ? '&p=' : '');
-		$('#url-text').html(newURL);
+    $('#url-text').html(newURL);
+    
+    this.updateHaskell();
 
 		return newURL;
 	},
 
+  /**
+   * Updates the Haskell Ant text box with a command based on the current
+   * configuration
+   */
+  updateHaskell() {
+    let text = 'runhaskell LangtonsAnt.hs ';
+
+    // add antString
+    let antString = '';
+    const tempMap = {u: 'Up', d: 'Down', l: 'left', r: 'Right'};
+		$('.an-ant').each((i, el) => {
+      if (antString === '') {
+        // if there are no ants we don't want to add anything
+        antString += '-a "';
+      }
+      antString += $(el).find('.x-input').val() + ',';
+      antString += $(el).find('.y-input').val() + ',';
+      antString += tempMap[$(el).find('.d-input').val()] + ' ';
+    });
+    if (antString !== '') {
+      antString = antString.substring(0, antString.length - 1) + '" ';
+    }
+    text += antString;
+
+    // add ruleString
+    let ruleString = '';
+		for (const r in BOARD.rules) {
+			if (typeof BOARD.rules[r] !== 'undefined') {
+        if (ruleString === '') {
+          // if there are no rules we don't want to add anything
+          ruleString += '-r "';
+        }
+        ruleString += ['TurnLeft', 'TurnRight', 'Continue', 'UTurn'][r];
+        ruleString += ' ';
+      }
+    }
+    if (ruleString !== '') {
+      ruleString = ruleString.substring(0, ruleString.length - 1) + '" ';
+    }
+    text += ruleString;
+
+    // add width, height, and wrap
+    text += '-w ' + BOARD.width + ' ';
+    text += '-h ' + BOARD.height + ' ';
+    if (BOARD.wrap) {
+      text += '-p ';
+    }
+
+    text += '-n 10000';
+
+    $('#haskell-text').html(text);
+  },
 
 	/**
 	 * Encodes the ant starting positions visible in the UI in base64. 
@@ -792,7 +846,6 @@ let UI = {
 		let tempH, tempW, tempS;
 		let tempM = urlParams.get('m');
 		let tempWrap = (urlParams.get('p') === ''); // param exists
-		console.log(tempWrap);
 
 		if (tempM) {
 			try {
@@ -1047,6 +1100,10 @@ $(document).ready(() => {
 	$('#reset').click(() => { UI.reset() });
 	$('#copy-url').click(() => {
 		document.getElementById('url-text').select();
+		document.execCommand('copy');
+	});
+	$('#copy-haskell').click(() => {
+		document.getElementById('haskell-text').select();
 		document.execCommand('copy');
 	});
 
