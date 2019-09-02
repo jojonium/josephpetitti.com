@@ -45,7 +45,7 @@ const turnTable = [[1, 12, 0, 9], [6, 2, 5, 0], [0, 11, 3, 10], [7, 0, 8, 4]];
 const tailTable = [1, 2, 3, 4, 2, 2, 4, 4, 1, 3, 3, 1];
 
 // initialize as globals so they persist beyond the board
-const moveQueue = [dirsEnum.up];
+let moveQueue = [dirsEnum.up];
 let paused = true;
 let lost = false;
 
@@ -71,7 +71,7 @@ class Point {
 
 class FruitPoint extends Point {
   /**
-   *
+   * Represents a point with a fruit in it
    * @param {number} x x coordinate of this fruit
    * @param {number} y y coordinate of this fruit
    * @param {string} [color] color of this fruit
@@ -94,6 +94,24 @@ class SnakePoint extends FruitPoint {
   constructor(x, y, color, dir) {
     super(x, y, color);
     this.dir = dir;
+  }
+}
+
+class BgAnimation {
+  /**
+   * @param {string} newColor color to change the background to
+   * @param {number} x the x coordinate where the animation starts
+   * @param {number} y the y coordinate where the animation starts
+   * @param {number} [duration] how long the animation should last in
+   * milliseconds
+   * @constructor
+   */
+  constructor(newColor, x, y, duration = 1000) {
+    this.newColor = newColor;
+    this.duration = duration;
+    this.x = x;
+    this.y = y;
+    this.startTime = new Date().valueOf();
   }
 }
 
@@ -132,6 +150,11 @@ class Board {
     /** @type Array<FruitPoint> */
     this.fruits = [];
     this.placeFruit();
+
+    // initialize background colors
+    this.bgColor = "#bbbbbb";
+    /** @type {Array<BgAnimation>} */
+    this.bgAnimations = [];
 
     // create the canvas
     const canvas = document.createElement("canvas");
@@ -192,13 +215,13 @@ class Board {
     }
 
     p.color =
-      "rgb(" +
-      Math.floor(Math.random() * 200) +
+      "hsl(" +
+      Math.floor(Math.random() * 360) +
       ", " +
-      Math.floor(Math.random() * 200) +
-      ", " +
-      Math.floor(Math.random() * 200) +
-      ")";
+      (80 + Math.floor(Math.random() * 20)) +
+      "%, " +
+      (20 + Math.floor(Math.random() * 80)) +
+      "%)";
     // add the point to the fruits list
     this.fruits.push(p);
 
@@ -313,15 +336,44 @@ class Board {
    * @return {Board} this, so it can be chained
    */
   drawBackground() {
-    // TODO make this look better
     this.ctx.save();
-    this.ctx.fillStyle = "#bbbbbb";
+
+    // fill in the background with the default color behind all the animations
+    this.ctx.fillStyle = this.bgColor;
     this.ctx.fillRect(
       0,
       0,
       this.width * this.squareSize,
       this.height * this.squareSize
     );
+
+    // animate a frame for each of the animations
+    for (let i = this.bgAnimations.length - 1; i >= 0; --i) {
+      let delta =
+        (new Date().valueOf() - this.bgAnimations[i].startTime) /
+        this.bgAnimations[i].duration;
+
+      this.ctx.fillStyle = this.bgAnimations[i].newColor;
+      this.ctx.beginPath();
+      this.ctx.arc(
+        this.bgAnimations[i].x * this.squareSize,
+        this.bgAnimations[i].y * this.squareSize,
+        Math.sqrt(this.width * this.width + this.height * this.height) *
+          this.squareSize *
+          delta,
+        0,
+        2 * Math.PI,
+        false
+      );
+      this.ctx.fill();
+
+      //remove the animation if its time is up
+      if (delta >= 1) {
+        this.bgColor = this.bgAnimations[i].newColor;
+        this.bgAnimations.splice(i, 1);
+      }
+    }
+
     this.ctx.restore();
 
     return this;
@@ -405,6 +457,25 @@ class Board {
     // iterate backwards through fruits so we can remove one while traversing
     for (let i = this.fruits.length - 1; i >= 0; --i) {
       if (this.fruits[i].x === newX && this.fruits[i].y === newY) {
+        // add animation starting where the fruit was
+        // get a new color that kind of matches the old one
+        const toks = this.fruits[i].color.replace(/[)(hsl% ]/g, "").split(",");
+        const newBgColor =
+          "hsl(" +
+          toks[0] +
+          ", " +
+          (+toks[1] - 50) +
+          "%, " +
+          Math.max(+toks[2] - 50, 20) +
+          "%)";
+        this.bgAnimations.unshift(
+          new BgAnimation(
+            newBgColor,
+            this.fruits[i].x,
+            this.fruits[i].y,
+            Math.pow(Math.random() * 30 + 10, 2) + 400
+          )
+        );
         this.score++; // add a score for eating it
         newColor = this.fruits[i].color; // remember the color for later
         this.fruits.splice(i, 1); // remove this fruit from reality
@@ -544,6 +615,7 @@ const setup = (w = 10, h = 10) => {
   gSquareSize = Math.floor(
     document.getElementById("main").clientWidth / (w * 1.15)
   );
+  moveQueue = [dirsEnum.up];
   // set other globals
   gWidth = w;
   gHeight = h;
@@ -567,6 +639,7 @@ const reset = () => {
     setup();
   } else {
     document.getElementById("canvas").remove();
+    moveQueue = [dirsEnum.up];
     BOARD = new Board(gWidth, gHeight, gSquareSize, gGapSize);
   }
 };
