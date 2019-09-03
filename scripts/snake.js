@@ -94,6 +94,8 @@ class SnakePoint extends FruitPoint {
   constructor(x, y, color, dir) {
     super(x, y, color);
     this.dir = dir;
+    /** @type {HTMLCanvasElement} */
+    this.bodyCanvas = null;
   }
 }
 
@@ -260,10 +262,11 @@ class Board {
    * @param {string} id the ID of the HTML img element containing the image
    * @param {Direction} dir the direction the image should be facing
    * @param {string} [color] the color to blend with the image
-   * @return {Board} this, so it can be chained
+   * @return {HTMLCanvasElement} the temp canvas with the image drawn in it
    */
   drawImage(x, y, id, dir = dirsEnum.up, color = "red") {
     // get the right image from the cache
+    /** @type {HTMLCanvasElement} */
     const tempCanvas = imgCache[id][(dir - 1) % 4];
     const tempCtx = tempCanvas.getContext("2d");
 
@@ -274,7 +277,7 @@ class Board {
 
     // convert tempCanvas to bitmap and draw it into the normal canvas
     this.ctx.drawImage(tempCanvas, x * this.squareSize, y * this.squareSize);
-    return this;
+    return tempCanvas;
   }
 
   /**
@@ -282,7 +285,6 @@ class Board {
    * @return {Board} this, so it can be chained
    */
   drawSnakeHead() {
-    // TODO make this look better
     // draw the face with the right color
     this.drawImage(
       this.snakeHead.x,
@@ -303,14 +305,29 @@ class Board {
   }
 
   drawSnakeBody() {
-    // TODO make this look better
     // draw each segment with the right color
     for (const b of this.snakeBodies) {
-      let imgID = "snake-segment";
-      if (b.dir > dirsEnum.left) {
-        imgID = "snake-segment-turning";
+      if (b.bodyCanvas === null) {
+        // create a cached canvas for this SnakePoint if it doesn't have one
+        b.bodyCanvas = document.createElement('canvas');
+        b.bodyCanvas.width = this.squareSize;
+        b.bodyCanvas.height = this.squareSize;
+        const tempCtx = b.bodyCanvas.getContext("2d");
+
+        // draw the uncolored image in
+        let imgID = "snake-segment";
+        if (b.dir > dirsEnum.left) {
+          imgID = "snake-segment-turning";
+        }
+        tempCtx.drawImage(imgCache[imgID][(b.dir - 1) % 4], 0, 0);
+
+        // blend with color
+        tempCtx.globalCompositeOperation = "source-in";
+        tempCtx.fillStyle = b.color;
+        tempCtx.fillRect(0, 0, this.squareSize, this.squareSize);
       }
-      this.drawImage(b.x, b.y, imgID, b.dir, b.color);
+      // draw the cached image into the real canvas
+      this.ctx.drawImage(b.bodyCanvas, b.x * this.squareSize, b.y * this.squareSize);
     }
   }
 
@@ -319,7 +336,6 @@ class Board {
    * @return {Board} this, so it can be chained
    */
   drawSnakeTail() {
-    // TODO make this look better
     this.drawImage(
       this.snakeTail.x,
       this.snakeTail.y,
@@ -348,6 +364,8 @@ class Board {
     );
 
     // animate a frame for each of the animations
+    // TODO known bug: if one animation starts and finishes while another is
+    // overall background color will be messed up
     for (let i = this.bgAnimations.length - 1; i >= 0; --i) {
       let delta =
         (new Date().valueOf() - this.bgAnimations[i].startTime) /
@@ -356,8 +374,8 @@ class Board {
       this.ctx.fillStyle = this.bgAnimations[i].newColor;
       this.ctx.beginPath();
       this.ctx.arc(
-        this.bgAnimations[i].x * this.squareSize,
-        this.bgAnimations[i].y * this.squareSize,
+        (this.bgAnimations[i].x + 0.5) * this.squareSize,
+        (this.bgAnimations[i].y + 0.5) * this.squareSize,
         Math.sqrt(this.width * this.width + this.height * this.height) *
           this.squareSize *
           delta,
@@ -385,7 +403,6 @@ class Board {
    * @return {Board} this, so it can be chained
    */
   drawFruit(p) {
-    // TODO make this look better
     this.ctx.fillStyle = p.color;
     this.ctx.strokeStyle = "black";
 
@@ -511,11 +528,9 @@ class Board {
       if (this.score >= this.width * this.height) {
         alert("You win!");
         lost = true;
-        // TODO make this nicer
       }
 
       // check to see if you've gone out of bounds
-      // TODO make this cleaner
       if (
         // out of bounds
         this.snakeHead.x >= this.width ||
@@ -610,6 +625,8 @@ const cacheImages = (ss, gs) => {
  * @param {number} [h] input height of board in cells, optional
  */
 const setup = (w = 10, h = 10) => {
+  lost = false;
+  paused = true;
   document.getElementById("play-again").style.display = "none";
   // set squareSize big enough to fill the body well
   gSquareSize = Math.floor(
@@ -702,6 +719,7 @@ document.getElementById("custom").addEventListener("click", () => {
     (document.getElementById("input-height"));
   setup(iw.valueAsNumber, ih.valueAsNumber);
 });
+document.getElementById("play-again").addEventListener("click", reset);
 
 function update() {
   if (BOARD) {
