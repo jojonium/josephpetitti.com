@@ -250,7 +250,7 @@
         pattern</a>, which repeats after 165,000 iterations.
       </p>
 
-      <h2 id="haskell-ant">Haskell Ant</h2>
+      <h1 id="haskell-ant">Haskell Ant</h1>
 
       <p>
         I reimplemented Langton's Ant in the Haskell programming language for
@@ -261,6 +261,25 @@
         faster because it doesn't display every step along the way, only the
         final board after a given number of iterations.
       </p>
+      
+      <p>
+        Haskell Ant is configured through a command line interface, which can be
+        hard to visualize. Instead, you can use the web version on this page to
+        design an ant configuration and then just copy this conveniently
+        auto-formatted command to try it in Haskell:
+      </p>
+
+      <div class="box">
+        <div id="haskell-box">
+          <button id="copy-haskell">Copy</button>
+          <textarea id="haskell-text" rows="4" cols="90" readonly></textarea>
+        </div>
+      </div>
+
+      <p>
+        Just change the <code>-n</code> argument to specify a different number
+        of iterations to do before printing the result
+    </p>
     </main>
 
   <!-- Footer -->

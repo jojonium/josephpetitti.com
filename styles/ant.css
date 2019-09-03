@@ -112,15 +112,15 @@ div.swatch-wrapper:hover {
   box-shadow: inset 0 0 50px 50px rgba(255, 255, 255, 0.2);
 }
 
-div#url-box {
+div#url-box, div#haskell-box {
   display: flex;
 }
 
-div#url-box button {
+div#url-box button, div#haskell-box button {
   flex: 0 1 100px;
 }
 
-div#url-box textarea {
+div#url-box textarea, div#haskell-box textarea {
   flex: 1 1 100%;
   margin: 0 10px;
   font-family: monospace;
