@@ -73,7 +73,7 @@
       <h1 class="title">DICE</h1>
 
       <form class="normal" style="text-align: center;">
-        <h2>Roll <input type="text" name="num-dice" id="num-dice" class="die-input" maxlength="4">d<input type="text" name="label" id="label" class="die-input" maxlength="5"></h2>
+        <h2>Roll <input type="number" name="num-dice" id="num-dice" class="die-input" maxlength="4">d<input type="number" name="label" id="label" class="die-input" maxlength="5"></h2>
         <button id="go" type="button">Go!</button>
       </form>
 
@@ -101,39 +101,7 @@
         }
       </style>
 
-      <script>
-        function go() {
-          var numDice = $("#num-dice").val();
-          var label = $("#label").val();
-          if (isNaN(parseInt(numDice, 10)) || isNaN(parseInt(label, 10))) {
-            alert("You must enter two numbers");
-            $("#num-dice").val("");
-            $("#label").val("");
-            return false;
-          }
-          var result = "<p id='result'>Result of rolling " + numDice + "d" + label + ":\t";
-          var temp;
-          var total = 0;
-          for(var i = 0; i < numDice; i++) {
-            temp = Math.floor(Math.random() * label) + 1;
-            total += temp;
-            result += "\t" + "<span class='die'>" + temp + "</span>";
-          }
-          result += "<br>Total: " + total + "</p>";
-          console.log(result);
-          $("#result").html(result);
-        };
-
-        $("#go").click(function() {
-          go();
-        });
-        $(document).keypress(function(e) {
-          if(e.which == 13) {
-            go();
-          }
-        });
-
-      </script>
+      <script src="scripts/dice.js"></script>
     </main>
 
   <!-- Footer -->
