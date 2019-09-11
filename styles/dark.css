@@ -280,11 +280,13 @@ figure {
 figure.float.right {
   float: right;
   width: 40%;
+  margin-right: 0em;
 }
 
 figure.float.left {
   float: left;
   width: 40%;
+  margin-left: 0em;
 }
 
 figure.full-width {
