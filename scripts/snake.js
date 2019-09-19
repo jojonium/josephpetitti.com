@@ -485,12 +485,19 @@ class Board {
           "%, " +
           Math.max(+toks[2] - 50, 20) +
           "%)";
+        // add a bit of randomness to the animation duration
+        let dur = Math.pow(Math.random() * 30 + 10, 2) + 400;
+        // don't let an animation start and finish while another one is still
+        // playing, because it would cause a bug with how the background is drawn
+        if (this.bgAnimations.length > 0) {
+          dur = Math.max(dur, this.bgAnimations[0].duration);
+        }
         this.bgAnimations.unshift(
           new BgAnimation(
             newBgColor,
             this.fruits[i].x,
             this.fruits[i].y,
-            Math.pow(Math.random() * 30 + 10, 2) + 400
+            dur
           )
         );
         this.score++; // add a score for eating it
