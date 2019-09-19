@@ -531,7 +531,7 @@ let UI = {
 
     // add antString
     let antString = '';
-    let tempMap = {u: 'Up', d: 'Down', l: 'left', r: 'Right'};
+    let tempMap = {u: 'Up', d: 'Down', l: 'Left', r: 'Right'};
 		$('.an-ant').each((i, el) => {
       if (antString === '') {
         // if there are no ants we don't want to add anything
