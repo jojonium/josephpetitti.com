@@ -124,5 +124,13 @@
 			<pubDate>Wed, 18 Sep 2019 09:49:26 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/how-to-climb-mount-fuji</guid>
 		</item>
+
+		<item>
+			<title>Leap seconds are actually a terrible idea</title>
+			<link>https://josephpetitti.com/blog/leap-seconds-are-actually-a-terrible-idea</link>
+			<description>About once every four years the powers that be slide an extra day into the calendar between February 28th and March 1st, to ensure that our timekeeping system stays in sync with the actual rotation of the Earth. We call this a leap year, and the current system of deciding when to add these extra days has remained unchanged for the past 437 years. However, recently Coordinated Universal Time has started adding leap seconds to particular years as well, a phenomenon which is causing all sorts of trouble for timekeeping around the world.</description>
+			<pubDate>Wed, 25 Sep 2019 06:34:24 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/leap-seconds-are-actually-a-terrible-idea</guid>
+		</item>
 	</channel>
 </rss>

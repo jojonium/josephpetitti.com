@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Leap seconds are actually a terrible idea</title>
+    <meta name="description" content="About once every four years the powers that be slide an extra day into the calendar between February 28th and March 1st, to ensure that our timekeeping system stays in sync with the actual rotation of the Earth. We call this a leap year, and the current system of deciding when to add these extra days has remained unchanged for the past 437 years. However, recently Coordinated Universal Time has started adding leap seconds to particular years as well, a phenomenon which is causing all sorts of trouble for timekeeping around the world." />
+    <meta property="og:title" content="Leap seconds are actually a terrible idea" />
+    <meta property="og:description" content="About once every four years the powers that be slide an extra day into the calendar between February 28th and March 1st, to ensure that our timekeeping system stays in sync with the actual rotation of the Earth. We call this a leap year, and the current system of deciding when to add these extra days has remained unchanged for the past 437 years. However, recently Coordinated Universal Time has started adding leap seconds to particular years as well, a phenomenon which is causing all sorts of trouble for timekeeping around the world." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/prague-astronomical-clock.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/leap-seconds-are-actually-a-terrible-idea" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.3" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-09-25">September 25, 2019</span>
+
+      <h1 class="title">Leap seconds are actually a terrible idea</h1>
+
+      <p>
+        About once every four years the powers that be slide an extra day into
+        the calendar between February 28th and March 1st, to ensure that our
+        timekeeping system stays in sync with the actual rotation of the Earth.
+        We call this a leap year, and the current system of deciding when to add
+        these extra days has remained unchanged for the past 437 years. However,
+        recently Coordinated Universal Time has started adding leap seconds to
+        particular years as well, a phenomenon which is causing all sorts of
+        trouble for timekeeping around the world.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/prague-astronomical-clock.jpg">
+          <img src="images/th_prague-astronomical-clock.jpg" alt="The Prague
+          Astronomical Clock in the Czech Republic">
+        </a>
+        <figcaption>
+          Installed in 1410, the Prague Astronomical Clock, the oldest
+          still-operating clock in the world, predates the modern leap year
+          system
+        </figcaption>
+      </figure>
+
+      <h2 id="how-do-we-measure-time">
+        How do we measure time?
+      </h2>
+
+      <p>
+        Of all the fundamental units of the universe (length, mass, temperature,
+        etc.) time is the one we can measure most accurately. <a href="https://www.nist.gov/sites/default/files/documents/2016/12/07/sp330.pdf">According
+        to the International System of Units</a>, the base unit is defined exactly
+        as so:
+      </p>
+
+      <p class="quote block">The second is the duration of 9 192 631 770 periods
+      of the radiation corresponding to the transition between the two hyperfine
+      levels of the ground state of the cesium 133 atom</p>
+
+      <p>
+        This sounds complex, but we can actually measure these radiation periods
+        very precisely with atomic clocks. The <a href="https://www.nist.gov/news-events/news/2014/04/nist-launches-new-us-time-standard-nist-f2-atomic-clock">NIST-F2
+        caesium fountain clock</a> used by the National Institute of Standards
+        and Technology in the United States will "neither gain nor lose one
+        second in about 300 million years".
+      </p>
+
+      <p>
+        The <a href="https://iag.dgfi.tum.de/fileadmin/IAG-docs/Travaux2013/08_BIPM.pdf">International Bureau of Weights and Measures</a>
+        calculates a weighted average of the time kept by over 400 atomic clocks
+        around the world, called Iternational Atomic Time (TAI). Because it is a
+        weighted average, TAI is an order of magnitude more stable than any of
+        its constituent clocks.
+      </p>
+
+      <p>
+        That should be the end of the story, right? Wrong. We have the
+        technology to measure time so precisely that we won't be off by more
+        than a second even in billions of years, but someone thought it would be
+        a good idea to arbitrarily add or subtract seconds from the offical
+        count once in a while anyway. Enter the leap second.
+      </p>
+
+      <h2 id="what-are-leap-seconds-and-where-do-they-come-from">
+        What are leap seconds and where do they come from?
+      </h2>
+
+      <p>
+        It has been known since ancient times that one year does not equal
+        exactly 365 days, or even exactly the 365.25 days that inserting a
+        February 29th every four years would get you. Because of this, Pope
+        Gregory XIII introduced the modern system of spacing out leap years in
+        1582, making the year exactly 265.2425 days. Summarized by the
+        <a href="https://aa.usno.navy.mil/faq/docs/calendars.php">United States
+        Naval Observatory</a>, this system is:
+      </p>
+
+      <p class="quote block">Every year that is exactly divisible by four is
+      a leap year, except for years that are exactly divisible by 100, but these
+      centurial years are leap years if they are exactly divisible by 400. For
+      example, the years 1700, 1800, and 1900 are not leap years, but the year
+      2000 is.</p>
+
+      <p>
+        This system is great. It approximates the actual length of the year so
+        closely that it will be off by one day approximately every 7,700 years
+        while being simple enough that children can understand and remember it.
+        Most importantly it's constant and predictable, qualities that leap
+        seconds do not share, but we'll come back to that later.
+      </p>
+
+      <p>
+        Although we can measure the length of a second almost perfectly, the
+        actual length of a day is not exactly 86,400 seconds. The actual mean
+        solar day is about 0.001 seconds longer than this, and slowly getting
+        longer due to the Moon slowing the Earth's rotation. Because of this,
+        the sun will no longer be directly overhead at latitude and longitude
+        0.00000 at 12:00:00 TAI (noon according to International Atomic Time).
+        TAI and solar-based standards like Greenwich Mean Time would slowly
+        drift apart. To account for this drift, a new time standard called
+        Coordinated Universal Time (UTC) was introduced in 1972.
+      </p>
+
+      <p>
+        By January 1st, 1972 TAI had already drifted ahead of Greenwich Mean
+        Time by ten seconds. UTC was introduced as being exactly ten seconds
+        behind TAI. The International Earth Rotation and Reference Systems
+        Service (IERS) also introduced a system for future adjustments to keep
+        UTC in sync with solar time.
+      </p>
+
+      <p>
+        Every once in a while a UTC day does not last 86,400 seconds. Instead,
+        IERS either inserts one extra second between UTC 23:59:59 and 00:00:00
+        or removes second 23:59:59 on a particular date. These dates are usually
+        <a href="https://www.itu.int/dms_pubrec/itu-r/rec/tf/R-REC-TF.460-6-200202-I!!PDF-E.pdf">June 30 or December 31</a>
+        and are <a href="https://hpiers.obspm.fr/eoppc/bul/bulc/bulletinc.49">decided six months in advance</a>.
+        These extra or deleted seconds are known as leap seconds.
+      </p>
+
+      <p>
+        Since the introduction of UTC 27 positive leap seconds have been added,
+        meaning that UTC lags behind TAI by <a href="https://hpiers.obspm.fr/iers/bul/bulc/bulletinc.58">37 seconds</a>.
+        The most recent leap second was included on December 31st, 2016.
+      </p>
+
+      <h2 "the-problem">The problem</h2>
+
+      <p>
+        At first glance this system seems fine, an extra second once in a while
+        to keep our clocks in sync with the sun doesn't seem like too much to
+        ask. But leap seconds actually wreak all sorts of havoc for many
+        industries and applications around the world.
+      </p>
+
+      <p>
+        Many computers internally count time as the number of seconds that have
+        passed since 00:00:00 January 1st, 1970. This is known as the Unix
+        epoch, and it is very easy for computers to compute and work with. For
+        human-readable dates and times they usually convert this Unix epoch time
+        to UTC. Because leap years are constant and predictable it's very easy
+        to incorporate them into this conversions, but leap seconds are not.
+        IERS only gives notice that a leap second will occur about six months in
+        advance, so for any date more than six months in the future there's no
+        guarantee your conversion will be accurate when that actual date rolls
+        around.
+      </p>
+
+      <p>
+        The GPS constellation has a system for broadcasting the fact that a leap
+        second will occur in the next few months, but <a href="gpsworld.com/leap-second-implementation-confuses-some-receivers/">many GPS receivers</a>
+        incorrectly <a href="www.guralp.com/howtos/leap-second-problem-with-older-gps-receivers.shtml">set their clocks forward immediately</a> upon receiving this
+        message instead of waiting for the actual date. A GPS receiver's clock
+        being off by one second can cause a location error of up to 460 meters.
+      </p>
+
+      <p>
+        The Network Time Protocol (NTP) includes a flag that indicates a flag
+        that informs the user that a leap second is imminent. <a href="https://tma.ifip.org/2016/papers/tma2016-final27.pdf">A study</a> found that
+        between 2008 and 2016 not once have all NTP servers set this flag
+        correctly, leading to servers broadcasting an incorrect time for up to a
+        day after the leap second insertion.
+      </p>
+
+      <p>
+        Even Cloudflare <a href="https://blog.cloudflare.com/how-and-why-the-leap-second-affected-cloudflare-dns/">experiences leap second-related problems</a>. The December
+        2016 leap second caused a difference between two timestamps from the Go
+        programming language to be negative, causing HTTP requests and DNS
+        queries to encounter errors.
+      </p>
+
+      <p>
+        To avoid having to deal with leap second issues, the Intercontinental
+        Exchange, parent of the New York Stock Exchange, simply <a href="https://web.archive.org/web/20150505061854/https://www.theice.com/leap-second">shut down operations</a>
+        for 61 minutes surrounding the June 2015 leap second.
+      </p>
+
+      <p>
+        <a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html">Google</a>
+        and <a href="https://aws.amazon.com/blogs/aws/look-before-you-leap-the-coming-leap-second-and-aws/">Amazon</a>
+        servers now implement a "leap smear" in which many seconds over a period
+        of time are slightly extended rather than inserting a whole entire
+        second at the end of the day. This means these servers' clocks are
+        slightly off from the rest of the world during this time period, leading
+        to new problems.
+      </p>
+
+      <p>
+        Basically, because leap seconds are arbitrary and impossible to predict
+        they're often incorrectly and inconsistently implemented by various
+        computer systems, causing a nightmare for any system that relies on
+        accurate timekeeping.
+      </p>
+
+      <h2 id="whats-the-alternative">What's the alternative?</h2>
+
+      <p>
+        Instead of using leap seconds we could just... not. Seriously, we don't
+        actually need leap seconds and all they do is cause problems.
+      </p>
+
+      <p>
+        The stated goal of ensuring that the sun culminates at 12:00:00 UTC in
+        Greenwich isn't even achieved by leap seconds since noon deviates by up
+        to 16 minutes over the course of the year anyway. If people are willing
+        to accept yearly adjustments of an entire hour from daylight savings
+        time, solar noon being off by 37 seconds will not bother them much.
+        Within the area of one time zone solar noon can vary quite a bit.
+      </p>
+
+      <p>
+        Without leap seconds the difference between solar noon and IAT noon in
+        Greenwich would likely not exceed half an hour for over a thousand
+        years. At this point they can just adjust the time zone back an hour to
+        make up for the change. This way local time stays close to the sun
+        without disturbing the absolute time of IAT.
+      </p>
+
+      <p>
+        We already have a nearly perfect, predictable, system of measuring time:
+        International Atomic Time. There's no reason to use a system tainted by
+        unpredictable random adjustments just to keep the culmination of the sun
+        at 12:00 when no one really cares about that it doesn't do it anyway.
+        Just use IAT for anything important or precise, show local time for
+        human-friendly times, and throw UTC in the trash where it belongs.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
