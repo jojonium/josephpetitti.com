@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Quines in JavaScript</title>
+    <meta name="description" content="Because programmers have nothing better to do with their free time, they often amuse themselves by finding clever solutions to difficult logic problems. One such problem is called a 'quine,' and it goes something like this: write the shortest possible program the prints its own source code." />
+    <meta property="og:title" content="Quines in JavaScript" />
+    <meta property="og:description" content="Because programmers have nothing better to do with their free time, they often amuse themselves by finding clever solutions to difficult logic problems. One such problem is called a 'quine,' and it goes something like this: write the shortest possible program the prints its own source code." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/turtle-burger.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/quines-in-javascript" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.4" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-09-29">September 29, 2019</span>
+
+      <h1 class="title">Quines in JavaScript</h1>
+
+      <p>
+        Because programmers have nothing better to do with their free time, they
+        often amuse themselves by finding clever solutions to difficult logic
+        problems. One such problem is called a "quine," and it goes something
+        like this: write the shortest possible program the prints its own source
+        code.
+      </p>
+
+      <p>
+        It would be trivial to just read the file that the program is saved as
+        and output that, but most programmers would consider this to be
+        cheating. With this restriction in place creating quines becomes an
+        interesting challenge that is more complicated than it initially
+        appears.
+      </p>
+
+      <p>
+        If you've never tried to create a quine in your favorite programming
+        language, I highly recommend you try it before reading further. There's
+        something magical about figuring out how to do it for the first time.
+        Spend some time tinkering until you solve it, then come back here.
+      </p>
+
+      <p>
+        Don't look below this turtle burger if you don't want me to spoil your
+        discovery by telling you how to make a quine.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/turtle-burger.jpg">
+          <img src="images/th_turtle-burger.jpg" alt="A rare but delicious turtle burger">
+        </a>
+        <figcaption>
+          This image hides the rest of the article so you don't get spoilered if
+          you haven't created your own quine yet
+        </figcaption>
+      </figure>
+
+      <p>
+        Here's the first quine I made today, in JavaScript:
+      </p>
+
+      <code class="block">s=console.log;r=x=&gt;x.replace(/\\/g,"\\\\").replace(/"/g,"\\\"");u="s(\"s=console.log;r=\"+r+\";u=\\\"\"+r(u)+\"\\\";\"+u);";s("s=console.log;r="+r+";u=\""+r(u)+"\";"+u);</code>
+
+      <p>
+        The actual program doesn't have any newlines, but here it is broken up
+        into separate statements with some syntax highlighting to make it easier
+        to read:
+      </p>
+
+      <code class="block"><span style="color: #d0d0d0">s=console.log;</span>
+<span style="color: #d0d0d0">r=x=&gt;x.replace(</span><span style="color: #3066be">/\\/g</span><span style="color: #d0d0d0">,</span><span style="color: #f1a208">&quot;\\\\&quot;</span><span style="color: #d0d0d0">).replace(</span><span style="color: #3066be">/&quot;/g</span><span style="color: #d0d0d0">,</span><span style="color: #f1a208">&quot;\\\&quot;&quot;</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">u=</span><span style="color: #f1a208">&quot;s(\&quot;s=console.log;r=\&quot;+r+\&quot;;u=\\\&quot;\&quot;+r(u)+\&quot;\\\&quot;;\&quot;+u);&quot;</span><span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">s(</span><span style="color: #f1a208">&quot;s=console.log;r=&quot;</span><span style="color: #d0d0d0">+r+</span><span style="color: #f1a208">&quot;;u=\&quot;&quot;</span><span style="color: #d0d0d0">+r(u)+</span><span style="color: #f1a208">&quot;\&quot;;&quot;</span><span style="color: #d0d0d0">+u);</span></code>
+
+      <p>
+        At 170 characters in length this is definitely not the shortest
+        possible, but I think it's not bad for a first attempt. Let's walk
+        through how it works.
+      </p>
+
+      <p>
+        The first statement just sets a one letter variable to equal the
+        function <code>console.log</code>, so that I don't have to retype it
+        later. Normally in JavaScript you declare variables with
+        <code>let</code> or <code>const</code>, but you don't actually need to.
+        It will still run just fine as long as you're not in strict mode.
+      </p>
+
+      <p>
+        Line 2 declares an arrow function that takes an argument,
+        <code>x</code>, and performs two regular expression find and replace
+        operations on it. It replaces a single backslash with two backslashes,
+        and a quotation mark with <code>\"</code>. This essentially "unescapes"
+        a string, and will be useful later.
+      </p>
+
+      <p>
+        The third line is a complex and ugly string containing a bunch of
+        escaped quotation marks and backslashes. This is the contents of the
+        final <code>console.log</code> as a JavaScript string.
+      </p>
+
+      <p>
+        The final line actually calls <code>console.log</code>, printing the
+        source code. When the function <code>r</code> is concatenated onto a
+        string literal, JavaScript calls the <code>Function.toString()</code>
+        method on it to coerce it into being a string. This inserts the source
+        code of <code>r</code> into the string that is printed. Finally,
+        <code>r(u)</code> unescapes the string <code>u</code> so it is printed
+        with backslashes exactly as it appears in the source code.
+      </p>
+
+      <p>
+        This quine works, but it's still a little long. With a bit more time I
+        managed to shorten it to 130 characters:
+      </p>
+
+      <code class="block">r=x=&gt;x.replace(/(["\\])/g,"\\$1");u="console.log(\"r=\"+r+\";u=\\\"\"+r(u)+\"\\\";\"+u)";console.log("r="+r+";u=\""+r(u)+"\";"+u)</code>
+
+      <p>
+        Once again, here's a version with newlines and syntax highlighting so
+        it's easier to read:
+      </p>
+
+      <code class="block"><span style="color: #d0d0d0">r=x=&gt;x.replace(</span><span style="color: #3066be">/([&quot;\\])/g</span><span style="color: #d0d0d0">,</span><span style="color: #f1a208">&quot;\\$1&quot;</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">u=</span><span style="color: #f1a208">&quot;console.log(\&quot;r=\&quot;+r+\&quot;;u=\\\&quot;\&quot;+r(u)+\&quot;\\\&quot;;\&quot;+u)&quot;</span><span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">console.log(</span><span style="color: #f1a208">&quot;r=&quot;</span><span style="color: #d0d0d0">+r+</span><span style="color: #f1a208">&quot;;u=\&quot;&quot;</span><span style="color: #d0d0d0">+r(u)+</span><span style="color: #f1a208">&quot;\&quot;;&quot;</span><span style="color: #d0d0d0">+u)</span></code>
+
+      <p>
+        The first line is completely removed from this version, because I
+        realized it's shorted to just type out <code>console.log</code> twice.
+        The function <code>r</code> is shortened by combining the two
+        <code>replace()</code> calls into one, using a more complicated regular
+        expression that does the same thing as the two previous ones.
+      </p>
+
+      <p>
+        Because of these changes <code>u</code> is shorter, and I removed the
+        final semicolon from the end because it isn't strictly required.
+      </p>
+
+      <p>
+        I thought this was the shortest I could get this quine to be, but after
+        another couple hours of playing with it I was able to cut it all the way
+        down to just 36 characters. Behold the shortest JavaScript quine I could
+        come up with:
+      </p>
+
+      <code class="block">r=x=&gt;console.log(<span style="color: #f1a208">"r="</span>+r+<span style="color: #f1a208">";r()"</span>);r()</code>
+
+      <p>
+        I had a hunch the power of <code>Function.toString()</code> could be
+        abused to create a very short quine, and it turned out to be right.
+      </p>
+
+      <p>
+        First, <code>r</code> is declared as an arrow function. Note that it
+        takes one argument, even though this argument is never used. This is
+        because <code>r=x=&gt;...</code> is one character shorter than
+        <code>r=()=&gt;...</code> and still just as valid. Because all function
+        parameters are optional in non-strict JavaScript we don't even need to
+        pass anything to <code>r</code> when we call it later.
+      </p>
+
+      <p>
+        If an arrow function is only one statement you can omit the curly braces
+        around the body, so the body of this function is just the
+        <code>console.log</code> call. Once again <code>r</code> is converted
+        into a string through type coercion by concatenating it with a string
+        literal. At the end of the line <code>r()</code> is actually called,
+        causing our output to be printed.
+      </p>
+
+      <p>
+        This is the shortest JavaScript quine I could think of. A quick search
+        revealed that some very clever people have come up with even shorter
+        ones, but I think 36 characters is still a pretty good score.
+      </p>
+
+      <h2 id="bonus-content-other-cool-quines">
+        Bonus content: other cool quines
+      </h2>
+
+      <p>
+        You can make quines in almost any programming language, and even some
+        things that aren't really programming languages.
+      </p>
+
+      <p>
+        For example, it's <a href="https://research.swtch.com/zip">possible</a>
+        to make a quine out of a Lempel-Ziv compressed data stream, the format
+        used to define zip files. This means you can create a
+        <a href="/assets/r.zip">zip file</a> that recursively contains an
+        infinite number of copies of itself.
+      </p>
+
+      <p>
+        Here's a neat shell script quine:
+      </p>
+
+      <code class="block">#!/bin/cat</code>
+
+      <p>
+        If you make this script executable and run it, the shebang indicates
+        that the program it should be run with is <code>cat</code>. This
+        obviously just prints the file to the stdout, technically making it a
+        correct quine.
+      </p>
+
+      <p>
+        Finally, here's a quine I wrote in Haskell. It's not very good, but it
+        does work:
+      </p>
+
+      <code class="block">module Main where
+
+main = do putStr (s ++ (show s) ++ <span style="color: #f1a208">"\n"</span>)
+       where s = <span style="color: #f1a208">"module Main where\n\nmain = do putStr (s ++ (show s) ++ \"\\n\")\n       where s = "</span></code>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

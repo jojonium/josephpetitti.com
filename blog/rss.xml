@@ -132,5 +132,13 @@
 			<pubDate>Wed, 25 Sep 2019 06:34:24 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/leap-seconds-are-actually-a-terrible-idea</guid>
 		</item>
+
+		<item>
+			<title>Quines in JavaScript</title>
+			<link>https://josephpetitti.com/blog/quines-in-javascript</link>
+			<description>Because programmers have nothing better to do with their free time, they often amuse themselves by finding clever solutions to difficult logic problems. One such problem is called a "quine," and it goes something like this: write the shortest possible program the prints its own source code.</description>
+			<pubDate>Sun, 29 Sep 2019 07:31:16 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/quines-in-javascript</guid>
+		</item>
 	</channel>
 </rss>
