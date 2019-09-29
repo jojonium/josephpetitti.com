@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link href="styles/dark.css?v=1.0.4" rel="stylesheet" type="text/css">
 
-    <script src="scripts/jquery-3.3.1.min.js"></script>
     <script src="scripts/beta-bingo.js"></script>
   </head>
   <body>
@@ -92,6 +91,16 @@
         background-color: #004b6e;
       }
 
+      div.bbox.selected {
+        background-color: rgba(240, 153, 12, 0.9);
+        color: black;
+      }
+
+      div.bbox.missed {
+        background-color: rgba(83, 83, 83, 0.9);
+        color: #222222;
+      }
+
       div.bbox span {
         display: inline-block;
         vertical-align: middle;
@@ -135,7 +144,7 @@
         <div class="row">
           <div class="bbox" id="bb11"><span><span></div>
           <div class="bbox" id="bb12"><span><span></div>
-          <div class="bbox" id="bb13"><span>*Free Real Estate*</span></div>
+          <div class="bbox" id="bb13"><span><b>*Free Real Estate*</b></span></div>
           <div class="bbox" id="bb14"><span></span></div>
           <div class="bbox" id="bb15"><span></span></div>
         </div>
