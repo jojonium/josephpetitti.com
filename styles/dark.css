@@ -70,7 +70,7 @@ h1.title {
   font-family: "Montserrat", Lato, "Noto Sans", sans-serif;
   color: #8eabdb;
   text-align: center;
-  text-shadow: 3px 3px 4px black;
+  text-shadow: 3px 3px 0 black;
   margin: 2em auto 1em;
   font-size: 3em;
   letter-spacing: 0.05em;
