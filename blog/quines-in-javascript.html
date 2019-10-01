@@ -161,11 +161,11 @@
       <p>
         I thought this was the shortest I could get this quine to be, but after
         another couple hours of playing with it I was able to cut it all the way
-        down to just 36 characters. Behold the shortest JavaScript quine I could
+        down to just 35 characters. Behold the shortest JavaScript quine I could
         come up with:
       </p>
 
-      <code class="block">r=x=&gt;console.log(<span style="color: #f1a208">"r="</span>+r+<span style="color: #f1a208">";r()"</span>);r()</code>
+      <code class="block">r=x=&gt;console.log(<span style="color: #f1a208">`r=</span><span style="color: #3066be">${r}</span><span style="color: #f1a208">;r()`</span>);r()</code>
 
       <p>
         I had a hunch the power of <code>Function.toString()</code> could be
@@ -185,15 +185,15 @@
         If an arrow function is only one statement you can omit the curly braces
         around the body, so the body of this function is just the
         <code>console.log</code> call. Once again <code>r</code> is converted
-        into a string through type coercion by concatenating it with a string
-        literal. At the end of the line <code>r()</code> is actually called,
-        causing our output to be printed.
+        into a string through type coercion, this time by inserting it into a
+        template literal. At the end of the line <code>r()</code> is actually
+        called, causing our output to be printed.
       </p>
 
       <p>
         This is the shortest JavaScript quine I could think of. A quick search
         revealed that some very clever people have come up with even shorter
-        ones, but I think 36 characters is still a pretty good score.
+        ones, but I think 35 characters is still a pretty good score.
       </p>
 
       <h2 id="bonus-content-other-cool-quines">
