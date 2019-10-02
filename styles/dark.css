@@ -40,7 +40,7 @@ main::before {
 div.fade-box, main::before {
   background-image: linear-gradient(90deg,#1f0053 0,rgba(31,0,83,.98556487) .97%,rgba(31,0,83,.9451312) 2.07833333%,rgba(31,0,83,.88300656) 3.29666667%,rgba(31,0,83,.80349854) 4.60166667%,rgba(31,0,83,.71091472) 5.96666667%,rgba(31,0,83,.60956268) 7.365%,rgba(31,0,83,.50375) 8.77166667%,rgba(31,0,83,.39778426) 10.16%,rgba(31,0,83,.29597303) 11.505%,rgba(31,0,83,.20262391) 12.78%,rgba(31,0,83,.12204446) 13.95833333%,rgba(31,0,83,.05854227) 15.01666667%,rgba(31,0,83,.01642493) 15.92833333%,rgba(31,0,83,0) 16.66666667%,rgba(31,0,83,0) 83.33333333%,rgba(31,0,83,.01642493) 84.07166667%,rgba(31,0,83,.05854227) 84.98333333%,rgba(31,0,83,.12204446) 86.04166667%,rgba(31,0,83,.20262391) 87.22%,rgba(31,0,83,.29597303) 88.495%,rgba(31,0,83,.39778426) 89.84%,rgba(31,0,83,.50375) 91.22833333%,rgba(31,0,83,.60956268) 92.635%,rgba(31,0,83,.71091472) 94.03333333%,rgba(31,0,83,.80349854) 95.39833333%,rgba(31,0,83,.88300656) 96.70333333%,rgba(31,0,83,.9451312) 97.92166667%,rgba(31,0,83,.98556487) 99.03%,#1f0053),
   linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%),
-  url('../images/subtle-white-feathers.png');
+  url('../images/brushed-alum-dark.png');
 }
 
 div.fade-box {
@@ -71,7 +71,7 @@ h1.title {
   color: #8eabdb;
   text-align: center;
   text-shadow: 3px 3px 0 black;
-  margin: 2em auto 1em;
+  margin: 1.5em auto;
   font-size: 3em;
   letter-spacing: 0.05em;
 }
@@ -138,6 +138,9 @@ span.gpg {
   font-size: .65em;
 }
 
+img#logo {
+  max-height: 8em;
+}
 
 /* Header */
 header {
@@ -145,6 +148,11 @@ header {
   width: 100%;
   display: flex;
   z-index: 2;
+  background-color: none;
+  transition: background-color .5s;
+}
+
+header:hover {
   background-color: #005377;
 }
 
@@ -205,7 +213,7 @@ header nav ul li ul {
   z-index: 1;
   max-height: 0;
   overflow: hidden;
-  transition: max-height .8s, box-shadow .3s;
+  transition: max-height .5s, box-shadow .3s;
   transition-timing-function: ease;
   font-weight: normal;
 }
@@ -413,6 +421,18 @@ footer section ul.icons li {
 }
 
 /* Mobile */
+@media screen and (max-width: 1200px) {
+  div.fade-box, main::before {
+    background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%),
+    url('../images/brushed-alum-dark.png');
+  }
+
+  main::before {
+    width: 100%;
+    left: 0;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   h1.title {
     font-size: 2em;
@@ -420,6 +440,7 @@ footer section ul.icons li {
 
   header {
     font-size: 1.25em;
+    background-color: #005377;
   }
 
   header nav {
@@ -491,11 +512,6 @@ footer section ul.icons li {
     align-items: center;
   }
   
-  main::before {
-    width: 100%;
-    background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%), url('../images/subtle-white-feathers.png');   left: 0;
-  }
-
   figure.float.left, figure.float.right {
     width: 100%;
     margin-inline-start: 0;
