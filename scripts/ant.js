@@ -527,7 +527,7 @@ let UI = {
    * configuration
    */
   updateHaskell() {
-    let text = 'runhaskell LangtonsAnt.hs ';
+    let text = 'stack run -- ';
 
     // add antString
     let antString = '';
