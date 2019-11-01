@@ -140,5 +140,13 @@
 			<pubDate>Sun, 29 Sep 2019 07:31:16 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/quines-in-javascript</guid>
 		</item>
+
+		<item>
+			<title>How to take beautiful notes with Pandoc</title>
+			<link>https://josephpetitti.com/blog/how-to-take-beautiful-notes-with-pandoc</link>
+			<description>Taking notes by hand is so old fashioned. You can't version control or backup paper, it's hard to search through, and a small mistake can force you to cross out or erase a whole line of text. But taking good notes on a computer has a host of problems of its own. Fiddling with formatting and typesetting is time-consuming, and it's hard to include mathematical notation, images, and other elements that are easy to write by hand but hard to type. Fortunately, I've found a solution that's easy and fun to use: writing Markdown and compiling it to a LaTeX-produced PDF with Pandoc. Read on to learn how I do it.</description>
+			<pubDate>Thu, 31 Oct 2019 07:15:00 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/how-to-take-beautiful-notes-with-pandoc</guid>
+		</item>
 	</channel>
 </rss>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How to take beautiful notes with Pandoc</title>
+    <meta name="description" content="Taking notes by hand is so old fashioned. You can't version control or backup paper, it's hard to search through, and a small mistake can force you to cross out or erase a whole line of text. But taking good notes on a computer has a host of problems of its own. Fiddling with formatting and typesetting is time-consuming, and it's hard to include mathematical notation, images, and other elements that are easy to write by hand but hard to type. Fortunately, I've found a solution that's easy and fun to use: writing Markdown and compiling it to a LaTeX-produced PDF with Pandoc. Read on to learn how I do it." />
+    <meta property="og:title" content="How to take beautiful notes with Pandoc" />
+    <meta property="og:description" content="Taking notes by hand is so old fashioned. You can't version control or backup paper, it's hard to search through, and a small mistake can force you to cross out or erase a whole line of text. But taking good notes on a computer has a host of problems of its own. Fiddling with formatting and typesetting is time-consuming, and it's hard to include mathematical notation, images, and other elements that are easy to write by hand but hard to type. Fortunately, I've found a solution that's easy and fun to use: writing Markdown and compiling it to a LaTeX-produced PDF with Pandoc. Read on to learn how I do it." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/notes-latex.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/how-to-take-beautiful-notes-with-pandoc" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-10-31">October 31, 2019</span>
+
+      <h1 class="title">How to take beautiful notes with Pandoc</h1>
+
+      <p>
+        Taking notes by hand is so old fashioned. You can't version control or
+        backup paper, it's hard to search through, and a small mistake can force
+        you to cross out or erase a whole line of text. But taking good notes on
+        a computer has a host of problems of its own. Fiddling with formatting
+        and typesetting is time-consuming, and it's hard to include mathematical
+        notation, images, and other elements that are easy to write by hand but
+        hard to type. Fortunately, I've found a solution that's easy and fun to
+        use: writing Markdown and compiling it to a LaTeX-produced PDF with
+        Pandoc. Read on to learn how I do it.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/notes-latex.png">
+          <img src="images/th_notes-latex.png" alt="Nicely typeset algorithms notes">
+        </a>
+      </figure>
+
+      <p>
+        <a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a> is indisputably
+        the king of math and science typesetting, but it's cumbersome to use for
+        basic tasks like note-taking. Writing out a whole LaTeX preamble for a
+        every document is more work than is needed for something this simple.
+        Instead, I write my notes in a super simple markup language called
+        <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>. If you
+        don't already know Markdown, spend two minutes reading
+        <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">this page</a>
+        and you'll know everything you need to. The nice thing about Markdown,
+        as opposed to other markup languages like HTML or YAML is that it's
+        already pretty readable as plain text. But we want our notes, and
+        especially our notes, to look better than "pretty readable."
+      </p>
+
+      <p>
+        We'll use a lovely program called
+        <a href="https://en.wikipedia.org/wiki/Pandoc">Pandoc</a> to convert our
+        okay-looking Markdown notes to beautiful PDF notes. Pandoc is free
+        software written in Haskell, so installing it is easy. On a Fedora
+        system, just do:
+      </p>
+
+      <code class="block"># dnf install pandoc</code>
+
+      <p>
+        See <a href="https://pandoc.org/installing.html">here</a> if you need
+        more help installing.
+      </p>
+
+      <p>
+        Pandoc converts between many different types of documents, among them
+        being Markdown files and PDFs. For creating PDFs Pandoc uses LaTeX as
+        its backend, so you get the professional look of TeX without having to
+        actually write it.
+      </p>
+
+      <p>
+        This does mean that it relies on a a TeX backend, so install one if you
+        don't already have one. For example:
+      </p>
+
+      <p>
+        Now we can convert our markdown to beautiful PDFs with one command:
+      </p>
+
+      <code class="block">$ pandoc -s -o notes.pdf notes.md</code>
+
+      <p>
+        The <code>-o</code> flag tells Pandoc the filename and format to output
+        to, and the <code>-s</code> flag stands for "standalone" (create a full
+        file instead of just a snippet).
+      </p>
+
+      <code class="block"># dnf install texlive-latex</code>
+
+      <p>
+        "But wait!" you say. "Markdown is nice, but what about math mode and
+        those other neat features from LaTeX?" Fear not. Pandoc supports many
+        Markdown extensions like <code>tex_math_dollars</code> out of the box.
+        (See <a href="https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html">here</a>
+        for a full list of supported extensions).
+      </p>
+
+      <p>
+        Anything between two dollar signs will be treated as TeX math by the
+        Pandoc compiler. So this:
+      </p>
+
+      <code class="block">$\min \{ \pi(w), \pi(v) + l_e \}$</code>
+
+      <p>
+        Becomes this:
+      </p>
+
+      <figure class="full-width">
+        <img src="images/math-mode.png">
+      </figure>
+
+      <p>
+        <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">This</a> is a
+        great resource on mathematics in LaTeX that I'd recommend looking
+        through.
+      </p>
+
+      <p>
+        This method is what I use for taking notes in my computer science
+        classes. It lets me write quickly during class, but compiles to
+        beautifully-typeset PDFs that are great for studying later. Pandoc is
+        also an incredibly useful tool with tons more features that I haven't
+        covered here, so I'd recommend looking into it more if you do any large
+        amount of writing.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
