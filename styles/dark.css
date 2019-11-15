@@ -87,7 +87,11 @@ a {
   text-decoration-line: underline;
 }
 
-a:hover {
+a:visited {
+  color: #ccc;
+}
+
+a:hover, a:visited:hover {
   color: #40bcf4;
 }
 
