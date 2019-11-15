@@ -151,10 +151,10 @@
 
 		<item>
 			<title>The C ??!??! operator</title>
-			<link>https://josephpetitti.com/blog/the-c-??!??!-operator</link>
+			<link>https://josephpetitti.com/blog/the-c-%3F%3F!%3F%3F!-operator</link>
 			<description> The C programming language has a bit of a reputation for having weird syntax. The #define directive, pointer declaration, and uncommon array indexing methods can all make it hard to understand what's going on in a C program. Still, some of C's weirdness manages to surprise me even after using it for a few years. For example, what do you think this expression does: !x ??!??! y();</description>
 			<pubDate>Fri, 15 Nov 2019 18:53:13 GMT</pubDate>
-			<guid>https://josephpetitti.com/blog/the-c-??!??!-operator</guid>
+			<guid>https://josephpetitti.com/blog/the-c-%3F%3F!%3F%3F!-operator</guid>
 		</item>
 
 	</channel>
