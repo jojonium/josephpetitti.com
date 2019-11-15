@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>The C ??!??! operator</title>
+    <meta name="description" content="The C programming language has a bit of a reputation for having weird syntax. The #define directive, pointer declaration, and uncommon array indexing methods can all make it hard to understand what's going on in a C program. Still, some of C's weirdness manages to surprise me even after using it for a few years. For example, what do you think this expression does: !x ??!??! y();"/>
+    <meta property="og:title" content="The C ??!??! operator" />
+    <meta property="og:description" content="The C programming language has a bit of a reputation for having weird syntax. The #define directive, pointer declaration, and uncommon array indexing methods can all make it hard to understand what's going on in a C program. Still, some of C's weirdness manages to surprise me even after using it for a few years. For example, what do you think this expression does: !x ??!??! y();"/>
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/The_C_Programming_Language%2C_First_Edition_Cover_%282%29.svg/800px-The_C_Programming_Language%2C_First_Edition_Cover_%282%29.svg.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/the-c-??!??!-operator" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-11-15">November 15, 2019</span>
+
+      <h1 class="title">The C ??!??! operator</h1>
+
+      <p>
+        The C programming language has a bit of a reputation for having weird
+        syntax. The <code>#define</code> directive, pointer declaration, and
+        uncommon array indexing methods can all make it hard to understand
+        what's going on in a C program. Still, some of C's weirdness manages to
+        surprise me even after using it for a few years. For example, what do
+        you think this expression does?
+      </p>
+
+      <code class="block">!x ??!??! y();</code>
+
+      <p>
+        If you guessed that it's a basic <code>if</code> statement, you'd be
+        correct. The above line is equivalent to this:
+      </p>
+
+      <code class="block">if (x) {
+    y();
+}</code>
+
+      <p>
+        The first step to understanding this is to realize that
+        <code>??!??!</code> isn't really an operator at all, it's actually two
+        <a href="https://en.wikipedia.org/wiki/Digraphs_and_trigraphs#C">trigraphs</a>
+        in a row. This is an old feature of the C preprocessor that replaces
+        a sets of three characters with their equivalent before compiling.
+      </p>
+
+      <figure class="float right">
+        <table>
+          <tr>
+            <th>Trigraph</th>
+            <th>Equivalent</th>
+          </tr>
+          <tr>
+            <td><code>??=</code></td>
+            <td><code>#</code></td>
+          </tr>
+          <tr>
+            <td><code>??/</code></td>
+            <td><code>\</code></td>
+          </tr>
+          <tr>
+            <td><code>??'</code></td>
+            <td><code>^</code></td>
+          </tr>
+          <tr>
+            <td><code>??(</code></td>
+            <td><code>[</code></td>
+          </tr>
+          <tr>
+            <td><code>??)</code></td>
+            <td><code>[</code></td>
+          </tr>
+          <tr>
+            <td><code>??!</code></td>
+            <td><code>|</code></td>
+          </tr>
+          <tr>
+            <td><code>??&lt;</code></td>
+            <td><code>{</code></td>
+          </tr>
+          <tr>
+            <td><code>??&gt;</code></td>
+            <td><code>}</code></td>
+          </tr>
+          <tr>
+            <td><code>??-</code></td>
+            <td><code>~</code></td>
+          </tr>
+        </table>
+      </figure>
+
+      <p>
+        These were apparently included so that programmers who didn't have
+        certain keys on their keyboard could still use all the features of C.
+      </p>
+
+      <p>
+        We can see that the <code>??!</code> gets replaced by the pipe
+        character, so <code>??!??!</code> is actually <code>||</code> the
+        logical OR operator.
+      </p>
+
+      <p>
+        Thanks to the power of <a href="https://en.wikipedia.org/wiki/Short-circuit_evaluation">short-circuit evaluation</a>,
+        <code>y()</code> is only executed if the first statement,
+        <code>!x</code> is false. 
+      </p>
+
+      <p>
+        This is not a good way of writing an <code>if</code> statement, and I
+        would never recommend using this in practice, but it's interesting to
+        see how rules of C can lead to such weird-looking code being perfectly
+        valid.
+      </p>
+
+      <h2 id="bonus">Bonus</h2>
+
+      <p>
+        As another weird C thing, here's a perfectly valid way to access an
+        element of an array:
+      </p>
+
+      <code class="block">NULL[array + 10];</code>
+
+      <p>
+        Due to the nature of memory addressing, this is the same as writing:
+      </p>
+
+      <code class="block">array[10];</code>
+
+      <p>
+        To make it even cooler, try:
+      </p>
+
+      <code class="block">0??(array + 10??);</code>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
