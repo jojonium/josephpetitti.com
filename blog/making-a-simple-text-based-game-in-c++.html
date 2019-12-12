@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Making a simple text-based game in C++</title>
+    <meta name="description" content="For the WPI course IMGD 3000 - Technical Game Development 1, I worked over the course of seven weeks to make a fully-featured game engine in C++. It uses simple text-based ASCII graphics and handles events, input, sounds, sprites, collisions, and other basic features. As a final project, to show off the features of this engine, I worked with a partner to make a fun game using it. The game, called 'XiQ', is a fast-paced arcade puzzle game in based on the Taito classic Qix." />
+    <meta property="og:title" content="Making a simple text-based game in C++" />
+    <meta property="og:description" content="For the WPI course IMGD 3000 - Technical Game Development 1, I worked over the course of seven weeks to make a fully-featured game engine in C++. It uses simple text-based ASCII graphics and handles events, input, sounds, sprites, collisions, and other basic features. As a final project, to show off the features of this engine, I worked with a partner to make a fun game using it. The game, called 'XiQ', is a fast-paced arcade puzzle game in based on the Taito classic Qix." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/xiq.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url"
+    content="https://josephpetitti.com/blog/making-a-simple-text-based-game-in-c++" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-12-11">December 11, 2019</span>
+
+      <h1 class="title">Making a simple text-based game in C++</h1>
+
+      <p>
+        For the WPI course IMGD 3000 - Technical Game Development 1, I worked
+        over the course of seven weeks to make a fully-featured game engine in
+        C++. It uses simple text-based ASCII graphics and handles events, input,
+        sounds, sprites, collisions, and other basic features. As a final
+        project, to show off the features of this engine, I worked with a
+        <a href="https://www.mattpuentes.com/">partner</a> to make a fun game
+        using it. The game, called "XiQ", is a fast-paced arcade puzzle game in
+        based on the Taito classic
+        <a href="https://en.wikipedia.org/wiki/Qix">Qix</a>.
+      </p>
+
+      <figure class="full-width">
+        <video src="../images/xiq.webm" alt="Video of the game XiQ" controls>
+      </figure>
+
+      <h2 id="technical-details">Technical details</h2>
+
+      <p>
+        The engine I made is based on Professor Mark Claypool's
+        <a href="https://dragonfly.wpi.edu/">Dragonfly</a> engine, described as
+        "a text-based game engine, primarily designed to teach about game engine
+        development." Over the course of the term I built up the various
+        features of the engine in several increments, which can be seen on
+        <a href="https://github.com/jojonium/IMGD-3000-Technical-Game-Development-I/releases">GitHub</a>.
+      </p>
+
+      <p>
+        By the end of Project 2c my engine had the following features:
+      </p>
+
+      <ul>
+        <li>Providing a 2D game world with positions, velocities, and
+          acceleration for game objects</li>
+        <li>Running a game loop with a consistent frame rate (60 Hz)</li>
+        <li>Using events to send messages to various game objects</li>
+        <li>Providing robust logging capabilities</li>
+        <li>2D ASCII sprites and animations</li>
+        <li>Accepting non-blocking mouse and keyboard input</li>
+        <li>Calculating collisions between objects and sending events to the
+          objects involved</li>
+        <li>Support for audio, including sound effects and music</li>
+        <li>Camera controls, enabling "views" over a subset of the game
+          world</li>
+      </ul>
+
+      <p>
+        As well as various other minor features.
+      </p>
+
+      <h2 id="game-features">Game features</h2>
+
+      <p>
+        To showcase the engine and make a practical project with it, I worked
+        with a partner to develop a simple game using it.
+      </p>
+
+      <p>
+        The game we created is called <b>XiQ: Tactical Zone Control</b>. XiQ is
+        a simple game in which you try to claim as much territory as possible in
+        sixty seconds while avoiding enemies. You control a green marker called
+        a XiQ (pronounced "quiche") that can walk along lines called Xix
+        (pronounced "kicks"). You can draw Xix into the center of the play area
+        by holding X or Z to draw fast or slow, respectively. When you box in an
+        area with Xix it gets filled in, and you get points for the amount of
+        area you captured. If you fence in an area by only drawing slowly you
+        get ten times as many points, and the area is colored in a different
+        color. 
+      </p>
+
+      <p>
+        However, there are enemies that will try to stop you from claiming
+        territory. Xyvz (pronounced "chives") are red X-shaped enemies that walk
+        along Xix, and if they touch you you’ll die. The Xiz (pronounced
+        "Cheese") is a red line-shaped enemy that flies around the uncaptured
+        area of the board. If it hits an incomplete Xix as you’re drawing it,
+        you’ll die. Also, if you run into your own incomplete Xix you’ll die.
+        Score as many points as possible within sixty seconds to win! 
+      </p>
+
+      <figure class="full-width">
+        <a href="images/xiq.png">
+          <img src="images/xiq.png" alt="Screenshot of Xiq">
+        </a>
+        <figcaption>The Xiz is the red flying enemy, and the Xyvz are the red
+          X's on the wires</figcaption>
+      </figure>
+
+      <p>
+        One of the most difficult technical features of XiQ is the flood-fill
+        algorithm we use to fill fenced-in areas with 'o' characters. When the
+        player finishes drawing a line of Xix, the game runs a flood-fill
+        algorithm on each side of the newly drawn line, filling in an arbitrary
+        number of enclosed spaces created by it. All but the biggest enclosed
+        area are taken as the captured zone, and are filled in with 'o'
+        characters.
+      </p>
+
+      <h2 id="how-to-try-it-out">How to try it out</h2>
+
+      <p>
+        If you want to try out XiQ for yourself you can download and compile it
+        for your system. You can find the source code on
+        <a href="https://github.com/jojonium/IMGD-3000-Technical-Game-Development-I">GitHub</a>
+        under the <code>projecr4</code> directory.
+      </p>
+
+      <p>
+        The README and Makefile in GitHub are designed for a GNU/Linux system,
+        but can be easily modified to work on any system.
+      </p>
+
+      <p>
+        The engine depends on the <a href="https://www.sfml-dev.org/">Simple and
+        Fast Multimedia Library</a>. To install it on Fedora GNU/Linux, do:
+      </p>
+
+      <code class="block"># dnf install SFML-devel</code>
+
+      <p>
+        Now just download the code and compile it:
+      </p>
+
+      <code class="block">$ git clone https://github.com/jojonium/IMGD-3000-Technical-Game-Development-I.git imgd-3000
+$ cd imgd-3000/project4/game
+$ make</code>
+
+      <p>
+        Just run the <code>./game</code> executable to play.
+      </p>
+
+      <h2 id="final-thoughts">Final thoughts</h2>
+
+      <p>
+        Because I haven't done a ton of previous programming in C++, making this
+        engine could be frustrating at times. Tracking down segmentation faults
+        is always annoying, and some of the Professor's examples were misleading
+        or outright wrong.
+      </p>
+
+      <p>
+        Even so, I feel liks a learned a lot from this class, and seriously
+        sharpened my C++ skills. I ended up with a cool project that is actually
+        pretty fun to play, and a simple game engine that I could re-use for
+        something else in the future.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

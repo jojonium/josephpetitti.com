@@ -157,5 +157,12 @@
 			<guid>https://josephpetitti.com/blog/the-c-%3F%3F!%3F%3F!-operator</guid>
 		</item>
 
+		<item>
+			<title>Making a simple text-based game in C++</title>
+			<link>https://josephpetitti.com/blog/making-a-simple-text-based-game-in-c++</link>
+			<description>For the WPI course IMGD 3000 - Technical Game Development 1, I worked over the course of seven weeks to make a fully-featured game engine in C++. It uses simple text-based ASCII graphics and handles events, input, sounds, sprites, collisions, and other basic features. As a final project, to show off the features of this engine, I worked with a partner to make a fun game using it. The game, called "XiQ", is a fast-paced arcade puzzle game in based on the Taito classic Qix.</description>
+			<pubDate>Thu, 11 Dec 2019 02:47:09 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/making-a-simple-text-based-game-in-c++</guid>
+		</item>
 	</channel>
 </rss>
