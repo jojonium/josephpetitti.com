@@ -170,7 +170,7 @@
           <link>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</link>
           <description>This term I decided to branch out from my usual computer science courseload and try out a class from a very similar department: Interactive Media and Game Development. To that end I took a class called 'Artificial Intelligence in Interactive Media and Games,' which turned out to be a lot of fun. (It's also nice that it counts for CS credit). One of the projects I did for the class was to use various AI techniques to build a generator for Super Mario Bros. levels, and an agent that can appear human while playing them. A partner and I used Ahmed Khalifa's Mario AI framework to implement these systems in Java, and they both ended up working pretty well.</description>
           <pubDate>Sat, 14 Dec 2019 04:06:14 GMT</pubDate
-          <link>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</link>
+          <guid>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</guid>
         </item>
 	</channel>
 </rss>
