@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Using AI to make and play Mario Levels</title>
+    <meta name="description" content="This term I decided to branch out from my usual computer science courseload and try out a class from a very similar department: Interactive Media and Game Development. To that end I took a class called 'Artificial Intelligence in Interactive Media and Games,' which turned out to be a lot of fun. (It's also nice that it counts for CS credit). One of the projects I did for the class was to use various AI techniques to build a generator for Super Mario Bros. levels, and an agent that can appear human while playing them. A partner and I used Ahmed Khalifa's Mario AI framework to implement these systems in Java, and they both ended up working pretty well." />
+    <meta property="og:title" content="Using AI to make and play Mario Levels" />
+    <meta property="og:description" content="This term I decided to branch out from my usual computer science courseload and try out a class from a very similar department: Interactive Media and Game Development. To that end I took a class called 'Artificial Intelligence in Interactive Media and Games,' which turned out to be a lot of fun. (It's also nice that it counts for CS credit). One of the projects I did for the class was to use various AI techniques to build a generator for Super Mario Bros. levels, and an agent that can appear human while playing them. A partner and I used Ahmed Khalifa's Mario AI framework to implement these systems in Java, and they both ended up working pretty well." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/mario-level-generator.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="../styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../styles/brands.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2019-12-13">December 13, 2019</span>
+
+      <h1 class="title">Using AI to make and play Mario Levels</h1>
+
+      <div class="main-links-holder long-buttons">
+        <a href="https://github.com/jojonium/Mario-AI-Framework" target="_blank">
+          <button class="long">
+            <span class="fab fa-github"></span> View on GitHub
+          </button>
+        </a>
+      </div>
+
+      <p>
+        This term I decided to branch out from my usual computer science
+        courseload and try out a class from a very similar department:
+        Interactive Media and Game Development. To that end I took a class
+        called "Artificial Intelligence in Interactive Media and Games," which
+        turned out to be a lot of fun. (It's also nice that it counts for CS
+        credit).
+      </p>
+
+      <p>
+        One of the projects I did for the class was to use various AI techniques
+        to build a generator for Super Mario Bros. levels, and an agent that can
+        appear human while playing them. A partner and I used
+        <a href="https://github.com/amidos2006/Mario-AI-Framework">Ahmed
+        Khalifa</a>'s Mario AI framework to implement these systems in Java, and
+        they both ended up working pretty well.
+      </p>
+
+      <h2 id="phase-1-the-level-generator">Phase 1: the level generator</h2>
+
+      <p>
+        We used a <a href="https://en.wikipedia.org/wiki/Markov_chain">Markov
+        chain</a> model to generate new Mario levels from inputs of existing
+        ones, both from the games and created by other generators. It reads in
+        level files from a specified directory, parses each vertical column
+        of blocks into a "slice," and adds it to a Markov chain transition
+        table. Basically each unique slice has a list of which slices follow it,
+        and the probability that it is followed by that specific slice.
+      </p>
+
+      <p>
+        To generate a level, it picks a random slice to start with, then picks
+        another to follow it based on the transition table, and so on. This
+        continues until the generator selects a slice with a flag in it or
+        reaches the desired level length.
+      </p>
+
+      <p>
+        Overall, the Markov chain-based generator worked decently, and managed
+        to make some nice-looking levels when given the original Super Mario
+        Bros. maps as input:
+      </p>
+
+      <figure class="full-width">
+        <a href="images/mario-level-generator.png">
+          <img src="images/mario-level-generator.png"
+          alt="A Mario level generated by our algorithm">
+        </a>
+      </figure>
+
+      <p>
+        The main weakness of this type of level generator is one of the main
+        properties of Markov chains: memorylessness. The decision of which slice
+        to select is based only on the previous slice. This means there's no way
+        for the generator to tell if it's making pits that are too wide to jump
+        across or a long row of boring nothingness.
+      </p>
+
+      <h2 id="phase-2-the-ai-agent">Phase 2: the AI agent</h2>
+      
+      <p>
+        For this phase of the project we tried to create an agent that could
+        successfully navigate Mario levels while convincing viewers that a human
+        was playing. Although it would be easy to implement an A* algorithm that
+        always makes it to the flag, we wanted it to look like a flawed human
+        was behind the controller, which is a much more difficult task. We
+        implemented a decision-tree AI system to do this, since this type of
+        model can provide complex behavior while being easy to understand and
+        debug.
+      </p>
+
+      <p>
+        We created a basic tree data structure with two types of
+        nodes&mdash;action and question nodes. At a question node, the agent
+        makes some kind of decision based on information it has about the
+        environment. For example, whether Mario is standing next to a pit or
+        not. Action nodes are the leaves of the tree, representing the action
+        taken after a series of decisions. For example, if Mario is standing on
+        the ground and there is an enemy to the right he might take the action
+        "jump right."
+      </p>
+
+      <p>
+        Using basic decisions and actions as building blocks we constructed a
+        decision tree that would be executed each game step to get the next
+        action for our agent to take. We incrementally tweaked the shape and
+        nodes of the tree until we got an agent that looks almost human while
+        playing a level:
+      </p>
+
+      <figure class="full-width">
+        <video src="images/mario.mp4" controls>
+      </figure>
+
+      <p>
+        Our agent ended up being not terrible, but it probably could have been a
+        lot better. It turns out that decision trees aren't a great choice for
+        this type of problem for the same reason Markov chains aren't the best
+        at designing levels: they don't have any memory. Because the same tree
+        has to be run every game step, it's difficult to do complex actions like
+        long jumps because the tree doesn't hold a global state.
+      </p>
+
+      <p>
+        Overall, it was still a fun project even though the design decisions we
+        chose turned out to not be the most optimal. I learned a lot about
+        procedural generation that I would later put to use in a JavaScript
+        rogue-lite game I'm working on, and had fun experimenting with different
+        AI techniques.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
