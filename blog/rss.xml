@@ -158,35 +158,43 @@
 		</item>
 
 		<item>
-			<title>Making a simple text-based game in C++</title>
+		<title>Making a simple text-based game in C++</title>
 			<link>https://josephpetitti.com/blog/making-a-simple-text-based-game-in-c++</link>
 			<description>For the WPI course IMGD 3000 - Technical Game Development 1, I worked over the course of seven weeks to make a fully-featured game engine in C++. It uses simple text-based ASCII graphics and handles events, input, sounds, sprites, collisions, and other basic features. As a final project, to show off the features of this engine, I worked with a partner to make a fun game using it. The game, called "XiQ", is a fast-paced arcade puzzle game based on the Taito classic Qix.</description>
 			<pubDate>Thu, 11 Dec 2019 02:47:09 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/making-a-simple-text-based-game-in-c++</guid>
 		</item>
 
-        <item>
-          <title>Using AI to make and play Mario Levels</title>
-          <link>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</link>
-          <description>This term I decided to branch out from my usual computer science courseload and try out a class from a very similar department: Interactive Media and Game Development. To that end I took a class called 'Artificial Intelligence in Interactive Media and Games,' which turned out to be a lot of fun. (It's also nice that it counts for CS credit). One of the projects I did for the class was to use various AI techniques to build a generator for Super Mario Bros. levels, and an agent that can appear human while playing them. A partner and I used Ahmed Khalifa's Mario AI framework to implement these systems in Java, and they both ended up working pretty well.</description>
-		  <pubDate>Sat, 14 Dec 2019 04:06:14 GMT</pubDate>
-          <guid>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</guid>
-        </item>
+		<item>
+			<title>Using AI to make and play Mario Levels</title>
+			<link>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</link>
+			<description>This term I decided to branch out from my usual computer science courseload and try out a class from a very similar department: Interactive Media and Game Development. To that end I took a class called 'Artificial Intelligence in Interactive Media and Games,' which turned out to be a lot of fun. (It's also nice that it counts for CS credit). One of the projects I did for the class was to use various AI techniques to build a generator for Super Mario Bros. levels, and an agent that can appear human while playing them. A partner and I used Ahmed Khalifa's Mario AI framework to implement these systems in Java, and they both ended up working pretty well.</description>
+			<pubDate>Sat, 14 Dec 2019 04:06:14 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/using-ai-to-make-and-play-mario-levels</guid>
+		</item>
 
-        <item>
-          <title>The Dilbert TV series is way better than it should be</title>
-          <link>https://josephpetitti.com/blog/the-dilbert-tv-series-is-way-better-than-it-should-be</link>
-          <description>Everyone's read Dilbert in the daily newspaper or seen it taped to a boss or professor's door, but few know about the animated TV series based on it that ran for 30 episodes in 1999-2000. I had the good fortune of stumbling across this cartoon recently, and it turned out to be way better than I expected, given the lack of acclaim I hear for it.</description>
-		  <pubDate>Thu, 19 Dec 2019 09:52:18 GMT</pubDate>
-          <guid>https://josephpetitti.com/blog/the-dilbert-tv-series-is-way-better-than-it-should-be</guid>
-        </item>
+		<item>
+			<title>The Dilbert TV series is way better than it should be</title>
+			<link>https://josephpetitti.com/blog/the-dilbert-tv-series-is-way-better-than-it-should-be</link>
+			<description>Everyone's read Dilbert in the daily newspaper or seen it taped to a boss or professor's door, but few know about the animated TV series based on it that ran for 30 episodes in 1999-2000. I had the good fortune of stumbling across this cartoon recently, and it turned out to be way better than I expected, given the lack of acclaim I hear for it.</description>
+			<pubDate>Thu, 19 Dec 2019 09:52:18 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/the-dilbert-tv-series-is-way-better-than-it-should-be</guid>
+		</item>
 
-        <item>
-          <title>Some trivia I've noticed about FLCL</title>
-          <link>https://josephpetitti.com/blog/some-trivia-ive-noticed-about-flcl</link>
-          <description>FLCL, a classic six-episode OVA series from Studio Gainax and director Kazuya Tsurumaki (known for his work on Evangelion), is well known for being kind of confusing. Its blistering fast pace, wild animation style, and total disdain for holding the viewer's hand makes it difficult to follow on a first viewing. But after watching the series maybe a dozen times, I finally think I mostly get what it's about, and even noticed a few cool things that I missed on my first viewings.</description>
-		  <pubDate>Mon, 30 Dec 2019 22:39:34 GMT</pubDate>
-          <guid>https://josephpetitti.com/blog/some-trivia-ive-noticed-about-flcl</guid>
-        </item>
+		<item>
+			<title>Some trivia I've noticed about FLCL</title>
+			<link>https://josephpetitti.com/blog/some-trivia-ive-noticed-about-flcl</link>
+			<description>FLCL, a classic six-episode OVA series from Studio Gainax and director Kazuya Tsurumaki (known for his work on Evangelion), is well known for being kind of confusing. Its blistering fast pace, wild animation style, and total disdain for holding the viewer's hand makes it difficult to follow on a first viewing. But after watching the series maybe a dozen times, I finally think I mostly get what it's about, and even noticed a few cool things that I missed on my first viewings.</description>
+			<pubDate>Mon, 30 Dec 2019 22:39:34 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/some-trivia-ive-noticed-about-flcl</guid>
+		</item>
+
+		<item>
+			<title>My favorite media of 2019</title>
+			<link>https://josephpetitti.com/blog/my-favorite-media-of-2019</link>
+			<description>It's the start of a brand new year! And what better way to boldly step into 2020 than by talking about a bunch of stuff that happened in 2019. Here I'll list my favorite movie, album, anime, manga, western TV show, and video game from 2019. Consider all of these strong recommendations.</description>
+			<pubDate>Wed, 01 Jan 2020 11:36:56 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/my-favorite-media-of-2019</guid>
+		</item>
 	</channel>
 </rss>
