@@ -339,6 +339,16 @@ $ sudo restorecon -R /var/www/koel/storage</code>
         Credit to <a href="https://stackoverflow.com/questions/42937925/laravel-permission-denied-on-remote-mysql-server-aws-aurora">this StackOverflow post</a>
         for that solution.
       </p>
+
+      <p>
+        If your music collection is on a shared network drive, like mine, you'll
+        need to explicitly allow Nginx to read from it too. Do one of the
+        following, depending on the type of network drive you have:
+      </p>
+
+      <code class="block">$ sudo setsebool -P httpd_use_cifs on
+$ sudo setsebool -P httpd_use_nfs on</code>
+
     </main>
 
   <!-- Footer -->
