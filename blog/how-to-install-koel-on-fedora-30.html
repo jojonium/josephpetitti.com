@@ -303,9 +303,9 @@ $ sudo chown -R nginx:nginx /var/www/koel</code>
 
       <p>
         That should have fixed the issue, but for me it didn't. If you're on
-        a Red Hat and you've been banging your head against the wall for an hour
-        trying to figure out why something that should work doesn't work, 99% of
-        the time the issue is
+        a Red Hat system and you've been banging your head against the wall for
+        an hour trying to figure out why something that should work doesn't
+        work, 99% of the time the issue is
         <a href="https://selinuxproject.org/page/Main_Page">SELinux</a>.
       </p>
 
@@ -333,7 +333,7 @@ $ sudo restorecon -R /var/www/koel/storage</code>
         databases over the network, which can be done with this command:
       </p>
 
-      <code class="block">sudo setsebool -P httpd_can_network_connect_db=1</code>
+      <code class="block">$ sudo setsebool -P httpd_can_network_connect_db=1</code>
 
       <p>
         Credit to <a href="https://stackoverflow.com/questions/42937925/laravel-permission-denied-on-remote-mysql-server-aws-aurora">this StackOverflow post</a>
