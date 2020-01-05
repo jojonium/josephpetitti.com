@@ -196,5 +196,13 @@
 			<pubDate>Wed, 01 Jan 2020 11:36:56 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/my-favorite-media-of-2019</guid>
 		</item>
+
+		<item>
+			<title>How to install Koel on Fedora 30</title>
+			<link>https://josephpetitti.com/blog/how-to-install-koel-on-fedora-30</link>
+			<description>Koel is a cool web application built on PHP and Vue.js for streaming your music collection over the internet. Basically it's like having your own personal Spotify, except it's free and open source. Since I couldn't find any detailed guide for installing it and all its dependencies on a Fedora server, I decided to write my own.</description>
+			<pubDate>Sun, 05 Jan 2020 09:31:22 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/how-to-install-koel-on-fedora-30</guid>
+		</item>
 	</channel>
 </rss>

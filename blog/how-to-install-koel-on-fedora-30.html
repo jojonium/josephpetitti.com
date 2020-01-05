@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How to install Koel on Fedora 30</title>
+    <meta name="description" content="Koel is a cool web application built on PHP and Vue.js for streaming your music collection over the internet. Basically it's like having your own personal Spotify, except it's free and open source. Since I couldn't find any detailed guide for installing it and all its dependencies on a Fedora server, I decided to write my own." />
+    <meta property="og:title" content="Blog Template" />
+    <meta property="og:description" content="Koel is a cool web application built on PHP and Vue.js for streaming your music collection over the internet. Basically it's like having your own personal Spotify, except it's free and open source. Since I couldn't find any detailed guide for installing it and all its dependencies on a Fedora server, I decided to write my own." />
+    <meta property="og:image" content="https://koel.phanan.net/dist/img/showcase.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/how-to-install-koel-on-fedora-30" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="shortcut icon" href="../icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2020-01-05">January 5, 2020</span>
+
+      <h1 class="title">How to install Koel on Fedora 30</h1>
+
+      <p>
+        <a href="https://koel.phanan.net/">Koel</a> is a cool web application
+        built on PHP and Vue.js for streaming your music collection over the
+        internet. Basically it's like having your own personal Spotify, except
+        it's free and open source. Since I couldn't find any detailed guide for
+        installing it and all its dependencies on a Fedora server, I decided to
+        write my own.
+      </p>
+
+      <h2 id="install-laravel">Install Laravel</h2>
+
+      <p>
+        Koel depends on Laravel, a PHP web framework. Laravel in turn depends on
+        PHP and composer.
+      </p>
+
+      <h3 id="install-a-dbms">Install a DBMS</h3>
+
+      <p>
+        If you already have a Datamase Management System server skip ahead to
+        <a href="#install-php-and-composer">Install PHP</a>. If not, you'll have
+        to install one either locally or on a separate server. Laravel is
+        compatible with several DBMSs, but I like MariaDB (the community-driven
+        fork of MySQL) so that's what I'll use.  Feel free to substitute
+        PostreSQL, SQLite, or whatever else you prefer.
+      </p>
+
+      <p>
+        On the database server run
+      </p>
+
+      <code class="block">$ sudo dnf install mariadb-server</code>
+
+      <p>
+        Now enable, start, and set up MariaDB by running:
+      </p>
+      
+      <code class="block">$ sudo systemctl enable mariadb
+$ sudo systemctl start mariadb
+$ sudo mysql_secure_installation</code>
+
+      <p>
+        Just press enter the first time it prompts for the root password because
+        it hasn't been set yet. Then set the root password to something strong,
+        and answer each of the questions. The recommended answer to each of them
+        is 'Y'.
+      </p>
+
+      <p>
+        If MariaDB is running on a different server, the Koel server will still
+        need to be able to access it. Install the <code>mysql</code> tool on the
+        Koel server:
+      </p>
+
+      <code class="block">$ sudo dnf install mariadb</code>
+
+      <h3 id="install-php-and-composer">Install PHP and Composer</h3>
+
+      <p>
+        Now we have to install PHP and all the extensions that Laravel depends
+        on.
+      </p>
+
+      <code class="block">$ sudo dnf install php \
+php-common \
+php-cli \
+php-pdo \
+php-mbstring \
+php-zip \
+php-xml \
+php-cli \
+php-json \
+php-mysqli</code>
+
+      <p>
+        Laravel uses Composer, a dependency manager for PHP. This can be
+        installed with:
+      </p>
+
+      <code class="block">$ sudo dnf install composer</code>
+
+      <p>
+        Now we can use composer to install Laravel globally.
+      </p>
+
+      <code class="block">$ composer global require "laravel/installer"</code>
+
+      <p>
+        To make sure we can run the <code>laravel</code> command from anywhere,
+        we need to add <code>~/.config/composer/vendor/bin</code> to our
+        <code>PATH</code>. Add this line to the end of <code>~/.bashrc</code>:
+      </p>
+
+      <code class="block">export PATH="$PATH:$HOME/.config/composer/vendor/bin"</code>
+
+      <p>
+        Reload the config file with <code>$ source ~/.bashrc</code> and run this
+        to test if it worked:
+      </p>
+
+      <code class="block">$ laravel --version</code>
+
+      <p>
+        You should get a nice message telling you the version of Laravel
+        Installer you now have.
+      </p>
+
+      <h2 id="install-nodejs">Install Node.js</h2>
+
+      <p>
+        Koel also uses Node.js, a JavaScript runtime environment, and Yarn, a
+        JavaScript dependency manager. To install node on Fedora, just do
+      </p>
+
+      <code class="block">$ sudo dnf install nodejs</code>
+
+      <p>
+        Yarn isn't in the official Fedora repos, so you'll have to add theirs.
+        See <a href="https://yarnpkg.com/en/docs/install#centos-stable">here</a>
+        for the most up-to-date instructions for that. Then just run:
+      </p>
+
+      <code class="block">$ sudo dnf install yarn</code>
+
+      <p>
+        One of the JavaScript packages that Koel depends on requires
+        <code>libpng</code> development tools, so install them with
+      </p>
+
+      <code class="block">$ sudo dnf install libpng-devel</code>
+
+      <p>
+        Now we're finally done with dependencies and can move on to install
+        Koel itself!
+      </p>
+
+      <h2 id="install-koel">Install Koel</h2>
+
+      <p>
+        Let's make a directory for the Koel installation (replace
+        <code>USER</code> with your own username)
+      </p>
+
+      <code class="block">$ sudo mkdir /var/www/koel
+$ sudo chown -R USER:USER /var/www/koel</code>
+
+      <p>
+        Now clone the repo into that directory (<code>$ dnf install git</code>
+        if you don't already have it.
+      </p>
+
+      <code class="block">$ git clone --recurse-submodules https://github.com/phanan/koel.git /var/www/koel</code>
+
+      <p>
+        We want to checkout the most recent stable version, so check
+        <a href="https://github.com/phanan/koel/releases">the releases page</a>
+        to find out what that is. As of time of writing it's
+        <code>v4.2.2</code>.
+      </p>
+
+      <code class="block">$ cd /var/www/koel
+$ git checkout v4.2.2</code>
+
+      <p>
+        Use composer to install all PHP dependencies
+      </p>
+
+      <code class="block">$ composer install</code>
+
+      <p>
+        We're almost set, now we just have to set up a database user for Koel.
+      </p>
+
+      <h3 id="prepare-the-database">Prepare the database</h3>
+
+      <p>
+        These instructions are for MariaDB/MySQL, but other DBMSs should be
+        similar. From the database server, which may be the same as the one
+        you're installing Koel on, log into MySQL as root.
+      </p>
+
+      <code class="block">$ mysql -u root -p</code>
+
+      <p>
+        Enter the MySQL root password when prompted.
+      </p>
+
+      <p>
+        If Koel is running on a different machine from your database, edit
+        <code>/etc/my.cnf</code>. Add a <code>[mysqld]</code> section if it
+        doesn't already exist, then add <code>bind-address=0.0.0.0</code> below
+        it. If there's a line containing <code>skip-networking</code> comment it
+        out or delete it. This makes MariaDB listen to all IPv4 addresses rather
+        than just localhost. Then <code>$ sudo systemctl restart mariadb</code>
+        to reload the config.
+      </p>
+
+      <p>
+        Now we're going to create a database called <code>koel</code> and a user
+        called <code>koel-db-user</code> with permissions for that database.
+        Replace <code>koel-pass</code> with a strong password for the user. If
+        Koel is running on a different host from the database replace
+        <code>localhost</code> with the hostname or IP address of the Koel
+        server below.
+      </p>
+
+      <code class="block">mysql&gt; CREATE DATABASE koel DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+mysql&gt; CREATE USER 'koel-db-user'@'localhost' IDENTIFIED BY 'koel-pass';
+mysql&gt; GRANT ALL PRIVILEGES ON koel.* TO 'koel-db-user'@'localhost' WITH GRANT OPTION;
+mysql&gt; exit;</code>
+
+      <p>
+        Now return to the Koel server.
+      </p>
+
+      <h3 id="final-setup">Final setup</h3>
+
+      <p>
+        Back on the Koel server, running this command will allow you to populate
+        the <code>.env</code> file with your credentials, as well as pull in
+        frontend dependencies with yarn. Make sure you're still in
+        <code>/var/www/koel</code>, then do:
+      </p>
+
+      <code class="block">$ php artisan koel:init</code>
+
+      <p>
+        Answer each of the prompted questions, including the database
+        credentials you set up <a href="prepare-the-database">above</a>. Now
+        you're done! If you run <code>$ php artisan serve</code> you should be
+        able to visit the web interface at <code>http://localhost:8000</code>.
+      </p>
+
+      <p>
+        This is just the development server, but the production server can be
+        set up the same way as any other PHP application. I used Nginx with a
+        config file based on the
+        <a href="https://github.com/phanan/koel/blob/master/nginx.conf.example">sample
+        Nginx config</a>.
+      </p>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+
+      <p>
+        Here's some advice to get through some of the issues I encountered.
+      </p>
+
+      <p>
+        First I faced an issue where Koel didn't have permission to write to the
+        <code>storage</code> directory. Edit
+        <code>/etc/php-fpm.d/www.conf</code> to see what user and group it's
+        running as. I was using Nginx, so I set them both like so
+      </p>
+
+      <code class="block">user = nginx
+group = nginx</code>
+
+      <p>
+        Restart the php-fpm daemon to apply the change and set the Koel
+        directory to be owned by that user and group.
+      </p>
+
+      <code class="block">$ sudo systemctl restart php-fpm
+$ sudo chown -R nginx:nginx /var/www/koel</code>
+
+      <p>
+        That should have fixed the issue, but for me it didn't. If you're on
+        a Red Hat and you've been banging your head against the wall for an hour
+        trying to figure out why something that should work doesn't work, 99% of
+        the time the issue is
+        <a href="https://selinuxproject.org/page/Main_Page">SELinux</a>.
+      </p>
+
+      <p>
+        It turns out you need to explicitly give Nginx write permission for that
+        directory in SELinux. You can use a tool called <code>semanage</code> to
+        make this easier.
+      </p>
+
+      <code class="block">$ sudo dnf install policycoreutils-python-utils
+$ sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/koel/storage(/.*)?"
+$ sudo restorecon -R /var/www/koel/storage</code>
+
+      <p>
+        Credit to <a href="https://unix.stackexchange.com/questions/116575/selinux-httpd-write-access-to-a-directory">this StackExchange post</a>
+        for that solution.
+      </p>
+
+      <p>
+        That managed to solve that permission issue, but I was still getting
+        another. I had logs claiming permission was denied to access the
+        database even though I made sure the host, port, username, database
+        name, and password were correct. It turns out that SELinux was getting
+        in the way here too. You need to explicitly allow Nginx to connect to
+        databases over the network, which can be done with this command:
+      </p>
+
+      <code class="block">sudo setsebool -P httpd_can_network_connect_db=1</code>
+
+      <p>
+        Credit to <a href="https://stackoverflow.com/questions/42937925/laravel-permission-denied-on-remote-mysql-server-aws-aurora">this StackOverflow post</a>
+        for that solution.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
