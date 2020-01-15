@@ -74,6 +74,7 @@ h1.title {
   margin: 1.5em auto;
   font-size: 3em;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 main h1, main h2, main h3, main h4, main h5, main h6 {

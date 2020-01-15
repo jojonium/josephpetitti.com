@@ -20,6 +20,7 @@ main.blog h1.title {
   font-family: "Merriweather", serif;
   color: #eeeeee;
   margin-top: 0;
+  text-transform: none;
 }
 
 span.date {

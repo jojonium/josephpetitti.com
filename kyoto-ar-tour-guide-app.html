@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Kyoto AR Tour Guide App</title>
+    <meta name="description" content="" />
+    <meta property="og:title" content="Kyoto AR Tour Guide App" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/kyoto-ar-tour-guide-app" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/dark.css?v=1.0.5" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header>
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </label>
+    <!-- Nav -->
+      <nav id="nav">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
+          <i class="fas fa-times"></i> Close
+        </label>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="traffic-classifier">Traffic Classifier</a></li>
+              <li><a href="hong-kong-historic-conservation">Hong Kong Historic <br> Conservation</a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="http-server-client">HTTP Server & Client</a></li>
+              <li><a href="process-statistics">Process Statistics</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+              <li><a href="sliding-tetris">Sliding Tetris</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+
+    </header>
+
+  <!-- Main -->
+    <main id="main">
+      <h1 class="title">Kyoto AR<br>Tour Guide App</h1>
+
+      <div class="main-links-holder long-buttons">
+        <a href="https://github.com/bandaloo/editour" target="_blank">
+          <button class="long">
+            <span class="fab fa-github"></span> Editour on GitHub
+          </button>
+        </a>
+
+        <a href="https://web.wpi.edu/Pubs/E-project/Available/E-project-101519-135915/unrestricted/aruko-and-editour.pdf" target="_blank">
+          <button class="long">
+            <i class="fas fa-file-alt"></i> Read Paper
+          </button>
+        </a>
+
+        <a href="https://github.com/wscampbell/aruko" target="_blank">
+          <button class="long">
+            <i class="fab fa-github"></i> ARuko on GitHub
+          </button>
+        </a>
+      </div>
+
+      <h2 id="summary">Summary</h2>
+
+      <p>
+        To complete my <a href="https://www.wpi.edu/academics/undergraduate/major-qualifying-project">Major
+        Qualifying Project</a>, WPI's undergraduate capstone project, I spent
+        three months in Kyoto, Japan working with two other WPI students to
+        develop a platform for
+        <a href="https://en.wikipedia.org/wiki/Augmented_reality">augmented
+        reality</a> (AR) walking tour experiences.
+      </p>
+
+      <p>
+        <a href="https://en.wikipedia.org/wiki/Kinkaku-ji">Kinkaku-ji</a>, the
+        Temple of the Golden Pavilion, is one of Kyoto's most visited tourist
+        attractions. However, most people who visit the site do not have the
+        opportunity to experience the rich art and culture that are part of its
+        history. We worked with our sponsor,
+        <a href="https://kyoto-vr.com/en/">Kyoto VR</a>, to create an app that
+        would allow visitors of Kinkaku-ji to better experience these aspects of
+        the site.  We used Unity to create an audio tour app that provides
+        historical insight on the location, displays galleries of art throughout
+        the visit, and offers accessibility features through AR. We also
+        developed a web application to aid in the design and creation of these
+        audio tours.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/kinkakuji.jpg">
+          <img src="images/th_kinkakuji.jpg" alt="The Golden Pavilion at Kinkaku-ji">
+        </a>
+        <figcaption>The Golden Pavilion at Kinkaku-ji</figcaption>
+      </figure>
+
+      <h2 id="background">Background</h2>
+
+      <p>
+        In July 2019 I went to Kyoto, Japan for three months with six other WPI
+        students. We stayed at <a href="http://en.ritsumei.ac.jp/">Ritsumeikan
+        University</a>'s Biwako-Kusatsu Campus (technically in Shiga prefecture,
+        but close enough to Kyoto), and had access to their labs and faculty. My
+        team consisted of three Seniors: myself, a computer science major;
+        <a href="http://www.bandaloo.fun">Cole Granof</a>, computer science
+        major; and <a href="https://github.com/wscampbell/">Will Campbell</a>,
+        computer science and interactive media and game development double
+        major.
+      </p>
+
+      <p>
+        In Japan we fulfilled the requirements for the Major Qualifying Project,
+        a WPI graduation requirement in which students solve a real-world
+        problem through practical project-based work. Our project was sponsored
+        by <a href="https://kyoto-vr.com/en/">Kyoto VR</a>, a startup founded in
+        2016 to "document and preserve the culture and heritage of the city and
+        communicate the richness of Japan's Old Capital to the world."
+
+      <figure class="full-width">
+        <a href="images/kyoto-project-center-students.jpg">
+          <img src="images/th_kyoto-project-center-students.jpg" alt="The seven WPI students who completed an MQP in Kyoto in 2019">
+        </a>
+        <figcaption>
+          The seven WPI students who completed an MQP in Kyoto in 2019
+        </figcaption>
+      </figure>
+
+      <h2 id="aruko">ARuko&mdash;An AR Walking Tour App</h2>
+
+      <p>
+        My team worked directly under Kyoto VR founder and CEO Atticus Sims to
+        develop and test a mobile app to deliver an audio tour, incorporating
+        various augmented reality features to enhance the experience. The app,
+        which we named ARuko (from 歩こ <i>aruko</i>, roughly "let's walk," and
+        AR) was created in <a href="https://unity.com/">Unity</a> using the 
+        <a href="https://developer.vuforia.com">Vuforia Augmented Reality
+        SDK</a>. This allowed us to quickly develop a professional-level
+        application, and easily deploy to both iOS and Android.
+      </p>
+
+      <p>
+        We focused on designing a tour of Kinkaku-ji for the app, but made it
+        extensible to Kyoto VR could create tours of other locations using the
+        same app in the future.
+      </p>
+
+      <figure class="float right">
+        <a href="images/aruko-map.png">
+          <img src="images/aruko-map.png" alt="ARuko's map screen">
+        </a>
+        <figcaption>
+          ARuko's map screen
+        </figcaption>
+      </figure>
+
+      <h3 id="gps-functionality">GPS Functionality</h3>
+
+      <p>
+        The core experience of ARuko is the walking tour. By walking the given
+        route, the user enters and exits specific geographic regions that invoke
+        changes in the app, such as playing a portion of the audio tour related
+        to a specific area and displaying relevant images. We provided a robust
+        system for defining polygons of arbitrary size and shape using GPS
+        coordinates to represent the various points of interest along the tour.
+      </p>
+      
+      <p>
+        Each region is a set of three or more latitude and longitude points that
+        define a closed polygon. Using the phone's GPS location, the app needs
+        to periodically check to see if the user is located within one of these
+        polygons.
+      </p>
+
+      <p>
+        To do this, we used an algorithm that draws a ray from the user's
+        location to infinity in a random direction. The origin of the ray is
+        inside a polygon if the ray passes through an odd number of the
+        polygon's line segments (see the <a href="#intersections-diagram">figure
+        below</a>).
+      </p>
+
+      <p>
+        This algorithm is rather straightforward and runs in <i>O(n)</i> time,
+        where <i>n</i> is the total number of vertices of all polygons being
+        tested.
+      </p>
+
+      <p>
+        However, there is an edge case that could have given us issues. If the
+        ray passes exactly through a vertex, the collision algorithm will count
+        two intersections instead of just one. Even though this was extremely
+        unlikely, we avoided the edge case by subtracting one from the
+        intersection count if any vertices were exactly colinear with the ray.
+      </p>
+
+      <figure class="full-width" id="intersections-diagram" style="clear: both">
+        <a href="images/intersections-diagram.png">
+          <img src="images/intersections-diagram.png" alt="Illustration of the region-checking algorithm">
+        </a>
+        <figcaption>
+          Illustration of the region-checking algorithm
+        </figcaption>
+      </figure>
+
+      <h3 id="translation-feature">Translation Feature</h3>
+
+      <p>
+        ARuko uses augmented reality to translate text on the many Japanese-only
+        signs at Kinkaku-ji. We visited the site and took dozens of high quality
+        photos of every sign around the walking tour path. A Japanese student
+        named Hikaru Inoue provided English translations of each of them. We
+        then used the photos to generate Vuforia image targets.
+      </p>
+
+      <p>
+        When the user points the app at one of these signs, a blue "info" button
+        will be overlaid on the image. If the user clicks this button, the
+        translation is displayed.
+      </p>
+
+      <figure class="full-width" id="intersections-diagram" style="clear: both">
+        <a href="images/aruko-translation-feature.png">
+          <img src="images/th_aruko-translation-feature.png" alt="Japanese sign with blue info button over it on the left, with the translation displayed on the right">
+        </a>
+        <figcaption>
+          ARuko's AR translation feature
+        </figcaption>
+      </figure>
+
+      <p>
+        This turned out to be a very intuitive way of delivering high-quality
+        translations, and allowed non-Japanese speakers to understand more of
+        the cultural and historical significance of Kinkaku-ji.
+      </p>
+
+      <figure class="float left">
+        <a href="images/aruko-map-overlay.png">
+          <img src="images/aruko-map-overlay.png" alt="Kinkaku-ji map with path and translated labels">
+        </a>
+      </figure>
+
+      <h3 id="map-overlay">Map Overlay</h3>
+
+      <p>
+        Near the entrance to Kinkaku-ji is a large illustrated map. Much like
+        the signage around the site, all of the text on this map is in Japanese
+        only. Using the AR camera within the app we can overlay the walking path
+        and translations of the labels.
+      </p>
+
+      <p>
+        The blue path and English text in the figure are not present in the real
+        world, they are superimposed onto the camera image by ARuko in real
+        time.
+      </p>
+
+      <h2 id="editour">Editour&mdash;The Tour Editor</h2>
+
+      <p>
+        Alongside ARuko, Cole and I developed a web application called Editour
+        to allow a non-technical user to design AR audio tours. Editour allows
+        the user to draw arbitrarily-shaped geographic regions onto a map, edit
+        those regions, and assign media to each of those regions.
+      </p>
+
+      <p>
+        The user can upload an audio file and any number of image files for each
+        region. The server-side of the application organizes and
+        version-controls these files and a definition of the various regions in
+        the tour.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>
+              <span class="gpg">(<a href="gpg">GPG Key</a>)</span>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li>
+            <a href="https://github.com/jojonium" target="_blank">
+              <span class="fab fa-github" title="GitHub"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank">
+              <span class="fab fa-linkedin" title="LinkedIn"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank">
+              <span class="fab fa-steam" title="Steam"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/jojonium" target="_blank">
+              <span class="fab fa-telegram" title="Telegram"></span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </footer>
+    </body>
+</html>
