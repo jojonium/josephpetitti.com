@@ -3,10 +3,10 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Kyoto AR Tour Guide App</title>
-    <meta name="description" content="" />
+    <meta name="description" content="From July to October 2019 I worked on my Major Qualifying Project at Ritsumeikan University in Kyoto, Japan. For this project I worked with two other WPI students to build a mobile app with Unity and Vuforia to deliver custom augmented reality audio tours at a historic location in Kyoto. We also built a web application with Node.js for graphically designing these tours." />
     <meta property="og:title" content="Kyoto AR Tour Guide App" />
-    <meta property="og:description" content="" />
-    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:description" content="From July to October 2019 I worked on my Major Qualifying Project at Ritsumeikan University in Kyoto, Japan. For this project I worked with two other WPI students to build a mobile app with Unity and Vuforia to deliver custom augmented reality audio tours at a historic location in Kyoto. We also built a web application with Node.js for graphically designing these tours." />
+    <meta property="og:image" content="https://josephpetitti.com/images/kinkakuji.jpg" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://josephpetitti.com/kyoto-ar-tour-guide-app" />
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -301,7 +301,114 @@
         The user can upload an audio file and any number of image files for each
         region. The server-side of the application organizes and
         version-controls these files and a definition of the various regions in
-        the tour.
+        the tour. It serves the most recent version of the tour either as a
+        zipped archive or as an editable web page.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/editour.png">
+          <img src="images/th_editour.png" alt="Screenshot of the Editour front-end">
+        </a>
+      </figure>
+      <figcaption>A screenshot of the Editour front-end</figcaption>
+
+      <p>
+        The user can draw and edit regions of any shape by drawing directly on
+        an <a href="https://www.openstreetmap.org">OpenStreetMap</a> map.
+        Through the menu on the left the user can edit the media files
+        associated with each region, as well as uploading new ones.
+      </p>
+
+      <h3 id="editour-back-end">Editour Back-End</h3>
+
+      <p>
+        I wrote the back-end of the Editour web application using Node.js with
+        ECMAScript 2015 (also known as ES6). This allowed us to utilize some of
+        the useful new features of the standard, such as modules and promises. I
+        wrapped all of the asynchronous methods of the back-end in promises,
+        which made error-handling and control flow much easier.
+      </p>
+
+      <p>
+        Chaining promises with consecutive <code>then()</code> calls is a
+        powerful asynchronous technique that is easy to read and understand.
+        Consider this snippet from the "<a href="https://github.com/bandaloo/editour/blob/master/endpoints/getTour.js">get tours</a>"
+        endpoint:
+      </p>
+
+      <code class="block"><span style="color: #5b814a">// read files from the tours directory</span>
+<span style="color: #9cdcfe">pHelpers</span>
+  .<span style="color: #c4c498">getTours</span>(<span style="color: #9cdcfe">constants.toursLoc</span>)
+  .<span style="color: #c4c498">then</span>(<span style="color: #9cdcfe">files</span> =&gt; {
+    <span style="color: #5b814a">// find the full name of the tour</span>
+    <span style="color: #c586c0">return</span> <span style="color: #9cdcfe">pHelpers</span>.<span style="color: #c4c498">findFileName</span>(<span style="color: #9cdcfe">files</span>, <span style="color: #9cdcfe">req.params.name</span>);
+  })
+  .<span style="color: #c4c498">then</span>(<span style="color: #9cdcfe">zipFile</span> =&gt; {
+    <span style="color: #9cdcfe">logger</span>.<span style="color: #c4c498">log</span>(<span style="color: #ce9178">"Sending file: "</span> + <span style="color: #9cdcfe">zipFile</span>);
+    <span style="color: #9cdcfe">res</span>
+      .<span style="color: #c4c498">status</span>(200)
+      .<span style="color: #c4c498">download</span>(
+        <span style="color: #9cdcfe">constants.toursLoc</span> + <span style="color: #9cdcfe">zipFile</span>,
+        <span style="color: #9cdcfe">req.params.name</span> + <span style="color: #ce9178">".zip"</span>,
+        <span style="color: #9cdcfe">err</span> =&gt; {
+          <span style="color: #c586c0">if</span> (<span style="color: #9cdcfe">err</span>) {
+            <span style="color: #c586c0">throw</span> <span style="color: #9cdcfe">err</span>;
+          }
+        }
+      );
+  })
+  .<span style="color: #c4c498">catch</span>(<span style="color: #9cdcfe">errObj</span> =&gt; {
+    <span style="color: #5b814a">// send errors back to the client</span>
+    <span style="color: #9cdcfe">constants</span>.<span style="color: #c4c498">returnError</span>(<span style="color: #9cdcfe">res</span>, <span style="color: #9cdcfe">errObj.status</span>, <span style="color: #9cdcfe">errObj.message</span>);
+  });</code>
+
+      <p>
+        If an error is thrown at any point in the chain, control drops down to
+        the <code>catch()</code> clause and an error is returned to the client.
+      </p>
+
+      <p>
+        Tours are defined by a
+        <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> metadata file,
+        which contains the GPS coordinates, transcript, name, and files
+        associated with each region. This JSON and each of the files is stored
+        in a zip file on the server.
+      </p>
+
+      <h2 id="extensibility">Extensibility</h2>
+
+      <p>
+        The main goal of Editour is to allow ARuko to be extensible. A
+        non-technical user, such as our project sponsor, can use Editour to
+        easily design new walking tours for other locations, and automatically
+        load them into ARuko. We designed the mobile app to accept and parse the
+        same zip files generated by Editour, so the integration is seamless.
+      </p>
+
+      <p>
+        We planned to have ARuko automatically request new tours from the
+        Editour server, but didn't have time to implement this feature because
+        our sponsor wanted to focus on just the Kinkaku-ji tour.
+      </p>
+
+      <h2 id="conclusion">Conclusion</h2>
+
+      <p>
+        In three months we were able to create a functional and feature-complete
+        application for delivering AR-enhanced audio tours. It was a great
+        experience to work on a practical, real-world project for a real
+        sponsor, and I learned a lot about the software development process.
+      </p>
+
+      <p>
+        It was also great to spend three months in Japan, learning about a
+        foreign culture's approach to software development and computer science.
+      </p>
+
+      <p>
+        You can read our full 74 page paper <a href="https://web.wpi.edu/Pubs/E-project/Available/E-project-101519-135915/unrestricted/aruko-and-editour.pdf">here</a>,
+        and check out the source code for <a href="https://github.com/wscampbell/aruko">ARuko</a>
+        and <a href="https://github.com/bandaloo/editour">Editour</a> on GitHub.
       </p>
     </main>
 
