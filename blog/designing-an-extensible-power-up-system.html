@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Designing an extensible power up system</title>
+    <meta name="description" content="Continuing to work on a project I started last term in AI for Interactive Media and Games, I designed a flexible power up system in which power ups synergize with each other automatically" />
+    <meta property="og:title" content="Designing an extensible power up system" />
+    <meta property="og:description" content="Continuing to work on a project I started last term in AI for Interactive Media and Games, I designed a flexible power up system in which power ups synergize with each other automatically" />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/proc-cave-game.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/designing-an-extensible-power-up-system" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2020-01-25">January 25, 2020</span>
+
+      <h1 class="title">Designing an extensible power up system</h1>
+
+      <p>
+        Last term I started working on a simple procedurally-generated twinstick
+        shooter, tentatively called Proc Cave Game, with two of my friends as
+        our final project for AI for Interactive Media and Games. Although it
+        started as just another assignment, we continued to work on it over
+        winter break, expanding on what we had started to make a fun and
+        interesting game.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/proc-cave-game.jpg">
+          <img src="images/th_proc-cave-game.jpg" alt="A screenshot of Proc Cave Game">
+        </a>
+      </figure>
+
+      <h2 id="background">Background</h2>
+
+      <p>
+        Instead of using an existing engine or framework we decided to implement
+        everything from scratch. The three of us were most familiar with
+        JavaScript, and developing for the web makes a project much more
+        accessible, so we opted for using plain ECMAScript 2015 and the HTML
+        canvas API built into every browser.
+      </p>
+
+      <p>
+        <a href="http://www.bandaloo.fun">Cole Granof</a> did most of the work
+        on the engine, writing a game loop that could run at a constant speed
+        independent of your monitor's refresh rate and robust kinematic
+        simulations based on acceleration and drag.
+      </p>
+
+      <p>
+        <a href="https://www.mattpuentes.com/">Matt Puentes</a> worked on an
+        efficient collision system, and an algorithm to connect the randomly
+        generated cave environments using a minimum spanning tree.
+      </p>
+
+      <p>
+        I, meanwhile, focused on designing the power up system.
+      </p>
+
+      <h2 id="guiding-principles">Guiding principles</h2>
+
+      <p>
+        <a href="https://en.wikipedia.org/wiki/The_Binding_of_Isaac_(video_game)">
+          <i>The Binding of Isaac</i></a> is another procedurally generated
+        top-down twinstick shooter, and it heavily inspired the design of Proc
+        Cave Game. Something I particularly like about <i>Isaac</i> is the way
+        different items synergize with each other to create unique gameplay.  In
+        <i>The Binding of Isaac</i>, most of these synergies are hard-coded by
+        the developer, but I wanted power ups in our game to work together
+        automatically.
+      </p>
+
+      <p>
+        I also wanted every power up to be able to "stack," so that getting the
+        same power up twice would make the ability gained from it stronger. This
+        way we could have different levels of power ups, and finding the same
+        one twice wouldn't be disappointing for players.
+      </p>
+
+      <p>
+        Finally, I wanted all power ups to be able to apply to both the player
+        and the enemies. This would allow us to apply random power ups to
+        enemies to make them stronger, as well as designing new enemy types
+        around certain power ups.
+      </p>
+
+      <h2 id="implementation">Implementation</h2>
+      
+      <p>
+        The <code>PowerUp</code> super-class is pretty basic, but defines the
+        interface that individual power ups must implement. Here are some of the
+        methods it defines:
+      </p>
+
+      <code class="block">export <span style="color: #44749c">class</span> <span style="color: #44a994">PowerUp</span> <span style="color: #44749c">extends</span> <span style="color: #44a994">Entity</span> {
+  <span style="color: #44749c">constructor</span>(
+    position,
+    magnitude = 1,
+    powerUpClass,
+    description
+  );
+
+  <span style="color: #5b814a">/**
+   * called when a creature picks up this power up
+   */</span>
+  <span style="color: #c4c498">apply</span>(creature);
+
+  <span style="color: #5b814a">/**
+   * tests whether the creature is at
+   * max level for this power up
+   * <span style="color: #44749c">@return</span> boolean
+   */</span>
+  <span style="color: #c4c498">isAtMax</span>(creature);
+
+  <span style="color: #5b814a">/**
+   * what to do when this isn't applied due
+   * to the creature being at max level
+   */</span>
+  <span style="color: #c4c498">overflowAction</span>(creature);
+
+  <span style="color: #5b814a">/**
+   * draw the power up in the world as a shiny
+   * circle with a letter in the middle
+   */</span>
+  <span style="color: #c4c498">draw</span>();
+}
+</code>
+
+      <p>
+        You can see the full implementation <a href="https://github.com/bandaloo/proc-cave-game/blob/master/static/game/powerup.js">on GitHub</a>.
+        As you can see, each power up has a <code>magnitude</code>, a number
+        from 1 to 5 that describes how powerful it is. This enforces the design
+        principle that all power ups have to be able to scale, and multiple
+        copies of the same power up stack by essentially having their total
+        combined magnitude.
+      </p>
+
+      <p>
+        Each power up also needs to have some way of checking whether the
+        <code>Creature</code> (the player character or an enemy) that picked it
+        up is already at the max level for that power up.  For example, the
+        power up <code>QuickShot</code>, which increases bullet speed, just
+        checks whether the creature's existing bullet speed is above a set limit
+        already.
+      </p>
+
+      <p>
+        If the creature is close to the max, but not quite at it yet, the
+        <code>isAtMax</code> method can trim the magnitude of the power up so
+        that it still has an affect without going over the limit. Here's how
+        <code>QuickShot</code> does it:
+      </p>
+
+      <code class="block"><span style="color: #c4c498">isAtMax</span>(creature) {
+  <span style="color: #5b814a">// bullet speed is already too high</span>
+  <span style="color: #44749c">if</span> (creature.bulletSpeed >= MAX_BULLET_SPEED) {
+    <span style="color: #44749c">return</span> true;
+  }
+
+  <span style="color: #5b814a">// see if we need to trim magnitude</span>
+  const availMag = Math.<span style="color: #c4c498">floor</span>(
+    Math.<span style="color: #c4c498">abs</span>(
+      MAX_BULLET_SPEED - creature.bulletSpeed
+    ) / BULLET_SPEED_FACTOR
+  );
+  <span style="color: #44749c">if</span> (availMag &lt; 1) <span style="color: #44749c">return</span> true;
+
+  <span style="color: #44749c">this</span>.magnitude = Math.<span style="color: #c4c498">min</span>(
+    availMag, this.magnitude
+  );
+  <span style="color: #44749c">return</span> false;
+}</code>
+
+      <p>
+        <code>MAX_BULLET_SPEED</code> and <code>BULLET_SPEED_FACTOR</code> are
+        constants that determine the maximum bullet speed, and by how much
+        bullet speed is increased by each point of <code>QuickShot</code>
+        respectively.
+      </p>
+
+      <p>
+        Applying simple power ups like this are easy, just increase a number by
+        the power up's magnitude times <code>BULLET_SPEED_FACTOR</code>. But
+        what about more complex power ups? <code>FlameThrower</code> makes the
+        player's bullets light enemies on fire. We could give each bullet an
+        attribute <code>causesBurning</code>, but this would be annoying to
+        maintain as we added more an more power ups. Instead, I used one of the
+        most useful features of JavaScript: first-class functions.
+      </p>
+
+      <p>
+        In JavaScript, functions are treated as first-class citizens, meaning
+        they can be used in the same way as any other data type: passed as
+        arguments to other functions, returned from functions, assigned to
+        variables, and stored in data structures. This means we can create an
+        array of functions to execute whenever a bullet hits an enemy, and
+        simply add a function to it that causes burning.
+      </p>
+
+      <p>
+        See the <a href="https://github.com/bandaloo/proc-cave-game/blob/master/static/game/powerups/flamethrower.js">source code</a>
+        for <code>FlameThrower</code> for an example of this. This approach
+        makes the synergy I mentioned above much easier.
+      </p>
+
+      <p>
+        When you get an <code>Xplode</code> power up, it makes your bullets
+        explode into a ring of sub-bullets. By simply passing these sub-bullets
+        the same array of <code>onHitEnemy</code> functions that the parent had,
+        they will inherit the same flamethrower effect.
+      </p>
+
+      <p>
+        Now you can have flaming, exploding bullets that bounce off walls, and
+        the game logic does all the work of combining these effects
+        automatically. It can lead to some really complex combinations and
+        emergent gameplay.
+      </p>
+
+      <figure class="full-width">
+        <video src="images/proc-cave-game-2.webm" controls>
+      </figure>
+
+      <p>
+        Proc Cave Game is released as free software, so you can download the
+        source code, inspect, modify, and redistribute it as much as you want.
+        It's available as source code on <a href="https://github.com/bandaloo/proc-cave-game/">GitHub</a>,
+        or you can try it out on the web <a href="https://game.petitti.org">here</a>.
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

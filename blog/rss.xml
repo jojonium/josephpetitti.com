@@ -204,5 +204,12 @@
 			<pubDate>Sun, 05 Jan 2020 09:31:22 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/how-to-install-koel-on-fedora-30</guid>
 		</item>
+
+		<item>
+			<title>Designing an extensible power up system</title>
+			<link>https://josephpetitti.com/blog/designing-an-extensible-power-up-system</link>
+			<description>Continuing to work on a project I started last term in AI for Interactive Media and Games, I designed a flexible power up system in which power ups synergize with each other automatically.</description>
+			<pubDate>Sat, 25 Jan 2020 10:26:15 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/designing-an-extensible-power-up-system</guid>
 	</channel>
 </rss>
