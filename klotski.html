@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link rel="stylesheet" href="styles/dark.css?v=1.0.5" type="text/css">
 
-    <script src="scripts/jquery-3.3.1.min.js"></script>
     <script src="scripts/klotski.js"></script>
   </head>
   <body>
@@ -83,7 +82,7 @@ App</a></li>
       <button id="reset">Reset Puzzle</button>
       </div>
       <div style="float: right">
-      <button id="config-1" class="config" style="background-color: #f1a208">Configuration 1</button>
+      <button id="config-1" class="config selected">Configuration 1</button>
       <button id="config-2" class="config">Configuration 2</button>
       <button id="config-3" class="config">Configuration 3</button>
       <button id="config-4" class="config">Configuration 4</button>
@@ -130,6 +129,11 @@ App</a></li>
         display: block;
         margin: 5px;
         font-size: 1em;
+        background-color: #3066be;
+      }
+
+      button.config.selected {
+        background-color: #f1a208;
       }
 
       #canvas {

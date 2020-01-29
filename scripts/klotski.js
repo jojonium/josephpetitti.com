@@ -1,4 +1,6 @@
-/* (c) 2018, 2019 Joseph Petitti | https://josephpetitti.com/license.txt */
+/* (c) 2018-2020 Joseph Petitti | https://josephpetitti.com/license.txt */
+
+"use strict";
 
 // Global constants and variables
 const SQUARE_SIZE = 100;
@@ -17,38 +19,42 @@ class Piece {
     this.w = w;
     this.h = h;
   }
-	/**
-	 * Moves the piece in a given direction on the board. Assumes the move
-	 * is valid.
-     * @param {0|1|2|3} direction 0=up, 1=right, 2=down, 3=left
-	 */
+  /**
+   * Moves the piece in a given direction on the board. Assumes the move
+   * is valid.
+   * @param {0|1|2|3} direction 0=up, 1=right, 2=down, 3=left
+   */
   move(direction) {
-    if (direction == 0) { // up
+    if (direction == 0) {
+      // up
       this.y--;
-    } else if (direction == 1) { // right
+    } else if (direction == 1) {
+      // right
       this.x++;
-    } else if (direction == 2) { // down
+    } else if (direction == 2) {
+      // down
       this.y++;
     } else if (direction == 3) {
       this.x--;
     }
   }
 
-	/**
-	 * returns true if this piece contains the given point, false otherwise
-     * @param {number} x
-     * @param {number} y
-	 */
+  /**
+   * returns true if this piece contains the given point, false otherwise
+   * @param {number} x
+   * @param {number} y
+   */
   containsPoint(x, y) {
-    return (x >= this.x && y >= this.y && x < (this.x + this.w) &&
-      y < (this.y + this.h));
+    return (
+      x >= this.x && y >= this.y && x < this.x + this.w && y < this.y + this.h
+    );
   }
 
-	/**
-	 * Finds the x and y coordinates of the top left point in the piece, as
-	 * well as the piece's width and height in a convenient array
-     * @return {number[]} an array with the left, top, width, and height values
-	 */
+  /**
+   * Finds the x and y coordinates of the top left point in the piece, as
+   * well as the piece's width and height in a convenient array
+   * @return {number[]} an array with the left, top, width, and height values
+   */
   getDims() {
     return [this.x, this.y, this.w, this.h];
   }
@@ -121,12 +127,14 @@ class Board {
     }
 
     // check win
-    if (this.selected === this.pieces[0] &&
+    if (
+      this.selected === this.pieces[0] &&
       this.selected.x == 1 &&
       this.selected.y == 3 &&
-      direction == 2) {
-      $("#message").html("YOU WIN!");
-      $("#play-again").show();
+      direction == 2
+    ) {
+      document.getElementById("message").innerText = "YOU WIN!";
+      document.getElementById("play-again").style.display = "block";
       return true;
     }
 
@@ -134,8 +142,7 @@ class Board {
     if (direction == 0) {
       // up
       if (this.selected.y == 0) return false; // ceiling
-      for (i = this.selected.x;
-        i < this.selected.x + this.selected.w; ++i) {
+      for (i = this.selected.x; i < this.selected.x + this.selected.w; ++i) {
         if (this.isOccupied(i, this.selected.y - 1)) {
           // there's a piece blocking this one
           return false;
@@ -143,24 +150,18 @@ class Board {
       }
     } else if (direction == 1) {
       // right
-      if (this.selected.x + this.selected.w == this.width)
-        return false;
-      for (i = this.selected.y;
-        i < this.selected.y + this.selected.h; ++i) {
-        if (this.isOccupied(
-          this.selected.x + this.selected.w, i)) {
+      if (this.selected.x + this.selected.w == this.width) return false;
+      for (i = this.selected.y; i < this.selected.y + this.selected.h; ++i) {
+        if (this.isOccupied(this.selected.x + this.selected.w, i)) {
           // there's a piece blocking this one
           return false;
         }
       }
     } else if (direction == 2) {
       // down
-      if (this.selected.y + this.selected.h == this.height)
-        return false;
-      for (i = this.selected.x;
-        i < this.selected.x + this.selected.w; ++i) {
-        if (this.isOccupied(i,
-          this.selected.y + this.selected.h)) {
+      if (this.selected.y + this.selected.h == this.height) return false;
+      for (i = this.selected.x; i < this.selected.x + this.selected.w; ++i) {
+        if (this.isOccupied(i, this.selected.y + this.selected.h)) {
           // there's a piece blocking this one
           return false;
         }
@@ -168,8 +169,7 @@ class Board {
     } else if (direction == 3) {
       // left
       if (this.selected.x == 0) return false;
-      for (i = this.selected.y;
-        i < this.selected.y + this.selected.h; ++i) {
+      for (i = this.selected.y; i < this.selected.y + this.selected.h; ++i) {
         if (this.isOccupied(this.selected.x - 1, i)) {
           // there's a piece blocking this one
           return false;
@@ -183,7 +183,7 @@ class Board {
     gooey.updateMoves(this.moves);
     return true;
   }
-};
+}
 
 class Point {
   /**
@@ -201,13 +201,13 @@ class GUI {
    * @param {Board} board
    */
   constructor(board) {
-    this.canvas = document.createElement('canvas');
+    this.canvas = document.createElement("canvas");
     this.board = board;
-    this.canvas.id = 'canvas';
+    this.canvas.id = "canvas";
     this.canvas.width = SQUARE_SIZE * board.width;
     this.canvas.height = SQUARE_SIZE * board.height + 8;
-    document.getElementById('canvas-holder').appendChild(this.canvas);
-    this.ctx = canvas.getContext('2d');
+    document.getElementById("canvas-holder").appendChild(this.canvas);
+    this.ctx = canvas.getContext("2d");
     this.prevPoint = null;
   }
 
@@ -225,25 +225,27 @@ class GUI {
     for (let i = 0; i < this.board.pieces.length; ++i) {
       if (this.board.selected === this.board.pieces[i])
         this.ctx.fillStyle = "#3066be";
-      else if (i == 0)
-        this.ctx.fillStyle = "#f1a208";
-      else
-        this.ctx.fillStyle = "#4ea5d9";
+      else if (i == 0) this.ctx.fillStyle = "#f1a208";
+      else this.ctx.fillStyle = "#4ea5d9";
       var tlx = this.board.pieces[i].getDims()[0];
       var tly = this.board.pieces[i].getDims()[1];
       var wid = this.board.pieces[i].getDims()[2];
       var hei = this.board.pieces[i].getDims()[3];
       this.ctx.beginPath();
-      this.ctx.rect(tlx * SQUARE_SIZE + 5,
+      this.ctx.rect(
+        tlx * SQUARE_SIZE + 5,
         tly * SQUARE_SIZE + 5,
         wid * SQUARE_SIZE - 10,
-        hei * SQUARE_SIZE - 10);
+        hei * SQUARE_SIZE - 10
+      );
       //	this.ctx.closePath();
       this.ctx.stroke();
-      this.ctx.fillRect(tlx * SQUARE_SIZE + 5,
+      this.ctx.fillRect(
+        tlx * SQUARE_SIZE + 5,
         tly * SQUARE_SIZE + 5,
         wid * SQUARE_SIZE - 10,
-        hei * SQUARE_SIZE - 10);
+        hei * SQUARE_SIZE - 10
+      );
     }
   }
 
@@ -257,9 +259,13 @@ class GUI {
       x = e.pageX;
       y = e.pageY;
     } else {
-      x = e.clientX + document.body.scrollLeft +
+      x =
+        e.clientX +
+        document.body.scrollLeft +
         document.documentElement.scrollLeft;
-      y = e.clientY + document.body.scrollTop +
+      y =
+        e.clientY +
+        document.body.scrollTop +
         document.documentElement.scrollTop;
     }
     x -= canvas.offsetLeft;
@@ -285,36 +291,42 @@ class GUI {
       newX = e.pageX;
       newY = e.pageY;
     } else {
-      newX = e.clientX + document.body.scrollLeft +
+      newX =
+        e.clientX +
+        document.body.scrollLeft +
         document.documentElement.scrollLeft;
-      newY = e.clientY + document.body.scrollTop +
+      newY =
+        e.clientY +
+        document.body.scrollTop +
         document.documentElement.scrollTop;
     }
-    newX -= canvas.offsetLeft;
-    newY -= canvas.offsetTop;
+    if (this.prevPoint) {
+      newX -= canvas.offsetLeft;
+      newY -= canvas.offsetTop;
 
-    var dx = newX - this.prevPoint.x;
-    var dy = newY - this.prevPoint.y;
-    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
-      // mouse dragged
-      if (Math.abs(dx) > Math.abs(dy)) {
-        // horizontal drag
-        if (dx > 0) {
-          this.board.movePiece(1);
+      var dx = newX - this.prevPoint.x;
+      var dy = newY - this.prevPoint.y;
+      if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+        // mouse dragged
+        if (Math.abs(dx) > Math.abs(dy)) {
+          // horizontal drag
+          if (dx > 0) {
+            this.board.movePiece(1);
+          } else {
+            this.board.movePiece(3);
+          }
         } else {
-          this.board.movePiece(3);
-        }
-      } else {
-        // vertical drag
-        if (dy > 0) {
-          this.board.movePiece(2);
-        } else {
-          this.board.movePiece(0);
+          // vertical drag
+          if (dy > 0) {
+            this.board.movePiece(2);
+          } else {
+            this.board.movePiece(0);
+          }
         }
       }
-    }
 
-    this.drawBoard();
+      this.drawBoard();
+    }
   }
 
   /**
@@ -344,26 +356,34 @@ class GUI {
    * @param {number} input
    */
   updateMoves(input) {
-    $('#moves').html(input);
+    document.getElementById("moves").innerText = input;
   }
 }
 
+var clickIt = function(e) {
+  gooey.handleClick(e);
+};
+var unclickIt = function(e) {
+  gooey.handleUnclick(e);
+};
+var hitKey = function(e) {
+  gooey.handleKey(e);
+};
 
-var clickIt = function (e) {gooey.handleClick(e);};
-var unclickIt = function (e) {gooey.handleUnclick(e);};
-var hitKey = function (e) {gooey.handleKey(e);};
-
-
-$(document).ready(function () {main();});
-
-var config = function (num) {
+var config = function(num) {
   configuration = num;
-  $(".config").css("background-color", "#3066be");
-  $("#config-" + num).css("background-color", "#f1a208");
+  const configs = document.getElementsByClassName("config");
+  for (const c of configs) {
+    if (c.id === "config-" + num) {
+      c.classList.add("selected");
+    } else {
+      c.classList.remove("selected");
+    }
+  }
   reset();
-}
+};
 
-var genPieces = function (num) {
+var genPieces = function(num) {
   var out = new Array(10);
 
   if (num == 1) {
@@ -417,7 +437,7 @@ var genPieces = function (num) {
 
 var gooey;
 
-var main = function () {
+var main = function() {
   // make the board
   var pieces = genPieces(configuration);
 
@@ -426,7 +446,7 @@ var main = function () {
   gooey = new GUI(b);
 
   // handle clicking on the canvas
-  document.getElementById('canvas').addEventListener("mousedown", clickIt);
+  document.getElementById("canvas").addEventListener("mousedown", clickIt);
   document.addEventListener("mouseup", unclickIt);
   document.addEventListener("keydown", hitKey);
 
@@ -443,23 +463,30 @@ var main = function () {
   gooey.drawBoard();
 };
 
-var reset = function () {
+var reset = function() {
   // remove the canvas
-  document.getElementById('canvas')
-    .removeEventListener("mousedown", clickIt);
-  document.getElementById('canvas')
-    .removeEventListener("mouseup", unclickIt);
+  document.getElementById("canvas").removeEventListener("mousedown", clickIt);
+  document.getElementById("canvas").removeEventListener("mouseup", unclickIt);
   document.removeEventListener("keydown", hitKey);
   var canv = document.getElementById("canvas");
+  for (let i = 1; i <= 4; ++i) {
+    document.getElementById("config-" + i).removeEventListener("click", () => {
+      config(i);
+    });
+  }
+  document.getElementById("reset").removeEventListener("click", reset);
+  document.getElementById("play-again").removeEventListener("click", reset);
+
   canv.parentNode.removeChild(canv);
 
-
   // hide the message
-  $("#message").html('');
+  document.getElementById("message").innerText = "";
 
   // hide the play again button
-  $("#play-again").hide();
+  document.getElementById("play-again").style.display = "none";
 
   // start over
   main();
 };
+
+document.addEventListener("DOMContentLoaded", main);
