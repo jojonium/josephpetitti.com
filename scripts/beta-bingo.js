@@ -68,7 +68,8 @@ window.onload = () => {
     'Someone writes on the blackboard or whiteboard',
     'Misspelled name in minutes',
     'Voting on something',
-    'Announcing an event more than three weeks in the future'
+    'Announcing an event more than three weeks in the future',
+    'Tim can\'t fails to read something'
   ];
 
   shuffle(o);
