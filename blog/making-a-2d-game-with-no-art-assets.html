@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Making a 2D game with no art assets</title>
+    <meta name="description" content="If you're reading this it means I forgot to change the default description" />
+    <meta property="og:title" content="Making a 2D game with no art assets" />
+    <meta property="og:description" content="If you're reading this it means I forgot to change the default description" />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/turtle-burger.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/making-a-2d-game-with-no-art-assets" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2020-02-18">February 18, 2020</span>
+
+      <h1 class="title">Making a 2D game with no art assets</h1>
+
+      <p>
+        In my <a href="designing-an-extensible-power-up-system">last blog
+        post</a> I wrote about the game I'm working on with two of my friends.
+        It now officially has a name, 
+        <a href="https://afterlightcaves.com">Afterlight Caves</a>, and we're
+        going to be showing it off at the WPI booth at
+        <a href="https://east.paxsite.com/">PAX East</a>, February 27 through
+        March 1 2020. In this post I'll talk about how three computer science
+        majors with no artistic ability between them were able to make a decent
+        looking game.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/afterlight-caves-1.png">
+          <img src="images/th_afterlight-caves-1.png" alt="Screenshot of Afterlight Caves">
+        </a>
+      </figure>
+
+      <p>
+        The game's graphics system is powered by the 
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">JavaScript Canvas API</a>,
+        which allows you to draw simple lines, circles, and rectangles onto an
+        HTML canvas. Though simple, this API is deceptively powerful, and
+        combining its various features allowed us to make some cool-looking
+        effects.
+      </p>
+
+      <h2 id="simple-particles">Simple particles</h2>
+
+      <p>
+        Good looking particles add a lot of excitement and motion to a game, and
+        they can be surprisingly simple to make. In our physics system, all
+        entities have velocity, acceleration, and drag. Using these, we can
+        create simple line-based particles very easily.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/afterlight-caves-2.png">
+          <img src="images/th_afterlight-caves-2.png" alt="Screenshot of Afterlight Caves">
+        </a>
+      </figure>
+
+      <p>
+        Each particle has a lifetime, after which it is automatically removed
+        from the world, an initially high velocity, and high drag. It's drawn as
+        a line with length as a function of its velocity, so it naturally
+        shortens as it slows down until it is removed. This creates a nice
+        spark-like effect that is computationally cheap and snappy.
+      </p>
+
+      <h2 id="glow-effect">Glow effect</h2>
+
+      <p>
+        We tried to give Afterlight Caves a glowing, neon look.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/afterlight-caves-display-canvas.png">
+          <img src="images/afterlight-caves-display-canvas.png" alt="The front, display canvas">
+        </a>
+        <figcaption>The regular display canvas</figcaption>
+      </figure>
+
+      <figure>
+        <a href="images/afterlight-caves-blur-canvas.png">
+          <img src="images/afterlight-caves-blur-canvas.png" alt="The blur canvas">
+        </a>
+        <figcaption>The blur canvas</figcaption>
+      </figure>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
