@@ -212,5 +212,13 @@
 			<pubDate>Sat, 25 Jan 2020 10:26:15 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/designing-an-extensible-power-up-system</guid>
 		</item>
+
+		<item>
+			<title>Making a 2D game with no art assets</title>
+			<link>https://josephpetitti.com/blog/making-a-2d-game-with-no-art-assets</link>
+			<description>In my last blog post I wrote about the game I'm working on with two of my friends. It now officially has a name, Afterlight Caves, and we're going to be showing it off at the WPI booth at PAX East, February 27 through March 1 2020. In this post I'll talk about how three computer science majors with no artistic ability between them were able to make a decent looking game.</description>
+			<pubDate>Fri, 20 Feb 2020 23:16:45 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/making-a-2d-game-with-no-art-assets</guid>
+		</item>
 	</channel>
 </rss>
