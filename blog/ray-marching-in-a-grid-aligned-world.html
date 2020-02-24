@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Ray marching in a grid-aligned world</title>
+    <meta name="description" content="In many games or other graphical applications, there is often a need to draw a ray from a point until it hits an object. This is the fundamental operation of ray tracing, an essential technique in computer graphics: drawing reflecting and refracting light rays from a light source to the camera. Unfortunately, this process is quite computationally expensive, which is why most real-time graphics programs only approximate it. However, if you can simplify the world you can make ray tracing a lot easier, and it can be useful in many applications. In the game I'm working on, Afterlight Caves, I implemented a type of ray casting to draw laser beams on the game world." />
+    <meta property="og:title" content="Ray marching in a grid-aligned world" />
+    <meta property="og:description" content="In many games or other graphical applications, there is often a need to draw a ray from a point until it hits an object. This is the fundamental operation of ray tracing, an essential technique in computer graphics: drawing reflecting and refracting light rays from a light source to the camera. Unfortunately, this process is quite computationally expensive, which is why most real-time graphics programs only approximate it. However, if you can simplify the world you can make ray tracing a lot easier, and it can be useful in many applications. In the game I'm working on, Afterlight Caves, I implemented a type of ray casting to draw laser beams on the game world." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/turtle-burger.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/ray-marching-in-a-grid-aligned-world" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2020-02-23">February 23, 2020</span>
+
+      <h1 class="title">Ray marching in a grid-aligned world</h1>
+
+      <p>
+        In many games or other graphical applications, there is often a need to
+        draw a ray from a point until it hits an object. This is the fundamental
+        operation of <a href="https://en.wikipedia.org/wiki/Ray_tracing_(graphics)">ray tracing</a>,
+        an essential technique in computer graphics: drawing reflecting and
+        refracting light rays from a light source to the camera. Unfortunately,
+        this process is quite computationally expensive, which is why most
+        real-time graphics programs only approximate it.
+      </p>
+
+      <p>
+        However, if you can simplify the world you can make ray tracing a lot
+        easier, and it can be useful in many applications. In the game I'm
+        working on, <a href="https://afterlightcaves.com">Afterlight Caves</a>,
+        I implemented a type of ray casting to draw laser beams on the game
+        world.
+      </p>
+
+      <p>
+        For the purposes of this application, each beam has a starting point
+        (the entity that fired it) and a direction, and should be drawn as a
+        continuous line in that direction until it hits a piece of terrain. The
+        nature of the terrain in Afterlight Caves is what enabled this more
+        efficient ray casting algorithm.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/afterlight-caves-3.png" alt="The Afterlight Caves game world">
+        <figcaption>
+          Although entities can roam freely, all terrain in the game is made up
+          of uniformly-sized squares.
+        </figcaption>
+      </figure>
+
+      <p>
+        Everything we need to check for collisions is aligned to a 60 by 60
+        pixel grid. This should make our job much easier, because we know we
+        don't have to check every point on the ray, only points where a
+        collision with the grid lines could occur. If we implement the algorithm
+        in a smart way this can save us tons of computation time.
+      </p>
+
+      <p>
+        We're can skip over points that we know won't be collisions, so it's
+        more like we're marching the ray in steps rather than tracing it out.
+        Because of this we call the algorithm "ray marching."
+      </p>
+
+      <h2 id="the-naive-first-attempt">The naive first attempt</h2>
+
+      <p>
+        My first implementation was a relatively simple algorithm that stepped
+        in the given direction in increments of 60 (the standard block width)
+        until it got a collisions, then backed up until it reached open space
+        again.
+      </p>
+
+<code class="block" style="font-size: 0.75em;"><span class="hljs-comment" style="color: rgb(117, 113, 94);">/**
+ * Draws a ray from the given point in the given direction until it hits
+ * terrain, then returns the coordinates of the point it hit
+ * @param {Vector} startPos the starting position of the ray
+ * @param {Vector} dir the direction the ray is facing
+ * @return {Vector}
+ */</span>
+<span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">export</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">function</span> <span class="hljs-title" style="color: rgb(166, 226, 46); font-weight: 700;">nextIntersection</span>(<span class="hljs-params">startPos, dir</span>) </span>{
+  dir = dir.norm();
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">let</span> curPos = startPos;
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">let</span> length = <span class="hljs-number">0</span>;
+  <span class="hljs-comment" style="color: rgb(117, 113, 94);">// make big steps until we hit a block</span>
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> dx = getBlockWidth();
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">let</span> cellVec = getCell(curPos);
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">do</span> {
+    length += dx;
+    curPos = startPos.add(dir.mult(length));
+    cellVec = getCell(curPos);
+  } <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">while</span> (!solidAt(cellVec.x, cellVec.y));
+  <span class="hljs-comment" style="color: rgb(117, 113, 94);">// make small steps until we're out of the block</span>
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">do</span> {
+    length -= <span class="hljs-number">2</span>;
+    curPos = startPos.add(dir.mult(length));
+    cellVec = getCell(curPos);
+  } <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">while</span> (solidAt(cellVec.x, cellVec.y));
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">return</span> curPos;
+}</code>
+
+      <p>
+        At first glance this appears correct, and it works perfectly as long as
+        you only shoot in a cardinal direction. The problem arises when you try
+        to shoot diagonally.
+      </p>
+      
+      <figure class="full-width">
+        <img src="images/ray-marching-fail.jpg" alt="Naive ray marching causes the ray to miss collisions with corners">
+        <figcaption>
+          The naive method can miss collisions with corners
+        </figcaption>
+      </figure>
+
+      <p>
+        By stepping in increments of 60, the algorithm can jump right over small
+        corners. Even if you set the step size to one half (or one third or one
+        fourth) of the block width there will still be some small corner size
+        that the algorithm will miss.
+      </p>
+
+      <p>
+        Obviously we'll have to do some more math to solve this problem in the
+        general case.
+      </p>
+
+      <h2 id="the-smart-method">The smart method</h2>
+
+      <p>
+        The key observation here is that we only need to check for a block when
+        the beam crosses a grid line. We need to find these intersections for an
+        arbitrary line, and calculate whether they are on the boundary of a
+        solid block in the right direction.
+      </p>
+      
+      <figure class="full-width">
+        <img src="images/ray-marching-diagram.svg" alt="A diagram showins the intersections of a ray with a grid">
+        <figcaption>
+          The red points are the only ones we need to check
+        </figcaption>
+      </figure>
+
+      <p>
+        The line can go in any direction, so to get the "next" grid coordinate
+        we need to remember whether we're moving in the negative, positive, or
+        zero direction for both axes. We'll store these values in a vector to
+        help us later:
+      </p>
+
+      <code class="block" style="font-size: 0.75em;"><span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> signVec = <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">new</span> Vector(<span class="hljs-built_in" style="color: rgb(166, 226, 46);">Math</span>.sign(dir.x), <span class="hljs-built_in" style="color: rgb(166, 226, 46);">Math</span>.sign(dir.y));</code>
+
+      <p>
+        The next thing we need is the equation of the line in terms of both x
+        and y. Doing some basic high school level geometry I got this:
+      </p>
+      
+      <code class="block" style="font-size: 0.75em;"><span style="color: rgb(249, 38, 114); font-weight: 700;">const</span> f = x =&gt; (dir.y / dir.x) * (x - startPos.x) + startPos.y;
+<span style="color: rgb(249, 38, 114); font-weight: 700;">const</span> g = y =&gt; (dir.x / dir.y) * (y - startPos.y) + startPos.x;</code>
+
+      <p>
+        where <code>dir</code> is the direction vector and <code>startPos</code>
+        is the starting position. Using these functions, <code>f(x)</code> will
+        give you the y value of the line at a particular x, and
+        <code>g(y)</code> will give you the x value at a particular y.
+      </p>
+
+      <p>
+        At each step, we move <code>nextPos</code> to the top-left corner of the
+        next grid space we want to investigate. Then we calculate the x value of
+        the line at that y, and the y value of the line at that x.
+      </p>
+
+      <code class="block" style="font-size: 0.75em"><span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> nextPos = cellVec.mult(bw, bh);
+<span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> ny = dir.x === <span class="hljs-number">0</span> ? nextPos.y : f(nextPos.x);
+<span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> nx = dir.y === <span class="hljs-number">0</span> ? nextPos.x : g(nextPos.y);</code>
+
+      <p>
+        The ternary if statements just guard against division by zero when the
+        line is straight vertical or horizontal.
+      </p>
+
+      <p>
+        The diagram below shows the locations of <code>nx</code> and
+        <code>ny</code> at the first step.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/nx-ny-diagram.svg" alt="Diagram showing where nx and ny are located">
+      </figure>
+
+      <p>
+        In our example, because <code>nx &gt; nextPos.x</code> we know that the
+        line intersects with the next cell at the vertical line <i>x =
+        nextPos.x</i>. If the line travels in the negative x direction we just
+        need to multiply bot sides of the inequality by -1. Now we just need to
+        check if that cell is a solid piece of terrain with the
+        <code>solidAt()</code> helper function.
+      </p>
+
+      <p>
+        If that block is solid terrain, we've found the first collision point
+        along the ray, which is the answer we were looking for. If not, we move
+        <code>nextPos</code> over by one cell unit and continue the process.
+      </p>
+
+      <p>
+        Note that we check for a collision with the top and bottom of blocks the
+        same way, by testing whether <code>ny &gt; nextPos.y</code> and testing
+        whether the next block up is solid.
+      </p>
+
+      <h2 id="final-algorithm">Final algorithm</h2>
+
+      <p>
+        After several hours of covering edge cases, debugging, and testing
+        here's the final algorithm. Maybe it could be a little more efficient or
+        clean, but it correctly solves the problem in a reasonable amount of
+        time, which is good enough for me.
+      </p>
+
+<code class="block" style="font-size: 0.75em;"><span class="hljs-comment" style="color: rgb(117, 113, 94);">/**
+ * Draws a ray from the given point in the given direction until it hits
+ * terrain, then returns the coordinates of the point it hit
+ * @param {Vector} startPos the starting position of the ray
+ * @param {Vector} dir the direction the ray is facing
+ * @return {Vector}
+ */</span>
+<span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">export</span> <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">function</span> <span class="hljs-title" style="color: rgb(166, 226, 46); font-weight: 700;">nextIntersection</span>(<span class="hljs-params">startPos, dir</span>) </span>{
+  <span class="hljs-comment" style="color: rgb(117, 113, 94);">// no direction</span>
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (dir.isZeroVec()) <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">return</span> startPos;
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> cellVec = getCell(startPos);
+  <span class="hljs-comment" style="color: rgb(117, 113, 94);">// see if we're starting in a block</span>
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (solidAt(cellVec.x, cellVec.y)) <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">return</span> startPos;
+  dir = dir.norm();
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> bw = getBlockWidth();
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> bh = getBlockHeight();
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> signVec = <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">new</span> Vector(<span class="hljs-built_in" style="color: rgb(166, 226, 46);">Math</span>.sign(dir.x), <span class="hljs-built_in" style="color: rgb(166, 226, 46);">Math</span>.sign(dir.y));
+
+  <span class="hljs-comment" style="color: rgb(117, 113, 94);">/** @param {number} x */</span>
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> f = x =&gt; (dir.y / dir.x) * (x - startPos.x) + startPos.y;
+  <span class="hljs-comment" style="color: rgb(117, 113, 94);">/** @param {number} y */</span>
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> g = y =&gt; (dir.x / dir.y) * (y - startPos.y) + startPos.x;
+
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (signVec.x &gt; <span class="hljs-number">0</span>) cellVec.x++;
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (signVec.y &gt; <span class="hljs-number">0</span>) cellVec.y++;
+  <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">while</span> (<span class="hljs-literal" style="color: rgb(249, 38, 114); font-weight: 700;">true</span>) {
+    <span class="hljs-comment" style="color: rgb(117, 113, 94);">// go to the next block boundary</span>
+    <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> nextPos = cellVec.mult(bw, bh);
+    <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> ny = dir.x === <span class="hljs-number">0</span> ? nextPos.y : f(nextPos.x);
+    <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> nx = dir.y === <span class="hljs-number">0</span> ? nextPos.x : g(nextPos.y);
+
+    <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (
+      signVec.x === <span class="hljs-number">0</span> ||
+      (signVec.y !== <span class="hljs-number">0</span> &amp;&amp; signVec.y * ny &gt;= signVec.y * nextPos.y)
+    ) {
+      <span class="hljs-comment" style="color: rgb(117, 113, 94);">// the next intersection with the game grid is vertical</span>
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> xInter = dir.x === <span class="hljs-number">0</span> ? startPos.x : g(nextPos.y);
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> intersection = <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">new</span> Vector(xInter, nextPos.y + signVec.y);
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> blockToCheck = getCell(intersection);
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (solidAt(blockToCheck.x, blockToCheck.y)) {
+        <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">return</span> intersection;
+      }
+      cellVec.y += signVec.y;
+    }
+    <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (
+      signVec.y === <span class="hljs-number">0</span> ||
+      (signVec.x !== <span class="hljs-number">0</span> &amp;&amp; signVec.x * nx &gt;= signVec.x * nextPos.x)
+    ) {
+      <span class="hljs-comment" style="color: rgb(117, 113, 94);">// next intersection is horizontal</span>
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> yInter = dir.y === <span class="hljs-number">0</span> ? startPos.y : f(nextPos.x);
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> intersection = <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">new</span> Vector(nextPos.x + signVec.x, yInter);
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">const</span> blockToCheck = getCell(intersection);
+      <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">if</span> (solidAt(blockToCheck.x, blockToCheck.y)) {
+        <span class="hljs-keyword" style="color: rgb(249, 38, 114); font-weight: 700;">return</span> intersection;
+      }
+      cellVec.x += signVec.x;
+    }
+  }
+}
+</code>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

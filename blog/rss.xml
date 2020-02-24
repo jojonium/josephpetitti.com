@@ -220,5 +220,13 @@
 			<pubDate>Fri, 20 Feb 2020 23:16:45 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/making-a-2d-game-with-no-art-assets</guid>
 		</item>
+
+		<item>
+			<title>Ray marching in a grid-aligned world</title>
+			<link>https://josephpetitti.com/blog/ray-marching-in-a-grid-aligned-world</link>
+			<description>In many games or other graphical applications, there is often a need to draw a ray from a point until it hits an object. This is the fundamental operation of ray tracing, an essential technique in computer graphics: drawing reflecting and refracting light rays from a light source to the camera. Unfortunately, this process is quite computationally expensive, which is why most real-time graphics programs only approximate it. However, if you can simplify the world you can make ray tracing a lot easier, and it can be useful in many applications. In the game I'm working on, Afterlight Caves, I implemented a type of ray casting to draw laser beams on the game world.</description>
+			<pubDate>Sun, 23 Feb 2020 22:10:22 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/ray-marching-in-a-grid-aligned-world</guid>
+		</item>
 	</channel>
 </rss>
