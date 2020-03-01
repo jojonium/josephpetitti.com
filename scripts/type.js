@@ -5,6 +5,7 @@ var canvas = document.createElement('canvas');
 canvas.id = 'globalCanvas';
 canvas.width = 400;
 canvas.height = 800;
+canvas.tabIndex = 1;
 var ctx = canvas.getContext("2d");
 document.getElementById('canvas-holder').appendChild(canvas);
 
@@ -71,10 +72,8 @@ document.getElementById('start').onclick = function() {
 	multiplierSpan = document.getElementById("multiplier-span");
 	comboSpan = document.getElementById("combo-span");
 
-	document.addEventListener('keypress', function(e) {
-		e.preventDefault();
-		type(e);
-	});
+	document.addEventListener('keydown', type);
+    document.getElementById('globalCanvas').focus();
 	
 	document.getElementById('start').disabled = "true";
 	main();
@@ -157,10 +156,17 @@ var getWord = function(low, high) {
 	return dictionary[len][Math.floor(Math.random() * dictionary[len].length)];
 };
 
-/* typing engine */
+/**
+ * typing engine
+ * @param {KeyboardEvent} e
+ */
 var type = function(e) {
+    if (!e.ctrlKey && !e.altKey && !e.metaKey && !/F\d+/.test(e.key))
+        e.preventDefault();
+    // reject non-single-letter keys
+    if (!/\w{1}/.test(e.key)) return;
 	if (globActive) { // if in a word
-		if (e.key == globActive.remaining.charAt(0)) { // if hit
+		if (e.key.toLowerCase() === globActive.remaining.charAt(0)) { // if hit
 			score += multiplier;
 			combo++;
 			if (globActive.remaining.length > 1) { // word still has more letters
@@ -179,7 +185,7 @@ var type = function(e) {
 	} else { // not in a word
 		// search for the first applicable word
 		for (var i = 0; i < enemies.length; i++) {
-			if (e.key == enemies[i].remaining.charAt(0)) {
+			if (e.key.toLowerCase() === enemies[i].remaining.charAt(0)) {
 				enemies[i].remaining = enemies[i].remaining.slice(1);
 				globActive = enemies[i];
 				score += multiplier;
