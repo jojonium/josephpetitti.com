@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Presenting at PAX East</title>
+    <meta name="description" content="For the past few months I've been workin on a procedurally-generated top-down twinstick shooter game for the web, as I've written about previously. Although I've just been developing it when my friends in our spare time, WPI selected it to be shown off at their booth at PAX East. The WPI booth showcases student-made games as a way of promoting the school's Interactive Media and Game Design (IMGD) program.  What this means is that I got to go to PAX East for free to show off my game." />
+    <meta property="og:title" content="Presenting at PAX East" />
+    <meta property="og:description" content="For the past few months I've been workin on a procedurally-generated top-down twinstick shooter game for the web, as I've written about previously. Although I've just been developing it when my friends in our spare time, WPI selected it to be shown off at their booth at PAX East. The WPI booth showcases student-made games as a way of promoting the school's Interactive Media and Game Design (IMGD) program.  What this means is that I got to go to PAX East for free to show off my game."  />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/pax-east.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/presenting-at-pax-east" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.5" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date"><time datetime="2020-03-03">March 3, 2020</span>
+
+      <h1 class="title">Presenting at PAX East</h1>
+
+      <p>
+        For the past few months I've been workin on a procedurally-generated
+        top-down twinstick shooter 
+        <a href="https://afterlightcaves.com">game</a> for the web, as I've
+        <a href="designing-an-extensible-power-up-system">written</a> 
+        <a href="making-a-2d-game-with-no-art-assets">about</a>
+        <a href="ray-marching-in-a-grid-aligned-world">previously</a>. Although
+        I've just been developing it when my friends in our spare time, WPI
+        selected it to be shown off at their booth at 
+        <a href="https://east.paxsite.com/">PAX East</a>. The WPI booth
+        showcases student-made games as a way of promoting the school's
+        Interactive Media and Game Design (IMGD) program. What this means is
+        that I got to go to PAX East for free to show off my game.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/pax-east.jpg">
+          <img src="images/th_pax-east.jpg" alt="The show floor at PAX East">
+        </a>
+      </figure>
+
+      <h2 id="feedback-on-afterlight-caves">
+        Feedback on <i>Afterlight Caves</i>
+      </h2>
+
+      <p>
+        Although <i>Afterlight Caves</i> was only really there to promote WPI to
+        prospective students, it was also a perfect opportunity to get valuable
+        playtesting feedback from random strangers.
+      </p>
+
+      <p>
+        Between the three of us we spent a total of 18 hours standing at the WPI
+        booth, watching people play, and listening to their thoughts.
+        Miraculously, we never once saw the game crash or break in any way,
+        which is especially amazing considering we built the whole engine from
+        scratch in JavaScript.
+      </p>
+
+      <p>
+        One of the biggest issues we discovered was that players had trouble
+        navigating the world. They were getting confused because the walls and
+        floor were both black, so you had to remember which side of the colored
+        wall border was navigable ground and which wasn't.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/afterlight-caves-black-walls.png" alt="Screenshot showing the black walls and floor">
+        <figcaption>Old color scheme, with black walls and floors</figcaption>
+      </figure>
+
+      <p>
+        To try to make the design clearer, I added a slight hue to the interior
+        of walls, which matches the randomly generated wall outline color.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/afterlight-caves-colored-walls.png" alt="Screenshot showing the new subtly colored walls">
+        <figcaption>
+          New color scheme, with a slight hue on the walls
+        </figcaption>
+      </figure>
+
+      <p>
+        A lot of players also didn't realize that the light-gray blocks are
+        breakable, or that they should be collecting power ups. We decided to
+        add some hints at the start of the game, like a sign pointing to a gray
+        block that says "Break this!"
+      </p>
+
+      <p>
+        Other than those issues, people seemed to like our game a lot. Many
+        tried hard to get a daily high score, and a few players wrote down the
+        URL to play later.
+      </p>
+
+      <h2 id="trying-new-games">Trying new games</h2>
+
+      <p>
+        Getting feedback on <i>Afterlight Caves</i> was good, but the main thing
+        I was excited for was trying out all the new games that companies and
+        indie developers would be showcasing.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/pax-east-selfie.jpg">
+          <img src="images/th_pax-east-selfie.jpg" alt="Me, along with some friends, at PAX East">
+        </a>
+      </figure>
+
+      <h3 id="carrion"><i>Carrion</i></h3>
+
+      <p>
+        I got a chance to play Devolver Digital's new game, 
+        <a href="https://devolverdigital.com/games/carrion"><i>Carrion</i></a>,
+        at their booth on Friday. It's a sort of "reverse horror" game, where
+        you play as the unspeakable tentacle monstrosity hunting down scared
+        scientists in a metroidvania/action/platformer type thing.
+      </p>
+
+      <p>
+        The sprites and pixel art are great, and the way the monster slithers
+        over the ground and reaches out with slimy tendrils is really satisfying
+        to watch. <i>Carrion</i>'s gameplay is also slick and fun, as you bash
+        turrets with grabbed metal crates and consume security guards to grow in
+        size.
+      </p>
+
+      <h3 id="overpass"><i>Overpass</i></h3>
+
+      <p>
+        Another really cool game I got to play was
+        <a href="https://overpass.es"><i>Overpass</i></a>, an indie rhythm game
+        that puts a new twist on the genre.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/overpass.jpg">
+          <img src="images/th_overpass.jpg" alt="Overpass logo">
+        </a>
+      </figure>
+
+      <p>
+        The controls are super simple: for each beat you just move into the
+        left, middle, or right lane and click the button. The difficulty comes
+        from the perspective. Notes are placed on bridges, trees, and hover cars
+        that pass over you as you gaze out the top of a fast-moving car. You
+        have to both look ahead at what notes are visible and pay attention to
+        the perspective to see which ones will pass through your cursor first.
+      </p>
+
+      <p>
+        In lieu of the standard multiple difficulties per song,
+        <i>Overpass</i>'s 30 tracks each have dozens of optional lamps that you
+        can ignore to make them easier, or try to grab for an extra challenge.
+      </p>
+
+      <p>
+        It was cool to get to talk to
+        <a href="https://onemrbean.com">Michael Molinari</a>, the developer,
+        while trying out the game at PAX. I was instantly hooked by the unique
+        gameplay and ended up buying the game that night.
+      </p>
+      
+      <h3 id="avicii-invector"><i>AVICII Invector</i></h3>
+
+      <p>
+        The other game I ended up buying after trying it at PAX was <i>AVICII
+        Invector</i>. This is a more traditional rhythm game with five button
+        inputs and three lanes, but its slick presentation and stylish visuals
+        made it one of my new favorites.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/avicii-invector.jpg">
+          <img src="images/th_avicii-invector.jpg" alt="Overpass logo">
+        </a>
+      </figure>
+
+      <p>
+        I almost missed this game entirely though, because all of the branding
+        is based around the music artist, 
+        <a href="https://en.wikipedia.org/wiki/Avicii">Avicii</a>, rather than
+        the game itself. The poster is just a picture of the guy's face, with no
+        indication that it's a rhythm game at all.
+      </p>
+
+      <p>
+        It seems strange, because the gameplay is fun enough to sell the game on
+        its own. The game has only 20 tracks and no level editor, so limiting
+        it to using only music by one artist feels like a strange move on the
+        part of the developers.
+      </p>
+
+      <p>
+        Still, the music is all quite good, and the tracks are well designed.
+        <i>AVICII Invector</i> is a fun and polished experience that will
+        satisfy any rhythm game fan. The split-screen local multiplayer is a
+        nice addition too.
+      </p>
+
+      <h3 id="other-games">Other games</h3>
+
+      <p>
+        I played plenty of other fun games at PAX too.
+        <a href="https://playphogs.com/"><i>Phogs</i></a> is a wacky and
+        colorful co-op puzzls game where two people play as the separate ends of
+        a two-headed dog thing. <i>Magic: Legends</i> is an upcoming
+        free-to-play <i>Magic: the Gathering</i>-themed <i>Diablo</i>-like
+        online action RPG that was actually pretty fun to play. I even got to
+        play a few minutes of <i>Doom Eternal</i>, which was super fun.
+      </p>
+
+      <p>
+        Overall, PAX was a fun&mdash;albeit exhausting&mdash;experience. Being
+        able to talk to actual indie game developers and try out new and
+        upcoming games was great, and I was able to get some valuable feedback
+        on the game I'm developing.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

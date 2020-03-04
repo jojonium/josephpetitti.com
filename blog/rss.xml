@@ -228,5 +228,13 @@
 			<pubDate>Sun, 23 Feb 2020 22:10:22 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/ray-marching-in-a-grid-aligned-world</guid>
 		</item>
+
+		<item>
+			<title>Presenting at PAX East</title>
+			<link>https://josephpetitti.com/blog/presenting-at-pax-east</link>
+			<description>For the past few months I've been workin on a procedurally-generated top-down twinstick shooter game for the web, as I've written about previously. Although I've just been developing it when my friends in our spare time, WPI selected it to be shown off at their booth at PAX East. The WPI booth showcases student-made games as a way of promoting the school's Interactive Media and Game Design (IMGD) program. What this means is that I got to go to PAX East for free to show off my game.</description>
+			<pubDate>Tue, 03 Mar 2020 23:44:01 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/presenting-at-pax-east</guid>
+		</item>
 	</channel>
 </rss>
