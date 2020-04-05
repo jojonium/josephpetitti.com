@@ -69,7 +69,7 @@ window.onload = () => {
     'Misspelled name in minutes',
     'Voting on something',
     'Announcing an event more than three weeks in the future',
-    'Tim can\'t fails to read something'
+    'Tim fails to read something'
   ];
 
   shuffle(o);
