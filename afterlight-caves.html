@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Afterlight Caves</title>
+    <meta name="description" content="Afterlight Caves is a procedurally generated top-down twinstick shooter game for the web, developed by Joseph Petitti, Cole Granof, and Matt Puentes" />
+    <meta property="og:title" content="Afterlight Caves" />
+    <meta property="og:description" content="Afterlight Caves is a procedurally generated top-down twinstick shooter game for the web, developed by Joseph Petitti, Cole Granof, and Matt Puentes" />
+    <meta property="og:image" content="https://josephpetitti.com/images/afterlight-caves-1.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/afterlight-caves" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/dark.css?v=1.0.6" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header>
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </label>
+    <!-- Nav -->
+      <nav id="nav">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
+          <i class="fas fa-times"></i> Close
+        </label>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="afterlight-caves">Afterlight Caves</a></li>
+              <li><a href="kyoto-ar-tour-guide-app">
+                Kyoto AR <br> Tour Guide App
+              </a></li>
+              <li><a href="traffic-classifier">Traffic Classifier</a></li>
+              <li><a href="hong-kong-historic-conservation">
+                Hong Kong Historic <br> Conservation
+              </a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+              <li><a href="sliding-tetris">Sliding Tetris</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+    </header>
+
+  <!-- Main -->
+    <main id="main">
+      <h1 class="title">Afterlight Caves</h1>
+
+      <div class="main-links-holder">
+        <a href="https://github.com/bandaloo/afterlight-caves" target="_blank" rel="noopener noreferrer">
+          <button class="long"><span class="fab fa-github"></span> View on Github</button>
+        </a>
+        <a href="https://afterlightcaves.com" target="_blank" rel="noopener noreferrer">
+          <button class="long"><span class="fas fa-gamepad"></span> Play Online</button>
+        </a>
+      </div>
+
+      <figure class="full-width">
+        <video controls>
+          <source src="images/afterlight-caves.webm" type="video/webm">
+        </video>
+        <figcaption>
+          A trailer made from an earlier version of the game with fewer
+          <a href="blog/making-a-2d-game-with-no-art-assets">visual effects</a>
+        </figcaption>
+      </figure>
+
+      <p>
+        <i>Afterlight Caves</i> is a procedurally generated, top-down twinstick
+        shooter game for the web developed by me,
+        <a href="https://www.bandaloo.fun" rel="noopener noreferrer" target="_blank">Cole Granof</a>,
+        and <a href="https://mattpuentes.com" rel="noopener noreferrer" target="_blank">Matt Puentes</a>.
+        The gameplay is something like a cross between <i>The Binding of
+        Isaac</i> and <i>Geometry Wars</i>, and it runs entirely in a browser.
+      </p>
+
+      <p>
+        We developed the game over the course of four months, from November 2019
+        to March 2020 in our free time. It's made entirely in pure JavaScript,
+        with no external front-end libraries. The scripts run directly in a
+        browser, and we use a Node.js express server solely to serve the static
+        files and keep track of high scores.
+      </p>
+
+      <p>
+        We wrote all of the game engine and logic from scratch. For graphics we
+        just use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener noreferrer">JavaScript canvas API</a>
+        to draw simple shapes and lines. We run the main game loop and a
+        constant speed so the game always runs at your monitor's refresh rate.
+        We put a lot of work into optimizing our code, and it runs at a stable
+        framerate even on low-powered hardware.
+      </p>
+
+      <p>
+        The whole thing is also free and open source software, with source code
+        available on <a href="https://github.com/bandaloo/afterlight-caves" rel="noopener noreferrer" target="_blank">GitHub</a>.
+      </p>
+
+      <p>
+        Due to the nature of working in a small team we were all involved with
+        pretty much every aspect of development, but here are a few of the
+        features I focused on.
+      </p>
+
+      <h2 id="controls">Controls</h2>
+
+      <p>
+        The twinstick genre practically requires the use of a controller with
+        two sticks, but we also wanted the game to be playable on a normal
+        computer without any specific hardware. To achieve this we needed the
+        user to be able to naturally switch between using a keyboard or
+        controller on the fly, a surprisingly difficult task in the environment
+        of a web browser.
+      </p>
+
+      <p>
+        There is a rather sophisticated <a href="https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API" rel="noopener noreferrer">gamepad API</a>
+        that works with all modern browsers, but unfortunately the way it's
+        implemented makes it tricky to use alongside keyboard input.
+      </a>
+
+      <p>
+        In JavaScript, keyboard input is detected asynchronously through event
+        listeners like this:
+      </p>
+
+      <code class="block">element.addEventListener(<span class="hljs-string" style="color: rgb(181, 189, 104);">"keydown"</span>, <span class="hljs-keyword" style="color: rgb(178, 148, 187);">event</span> =&gt; {
+  <span class="hljs-keyword" style="color: rgb(178, 148, 187);">if</span> (<span class="hljs-keyword" style="color: rgb(178, 148, 187);">event</span>.key === <span class="hljs-string" style="color: rgb(181, 189, 104);">"a"</span>) console.<span class="hljs-keyword" style="color: rgb(178, 148, 187);">log</span>(<span class="hljs-string" style="color: rgb(181, 189, 104);">"Pressed the 'a' key"</span>);
+});</code>
+
+      <p>
+        The function you pass to <code>addEventListener()</code> gets
+        automatically called whenever a keydown event occurs, which is nice and
+        straightforward and easy to deal with.
+      </p>
+
+      <p>
+        However, detecting gamepad input is done <i>synchronously</i>, which
+        means you have to poll the gamepad object to see what buttons are being
+        pressed each game step, like so:
+      </p>
+
+      <code class="block"><span class="hljs-keyword" style="color: rgb(178, 148, 187);">for</span> (<span class="hljs-keyword" style="color: rgb(178, 148, 187);">const</span> gamepad <span class="hljs-keyword" style="color: rgb(178, 148, 187);">of</span> navigator.getGamepads()) {
+  <span class="hljs-keyword" style="color: rgb(178, 148, 187);">if</span> (!gamepad || !gamepad.connected) <span class="hljs-keyword" style="color: rgb(178, 148, 187);">continue</span>;
+  <span class="hljs-keyword" style="color: rgb(178, 148, 187);">if</span> (gamepad.buttons[<span class="hljs-number" style="color: rgb(222, 147, 95);">1</span>].value &gt; <span class="hljs-number" style="color: rgb(222, 147, 95);">0</span> || gamepad.buttons[<span class="hljs-number" style="color: rgb(222, 147, 95);">1</span>].pressed) {
+    <span class="hljs-built_in" style="color: rgb(222, 147, 95);">console</span>.log(<span class="hljs-string" style="color: rgb(181, 189, 104);">"Gamepad button '1' is pressed"</span>);
+  }
+}</code>
+
+      <p>
+        To combine these two different styles of getting input, I created a
+        <a href="https://github.com/bandaloo/afterlight-caves/blob/master/static/modules/buttons.js" rel="noopener noreferrer">buttons module</a>
+        that abstracts all input methods into a single object. You can easily
+        define any number of Buttons (which represent a single keyboard key or
+        gamepad button) and Directionals (which represent a set of four keyboard
+        keys or one gamepad joystick). This also makes it easy to rebind keys so
+        you can customize controls to your liking.
+      </p>
+
+      <p>
+        Basically, the <code>buttons</code> object maintains a list of keyboard
+        keys, gamepad buttons, and gamepad joysticks it cares about, and keeps
+        track of their state. For Buttons this means whether the button is
+        pressed during the current game step, and whether it was pressed during
+        the last game step (so you can do things when the button is first
+        pushed or released). For Directionals it keeps track of the vector
+        formed by combining all of its keys or measuring the x and y coordinates
+        of its joystick.
+      </p>
+
+      <p>
+        It has event listeners that fire whenever a key is pressed that check
+        whether it's a key we care about and updates the entry for that button.
+        Whenever a gamepad button is pressed it switches to gamepad mode, where
+        it polls the gamepad each game step and overwrites the entries for each
+        button. The next time a keyboard key is pressed it stops overwriting
+        until the next time a gamepad is used.
+      </p>
+
+      <p>
+        Using this system you can seamlessly switch back and forth between using
+        a keyboard and gamepad, and even graphically rebind every key through a
+        menu.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/afterlight-caves-controls-menu.png" alt="The menu of Afterlight Caves, with entries to rebind each control">
+        <figcaption>The controls menu</figcaption>
+      </figure>
+
+      <h2 id="beam-shooter-enemies">Beam Shooter Enemies</h2>
+
+      <figure class="float right">
+        <video loop autoplay controls>
+          <source src="images/beam-shooter.webm" type="video/webm">
+        </video>
+      </figure>
+
+      <p>
+        We all worked on each of the seven enemy types in the game, but the one
+        I spent the most time on is the Beam Shooters. These enemies slowly move
+        in a random cardinal direction and rotate to face the player character
+        when it's in range. Unlike all other enemies in the game, the Beam
+        Shooter fires a continuous beam rather than a physics-based projectile.
+        Implementing this beam required a bit of creative math.
+      </p>
+
+      <p>
+        The beam cuts straight through entities (like the player character),
+        dealing damage and maybe inflicting status effects, but it stops at the
+        blocks that make up the walls of the game world.
+      </p>
+
+      <p>
+        There can be potentially dozens of these beams on the screen at a time,
+        and each can have a length as long as the game world itself, so the
+        algorithm that calculates a beam's length needs to be efficient.
+      </p>
+
+      <p>
+        I wrote a <a href="blog/ray-marching-in-a-grid-aligned-world">blog post</a>
+        that goes into the design of this algorithm, but the gist is this: start
+        from a point in the world (the origin of the beam) and march in a
+        direction until you hit a wall. The key observation is that the game
+        world is aligned to a grid, so you only need to check for collisions
+        with solid blocks at points where the equation of the beam line
+        intersects a grid line.
+      </p>
+
+      <p>
+        This implementation detail ended up being a fun little programming
+        challenge with a practical benefit. Drawing beam projectiles is
+        efficient enough that you can have many of them on screen at a
+        time&mdash;with arbitrary length&mdash;without a noticeable slowdown.
+      </p>
+
+      <h2 id="powerup-system">Powerup System</h2>
+
+      <p>
+        My favorite part of the project was designing the system of powerups.
+        There are 26 different powerups in the game (one for each letter of the
+        alphabet), each with a magnitude level from one to five. Every powerup
+        is designed to be unique and useful in different ways, and they all
+        interact and synergize with each other in interesting ways.
+      </p>
+
+      <figure class="float left">
+        <video loop autoplay controls>
+          <source src="images/afterlight-caves-synergy.webm" type="video/webm">
+        </video>
+        <figcaption>Synergy between Elastic and Xplode powerups</figcaption>
+      </figure>
+
+      <p>
+        For example, if you pick up an Xplode powerup it makes your bullets
+        explode into more bullets. If you pick up an Elastic powerup it makes
+        your bullets bounce off walls. If you get both then the elastic effect
+        is also applied to the sub-bullets. The powerups are designed in such a
+        way that this works for every combination, creating unique play styles
+        each time you play.
+      </p>
+
+      <p>
+        If you're curious about this system, I wrote another
+        <a href="blog/designing-an-extensible-power-up-system">blog post</a>
+        that goes into more detail on the game design and technical decisions
+        that went into its design.
+      </p>
+
+      <h2 id="conclusion" style="clear: both;">Conclusion</h2>
+
+      <p>
+        We got to present the game at PAX East 2020 at the WPI booth, which was
+        an amazing opportunity. We got some useful playtesting feedback, and it
+        was great to talk to other game developers and try out their games.
+      </p>
+
+      <p>
+        There are many more interesting features I could write about, so perhaps
+        I'll post some more about <i>Afterlight Caves</i> on my
+        <a href="blog">blog</a> in the future. It was a fun personal project to
+        work on, and and it ended up being a fun game that runs on pretty much
+        any hardware.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/afterlight-caves-1.png">
+          <img src="images/th_afterlight-caves-1.png" alt="Screenshot of the game, shoing splatter effects, the environment, and the player character">
+        </a>
+      </figure>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>
+              <span class="gpg">(<a href="gpg">GPG Key</a>)</span>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li>
+            <a href="https://github.com/jojonium" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-github" title="GitHub"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-linkedin" title="LinkedIn"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-steam" title="Steam"></span>
+            </a>
+          </li>
+          <li>
+			<a href="https://t.me/jojonium" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-telegram" title="Telegram"></span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </footer>
+  </body>
+</html>
