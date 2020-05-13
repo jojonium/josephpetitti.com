@@ -162,7 +162,7 @@
       </p>
 
       <p>
-        Since the introduction of UTC 27 positive leap seconds have been added,
+        Since the introduction of UTC, 27 positive leap seconds have been added,
         meaning that UTC lags behind TAI by <a href="https://hpiers.obspm.fr/iers/bul/bulc/bulletinc.58">37 seconds</a>.
         The most recent leap second was included on December 31st, 2016.
       </p>
@@ -182,7 +182,7 @@
         epoch, and it is very easy for computers to compute and work with. For
         human-readable dates and times they usually convert this Unix epoch time
         to UTC. Because leap years are constant and predictable it's very easy
-        to incorporate them into this conversions, but leap seconds are not.
+        to incorporate them into these conversions, but leap seconds are not.
         IERS only gives notice that a leap second will occur about six months in
         advance, so for any date more than six months in the future there's no
         guarantee your conversion will be accurate when that actual date rolls
@@ -198,8 +198,9 @@
       </p>
 
       <p>
-        The Network Time Protocol (NTP) includes a flag that indicates a flag
-        that informs the user that a leap second is imminent. <a href="https://tma.ifip.org/2016/papers/tma2016-final27.pdf">A study</a> found that
+        The Network Time Protocol (NTP) includes a flag that that informs the
+        user that a leap second is imminent. <a href="https://tma.ifip.org/2016/papers/tma2016-final27.pdf">A study</a>
+        found that
         between 2008 and 2016 not once have all NTP servers set this flag
         correctly, leading to servers broadcasting an incorrect time for up to a
         day after the leap second insertion.
@@ -263,9 +264,9 @@
         We already have a nearly perfect, predictable, system of measuring time:
         International Atomic Time. There's no reason to use a system tainted by
         unpredictable random adjustments just to keep the culmination of the sun
-        at 12:00 when no one really cares about that it doesn't do it anyway.
-        Just use IAT for anything important or precise, show local time for
-        human-friendly times, and throw UTC in the trash where it belongs.
+        at 12:00 when no one really cares about that and it doesn't do it
+        anyway. Just use IAT for anything important or precise, show local time
+        for human-friendly times, and throw UTC in the trash where it belongs.
       </p>
     </main>
 
