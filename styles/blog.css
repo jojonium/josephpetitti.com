@@ -49,9 +49,9 @@ footer.article section.about {
 }
 
 ol.references-list li {
-  margin-bottom: 0.1em;
+  margin-bottom: 0.5em;
 }
 
 ol.references-list li:target {
-  background-color: #300081;
+  background-color: rgba(187, 204, 221, 0.2);
 }
