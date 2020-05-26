@@ -47,3 +47,11 @@ footer.article section.about {
     font-size: 2em;
   }
 }
+
+ol.references-list li {
+  margin-bottom: 0.1em;
+}
+
+ol.references-list li:target {
+  background-color: #300081;
+}
