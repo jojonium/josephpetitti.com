@@ -1,0 +1,88 @@
+/* Whole Page */
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+div#main-container {
+  position: relative;
+}
+
+div#log {
+  height: 600px;
+  width: 400px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+div#log p {
+  transition: opacity 0.2s;
+}
+
+div#side-bar {
+  position: absolute;
+  top: 0;
+  left: 600px;
+}
+
+div#previous {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  max-height: 280px;
+}
+
+div#side-bar span {
+  font-family: "Liberation Mono", monospace;
+}
+
+div#previous span.known-score-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+div#letter-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.letter {
+  border: 1px solid #bcd;
+  background-color: rgba(0, 0, 0, 0);
+  text-align: center;
+  flex-basis: 2.5em;
+  padding: 0.5em 0;
+  cursor: pointer;
+  user-select: none;
+  margin: -1px 0 0 -1px;
+}
+
+form#input-form {
+  margin-bottom: 1em;
+}
+
+div#credits, div#credits a {
+  text-align: center;
+  width: 100%;
+}
+
+
+/* Mobile */
+@media screen and (max-width: 1000px) {
+  div#log {
+    height: auto;
+    width: auto;
+    overflow-y: auto;
+  }
+
+  div#side-bar {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  div#previous {
+    max-height: auto;
+    overflow-y: auto;
+  }
+}

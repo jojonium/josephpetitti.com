@@ -2,13 +2,13 @@
 <html lang="en-US">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Other</title>
-    <meta name="description" content="A page for everything that doesn't belong anywhere else" />
-    <meta property="og:title" content="Other" />
-    <meta property="og:description" content="A page for everything that doesn't belong anywhere else" />
-    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <title>Jotto</title>
+    <meta name="description" content="Play Jotto, a simple word-guessing game, online against a computer" />
+    <meta property="og:title" content="Jotto" />
+    <meta property="og:description" content="Play Jotto, a simple word-guessing game, online against a computer" />
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/6sided_dice.jpg/1280px-6sided_dice.jpg" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://josephpetitti.com/other" />
+    <meta property="og:url" content="https://josephpetitti.com/jotto" />
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -23,8 +23,9 @@
     <link rel="stylesheet" href="styles/brands.css" type="text/css">
     <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
     <link rel="stylesheet" href="styles/dark.css?v=1.0.6" type="text/css">
+    <link rel="stylesheet" href="styles/jotto.css" type="text/css">
 
-    <script src="scripts/seen.min.js"></script>
+    <script src="scripts/jotto.js"></script>
   </head>
   <body>
 
@@ -78,51 +79,45 @@
 
   <!-- Main -->
     <main id="main">
-      <h1 class="title">OTHER</h1>
 
-      <h2>A section for everything else</h2>
+      <h1 class="title">Jotto</h1>
+
+      <div class="main-links-holder">
+        <a href="https://github.com/jaturcotte/cs534-final-project/" target="_blank" rel="noopener noreferrer">
+          <button class="long"><span class="fab fa-github"></span> View on Github</button>
+        </a>
+      </div>
 
       <p>
-        The "Other" section holds everything that doesn't belong anywhere else
-        on my site. These pages range in quality from fully-fledged personal
-        projects to barely-implemented prototypes, so don't be surprised if
-        something breaks. If you want to be helpful, report bugs to
-        <a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>.</p>
+        In Jotto, each player thinks of a secret five letter word. Then, you
+        take turns trying to guess your opponent's five letter word. If you get
+        it wrong, you'll at least find out how many letters your guess has in
+        common with the correct word.
+      </p>
 
-      <p>Here's a directory of what can be found in this section:</p>
+      <p>
+        Repeating letters is okay. For example, if the secret word is "apple"
+        and you guess "popes", that's 3 letters in common (two p's and one e).
+      </p>
 
-      <ul>
-        <li><a href="dice">Dice</a> &mdash; A simple dice rolling program</li>
-        <li><a href="ant">Langton's Ant</a> &mdash; A customizable
-          implementation of Langton's Ant, a simple cellular automaton, in
-          JavaScript</li>
-        <li><a href="rps">Rock–Paper–Scissors Cellular Automaton</a> &mdash; An
-          implementation of a more complex cellular automaton, in which there
-          are three different types of cells, each of which an consume one other
-          type and are consumed by the third</li>
-        <li><a href="type">Typing Game</a> &mdash; A simple JavaScript game to
-          improve your typing speed</li>
-        <li><a href="minesweeper">Minesweeper</a> &mdash; An implementation of
-          the game Minesweeper in Javascript</li>
-        <li><a href="snake">Snake</a> &mdash; An implementation of the game
-          Snake in Javascript</li>
-        <li><a href="match">Color Match</a> &mdash; A color-matching game in
-          Javascript, featuring some fancy animations</li>
-        <li><a href="klotski">Klotski</a> &mdash; A sliding block puzzle game
-          that appears simple but is actually quite tricky</li>
-        <li><a href="sliding-tetris">Sliding Tetris</a> &mdash; Like the Soviet
-          classic Tetris, but rows of blocks move up from the bottom of the
-          screen instead of falling from the top</li>
-        <li><a href="jotto">Jotto</a> &mdash; Play the simple word game Jotto
-          against a computer</li>
-      </ul>
+      <p>
+        Once you enter a word, a grid of letters will appear. Click on these to
+        keep track of which letters you know are (or are not) in your opponent's
+        word. Use smart guesses to eliminate letters and figure out the
+        computer's secret word before it figures out yours!
+      </p>
 
-      <center style="max-width: 100%; overflow: hidden;">
-        <canvas height="400" width="400" id="seen-canvas"></canvas>
-      </center>
+      <div id="main-container"></div>
+
+      <div id="credits">
+        Created by
+        <a href="https://github.com/jlfong" target="_blank" rel="noopener noreferrer">Janette Fong</a>,
+        <a href="https://acnolan.tech/" target="_blank" rel="noopener noreferrer">Andrew Nolan</a>,
+        <a href="https://josephpetitti.com" target="_blank" rel="noopener noreferrer">Joseph Petitti</a>, and
+        <a href="https://github.com/jaturcotte" target="_blank" rel="noopener noreferrer">Joseph Turcotte</a> <br>
+    </div>
 
     </main>
-      <script src="scripts/wiggly-sphere.js"></script>
 
   <!-- Footer -->
     <footer id="footer">
@@ -184,5 +179,5 @@
         </ul>
       </section>
     </footer>
-    </body>
+  </body>
 </html>
