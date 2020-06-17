@@ -268,5 +268,14 @@
 			<pubDate>Mon, 26 May 2020 04:41:43 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/the-corrupting-influence-of-television-in-network</guid>
 		</item>
+
+		<item>
+			<title>Training a computer to play Jotto</title>
+			<link>https://josephpetitti.com/blog/training-a-computer-to-play-jotto</link>
+			<description>I've always liked word games like Scattergories and Scrabble, they tend to be a good mix of creativity and strategy. When I had to decide on a final project for a graduate-level artificial intelligence class last term it was a perfect opportunity to make a program that played a word game. But Scattegories and Scrabble are both trivial for machines to play—their decision trees are narrow enough that you can easily perform an exhaustive search for the best possible move. One of my teammates introduced a much more interesting game for computers to play: Jotto.</description>
+			<pubDate>Wed, 17 Jun 2020 16:15:46 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/training-a-computer-to-play-jotto</guid>
+		</item>
+
 	</channel>
 </rss>

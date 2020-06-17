@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Training a computer to play Jotto</title>
+    <meta name="description" content="I've always liked word games like Scattergories and Scrabble, they tend to be a good mix of creativity and strategy. When I had to decide on a final project for a graduate-level artificial intelligence class last term it was a perfect opportunity to make a program that played a word game. But Scattegories and Scrabble are both trivial for machines to play—their decision trees are narrow enough that you can easily perform an exhaustive search for the best possible move. One of my teammates introduced a much more interesting game for computers to play: Jotto." />
+    <meta property="og:title" content="Training a computer to play Jotto" />
+    <meta property="og:description" content="I've always liked word games like Scattergories and Scrabble, they tend to be a good mix of creativity and strategy. When I had to decide on a final project for a graduate-level artificial intelligence class last term it was a perfect opportunity to make a program that played a word game. But Scattegories and Scrabble are both trivial for machines to play—their decision trees are narrow enough that you can easily perform an exhaustive search for the best possible move. One of my teammates introduced a much more interesting game for computers to play: Jotto." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/jotto-online.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/training-a-computer-to-play-jotto" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2020-06-17">June 17, 2020</span>
+
+      <h1 class="title">Training a computer to play Jotto</h1>
+
+      <p>
+        I've always liked word games like Scattergories and Scrabble, they tend
+        to be a good mix of creativity and strategy. When I had to decide on
+        a final project for a graduate-level artificial intelligence class last
+        term it was a perfect opportunity to make a program that played a word
+        game. But Scattegories and Scrabble are both trivial for machines to
+        play&mdash;their decision trees are narrow enough that you can easily
+        perform an exhaustive search for the best possible move. One of my
+        teammates introduced a much more interesting game for computers to play:
+        Jotto.
+      </p>
+
+      <h2 id="how-to-play">How to play</h2>
+
+      <p>
+        The rules of Jotto are very simple. You and your opponent each pick a
+        five-letter secret word and write it down. The goal is to guess your
+        opponent's secret word before he or she guesses yours. On your turn, you
+        guess a five-letter word and your opponent tells you how many letters it
+        has in common with the secret word you're trying to find. For example,
+        if the secret word is "apple" and you guess "popes", that's three
+        letters in common (two <b>p</b>'s and one <b>e</b>). Players take turns
+        guessing words until one of them figures out the other's secret word.
+      </p>
+
+      <p>
+        It's a very simple game to learn, but the strategies can get kind of
+        complex. Most importantly, there's no clear "best move" on each turn,
+        which makes it an interesting problem for AI.
+      </p>
+
+      <h2 id="the-greedy-best-response-algorithm">
+        The greedy best response algorithm
+      </h2>
+
+      <p>
+        My team designed a
+        <a href="https://en.wikipedia.org/wiki/Greedy_algorithm" target="_blank" rel="noopener noreferrer">greedy algorithm</a>
+        to choose which word to guess. Put simply, the computer has a dictionary
+        with 8,861 five-letter English words to choose from and tries to
+        eliminate as many of them as possible each turn, so it can narrow in on
+        the human player's secret word. The algorithm works similar to a minimax
+        search to provide the best approximate response for the agent. It uses
+        several subroutines to pick the word that is expected to narrow the
+        list of possible words the most based on the probability that the
+        opponent chose each word.
+      </p>
+
+      <p>
+        This probability distribution is based on word frequency analysis of a
+        large dataset of English writing (we used a set of
+        <a href="https://ai.stanford.edu/~amaas/data/sentiment/" target="_blank" rel="noopener noreferrer">25,000 IMDb movie reviews</a>).
+        We also used a flat distribution for testing, and it tended to perform
+        worse than the distribution based on actual word usage.
+      </p>
+
+      <p>
+        To impose a limitation on the computer we prevented it from spending
+        more than two seconds per move. This only ended up mattering in the
+        first few turns when the list of possible words is still quite large.
+      </p>
+
+      <p>
+        When tested on words picked by humans the computer guessed the correct
+        word in an average of 10.9 moves, often beating human players. You can
+        <a href="https://josephpetitti.com/jotto">try it for yourself</a> online
+        to see if you can beat the computer, or check out our implementation in
+        TypeScript <a href="https://github.com/jaturcotte/cs534-final-project/"
+                      target="_blank" rel="noopener noreferrer">on GitHub</a>.
+      </p>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
