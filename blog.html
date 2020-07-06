@@ -86,15 +86,29 @@
         left: 0;
       }
 
-      ul li.blog-item {
+      li.blog-item {
         width: 100%;
-        list-style-position: inside;
-        text-indent: -1.5em;
-        margin-left: 1.5em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
-      ul li.blog-item a:visiter {
-        color: #ccc;
+      ul.blog-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li.blog-item a:visited {
+        color: #aaa;
+      }
+
+      li.blog-item a:hover {
+        color: #40bcf4;
+      }
+
+      li.blog-item time {
+        font-family: monospace;
       }
     </style>
 
@@ -114,301 +128,257 @@
         <a href="blog/rss.xml">RSS feed</a>
       </p>
 
-      <h2 id="blog-entries">Blog Entries</h2>
+      <h2 id="blog-index">Blog Index</h2>
 
-      <h3 id="07-2020"><time datetime="07-2020">July 2020</time></h3>
-
-      <ul>
+      <ul class="blog-list">
         <li class="blog-item">
-          <time datetime="07-05-2020">July 5, 2020</time>:
+          <time datetime="2020-07-05">2020-07-05</time>:
           <a href="blog/hiking-cannon-mountain">
             Hiking Cannon Mountain
           </a>
         </li>
-      </ul>
 
-      <h3 id="06-2020"><time datetime="06-2020">June 2020</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="06-23-2020">June 23, 2020</time>:
+          <time datetime="2020-06-23">2020-06-23</time>:
           <a href="blog/lupin-iii-the-first-takes-the-franchise-to-3d-and-it-works">
             <i>Lupin III: The First</i> brings the franchise to 3D—and it works
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="06-17-2020">June 17, 2020</time>:
+          <time datetime="2020-06-17">2020-06-17</time>:
           <a href="blog/training-a-computer-to-play-jotto">
             Training a computer to play Jotto
           </a>
         </li>
-      </ul>
 
-      <h3 id="05-2020"><time datetime="05-2020">May 2020</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="05-26-2020">May 26, 2020</time>:
+          <time datetime="2020-05-26">2020-05-26</time>:
           <a href="blog/the-corrupting-influence-of-television-in-network">
             The corrupting influence of television in <i>Network</i>
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="05-18-2020">May 18, 2020</time>:
+          <time datetime="2020-05-18">2020-05-18</time>:
           <a href="blog/finally-getting-some-use-out-of-my-trackball-with-spin-rhythm-xd">
             Finally getting some use out of my trackball with <i>Spin Rhythm
             XD</i>
           </a>
         </li>
-      </ul>
 
-      <h3 id="04-2020"><time datetime="04-2020">April 2020</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="04-26-2020">April 26, 2020</time>:
+          <time datetime="2020-04-26">2020-04-26</time>:
           <a href="blog/enlightenment-through-repetition-in-groundhog-day">
             Enlightenment through repetition in <i>Groundhog Day</i>
           </a>
         </li>
-      </ul>
 
-      <h3 id="03-2020"><time datetime="03-2020">March 2020</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="03-24-2020">March 24, 2020</time>:
+          <time datetime="2020-03-24">2020-03-24</time>:
           <a href="blog/half-life-alyx-is-what-vr-games-should-be">
             <i>Half-Life: Alyx</i> is what VR games should be
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="03-03-2020">March 3, 2020</time>:
+          <time datetime="2020-03-03">2020-03-03</time>:
           <a href="blog/presenting-at-pax-east">
             Presenting at PAX East
           </a>
         </li>
-      </ul>
 
-      <h3 id="02-2020"><time datetime="02-2020">February 2020</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="23-02-2020">February 23, 2020</time>:
+          <time datetime="2020-02-23">2020-02-23</time>:
           <a href="blog/ray-marching-in-a-grid-aligned-world">
             Ray marching in a grid-aligned world
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="20-02-2020">February 20, 2020</time>:
+          <time datetime="2020-02-20">2020-02-20</time>:
           <a href="blog/making-a-2d-game-with-no-art-assets">
             Making a 2D game with no art assets
           </a>
         </li>
-      </ul>
 
-      <h3 id="01-2020"><time datetime="01-2020">January 2020</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="25-01-2020">January 25, 2020</time>:
+          <time datetime="2020-01-25">2020-01-25</time>:
           <a href="blog/designing-an-extensible-power-up-system">
             Designing an extensible power up system
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="05-01-2020">January 5, 2020</time>:
+          <time datetime="2020-01-05">2020-01-05</time>:
           <a href="blog/how-to-install-koel-on-fedora-30">
             How to install Koel on Fedora 30
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="01-01-2020">January 1, 2020</time>:
+          <time datetime="2020-01-01">2020-01-01</time>:
           <a href="blog/my-favorite-media-of-2019">
             My favorite media of 2019
           </a>
         </li>
-      </ul>
 
-      <h3 id="12-2019"><time datetime="12-2019">December 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="30-12-2019">December 30, 2019</time>:
+          <time datetime="2019-12-30">2019-12-30</time>:
           <a href="blog/some-trivia-ive-noticed-about-flcl">
             Some trivia I've noticed about <i>FLCL</i>
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="19-12-2019">December 19, 2019</time>:
+          <time datetime="2019-12-19">2019-12-19</time>:
           <a href="blog/the-dilbert-tv-series-is-way-better-than-it-should-be">
             The <i>Dilbert</i> TV series is way better than it should be
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="13-12-2019">December 13, 2019</time>:
+          <time datetime="2019-12-13">2019-12-13</time>:
           <a href="blog/using-ai-to-make-and-play-mario-levels">
             Using AI to make and play Mario Levels
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="11-12-2019">December 11, 2019</time>:
+          <time datetime="2019-12-11">2019-12-11</time>:
           <a href="blog/making-a-simple-text-based-game-in-c++">
             Making a simple text-based game in C++
           </a>
         </li>
-      </ul>
 
-      <h3 id="11-2019"><time datetime="11-2019">November 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="11-15-2019">November 15, 2019</time>:
+          <time datetime="2019-11-15">2019-11-15</time>:
           <a href="blog/the-c-%3F%3F!%3F%3F!-operator">
             The C ??!??! operator
           </a>
         </li>
-      </ul>
 
-      <h3 id="10-2019"><time datetime="10-2019">October 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="10-31-2019">October 31, 2019</time>:
+          <time datetime="2019-10-31">2019-10-31</time>:
           <a href="blog/how-to-take-beautiful-notes-with-pandoc">
             How to take beautiful notes with Pandoc
           </a>
         </li>
-      </ul>
 
-      <h3 id="09-2019"><time datetime="09-2019">September 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="09-29-2019">September 29, 2019</time>:
+          <time datetime="2019-09-29">2019-09-29</time>:
           <a href="blog/quines-in-javascript">
             Quines in JavaScript
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="09-25-2019">September 25, 2019</time>:
+          <time datetime="2019-09-25">2019-09-25</time>:
           <a href="blog/leap-seconds-are-actually-a-terrible-idea">
             Leap seconds are actually a terrible idea
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="09-18-2019">September 18, 2019</time>:
+          <time datetime="2019-09-18">2019-09-18</time>:
           <a href="blog/how-to-climb-mount-fuji">
             How to climb Mount Fuji
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="09-11-2019">September 11, 2019</time>:
+          <time datetime="2019-09-11">2019-09-11</time>:
           <a href="blog/fuji-q-highland-proof-that-you-can-make-a-theme-park-out-of-anything">
             Fuji-Q Highland: proof that you can make a theme park out of
             anything
           </a>
         </li>
-      </ul>
 
-      <h3 id="08-2019"><time datetime="08-2019">August 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="08-30-2019">August 30, 2019</time>:
+          <time datetime="2019-08-30">2019-08-30</time>:
           <a href="blog/japanese-rhythm-games-my-new-addiction">
             Japanese rhythm games: my new addiction
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="08-14-2019">August 14, 2019</time>:
+          <time datetime="2019-08-14">2019-08-14</time>:
           <a href="blog/thoughts-on-japan">
             Thoughts on Japan
           </a>
         </li>
-      </ul>
 
-      <h3 id="07-2019"><time datetime="07-2019">July 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="07-20-2019">July 20, 2019</time>:
+          <time datetime="2019-07-20">2019-07-20</time>:
           <a href="blog/four-days-in-seoul">
             Four days in Seoul
           </a>
         </li>
-      </ul>
 
-      <h3 id="06-2019"><time datetime="06-2019">June 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="06-25-2019">June 25, 2019</time>:
+          <time datetime="2019-06-25">2019-06-25</time>:
           <a href="blog/my-top-10-favorite-research-papers">
             My top 10 favorite research papers
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="06-13-2019">June 13, 2019</time>:
+          <time datetime="2019-06-13">2019-06-13</time>:
           <a href="blog/how-to-toggle-styles-on-click-in-pure-css">
             How to toggle styles on click in pure CSS
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="06-05-2019">June 5, 2019</time>:
+          <time datetime="2019-06-05">2019-06-05</time>:
           <a href="blog/adventures-in-system-administration-part-2">
             Adventures in system administration - Part 2
           </a>
         </li>
-      </ul>
 
-      <h3 id="05-2019"><time datetime="05-2019">May 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="05-31-2019">May 31, 2019</time>:
+          <time datetime="2019-05-31">2019-05-31</time>:
           <a href="blog/how-to-change-wordpress-urls-in-the-database">
             How to change Wordpress URLs in the database
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="05-26-2019">May 26, 2019</time>:
+          <time datetime="2019-05-26">2019-05-26</time>:
           <a href="blog/adventures-in-system-administration-part-1">
             Adventures in system administration - Part 1
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="05-09-2019">May 9, 2019</time>:
+          <time datetime="2019-05-09">2019-05-09</time>:
           <a href="blog/meet-the-cloud-office-the-workplace-of-the-future">
             Meet the Cloud Office: the workplace of the future
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="05-02-2019">May 2, 2019</time>:
+          <time datetime="2019-05-02">2019-05-02</time>:
           <a href="blog/exploring-the-shinichiro-watanabe-cinematic-universe">
             Exploring the Shinichirō Watanabe Cinematic Universe
           </a>
         </li>
-      </ul>
 
-      <h3 id="04-2019"><time datetime="04-2019">April 2019</time></h3>
-
-      <ul>
         <li class="blog-item">
-          <time datetime="04-28-2019">April 28, 2019</time>: 
+          <time datetime="2019-04-28">2019-04-28</time>: 
           <a href="blog/audica-and-beat-saber-how-to-do-early-access-right-and-wrong">
             <i>Audica</i> and <i>Beat Saber</i>: how to do early access right
             and wrong
           </a>
         </li>
+
         <li class="blog-item">
-          <time datetime="04-22-2019">April 22, 2019</time>: 
+          <time datetime="2019-04-22">2019-04-22</time>: 
           <a href="blog/the-underrated-brilliance-of-american-psycho">The
             underrated brilliance of <i>American Psycho</i>
           </a>
         </li>
       </ul>
-
 
     </main>
 
