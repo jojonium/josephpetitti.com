@@ -17,7 +17,7 @@
 			<title>The underrated brilliance of American Psycho</title>
 			<link>https://josephpetitti.com/blog/the-underrated-brilliance-of-american-psycho</link>
 			<description>I've seen a lot of movies, and Mary Harron's 2000 psychological thriller American Psycho is one of my favorites of all time. Yet for some reason it seems like this masterpiece has mostly flown under the radar, seen as a curious but shallow origin of memes, and remembered with a casual "oh yeah, that was alright." This lack of acclaim for a film I rank among the likes of 2001: A Space Odyssey and The End of Evangelion is great injustice in my eyes, so I will try to explain what I like so much about it. Be warned, there be spoilers here, so for the best experience go watch the film first and come up with your own explanations, then come back and read this.</description>
-			<pubDate>Mon, 22 Apr 2019</pubDate>
+			<pubDate>Mon, 22 Apr 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/the-underrated-brilliance-of-american-psycho</guid>
 		</item>
 
@@ -25,7 +25,7 @@
 			<title>Audica and Beat Saber: how to do early access right and wrong</title>
 			<link>https://josephpetitti.com/blog/audica-and-beat-saber-how-to-do-early-access-right-and-wrong</link>
 			<description>Very rarely do you get such a perfect case study handed to you as with Audica and Beat Saber. Both are early access VR rhythm games on Steam and Oculus, both involve hitting red and blue notes with the correctly-colored weapon carried in each of you hands, and both are damn good fun. Let's take a look at how Audica takes advantage of early access to push content to early adopters while Beat Saber takes advantage of early access to take advantage of users.</description>
-			<pubDate>Sun, 28 Apr 2019</pubDate>
+			<pubDate>Sun, 28 Apr 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/audica-and-beat-saber-how-to-do-early-access-right-and-wrong</guid>
 		</item>
 
@@ -33,7 +33,7 @@
 			<title>Exploring the Shinichirō Watanabe Cinematic Universe</title>
 			<link>https://josephpetitti.com/blog/exploring-the-shinichiro-watanabe-cinematic-universe</link>
 			<description>Director Shinichirō Watanabe is well known for his science fiction and fantasy anime worlds filled with memorable characters, creative technology, and wonderous adventures. It appears that three of his critically acclaimed series, Cowboy Bebop, Space Dandy, and Carole &amp; Tuesday take place in the same universe, but the truth is much more complicated than that.</description>
-			<pubDate>Thu, 02 May 2019</pubDate>
+			<pubDate>Thu, 02 May 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/exploring-the-shinichiro-watanabe-cinematic-universe</guid>
 		</item>
 
@@ -41,7 +41,7 @@
 			<title>Meet the Cloud Office: the workplace of the future</title>
 			<link>https://josephpetitti.com/blog/meet-the-cloud-office-the-workplace-of-the-future</link>
 			<description>Nobody wants to deal with the hassle of maintaining hardware. It's expensive, difficult, and time consuming to set up your own networked infrastructure, and many companies just aren't dealing with it any more. But as more and more of our computer systems are transitioned into the cloud, we could end up in a world where the office as we know it is obsolete.</description>
-			<pubDate>Thu, 09 May 2019</pubDate>
+			<pubDate>Thu, 09 May 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/meet-the-cloud-office-the-workplace-of-the-future</guid>
 		</item>
 
@@ -49,7 +49,7 @@
 			<title>Adventures in system administration - Part 1</title>
 			<link>https://josephpetitti.com/blog/adventures-in-system-administration-part-1</link>
 			<description>Part 1 of an ongoing guide documenting my process of setting up a virtual network of servers to host various services for me</description>
-			<pubDate>Sun, 26 May 2019</pubDate>
+			<pubDate>Sun, 26 May 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/adventures-in-system-administration-part-1</guid>
 		</item>
 
@@ -57,7 +57,7 @@
 			<title>How to change Wordpress URLs in the database</title>
 			<link>https://josephpetitti.com/blog/how-to-change-wordpress-urls-in-the-database</link>
 			<description>Wordpress has a nasty habit of redirecting you to what it thinks the correct domain name is, and this value is hidden in multiple obscure places in the database. If you've ever had to migrate a Wordpress site from one domain name to another you've probably encountered this problem. Fortunately, there is a relatively painless way to reconfigure Wordpress to use the new domain name from inside its database.</description>
-			<pubDate>Fri, 31 May 2019</pubDate>
+			<pubDate>Fri, 31 May 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/how-to-change-wordpress-urls-in-the-database</guid>
 		</item>
 
@@ -65,7 +65,7 @@
 			<title>Adventures in system administration - Part 2</title>
 			<link>https://josephpetitti.com/blog/adventures-in-system-administration-part-2</link>
 			<description>Part 2 of an ongoing series about setting up a network of virtual servers. In this post, we configure Foreman and and a virtual network to allow unattended creation and provisioning of virtual hosts.</description>
-			<pubDate>Wed, 5 Jun 2019</pubDate>
+			<pubDate>Wed, 5 Jun 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/adventures-in-system-administration-part-2</guid>
 		</item>
 
@@ -73,7 +73,7 @@
 			<title>How to toggle styles on click in pure CSS</title>
 			<link>https://josephpetitti.com/blog/how-to-toggle-styles-on-click-in-pure-css</link>
 			<description>There are plenty of times in front-end web development where you want to toggle between two different CSS rules when an element is clicked. Maybe you want a custom menu to drop down, or a set of tabs to show different information. Either way, you could do this with some simple JavaScript. Or, you could use a CSS hack to do it without any scripts at all.</description>
-			<pubDate>Thu, 13 Jun 2019</pubDate>
+			<pubDate>Thu, 13 Jun 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/how-to-toggle-styles-on-click-in-pure-css</guid>
 		</item>
 
@@ -81,7 +81,7 @@
 			<title>My top 10 favorite research papers</title>
 			<link>https://josephpetitti.com/blog/my-top-10-favorite-research-papers</link>
 			<description>Some of the most amusing or intriguing studies, reports, and scientific papers I've stumbled across</description>
-			<pubDate>Tue, 25 Jun 2019</pubDate>
+			<pubDate>Tue, 25 Jun 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/my-top-10-favorite-research-papers</guid>
 		</item>
 
@@ -89,7 +89,7 @@
 			<title>Four days in Seoul</title>
 			<link>https://josephpetitti.com/blog/four-days-in-seoul</link>
 			<description>After an exhausting 44-hour journey involving planes, trains, and automobiles, I arrived in Seoul, South Korea this past Sunday. I'll be spending the next three months in Kyoto, Japan working on my Major Qualifying Project for WPI, but before that I wanted to spend some time seeing another city I had never been to before.</description>
-			<pubDate>Sat, 20 Jul 2019</pubDate>
+			<pubDate>Sat, 20 Jul 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/four-days-in-seoul</guid>
 		</item>
 
@@ -97,7 +97,7 @@
 			<title>Thoughts on Japan</title>
 			<link>https://josephpetitti.com/blog/thoughts-on-japan</link>
 			<description>As I mentioned in my last blog post, I'm spending three months in Japan to work on my Major Qualifying Project, a graduation requirement of WPI. Now that I've been here for almost four weeks I can talk a bit about what Japan is like, and my experiences here.</description>
-			<pubDate>Wed, 14 Aug 2019</pubDate>
+			<pubDate>Wed, 14 Aug 2019 12:00:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/thoughts-on-japan</guid>
 		</item>
 
