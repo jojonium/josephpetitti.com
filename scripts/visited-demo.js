@@ -326,7 +326,7 @@ const populateBoard = () => {
     BOARD.appendChild(link);
 
     // Random chance to add a decoy word.
-    if (Math.random < 0.2) {
+    if (Math.random() < 0.25) {
       const decoyLink = document.createElement("a");
       decoyLink.text = DECOY_WORDS[i] + " ";
       decoyLink.href="/";
@@ -338,6 +338,20 @@ const populateBoard = () => {
 }
 
 /**
+ * Decode the text entered by the user and display what sites used.
+ */
+const processInput = () => {
+  const textArea = document.getElementById("user-input");
+  if (textArea === null) {
+    throw new Error("Text area element does not exist");
+  }
+
+  const userText = textArea.value.trim();
+  
+
+}
+
+/**
  * Sets up the DOM and event listeners. This should only be called once,
  * when the page is first loaded.
  */
@@ -346,6 +360,11 @@ const setup = () => {
   if (board === null) {
     throw new Error("Board div does not exist");
   }
+  const submitButton = document.getElementById("submit-button");
+  if (submitButton === null) {
+    throw new Error("Submit button does not exist");
+  }
+  submitButton.addEventListener("click", processInput);
 
   populateBoard();
 }

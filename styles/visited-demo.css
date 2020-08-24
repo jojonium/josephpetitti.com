@@ -16,3 +16,18 @@ div#board a {
 div#board a:visited {
   color: blue;
 }
+
+div#board a.decoy-word {
+  color: green;
+}
+
+div#lower-holder {
+  width: 100%;
+  display: flex;
+  margin-top: 2em;
+  align-items: center;
+}
+
+textarea#user-input {
+  width: 75%;
+}
