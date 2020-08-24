@@ -1,0 +1,18 @@
+div#board {
+  background-color: white;
+  border: 1px solid black;
+  padding: 1em;
+  font-family: monospace;
+  color: black;
+  user-select: none;
+}
+
+div#board a {
+  color: black;
+  text-decoration: none;
+  cursor: default;
+}
+
+div#board a:visited {
+  color: blue;
+}
