@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Magic History Detector</title>
+    <meta name="description" content="A simple demo of how the CSS :visited pseudo-class can leak your browser history" />
+    <meta property="og:title" content="Magic History Detector" />
+    <meta property="og:description" content="A simple demo of how the CSS :visited pseudo-class can leak your browser history" />
+    <meta property="og:image" content="https://josephpetitti.com/images/logo.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/magic-history-detector" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="webfonts/fonts.css" type="text/css">
+    <link rel="stylesheet" href="styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="styles/solid.min.css" type="text/css">
+    <link href="styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+
+    <link href="styles/visited-demo.css" rel="stylesheet" type="text/css">
+
+    <script src="scripts/visited-demo.js"></script>
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header>
+      <input type="checkbox" id="toggle-menu">
+      <label for="toggle-menu" id="mobile-nav" title="Navigation">
+        <i class="fas fa-bars"></i> Menu
+      </label>
+    <!-- Nav -->
+      <nav id="nav">
+        <label for="toggle-menu" id="mobile-nav-close" title="Close">
+          <i class="fas fa-times"></i> Close
+        </label>
+        <ul>
+          <li><a href="index">Home</a></li>
+          <li><a href="resume">Resume</a></li>
+          <li><a href="projects">Projects</a>
+            <ul>
+              <li><a href="afterlight-caves">Afterlight Caves</a></li>
+              <li><a href="kyoto-ar-tour-guide-app">
+                Kyoto AR <br> Tour Guide App
+              </a></li>
+              <li><a href="traffic-classifier">Traffic Classifier</a></li>
+              <li><a href="hong-kong-historic-conservation">
+                Hong Kong Historic <br> Conservation
+              </a></li>
+              <li><a href="meeting-scheduler">Algol Meeting Scheduler</a></li>
+              <li><a href="this-website">This Website</a></li>
+              <li><a href="tic-tac-toe">Tic-Tac-Toe</a></li>
+            </ul>
+          </li>
+          <li><a href="blog">Blog</a>
+          <li><a href="other">Other</a>
+            <ul>
+              <li><a href="dice">Dice</a></li>
+              <li><a href="ant">Langton's Ant</a></li>
+              <li><a href="rps">RPS Automaton</a></li>
+              <li><a href="type">Typing Game</a></li>
+              <li><a href="minesweeper">Minesweeper</a></li>
+              <li><a href="snake">Snake</a></li>
+              <li><a href="match">Color Match</a></li>
+              <li><a href="klotski">Klotski</a></li>
+              <li><a href="sliding-tetris">Sliding Tetris</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+    </header>
+
+  <!-- Main -->
+    <main id="main">
+      <h1 class="title">Magic History Detector</h1>
+
+      <p>
+        This page uses a complex algorithm based on your typing style to
+        determine what types of sites you like to visit.
+      </p>
+
+      <p>
+        To begin, simply type each of the words you see below into the text
+        box in any order.
+      </p>
+
+      <div id="board"></div>
+
+      <div id="lower-holder">
+        <textarea id="user-input" ></textarea>
+
+        <button id="submit-button">Submit</button>
+      </div>
+
+      <div id="response-area"></div>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Information</h2>
+        <dl>
+          <dt>Address</dt>
+            <dd>
+              100 Institute Road, Mailbox #2658 Worcester, MA
+              01609
+            </dd>
+          <dt>Phone</dt>
+            <dd>(518) 545-1984</dd>
+          <dt>Email</dt>
+            <dd>
+              <a href="mailto:jppetitti@wpi.edu">jppetitti@wpi.edu</a>
+              <span class="gpg">(<a href="gpg">GPG Key</a>)</span>
+            </dd>
+        </dl>
+        <ul class="icons">
+          <li>
+            <a href="https://github.com/jojonium" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-github" title="GitHub"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/joseph-petitti/" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-linkedin" title="LinkedIn"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://steamcommunity.com/id/thedungeonmaster/" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-steam" title="Steam"></span>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/jojonium" target="_blank" rel="noreferrer noopener">
+              <span class="fab fa-telegram" title="Telegram"></span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </footer>
+  </body>
+</html>
