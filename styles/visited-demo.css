@@ -8,17 +8,17 @@ div#board {
 }
 
 div#board a {
-  color: black;
+  color: white;
   text-decoration: none;
   cursor: default;
 }
 
 div#board a:visited {
-  color: blue;
+  color: black;
 }
 
 div#board a.decoy-word {
-  color: green;
+  color: black;
 }
 
 div#lower-holder {

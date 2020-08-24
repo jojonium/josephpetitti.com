@@ -14,54 +14,54 @@
  */
 const TOP_SITES = [
   "https://www.google.com",
-  "https://www.youtube.com/",
-  "https://www.amazon.com/",
-  "https://www.yahoo.com/",
-  "https://www.facebook.com/",
-  "https://www.reddit.com/",
-  "https://zoom.us/",
-  "https://www.wikipedia.org/",
-  "https://myshopify.com/",
-  "https://www.ebay.com/",
-  "https://www.netflix.com/",
-  "https://www.bing.com/",
-  "https://www.office.com/",
-  "https://outlook.live.com/",
-  "https://www.twitch.tv/",
-  "https://www.microsoft.com/",
-  "https://www.instagram.com/",
-  "https://chaturbate.com/",
-  "https://www.chase.com/",
-  "https://www.zillow.com/",
-  "https://microsoftonline.com/",
-  "https://www.cnn.com/",
-  "https://www.apple.com/",
-  "https://www.linkedin.com/",
-  "https://www.etsy.com/",
-  "https://www.walmart.com/",
-  "https://www.aliexpress.com/",
-  "https://www.dropbox.com/",
-  "https://www.espn.com/",
-  "https://www.nytimes.com/",
-  "https://www.adobe.com/",
-  "https://www.craigslist.org/",
-  "https://twitter.com/",
-  "https://www.wellsfargo.com/",
-  "https://www.okta.com/",
-  "https://livejasmin.com/",
-  "https://www.instructure.com/",
-  "https://imgur.com/",
-  "https://www.salesforce.com/",
-  "https://www.homedepot.com/",
-  "https://force.com/",
-  "https://www.hulu.com/",
-  "https://www.usps.com/",
-  "https://www.pornhub.com/",
-  "https://www.indeed.com/",
-  "https://www.stackoverflow.com/",
-  "https://www.imdb.com/",
-  "https://www.msn.com/",
-  "https://www.ca.gov/",
+  "https://www.youtube.com",
+  "https://www.amazon.com",
+  "https://www.yahoo.com",
+  "https://www.facebook.com",
+  "https://www.reddit.com",
+  "https://zoom.us",
+  "https://www.wikipedia.org",
+  "https://myshopify.com",
+  "https://www.ebay.com",
+  "https://www.netflix.com",
+  "https://www.bing.com",
+  "https://www.office.com",
+  "https://outlook.live.com",
+  "https://www.twitch.tv",
+  "https://www.microsoft.com",
+  "https://www.instagram.com",
+  "https://chaturbate.com",
+  "https://www.chase.com",
+  "https://www.zillow.com",
+  "https://microsoftonline.com",
+  "https://www.cnn.com",
+  "https://www.apple.com",
+  "https://www.linkedin.com",
+  "https://www.etsy.com",
+  "https://www.walmart.com",
+  "https://www.aliexpress.com",
+  "https://www.dropbox.com",
+  "https://www.espn.com",
+  "https://www.nytimes.com",
+  "https://www.adobe.com",
+  "https://www.craigslist.org",
+  "https://twitter.com",
+  "https://www.wellsfargo.com",
+  "https://www.okta.com",
+  "https://livejasmin.com",
+  "https://www.instructure.com",
+  "https://imgur.com",
+  "https://www.salesforce.com",
+  "https://www.homedepot.com",
+  "https://force.com",
+  "https://www.hulu.com",
+  "https://www.usps.com",
+  "https://www.pornhub.com",
+  "https://www.indeed.com",
+  "https://www.stackoverflow.com",
+  "https://www.imdb.com",
+  "https://www.msn.com",
+  "https://www.ca.gov",
 ];
 
 /**
@@ -286,6 +286,8 @@ const CHARACTERS =
 
 /** @type{HTMLElement} */
 let BOARD;
+/** @type{HTMLTextAreaElement} */
+let TEXT_AREA;
 
 /**
  * Shuffles an array in place.
@@ -326,10 +328,10 @@ const populateBoard = () => {
     BOARD.appendChild(link);
 
     // Random chance to add a decoy word.
-    if (Math.random() < 0.25) {
+    if (Math.random() < 0.15) {
       const decoyLink = document.createElement("a");
       decoyLink.text = DECOY_WORDS[i] + " ";
-      decoyLink.href="/";
+      decoyLink.href = "/";
       decoyLink.classList.add("decoy-word");
 
       BOARD.appendChild(decoyLink);
@@ -341,14 +343,42 @@ const populateBoard = () => {
  * Decode the text entered by the user and display what sites used.
  */
 const processInput = () => {
-  const textArea = document.getElementById("user-input");
-  if (textArea === null) {
+  const responseArea = document.getElementById("response-area");
+  if (responseArea === null) {
     throw new Error("Text area element does not exist");
   }
 
-  const userText = textArea.value.trim();
-  
+  const userWords = TEXT_AREA.value.trim().split(/\s+/);
 
+  // Remove old values.
+  responseArea.innerHTML = "";
+  TEXT_AREA.value = "";
+
+  /** @type {string[]} */
+  const visited = [];
+  for (const w of userWords) {
+    if (SITES_MAP.has(w.toLowerCase())) {
+      visited.push(SITES_MAP.get(w.toLowerCase()));
+    }
+  }
+  const response = document.createElement("div");
+  const responseText = document.createElement("p");
+  if (visited.length === 0) {
+    responseText.textContent = "I couldn't detect anything about your" +
+      " browsing history. You either have good browser security or don't" +
+      " have many popular sites in in your browser history."
+  } else {
+    responseText.textContent = "I detect that you visit these sites:";
+  }
+  response.appendChild(responseText);
+  const visitedList = document.createElement("ul")
+  for (const v of visited) {
+    const li = document.createElement("li");
+    li.textContent = v;
+    visitedList.appendChild(li)
+  }
+  response.appendChild(visitedList);
+  responseArea.appendChild(response);
 }
 
 /**
@@ -364,6 +394,19 @@ const setup = () => {
   if (submitButton === null) {
     throw new Error("Submit button does not exist");
   }
+  TEXT_AREA = (
+    /** @type {HTMLTextAreaElement} */
+    document.getElementById("user-input")
+  );
+  if (TEXT_AREA === null) {
+    throw new Error("Text area element does not exist");
+  }
+  TEXT_AREA.addEventListener("keypress", (ev) => {
+    if (ev.key === "Enter") {
+      ev.preventDefault();
+      processInput();
+    }
+  });
   submitButton.addEventListener("click", processInput);
 
   populateBoard();
@@ -372,3 +415,4 @@ const setup = () => {
 window.onload = () => {
   setup();
 }
+
