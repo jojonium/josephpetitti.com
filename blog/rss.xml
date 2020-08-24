@@ -293,5 +293,13 @@
 			<guid>https://josephpetitti.com/blog/hiking-cannon-mountain</guid>
 		</item>
 
+		<item>
+			<title>How CSS can leak your browser history</title>
+			<link>https://josephpetitti.com/blog/how-css-can-leak-your-browser-history</link>
+			<description>Despite the huge effort that goes into making browsers secure, there are still a few ways they can expose your private data to attackers if you aren't careful. Most involve some kind of complex fingerprinting using JavaScript, but there is a way to trick users into giving up their browsing history using only CSS: with the :visited pseudo-class.</description>
+			<pubDate>Mon, 24 Aug 2020 20:30:48 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/how-css-can-leak-your-browser-history</guid>
+		</item>
+
 	</channel>
 </rss>

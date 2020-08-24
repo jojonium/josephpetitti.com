@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How CSS can leak your browser history</title>
+    <meta name="description" content="Despite the huge effort that goes into making browsers secure, there are still a few ways they can expose your private data to attackers if you aren't careful. Most involve some kind of complex fingerprinting using JavaScript, but there is a way to trick users into giving up their browsing history using only CSS: with the :visited pseudo-class." />
+    <meta property="og:title" content="How CSS can leak your browser history" />
+    <meta property="og:description" content="Despite the huge effort that goes into making browsers secure, there are still a few ways they can expose your private data to attackers if you aren't careful. Most involve some kind of complex fingerprinting using JavaScript, but there is a way to trick users into giving up their browsing history using only CSS: with the :visited pseudo-class." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/the-brain-manipulates" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/how-css-can-leak-your-browser-history" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2020-08-24">August 24, 2020</span>
+
+      <h1 class="title">How CSS can leak your browser history</h1>
+
+      <p>
+        Despite the huge effort that goes into making browsers secure, there are
+        still a few ways they can expose your private data to attackers if you
+        aren't careful. Most involve some kind of complex fingerprinting using
+        JavaScript, but there is a way to trick users into giving up their
+        browsing history using only CSS.
+      </p>
+
+      <h2 id="the-visited-pseudo-class">The :visited pseudo-class</h2>
+
+      <p>
+        In addition to regular selectors for HTML tag name, ID, and class, CSS
+        also provides a few special selectors callde pseudo-classes. For
+        example, the <code>:hover</code> pseudo-class represents an element that
+        the user is hovering over with their cursor.
+      </p>
+
+      <p>
+        This privacy-invading trick involves the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:visited" rel="noreferrer noopener" ><code>:visited</code></a>
+        pseudo-class. It's a way to style links that the user has already
+        visited, making long lists of links easier to read.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/visited-example.png" alt="A list of links where the ones that have already been visited are a darker color">
+        <figcaption>
+          This makes it easy to tell which posts you've already read
+        </figcaption>
+      </figure>
+
+      <p>
+        The fact that the styling is based on your browser's history makes this
+        pseudo-class an obvious security issue. Because of this, browsers
+        implement a number of measures to make it difficult to exploit.
+      </p>
+
+      <p>
+        The only rules you can apply to visited links are <code>color</code>,
+        <code>background-color</code>, <code>border-color</code>,
+        <code>column-rule-color</code>, and <code>outline-color</code>. Further,
+        it's normally impossible to detect whether the rule is being applied
+        with JavaScript because <code>indow.getComputedStyle</code> always acts
+        as if all links are unvisited.
+      </p>
+
+      <p>
+        If it weren't for these security measures, you could just include a
+        hidden link to <code>www.shady-site.com</code> and then automatically
+        test whether the link has the visited style applied to it to figure out
+        if a user has gone to the shady site before.
+      </p>
+
+      <p>
+        So how can you exploit the <code>:visited</code> pseudo-class when you
+        can't check if the style is being applied? Just trick the user into
+        telling you.
+      </p>
+
+      <figure class="full-width">
+        <img src="images/the-brain-manipulates.png" alt="A meme from Arthur
+        showing Brain saying 'Have you ever realized how frighteningly easy it
+        is to manipulate someone into doing whatever you want?'">
+      </figure>
+
+      <h2 id="proof-of-concept">Proof of concept</h2>
+
+      <p>
+        It's surprisingly easy to get people to give up their history with a
+        little bit of trickery. I made a simple
+        <a href="../magic-history-detector">proof of concept</a> that you can
+        try out now. Don't worry, it only reports your history to you, check
+        <a href="../scripts/visited-demo.js">the source</a> if you don't believe
+        me.
+      </p>
+
+      <p>
+        The page simply assigns a common English word for each of the top 50
+        most visited sites in the US, and colors them black if the link is
+        <code>:visited</code>. Unvisited links are white and therefore
+        invisible, and a few decoy words are thrown in to make it less obvious
+        how it works. Then we just put an invisible <code>div</code> over the
+        whole thing to prevent the user from clicking or selecting the links,
+        which would give away the trick.
+      </p>
+
+      <p>
+        The user types in all the words that are visible to them, and some
+        JavaScript reports all the matching sites.
+      </p>
+
+      <p>
+        This example is kind of silly, but it's not too hard to imagine
+        implementing a CAPTCHA service that only shows certain letters if you've
+        visited a particular site. In fact,
+        <a href="https://github.com/frantzmiccoli" rel="noopener noreferrer"
+          target="_blank">Fräntz Miccoli</a>
+        has already implemented a
+        <a href="https://frantzmiccoli.github.io/visited-captcha-history/#"
+          rel="noopener noreferrer" target="_blank">demo that does exactly
+          that.</a>
+      </p>
+
+      <h2 id="how-to-protect-yourself">How to protect yourself</h2>
+
+      <p>
+        These types of tricks are difficult to detect, so the best thing to do
+        is just disable styling visited links entirely. You lose the benefit of
+        seeing what links you've already clicked on some sites, but it makes you
+        more secure.
+      </p>
+
+      <p>
+        In Firefox, just add this line to your <code>user.js</code> file to
+        disable the <code>:visited</code> pseudo-class:
+      </p>
+
+      <code class="block">user_pref("layout.css.visited_links_enabled", false)</code>
+
+      <p>
+        If there is a way to disable it in Chrome I couldn't find it, but you
+        shouldn't really be using Chrome for security anyway.
+      </p>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
