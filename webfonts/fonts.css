@@ -1,24 +1,28 @@
 @font-face {
-  font-family: 'Liberation Mono';
+  font-family: "Liberation Mono";
   font-style: normal;
   font-weight: 400;
-  src: url('LiberationMono-Regular.ttf');
+  src: local("Liberation Mono"), url("LiberationMono-Regular.ttf");
+  font-display: swap;
 }
 @font-face {
-  font-family: 'Liberation Mono';
+  font-family: "Liberation Mono";
   font-style: italic;
   font-weight: 400;
-  src: url('LiberationMono-Italic.ttf');
+  src: local("Liberation Mono Italic"), url("LiberationMono-Italic.ttf");
+  font-display: swap;
 }
 @font-face {
-  font-family: 'Merriweather';
+  font-family: "Merriweather";
   font-style: normal;
   font-weight: 400;
-  src: url('Merriweather-Regular.ttf');
+  src: local("Merriweather Regular"), url("Merriweather-Regular.ttf");
+  font-display: swap;
 }
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 900;
-  src: url('Montserrat-Black.ttf');
+  src: local("Montserrat Black"), url("Montserrat-Black.ttf");
+  font-display: swap;
 }
