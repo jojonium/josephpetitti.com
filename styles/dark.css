@@ -10,14 +10,16 @@
  */
 
 /* Whole Page */
-html, body {
+html,
+body {
   width: 100%;
   margin: 0;
   padding: 0;
   font-size: 14pt;
 }
 
-html, div {
+html,
+div {
   font-family: "Deja Vu Sans", Lato, "noto sans", sans-serif;
 }
 
@@ -31,16 +33,67 @@ main::before {
   content: "";
   left: 10%;
   top: 0;
-  width: 80%; 
+  width: 80%;
   height: 800px;
   z-index: -1;
   background-repeat: repeat;
 }
 
-div.fade-box, main::before {
-  background-image: linear-gradient(90deg,#1f0053 0,rgba(31,0,83,.98556487) .97%,rgba(31,0,83,.9451312) 2.07833333%,rgba(31,0,83,.88300656) 3.29666667%,rgba(31,0,83,.80349854) 4.60166667%,rgba(31,0,83,.71091472) 5.96666667%,rgba(31,0,83,.60956268) 7.365%,rgba(31,0,83,.50375) 8.77166667%,rgba(31,0,83,.39778426) 10.16%,rgba(31,0,83,.29597303) 11.505%,rgba(31,0,83,.20262391) 12.78%,rgba(31,0,83,.12204446) 13.95833333%,rgba(31,0,83,.05854227) 15.01666667%,rgba(31,0,83,.01642493) 15.92833333%,rgba(31,0,83,0) 16.66666667%,rgba(31,0,83,0) 83.33333333%,rgba(31,0,83,.01642493) 84.07166667%,rgba(31,0,83,.05854227) 84.98333333%,rgba(31,0,83,.12204446) 86.04166667%,rgba(31,0,83,.20262391) 87.22%,rgba(31,0,83,.29597303) 88.495%,rgba(31,0,83,.39778426) 89.84%,rgba(31,0,83,.50375) 91.22833333%,rgba(31,0,83,.60956268) 92.635%,rgba(31,0,83,.71091472) 94.03333333%,rgba(31,0,83,.80349854) 95.39833333%,rgba(31,0,83,.88300656) 96.70333333%,rgba(31,0,83,.9451312) 97.92166667%,rgba(31,0,83,.98556487) 99.03%,#1f0053),
-  linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%),
-  url('../images/brushed-alum-dark.png');
+div.fade-box,
+main::before {
+  background-image: linear-gradient(
+      90deg,
+      #1f0053 0,
+      rgba(31, 0, 83, 0.98556487) 0.97%,
+      rgba(31, 0, 83, 0.9451312) 2.07833333%,
+      rgba(31, 0, 83, 0.88300656) 3.29666667%,
+      rgba(31, 0, 83, 0.80349854) 4.60166667%,
+      rgba(31, 0, 83, 0.71091472) 5.96666667%,
+      rgba(31, 0, 83, 0.60956268) 7.365%,
+      rgba(31, 0, 83, 0.50375) 8.77166667%,
+      rgba(31, 0, 83, 0.39778426) 10.16%,
+      rgba(31, 0, 83, 0.29597303) 11.505%,
+      rgba(31, 0, 83, 0.20262391) 12.78%,
+      rgba(31, 0, 83, 0.12204446) 13.95833333%,
+      rgba(31, 0, 83, 0.05854227) 15.01666667%,
+      rgba(31, 0, 83, 0.01642493) 15.92833333%,
+      rgba(31, 0, 83, 0) 16.66666667%,
+      rgba(31, 0, 83, 0) 83.33333333%,
+      rgba(31, 0, 83, 0.01642493) 84.07166667%,
+      rgba(31, 0, 83, 0.05854227) 84.98333333%,
+      rgba(31, 0, 83, 0.12204446) 86.04166667%,
+      rgba(31, 0, 83, 0.20262391) 87.22%,
+      rgba(31, 0, 83, 0.29597303) 88.495%,
+      rgba(31, 0, 83, 0.39778426) 89.84%,
+      rgba(31, 0, 83, 0.50375) 91.22833333%,
+      rgba(31, 0, 83, 0.60956268) 92.635%,
+      rgba(31, 0, 83, 0.71091472) 94.03333333%,
+      rgba(31, 0, 83, 0.80349854) 95.39833333%,
+      rgba(31, 0, 83, 0.88300656) 96.70333333%,
+      rgba(31, 0, 83, 0.9451312) 97.92166667%,
+      rgba(31, 0, 83, 0.98556487) 99.03%,
+      #1f0053
+    ),
+    linear-gradient(
+      0deg,
+      #1f0053 0,
+      #1f0053 21.48148148%,
+      rgba(31, 0, 83, 0.98556487) 23.63703704%,
+      rgba(31, 0, 83, 0.9451312) 26.1%,
+      rgba(31, 0, 83, 0.88300656) 28.80740741%,
+      rgba(31, 0, 83, 0.80349854) 31.70740741%,
+      rgba(31, 0, 83, 0.71091472) 34.74074074%,
+      rgba(31, 0, 83, 0.60956268) 37.84814815%,
+      rgba(31, 0, 83, 0.50375) 40.97407407%,
+      rgba(31, 0, 83, 0.39778426) 44.05925926%,
+      rgba(31, 0, 83, 0.29597303) 47.04814815%,
+      rgba(31, 0, 83, 0.20262391) 49.88148148%,
+      rgba(31, 0, 83, 0.12204446) 52.5%,
+      rgba(31, 0, 83, 0.05854227) 54.85185185%,
+      rgba(31, 0, 83, 0.01642493) 56.87777778%,
+      rgba(31, 0, 83, 0) 58.51851852%
+    ),
+    url("../images/brushed-alum-dark.png");
 }
 
 div.fade-box {
@@ -77,14 +130,19 @@ h1.title {
   text-transform: uppercase;
 }
 
-main h1, main h2, main h3, main h4, main h5, main h6 {
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
   font-family: "Merriweather", serif;
   color: #ccddee;
 }
 
 a {
   color: #eee;
-  transition: color .2s;
+  transition: color 0.2s;
   text-decoration-line: underline;
 }
 
@@ -96,7 +154,8 @@ sup a {
   text-decoration: none;
 }
 
-.code, code {
+.code,
+code {
   font-family: "Liberation Mono", monospace;
   background-color: #2b2b2b;
   padding: 1px 3px;
@@ -105,7 +164,8 @@ sup a {
   overflow-x: auto;
 }
 
-div.code, code.block {
+div.code,
+code.block {
   padding: 15px 10px 15px 15px;
   border-radius: 0 5px 5px 0;
   border-left: 4px solid #f1a208;
@@ -123,7 +183,8 @@ p.quote {
   color: #8899aa;
 }
 
-p.quote.block, figure p.quote.block {
+p.quote.block,
+figure p.quote.block {
   text-align: left;
   font-size: 1em;
   padding-left: 1em;
@@ -136,11 +197,15 @@ figure p.quote {
   text-align: center;
 }
 
-p.quote::before { content: "“" }
-p.quote::after { content: "”" }
+p.quote::before {
+  content: "“";
+}
+p.quote::after {
+  content: "”";
+}
 
 span.gpg {
-  font-size: .65em;
+  font-size: 0.65em;
 }
 
 img#logo {
@@ -154,23 +219,25 @@ header {
   display: flex;
   z-index: 2;
   background-color: none;
-  transition: background-color .5s;
+  transition: background-color 0.5s;
 }
 
 header:hover {
   background-color: #005377;
 }
 
-header input[type=checkbox]#toggle-menu {
+header input[type="checkbox"]#toggle-menu {
   display: none;
 }
 
-header label#mobile-nav, header label#mobile-nav-close {
+header label#mobile-nav,
+header label#mobile-nav-close {
   display: none;
   cursor: pointer;
 }
 
-header a, header label {
+header a,
+header label {
   color: #eee;
   display: block;
   padding: 12px;
@@ -179,10 +246,11 @@ header a, header label {
   text-decoration: none;
 }
 
-header a:hover, header label:hover {
+header a:hover,
+header label:hover {
   text-shadow: none;
   color: #eee;
-  transition: .2s;
+  transition: 0.2s;
   background-color: #4ea5d9;
 }
 
@@ -200,7 +268,7 @@ header nav ul {
   padding-inline-start: 0;
 }
 
-header nav>ul>li {
+header nav > ul > li {
   font-size: 1.5em;
   width: 160px;
   text-align: center;
@@ -208,7 +276,7 @@ header nav>ul>li {
 }
 
 header nav ul li ul {
-  font-size: .75em;
+  font-size: 0.75em;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -218,7 +286,7 @@ header nav ul li ul {
   z-index: 1;
   max-height: 0;
   overflow: hidden;
-  transition: max-height .5s, box-shadow .3s;
+  transition: max-height 0.5s, box-shadow 0.3s;
   transition-timing-function: ease;
   font-weight: normal;
 }
@@ -230,7 +298,7 @@ header nav ul li ul li {
 
 header nav ul li:hover ul {
   max-height: 100%;
-  box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .6);
+  box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.6);
 }
 
 /* Statistics */
@@ -268,19 +336,20 @@ main table {
   box-sizing: border-box;
 }
 
-main table td, main table th {
-  padding: 2px .75em 2px;
+main table td,
+main table th {
+  padding: 2px 0.75em 2px;
   text-align: left;
 }
 
-main table th.r, main table td.r {
+main table th.r,
+main table td.r {
   text-align: right;
 }
 
 main table thead.header th {
   border-bottom: 1px solid #bbccdd;
 }
-
 
 /* Figures */
 figure {
@@ -308,10 +377,10 @@ figure.full-width {
 }
 
 figcaption {
-  font-size: .875em;
+  font-size: 0.875em;
   text-align: center;
   color: #99aabb;
-  margin-top: .25em;
+  margin-top: 0.25em;
 }
 
 video {
@@ -338,26 +407,31 @@ button.medium {
   width: 6em;
 }
 
-button, .button-like {
+button,
+.button-like {
   font-size: 1.125em;
   color: #eee;
   background-color: #3066be;
   padding: 10px;
   border: none;
   box-shadow: 5px 5px rgba(0, 0, 0, 1);
-  transition: background-color .2s, box-shadow .2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   margin: 5px;
 }
 
-button[disabled], .button-like[disabled], 
-    .long-buttons a:hover button[disabled], button[disabled]:hover,
-    .button-like[disabled]:hover {
+button[disabled],
+.button-like[disabled],
+.long-buttons a:hover button[disabled],
+button[disabled]:hover,
+.button-like[disabled]:hover {
   background-color: #d2d2d2;
   text-shadow: none;
   box-shadow: none;
 }
 
-.long-buttons a:hover button, button:hover, .button-like:hover {
+.long-buttons a:hover button,
+button:hover,
+.button-like:hover {
   text-shadow: none;
   background-color: #4ea5d9;
   box-shadow: 6px 6px 10px 1px rgba(0, 0, 0, 1);
@@ -427,9 +501,28 @@ footer section ul.icons li {
 
 /* Mobile */
 @media screen and (max-width: 1200px) {
-  div.fade-box, main::before {
-    background-image: linear-gradient(0deg,#1f0053 0,#1f0053 21.48148148%,rgba(31,0,83,.98556487) 23.63703704%,rgba(31,0,83,.9451312) 26.1%,rgba(31,0,83,.88300656) 28.80740741%,rgba(31,0,83,.80349854) 31.70740741%,rgba(31,0,83,.71091472) 34.74074074%,rgba(31,0,83,.60956268) 37.84814815%,rgba(31,0,83,.50375) 40.97407407%,rgba(31,0,83,.39778426) 44.05925926%,rgba(31,0,83,.29597303) 47.04814815%,rgba(31,0,83,.20262391) 49.88148148%,rgba(31,0,83,.12204446) 52.5%,rgba(31,0,83,.05854227) 54.85185185%,rgba(31,0,83,.01642493) 56.87777778%,rgba(31,0,83,0) 58.51851852%),
-    url('../images/brushed-alum-dark.png');
+  div.fade-box,
+  main::before {
+    background-image: linear-gradient(
+        0deg,
+        #1f0053 0,
+        #1f0053 21.48148148%,
+        rgba(31, 0, 83, 0.98556487) 23.63703704%,
+        rgba(31, 0, 83, 0.9451312) 26.1%,
+        rgba(31, 0, 83, 0.88300656) 28.80740741%,
+        rgba(31, 0, 83, 0.80349854) 31.70740741%,
+        rgba(31, 0, 83, 0.71091472) 34.74074074%,
+        rgba(31, 0, 83, 0.60956268) 37.84814815%,
+        rgba(31, 0, 83, 0.50375) 40.97407407%,
+        rgba(31, 0, 83, 0.39778426) 44.05925926%,
+        rgba(31, 0, 83, 0.29597303) 47.04814815%,
+        rgba(31, 0, 83, 0.20262391) 49.88148148%,
+        rgba(31, 0, 83, 0.12204446) 52.5%,
+        rgba(31, 0, 83, 0.05854227) 54.85185185%,
+        rgba(31, 0, 83, 0.01642493) 56.87777778%,
+        rgba(31, 0, 83, 0) 58.51851852%
+      ),
+      url("../images/brushed-alum-dark.png");
   }
 
   main::before {
@@ -454,19 +547,19 @@ footer section ul.icons li {
     left: 0;
     top: 0;
     width: 0;
-    transition: width .8s;
+    transition: width 0.8s;
     z-index: 2;
     background-color: #005377;
     overflow: auto;
     white-space: nowrap;
   }
 
-  input[type=checkbox]:checked ~ nav {
+  input[type="checkbox"]:checked ~ nav {
     width: 100%;
   }
 
   header nav ul {
-    font-size: .75em;
+    font-size: 0.75em;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -508,7 +601,7 @@ footer section ul.icons li {
     margin-bottom: 1em;
   }
 
-  footer { 
+  footer {
     flex-direction: column;
   }
 
@@ -516,8 +609,9 @@ footer section ul.icons li {
     flex-direction: column;
     align-items: center;
   }
-  
-  figure.float.left, figure.float.right {
+
+  figure.float.left,
+  figure.float.right {
     width: 100%;
     margin-inline-start: 0;
     margin-inline-end: 0;
@@ -534,18 +628,21 @@ footer section ul.icons li {
   }
 
   p.quote {
-  margin-inline-start: 0;
+    margin-inline-start: 0;
   }
 }
 
 /* For printing */
 
 @media print {
-  header, nav, button {
+  header,
+  nav,
+  button {
     display: none;
   }
 
-  html, body {
+  html,
+  body {
     font-size: 10pt;
     color: black;
     background-color: white;
@@ -554,14 +651,15 @@ footer section ul.icons li {
   h1.title {
     font-family: "Merriweather", serif;
     text-shadow: none;
-    margin: .5em auto;
+    margin: 0.5em auto;
   }
 
   main::before {
     display: none;
   }
 
-  .fadein, .fadein.visible {
+  .fadein,
+  .fadein.visible {
     opacity: 1;
   }
 
@@ -573,6 +671,6 @@ footer section ul.icons li {
   }
 
   a:after {
-    content: " ("attr(href)")";
+    content: " (" attr(href) ")";
   }
 }
