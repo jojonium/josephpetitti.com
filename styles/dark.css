@@ -219,11 +219,13 @@ header {
   display: flex;
   z-index: 2;
   background-color: none;
-  transition: background-color 0.5s;
+  box-shadow: none;
+  transition: background-color 0.5s, box-shadow 0.5s;
 }
 
 header:hover {
   background-color: #005377;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 header input[type="checkbox"]#toggle-menu {
