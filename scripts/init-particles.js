@@ -3,7 +3,7 @@
 window.onload = function() {
   particlesJS.load(
     "particles-js",
-    "https://" + document.domain + "/assets/particle-cfg.json"
+    "/assets/particle-cfg.json"
   );
 };
 fadein();
