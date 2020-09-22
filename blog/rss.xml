@@ -301,5 +301,12 @@
 			<guid>https://josephpetitti.com/blog/how-css-can-leak-your-browser-history</guid>
 		</item>
 
+		<item>
+			<title>How accessibility undermines Android's security</title>
+			<link>https://josephpetitti.com/blog/how-accessibility-undermines-androids-security</link>
+			<description>As smartphones become more powerful and ubiquitous the incentives for malicious actors to hijack them continue to grow. Gaining access to a target's phone can yield bank account passwords, 2-factor authentication codes, contacts information, and all kinds of other juicy data. Google is constantly trying to protect their platform while still giving app developers freedom to make what they want, and for the most part they succeed. Applications are generally sandboxed from each other, and require granular permissions that users must manually accept in order to access hardware and OS resources. But there's one area where Android subverts its own strong sanboxing principles: accessibility services.</description>
+			<pubDate>Tue, 22 Sep 2020 20:39:15 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/how-accessibility-undermines-androids-security</guid>
+		</item>
 	</channel>
 </rss>

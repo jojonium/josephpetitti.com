@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How accessibility undermines Android's security</title>
+    <meta name="description" content="As smartphones become more powerful and ubiquitous the incentives for malicious actors to hijack them continue to grow. Gaining access to a target's phone can yield bank account passwords, 2-factor authentication codes, contacts information, and all kinds of other juicy data. Google is constantly trying to protect their platform while still giving app developers freedom to make what they want, and for the most part they succeed. Applications are generally sandboxed from each other, and require granular permissions that users must manually accept in order to access hardware and OS resources. But there's one area where Android subverts its own strong sanboxing principles: accessibility services." />
+    <meta property="og:title" content="How accessibility undermines Android's security" />
+    <meta property="og:description" content="As smartphones become more powerful and ubiquitous the incentives for malicious actors to hijack them continue to grow. Gaining access to a target's phone can yield bank account passwords, 2-factor authentication codes, contacts information, and all kinds of other juicy data. Google is constantly trying to protect their platform while still giving app developers freedom to make what they want, and for the most part they succeed. Applications are generally sandboxed from each other, and require granular permissions that users must manually accept in order to access hardware and OS resources. But there's one area where Android subverts its own strong sanboxing principles: accessibility services." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/android-password-field.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/how-accessibility-undermines-androids-security" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2020-09-22">September 22, 2020</span>
+
+      <h1 class="title">How accessibility undermines Android's security</h1>
+
+      <p>
+        As smartphones become more powerful and ubiquitous the incentives for
+        malicious actors to hijack them continue to grow. Gaining access to
+        a target's phone can yield bank account passwords, 2-factor
+        authentication codes, contacts information, and all kinds of other juicy
+        data. Google is constantly trying to protect their platform while still
+        giving app developers freedom to make what they want, and for the most
+        part they succeed. Applications are generally sandboxed from each other,
+        and require granular permissions that users must manually accept in
+        order to access hardware and OS resources. But there's one area where
+        Android subverts its own strong sanboxing principles: <a
+        href="https://support.google.com/accessibility/android/answer/6006564?hl=en"
+        target="_blank" rel="noopener noreferrer">accessibility services</a>.
+      </p>
+
+      <p>
+        As the name suggests, accessibility services are designed to help users
+        with disabilities, and include functionality like screen readers. But in
+        order to do this accessibility services need to be able to access all UI
+        elements and interactions. This means that any accessibility you have
+        enabled can read and interact with <i>anything</i> that appears on your
+        phone's screen.
+      </p>
+
+      <h2 id="leaking-passwords">Leaking passwords</h2>
+
+      <p>
+        Google has put in place a few security protections from these services.
+        For example, whenever you type into a text field an accessibility event
+        is sent with the new text to any accessibility services. When using
+        a password text field, only the transformed characters are sent (so the
+        service would only see something like
+        <code>&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</code>).
+      </p>
+
+      <figure class="full-width">
+        <a href="images/android-password-field.png">
+          <img src="images/th_android-password-field.png" alt="Screenshot showing a password field with the last character in plain text">
+        </a>
+      </figure>
+
+      <p>
+        But to make passwords easier to type Android shows the last character in
+        plain text for 1.5 seconds. The whole visible text is sent as an
+        accessibility event every time the text content changes, so the last
+        character typed is always sent in plain text. In this way, every
+        password you type is leaked to accessibility services one character at a
+        time.
+      </p>
+
+      <h2 id="enabling-third-party-keyboards">
+        Enabling third-party keyboards
+      </h2>
+
+      <p>
+        The keyboard you're using (or "input method editor" (IME) in
+        Android-speak) obviously has access to privileged information, so it can
+        normally only be changed manually by the user in the settings app. This
+        prevents apps from automatically setting a malicious keyboard as the
+        default and using it to steal typed information. However, with an
+        accessibility service's ability to simulate user interaction this
+        service can install and enable a new IME all by itself without the
+        user's knowledge.
+      </p>
+
+      <h2 id="tricking-users-into-enabling-accessibility-services">
+        Tricking users into enabling accessibility services
+      </h2>
+
+      <p>
+        Fortunately the only way an app can get access to accessibility events
+        is if the user manually enables it as an accessibility service in the
+        settings app. The OS displays a dialog box listing all the permissions
+        the accessibility service will have access to, and the user must
+        manually accept these in order to enable it.
+      </p>
+
+      <p>
+        To prevent click-jacking attacks where malicious apps would overlay
+        false information on top of system pop-ups like these, the Android
+        AppOpsManager prevents apps from displaying overlays when permission
+        dialogs are open. This is a good step, but it doesn't apply to the new
+        "picture-in-picture" feature that allows an app to display videos on top
+        of other apps. Attackers could use this to put misleading information on
+        top of the permissions dialog, thereby tricking users into enabling a
+        rogue accessibility service.
+      </p>
+
+      <p>
+        In <a href="#kalysch-2018">Kalysch et al.</a> researchers were able to
+        trick users with misleading permissions descriptions into enabling an
+        accessibility service that recorded UI events from other apps. They also
+        discuss social engineering methods to trick users, for example a
+        trojaned Google Play app that requires accessibility permissions to
+        "function properly."
+      </p>
+
+      <h2 id="how-to-protect-yourself">How to protect yourself</h2>
+
+      <p>
+        The easiest way is to simply not enable any accessibility services.
+        Carefully examine the permissions of each app you install to make sure
+        you're not accidentally giving away access to your passwords. Google is
+        always working on ways to protect sensitive info from these services,
+        but ultimately security comes down to the the responsibility of the end
+        user.
+      </p>
+
+      <h2 id="references">References</h2>
+
+      <ol class="references-list">
+        <li id="kalysch-2018">Kalysch, A., Bove, D., &amp; Müller, T. (2018,
+          November). <a href="https://faui1-files.cs.fau.de/public/publications/a11y_final_version.pdf" target="_blank" rel="noopener noreferrer"> How
+          Android's UI Security is Undermined by Accessibility</a>.
+          In <i>Proceedings of the 2nd Reversing and Offensive-oriented Trends
+          Symposium</i> (pp. 1-10).</li>
+      </ol>
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
