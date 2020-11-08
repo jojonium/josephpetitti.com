@@ -308,5 +308,13 @@
 			<pubDate>Tue, 22 Sep 2020 20:39:15 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/how-accessibility-undermines-androids-security</guid>
 		</item>
+
+		<item>
+			<title>Object-oriented functions in JavaScript</title>
+			<link>https://josephpetitti.com/blog/object-oriented-functions-in-javascript</link>
+			<description>As you may know, JavaScript is a bit of an indecisive language. It doesn't fully commit to any one paradigm, instead having features from object-oriented, procedural, and functional languages. Its mish-mash of philosophies can make it confusing to learn, but once in a while it manages to surprise me with some clever design decision. For example, the fact that all functions are objects that can be extended and inherited from like any other opens up some powerful possibilities.</description>
+			<pubDate>Sun, 08 Nov 2020 21:11:30 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/object-oriented-functions-in-javascript</guid>
+		</item>
 	</channel>
 </rss>
