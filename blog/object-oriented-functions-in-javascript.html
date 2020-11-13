@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Object-oriented functions in JavaScript</title>
+    <meta name="description" content="As you may know, JavaScript is a bit of an indecisive language. It doesn't fully commit to any one paradigm, instead having features from object-oriented, procedural, and functional languages. Its mish-mash of philosophies can make it confusing to learn, but once in a while it manages to surprise me with some clever design decision. For example, the fact that all functions are objects that can be extended and inherited from like any other opens up some powerful possibilities." />
+    <meta property="og:title" content="Object-oriented functions in JavaScript" />
+    <meta property="og:description" content="As you may know, JavaScript is a bit of an indecisive language. It doesn't fully commit to any one paradigm, instead having features from object-oriented, procedural, and functional languages. Its mish-mash of philosophies can make it confusing to learn, but once in a while it manages to surprise me with some clever design decision. For example, the fact that all functions are objects that can be extended and inherited from like any other opens up some powerful possibilities." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/javascript-function-inheritance.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/object-oriented-functions-in-javascript" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2020-11-08">November 8, 2020</span>
+
+      <h1 class="title">Object-oriented functions in JavaScript</h1>
+
+      <p>
+        As you may know, JavaScript is a bit of an indecisive language. It
+        doesn't fully commit to any one paradigm, instead having features from
+        object-oriented, procedural, and functional languages. Its mish-mash of
+        philosophies can make it confusing to learn, but once in a while it
+        manages to surprise me with some clever design decision.
+      </p>
+
+      <p>
+        JavaScript uses prototype-based object orientation. This means that
+        there are no "classes," but objects can inherit from other objects. Each
+        object is simply an associative array between string keys and
+        properties, which can be primitives or functions (like methods in other
+        languages). They also inherit properties from their "prototype" object,
+        which can be dynamically updated, changing all sub-objects.
+      </p>
+
+      <p>
+        But JavaScript has another powerful feature that many object-oriented
+        languages lack: first-class functions. This means that functions are
+        treated like first-class citizens: you can pass them as arguments to
+        other functions, return them, and assign them to variables. This is a
+        powerful paradigm that OO languages like Java still <a
+        href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html"
+        target="_blank" rel="noopener noreferrer">don't really support</a>.
+      </p>
+
+      <p>
+        For example, first-class functions let you do stuff like filtering an
+        array based on some condition very easily:
+      </p>
+
+      <code class="block">myArray.filter(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(203, 120, 50);">function</span><span class="hljs-params" style="color: rgb(185, 185, 185);">(value, index)</span></span> {
+  <span class="hljs-keyword" style="color: rgb(203, 120, 50);">return</span> (<span class="hljs-keyword">value</span> % <span class="hljs-number" style="color: rgb(104, 150, 186);">2</span> === <span class="hljs-number" style="color: rgb(104, 150, 186);">0</span> || <span class="hljs-built_in">index</span> &gt; <span class="hljs-number" style="color: rgb(104, 150, 186);">5</span>);
+});</code>
+
+      <p>
+        This filters out odd numbers with an index less than or equal to 5
+        without having to implement or override anything.
+      </p>
+
+      <p>
+        First-class functions are neat, but what makes JavaScript functions
+        really neat is that they are also objects. Functions can be declared
+        like primitives (i.e. without using a constructor, kind of like Strings
+        in Java), but they all inherit from the <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function"
+        target="_blank" rel="noopener noreferrer"><code>Function</code> global
+        object</code></a>.
+      </p>
+
+      <p>
+        This means that functions have their own properties and methods. For
+        example, you can use <code>myFunction.apply()</code> to change the
+        <code>this</code> variable a function executes with. This is useful in
+        all sorts of scenarios, and also opens up a lot of other interesting
+        possibilities.
+      </p>
+
+      <p>
+        Because JavaScript objects are always mutable and inherit from other
+        objects, you can make new objects that inherit from the
+        <code>Function</code> object and implement new properties.
+      </p>
+
+      <p>
+        Unfortunately the <code>Function</code> constructor only operates in the
+        global scope, and is therefore not super userful, you can still add new
+        stuff to the <code>Function</code> prototype.
+      </p>
+
+      <p>
+        For example, if we wanted to implement <a
+          href="https://en.wikipedia.org/wiki/Currying" target="_blank"
+          rel="noopener noreferrer">function currying</a> we could do it by
+        adding a new method to the <code>Function</code> prototype.
+      </p>
+
+      <code class="block">Function.prototype.curry = <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(203, 120, 50);">function</span><span class="hljs-params" style="color: rgb(185, 185, 185);">(<span class="hljs-rest_arg">...args1</span>)</span> </span>{
+  <span class="hljs-keyword" style="color: rgb(203, 120, 50);">return</span> (...args2) =&gt; <span class="hljs-keyword" style="color: rgb(203, 120, 50);">this</span>(...args1, ...args2);
+};</code>
+
+      <p>
+        We use <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"
+        target="_blank" rel="noopener norefferer">spread syntax</a> and <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters"
+        target="_blank" rel="noopener norefferer">rest parameters</a> to support
+        partial application with multiple arguments at a time. We also use an <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions"
+        target="_blank" rel="noopener norefferer">arrow function</a> to fit the
+        whole body in one line.
+      </p>
+
+      <p>
+        Let's test it out:
+      </p>
+
+      <code class="block"><span class="hljs-keyword" style="color: rgb(203, 120, 50);">function</span> <span class="hljs-title">sum3</span>(a, b, c) {
+  <span class="hljs-keyword" style="color: rgb(203, 120, 50);">return</span> a + b + c;
+}
+
+<span class="hljs-title">sum3</span>(<span class="hljs-number" style="color: rgb(104, 150, 186);">1</span>, <span class="hljs-number" style="color: rgb(104, 150, 186);">2</span>, <span class="hljs-number" style="color: rgb(104, 150, 186);">3</span>);</span>        <span class="hljs-comment" style="color: rgb(127, 127, 127);">// 6</span>
+sum3.curry(<span class="hljs-number" style="color: rgb(104, 150, 186);">3</span>)(<span class="hljs-number" style="color: rgb(104, 150, 186);">5</span>, <span class="hljs-number" style="color: rgb(104, 150, 186);">2</span>);  <span class="hljs-comment" style="color: rgb(127, 127, 127);">// 10</span>
+sum3.curry(<span class="hljs-number" style="color: rgb(104, 150, 186);">1</span>, <span class="hljs-number" style="color: rgb(104, 150, 186);">5</span>)(<span class="hljs-number" style="color: rgb(104, 150, 186);">6</span>);  <span class="hljs-comment" style="color: rgb(127, 127, 127);">// 12</span>
+sum3.curry(<span class="hljs-number" style="color: rgb(104, 150,
+  186);">1</span>);        <span class="hljs-comment" style="color: rgb(127,
+  127, 127);">// Function</span></code>
+
+      <p>
+        Now in practice you should avoid changing the prototype of any global
+        object, but the ability to extend the Function object is a very powerful
+        feature, and shows that despite all its weirdness JavaScript does have
+        some good design choices.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

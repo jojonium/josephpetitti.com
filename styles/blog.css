@@ -32,6 +32,7 @@ span.date {
 header.article {
   justify-content: flex-start;
   background-color: transparent;
+  box-shadow: none;
 }
 
 header.article a {
