@@ -17,9 +17,8 @@ div {
   width: 20em;
   display: flex;
   justify-content: center;
-  align-items: center;
-  top: -22em;
-  height: 20em;
+  top: -14.5em;
+  height: 4.5em;
 }
 
 #center-buttons > button {
