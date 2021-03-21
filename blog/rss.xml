@@ -316,5 +316,13 @@
 			<pubDate>Sun, 08 Nov 2020 21:11:30 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/object-oriented-functions-in-javascript</guid>
 		</item>
+
+		<item>
+			<title>Detecting stealthy Android malware</title>
+			<link>https://josephpetitti.com/blog/detecting-stealthy-android-malware</link>
+            <description>A brief outline of my goals and approach to my thesis project, using Android UI context to enable the detection of stealthy malware.</description>
+			<pubDate>Sun, 21 Mar 2021 23:29:40 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/detecting-stealthy-android-malware</guid>
+		</item>
 	</channel>
 </rss>
