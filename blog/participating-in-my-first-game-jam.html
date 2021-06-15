@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Participating in my first game jam</title>
+    <meta name="description" content="This past weekend I participated my first game jam—a competition in which individuals or teams rush to design and create a new game within a time limit, in this case 48 hours. The jam in question was the annual GMTK game jam, one of the biggest in the world. I worked with four of my friends (three other programmers and an artist) from 2 PM Friday through 2 PM Sunday to create SCHLORP, finishing just seven minutes before the deadline. While the game is a bit simplistic and bare, it's actually pretty fun to play, and was a bunch of fun to make." />
+    <meta property="og:title" content="Participating in my first game jam" />
+    <meta property="og:description" content="This past weekend I participated my first game jam—a competition in which individuals or teams rush to design and create a new game within a time limit, in this case 48 hours. The jam in question was the annual GMTK game jam, one of the biggest in the world. I worked with four of my friends (three other programmers and an artist) from 2 PM Friday through 2 PM Sunday to create SCHLORP, finishing just seven minutes before the deadline. While the game is a bit simplistic and bare, it's actually pretty fun to play, and was a bunch of fun to make." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/schlorp-gameplay.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/participating-in-my-first-game-jam" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../styles/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../styles/brands.css" type="text/css">
+    <link rel="stylesheet" href="../styles/solid.min.css" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2021-06-14">June 6, 2021</span>
+
+      <h1 class="title">Participating in my first game jam</h1>
+
+      <div class="main-links-holder">
+        <a href="https://github.com/bandaloo/gmtk2021" target="_blank" rel="noopener noreferrer">
+          <button class="long"><span class="fab fa-github"></span> View on GitHub</button>
+        </a>
+        <a href="https://jojonium.itch.io/schlorp" target="_blank" rel="noopener noreferrer">
+          <button class="long"><span class="fas fa-gamepad"></span> Play Online</button>
+        </a>
+      </div>
+
+      <p>
+        This past weekend I participated my first game jam&mdash;a competition
+        in which individuals or teams rush to design and create a new game
+        within a time limit, in this case 48 hours. The jam in question was the
+        annual <a href="https://itch.io/jam/gmtk-2021" target="_blank" rel="noopener noreferrer">GMTK game jam</a>,
+        one of the biggest in the world. I worked with four of my friends (three
+        other programmers and an artist) from 2 PM Friday through 2 PM Sunday to
+        create <a href="https://jojonium.itch.io/schlorp" target="_blank" rel="noopener noreferrer">SCHLORP</a>,
+        finishing just seven minutes before the deadline. While the game is a
+        bit simplistic and bare, it's actually pretty fun to play, and was a
+        bunch of fun to make.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/schlorp-gameplay.png">
+          <img src="images/th_schlorp-gameplay.png" alt="A gameplay screenshot showing a cartoony blob character extending a grappling hook arm at an aerial enemy.">
+        </a>
+      </figure>
+
+      <p>
+        As in most game jams, teams are instructed to make the vast majority of
+        the code and assets of their game during the allotted time. To encourage
+        this, the theme of the jam isn't announced until the last minute, and
+        all entries have to incorporate the theme in some way. This year's theme
+        was "joined together."
+      </p>
+
+      <p>
+        As soon as the whole team was able to meet up we started brainstorming
+        game ideas that tied into the theme. The resulting concept we came up
+        with involved playing as a slime that can reach out with a grappling
+        hook-like arm and grab enemies and terrain. Once you grabbed an enemy
+        you'd be able to pull them back in and stick them to yourself, "joining
+        together" and gaining the enemy's power.
+      </p>
+
+      <p>
+        Within a few hours of drawing up designs we settled on a sketchy,
+        chalkboard style for the art direction, and we were ready to begin. All
+        the programmers on the team had experience with web technologies and
+        JavaScript, so we decided to make a game that can run in a web browser.
+        Unlike the <a href="../afterlight-caves">last game I made</a>, this time
+        we opted to use a game engine instead of building our own. We chose
+        <a href="https://phaser.io/" target="_blank" rel="noopener noreferrer">Phaser 3</a>
+        as the engine and started programming Friday night.
+      </p>
+
+      <p>
+        The decision to use Phaser turned out to be a double-edged sword. The
+        engine was great for handling things like spritesheets, animations, and
+        input, but also led to some delays and issues. It took us all a while to
+        understand the "Phaser way of doing things," a problem exacerbated by
+        the engine's inconsistent APIs and confusing documentation. While
+        getting started I personally struggled a lot with Phaser's preference
+        for using composition design patterns over inheritance.
+      </p>
+
+      <p>
+        Difficulties setting up the basic scene and entities in Phaser delayed
+        the team a bit Friday night, but by Saturday morning we all had a decent
+        idea of what we were doing and could expand the game by building on the
+        basic components we had already started. Meanwhile our <a href="https://twitter.com/buhl_boy" target="_blank" rel="noopener noreferrer">team artist</a>
+        was busy drawing all the sprites for the player character, enemies,
+        pickups, UI elements, and world tiles.
+      </p>
+
+      <figure class="full-width">
+        <video src="images/schlorp-bat.mp4" autoplay loop></video>
+        <caption>Idle animation of SCHLORP's flying enemy</caption>
+      </figure>
+
+      <p>
+        Between Saturday morning and Sunday afternoon we all worked practically
+        non-stop except for a brief break to sleep. I personally implemented the
+        flying enemy's AI, the health and damage system, and the powerup system.
+      </p>
+
+      <p>
+        According to our design plans, each enemy would provide the player with
+        a unique powerup for a limited time after they were absorbed by the
+        grappling hook attack. Each of these powerups had to apply a unique
+        cosmetic change to the player character and have a potentially complex
+        behavior associated with the attack button. For example, the flying
+        enemy gives a wing powerup that allows the player to double-jump, and
+        also shoots out four gusts of wind that damage enemies.
+      </p>
+
+      <figure class="full-width">
+        <a href="images/schlorp-wing-jump.png">
+          <img src="images/th_schlorp-wing-jump.png" alt="A slime jumps into the air, shooting four gusts of wind in different directions">
+        </a>
+      </figure>
+
+      <p>
+        The cosmetic feature was the most difficult to implement, because each
+        powerup needed a unique set of sprites for each of the player
+        character's six different animations, and these needed to by synced up
+        with the player's sprite and drawn either on top of or below it.
+      </p>
+      
+      <style>
+        div#blob-box {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
+        @media screen and (max-width: 800px) {
+          div#blob-box {
+            flex-direction: column;
+          }
+          div#blob-box img {
+            padding-bottom: 0.5em;
+          }
+        }
+      </style>
+
+      <figure class="full-width">
+        <div id="blob-box">
+          <img src="images/schlorp-blob-without-wings.png" alt="A blobby slime-shaped player character">
+          <img src="images/schlorp-blob-with-wings.png" alt="The same blobby slime-shaped character, but with wings">
+        </div>
+      </figure>
+
+      <p>
+        Due to the time constraints we were only able to complete two enemies
+        and powerups, the flying "bat" and a walking cannon that allows the
+        player to shoot a projectile. We had a third spiky porcupine enemy
+        planned, and even had all the sprites completed but ran out of time to
+        add it to the game.
+      </p>
+
+      <p>
+        Still, we managed to finish all the key features of the game and submit
+        it in time for the game jam. You can play it online at
+        <a href="https://jojonium.itch.io/schlorp" target="_blank" rel="noopener noreferrer">itch.io</a>
+        or <a href="https://www.newgrounds.com/portal/view/799721" target="_blank" rel="noopener noreferrer">Newgrounds</a>,
+        and all the source code is available on
+        <a href="https://github.com/bandaloo/gmtk2021" target="_blank" rel="noopener noreferrer">GitHub</a>
+        as free software. We've already received some nice comments and
+        suggestions from the itch.io community, and I had a bunch of fun making
+        it (and learned some stuff too), so I'd consider that a win. I
+        definitely plan to participate in more game jams in the future, so stay
+        tuned as I'll probably post about them here too.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>

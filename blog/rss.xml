@@ -324,5 +324,13 @@
 			<pubDate>Sun, 21 Mar 2021 23:29:40 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/detecting-stealthy-android-malware</guid>
 		</item>
+
+		<item>
+			<title>Participating in my first game jam</title>
+			<link>https://josephpetitti.com/blog/participating-in-my-first-game-jam</link>
+            <description>This past weekend I participated my first game jam—a competition in which individuals or teams rush to design and create a new game within a time limit, in this case 48 hours. The jam in question was the annual GMTK game jam, one of the biggest in the world. I worked with four of my friends (three other programmers and an artist) from 2 PM Friday through 2 PM Sunday to create SCHLORP, finishing just seven minutes before the deadline. While the game is a bit simplistic and bare, it's actually pretty fun to play, and was a bunch of fun to make.</description>
+			<pubDate>Mon, 14 Jun 2021 22:53:27 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/participating-in-my-first-game-jam</guid>
+		</item>
 	</channel>
 </rss>
