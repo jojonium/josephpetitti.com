@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# This should be run from the same directory of the site files
+# The directory where you want the site files
+DIR="/usr/share/nginx/html"
 
-if [ ! -d ".git" ]; then
-	rm -r ./*
-	git clone https://github.com/jojonium/josephpetitti.com.git .
+if [ ! -d "$DIR/.git" ]; then
+	rm -r "$DIR"
+	git clone https://github.com/jojonium/josephpetitti.com.git "$DIR"
 fi
 
+cd "$DIR"
 git checkout -- index.html
 git pull origin master
 bash ./statistics.sh

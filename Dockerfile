@@ -1,12 +1,10 @@
-FROM nginx
-COPY *.html robots.txt license.txt statistics.sh /usr/share/nginx/html
-COPY assets /usr/share/nginx/html/assets
-COPY blog /usr/share/nginx/html/blog
-COPY images /usr/share/nginx/html/images
-COPY styles /usr/share/nginx/html/styles
-COPY scripts /usr/share/nginx/html/scripts
-COPY webfonts /usr/share/nginx/html/webfonts
-
+FROM nginx:mainline-alpine
+RUN apk  update
+RUN apk add git python3 bash py3-pip
+RUN pip install bs4 requests
 COPY ./josephpetitti.com.nginx.conf /etc/nginx/conf.d
+COPY ./updater.sh /
+RUN bash /updater.sh
+RUN echo '*/5 * * * * /bin/bash /updater.sh' >> /etc/crontabs/root
 
 EXPOSE 80
