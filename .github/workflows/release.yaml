@@ -1,11 +1,7 @@
 name: Build and publish Docker image
 on:
-  release:
-    types: [published]
   push:
     tags: ['v*']
-    branches:
-    - master
 
 env:
   REGISTRY: ghcr.io
@@ -14,6 +10,7 @@ env:
 jobs:
   docker_build_push:
     name: Build and publish
+    if: github.event.base_ref=='refs/heads/master' # skip if tag not on master
     runs-on: ubuntu-latest
     permissions:
       packages: write
