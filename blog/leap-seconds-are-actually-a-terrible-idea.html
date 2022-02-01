@@ -71,7 +71,7 @@
 
       <p>
         Of all the fundamental units of the universe (length, mass, temperature,
-        etc.) time is the one we can measure most accurately. <a href="https://www.nist.gov/sites/default/files/documents/2016/12/07/sp330.pdf">According
+        etc.) time is the one we can measure most accurately. <a href="https://www.nist.gov/sites/default/files/documents/2016/12/07/sp330.pdf" target="_blank" rel="noreferrer noopener">According
         to the International System of Units</a>, the base unit is defined exactly
         as so:
       </p>
@@ -82,14 +82,14 @@
 
       <p>
         This sounds complex, but we can actually measure these radiation periods
-        very precisely with atomic clocks. The <a href="https://www.nist.gov/news-events/news/2014/04/nist-launches-new-us-time-standard-nist-f2-atomic-clock">NIST-F2
+        very precisely with atomic clocks. The <a href="https://www.nist.gov/news-events/news/2014/04/nist-launches-new-us-time-standard-nist-f2-atomic-clock" target="_blank" rel="noreferrer noopener">NIST-F2
         caesium fountain clock</a> used by the National Institute of Standards
         and Technology in the United States will "neither gain nor lose one
         second in about 300 million years".
       </p>
 
       <p>
-        The <a href="https://iag.dgfi.tum.de/fileadmin/IAG-docs/Travaux2013/08_BIPM.pdf">International Bureau of Weights and Measures</a>
+        The <a href="https://iag.dgfi.tum.de/fileadmin/IAG-docs/Travaux2013/08_BIPM.pdf" target="_blank" rel="noreferrer noopener">International Bureau of Weights and Measures</a>
         calculates a weighted average of the time kept by over 400 atomic clocks
         around the world, called Iternational Atomic Time (TAI). Because it is a
         weighted average, TAI is an order of magnitude more stable than any of
@@ -114,7 +114,7 @@
         February 29th every four years would get you. Because of this, Pope
         Gregory XIII introduced the modern system of spacing out leap years in
         1582, making the year exactly 265.2425 days. Summarized by the
-        <a href="https://aa.usno.navy.mil/faq/docs/calendars.php">United States
+        <a href="https://aa.usno.navy.mil/faq/docs/calendars.php" target="_blank" rel="noreferrer noopener">United States
         Naval Observatory</a>, this system is:
       </p>
 
@@ -156,14 +156,14 @@
         Every once in a while a UTC day does not last 86,400 seconds. Instead,
         IERS either inserts one extra second between UTC 23:59:59 and 00:00:00
         or removes second 23:59:59 on a particular date. These dates are usually
-        <a href="https://www.itu.int/dms_pubrec/itu-r/rec/tf/R-REC-TF.460-6-200202-I!!PDF-E.pdf">June 30 or December 31</a>
-        and are <a href="https://hpiers.obspm.fr/eoppc/bul/bulc/bulletinc.49">decided six months in advance</a>.
+        <a href="https://www.itu.int/dms_pubrec/itu-r/rec/tf/R-REC-TF.460-6-200202-I!!PDF-E.pdf" target="_blank" rel="noreferrer noopener">June 30 or December 31</a>
+        and are <a href="https://hpiers.obspm.fr/eoppc/bul/bulc/bulletinc.49" target="_blank" rel="noreferrer noopener">decided six months in advance</a>.
         These extra or deleted seconds are known as leap seconds.
       </p>
 
       <p>
         Since the introduction of UTC, 27 positive leap seconds have been added,
-        meaning that UTC lags behind TAI by <a href="https://hpiers.obspm.fr/iers/bul/bulc/bulletinc.58">37 seconds</a>.
+        meaning that UTC lags behind TAI by <a href="https://hpiers.obspm.fr/iers/bul/bulc/bulletinc.58" target="_blank" rel="noreferrer noopener">37 seconds</a>.
         The most recent leap second was included on December 31st, 2016.
       </p>
 
@@ -199,7 +199,7 @@
 
       <p>
         The Network Time Protocol (NTP) includes a flag that that informs the
-        user that a leap second is imminent. <a href="https://tma.ifip.org/2016/papers/tma2016-final27.pdf">A study</a>
+        user that a leap second is imminent. <a href="https://tma.ifip.org/2016/papers/tma2016-final27.pdf" target="_blank" rel="noreferrer noopener">A study</a>
         found that
         between 2008 and 2016 not once have all NTP servers set this flag
         correctly, leading to servers broadcasting an incorrect time for up to a
@@ -207,7 +207,7 @@
       </p>
 
       <p>
-        Even Cloudflare <a href="https://blog.cloudflare.com/how-and-why-the-leap-second-affected-cloudflare-dns/">experiences leap second-related problems</a>. The December
+        Even Cloudflare <a href="https://blog.cloudflare.com/how-and-why-the-leap-second-affected-cloudflare-dns/" target="_blank" rel="noreferrer noopener">experiences leap second-related problems</a>. The December
         2016 leap second caused a difference between two timestamps from the Go
         programming language to be negative, causing HTTP requests and DNS
         queries to encounter errors.
@@ -215,13 +215,13 @@
 
       <p>
         To avoid having to deal with leap second issues, the Intercontinental
-        Exchange, parent of the New York Stock Exchange, simply <a href="https://web.archive.org/web/20150505061854/https://www.theice.com/leap-second">shut down operations</a>
+        Exchange, parent of the New York Stock Exchange, simply <a href="https://web.archive.org/web/20150505061854/https://www.theice.com/leap-second" target="_blank" rel="noreferrer noopener">shut down operations</a>
         for 61 minutes surrounding the June 2015 leap second.
       </p>
 
       <p>
-        <a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html">Google</a>
-        and <a href="https://aws.amazon.com/blogs/aws/look-before-you-leap-the-coming-leap-second-and-aws/">Amazon</a>
+        <a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html" target="_blank" rel="noreferrer noopener">Google</a>
+        and <a href="https://aws.amazon.com/blogs/aws/look-before-you-leap-the-coming-leap-second-and-aws/" target="_blank" rel="noreferrer noopener">Amazon</a>
         servers now implement a "leap smear" in which many seconds over a period
         of time are slightly extended rather than inserting a whole entire
         second at the end of the day. This means these servers' clocks are
@@ -282,11 +282,11 @@
 
         <p>
          All text on this site is released under the
-         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
          license. Scripts are released under various free and open source
          <a href="/licenses" rel="jslicense">licenses</a> by their respective
          authors. The entire source code of the site can be seen on
-         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">GitHub</a>.
         </p>
       </section>
     </footer>

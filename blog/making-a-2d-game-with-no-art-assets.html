@@ -46,9 +46,9 @@
         In my <a href="designing-an-extensible-power-up-system">last blog
         post</a> I wrote about the game I'm working on with two of my friends.
         It now officially has a name, 
-        <a href="https://afterlightcaves.com"><i>Afterlight Caves</i></a>, and
+        <a href="https://afterlightcaves.com" target="_blank" rel="noreferrer noopener"><i>Afterlight Caves</i></a>, and
         we're going to be showing it off at the WPI booth at
-        <a href="https://east.paxsite.com/">PAX East</a>, February 27 through
+        <a href="https://east.paxsite.com/" target="_blank" rel="noreferrer noopener">PAX East</a>, February 27 through
         March 1 2020. In this post I'll talk about how three computer science
         majors with no artistic ability between them were able to make a decent
         looking game.
@@ -62,7 +62,7 @@
 
       <p>
         The game's graphics system is powered by the 
-        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">JavaScript Canvas API</a>,
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noreferrer noopener">JavaScript Canvas API</a>,
         which allows you to draw simple lines, circles, and rectangles onto an
         HTML canvas. Though simple, this API is deceptively powerful, and
         combining its various features allowed us to make some cool-looking
@@ -105,11 +105,11 @@
       <h2 id="glow-effect">Glow effect</h2>
 
       <p>
-        <a href="https://www.bandaloo.fun">Cole</a> came up with a cool way to
+        <a href="https://www.bandaloo.fun" target="_blank" rel="noreferrer noopener">Cole</a> came up with a cool way to
         give <i>Afterlight Caves</i> a glowing, neon look. The display manager
         maintains a separate canvas, called the <code>blurCanvas</code> that's
         half the dimensions of the main display canvas (so it's only a quarter
-        of the pixels). The <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter">filter</a></code> attribute of this canvas' is set to a string of filter functions:
+        of the pixels). The <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter" target="_blank" rel="noreferrer noopener">filter</a></code> attribute of this canvas' is set to a string of filter functions:
       </p>
 
       <code class="block">const blurContext = blurCanvas.getContext("2d");
@@ -129,7 +129,7 @@ blurContext.filter = "blur(3px) brightness(200%)";</code>
         Next, all UI elements (menus, health bars, etc.) are drawn onto the
         <code>canvas</code>. This prevents text elements from getting blurred.
         Finally, the <code>canvas</code> is drawn onto the
-        <code>displayCanvas</code>, which has its <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation">globalCompositeOperation</a></code>
+        <code>displayCanvas</code>, which has its <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation" target="_blank" rel="noreferrer noopener">globalCompositeOperation</a></code>
         set to "lighter," placing the regular game world and UI elements on top
         of the glowing game world.
       </p>
@@ -177,10 +177,10 @@ blurContext.filter = "blur(3px) brightness(200%)";</code>
       </figure>
 
       <p>
-        Check out <a href="https://github.com/bandaloo/afterlight-caves/blob/master/static/modules/displaymanager.js">displaymanager.js</a>
-        and <a href="https://github.com/bandaloo/afterlight-caves/blob/master/static/game/draw.js">draw.js</a>
+        Check out <a href="https://github.com/bandaloo/afterlight-caves/blob/master/static/modules/displaymanager.js" target="_blank" rel="noreferrer noopener">displaymanager.js</a>
+        and <a href="https://github.com/bandaloo/afterlight-caves/blob/master/static/game/draw.js" target="_blank" rel="noreferrer noopener">draw.js</a>
         on GitHub to see how all these functions work, and try out the game
-        <a href="https://afterlightcaves.com">online</a> to see how it looks in
+        <a href="https://afterlightcaves.com" target="_blank" rel="noreferrer noopener">online</a> to see how it looks in
         motion.
       </p>
 
@@ -198,11 +198,11 @@ blurContext.filter = "blur(3px) brightness(200%)";</code>
 
         <p>
          All text on this site is released under the
-         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
          license. Scripts are released under various free and open source
          <a href="/licenses" rel="jslicense">licenses</a> by their respective
          authors. The entire source code of the site can be seen on
-         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">GitHub</a>.
         </p>
       </section>
     </footer>

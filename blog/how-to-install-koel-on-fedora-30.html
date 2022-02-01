@@ -43,7 +43,7 @@
       <h1 class="title">How to install Koel on Fedora 30</h1>
 
       <p>
-        <a href="https://koel.phanan.net/">Koel</a> is a cool web application
+        <a href="https://koel.phanan.net/" target="_blank" rel="noreferrer noopener">Koel</a> is a cool web application
         built on PHP and Vue.js for streaming your music collection over the
         internet. Basically it's like having your own personal Spotify, except
         it's free and open source. Since I couldn't find any detailed guide for
@@ -160,7 +160,7 @@ php-mysqli</code>
 
       <p>
         Yarn isn't in the official Fedora repos, so you'll have to add theirs.
-        See <a href="https://yarnpkg.com/en/docs/install#centos-stable">here</a>
+        See <a href="https://yarnpkg.com/en/docs/install#centos-stable" target="_blank" rel="noreferrer noopener">here</a>
         for the most up-to-date instructions for that. Then just run:
       </p>
 
@@ -197,7 +197,7 @@ $ sudo chown -R USER:USER /var/www/koel</code>
 
       <p>
         We want to checkout the most recent stable version, so check
-        <a href="https://github.com/phanan/koel/releases">the releases page</a>
+        <a href="https://github.com/phanan/koel/releases" target="_blank" rel="noreferrer noopener">the releases page</a>
         to find out what that is. As of time of writing it's
         <code>v4.2.2</code>.
       </p>
@@ -279,7 +279,7 @@ mysql&gt; exit;</code>
         This is just the development server, but the production server can be
         set up the same way as any other PHP application. I used Nginx with a
         config file based on the
-        <a href="https://github.com/phanan/koel/blob/master/nginx.conf.example">sample
+        <a href="https://github.com/phanan/koel/blob/master/nginx.conf.example" target="_blank" rel="noreferrer noopener">sample
         Nginx config</a>.
       </p>
 
@@ -312,7 +312,7 @@ $ sudo chown -R nginx:nginx /var/www/koel</code>
         a Red Hat system and you've been banging your head against the wall for
         an hour trying to figure out why something that should work doesn't
         work, 99% of the time the issue is
-        <a href="https://selinuxproject.org/page/Main_Page">SELinux</a>.
+        <a href="https://selinuxproject.org/page/Main_Page" target="_blank" rel="noreferrer noopener">SELinux</a>.
       </p>
 
       <p>
@@ -326,7 +326,7 @@ $ sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/koel/storage(/.*
 $ sudo restorecon -R /var/www/koel/storage</code>
 
       <p>
-        Credit to <a href="https://unix.stackexchange.com/questions/116575/selinux-httpd-write-access-to-a-directory">this StackExchange post</a>
+        Credit to <a href="https://unix.stackexchange.com/questions/116575/selinux-httpd-write-access-to-a-directory" target="_blank" rel="noreferrer noopener">this StackExchange post</a>
         for that solution.
       </p>
 
@@ -342,7 +342,7 @@ $ sudo restorecon -R /var/www/koel/storage</code>
       <code class="block">$ sudo setsebool -P httpd_can_network_connect_db=1</code>
 
       <p>
-        Credit to <a href="https://stackoverflow.com/questions/42937925/laravel-permission-denied-on-remote-mysql-server-aws-aurora">this StackOverflow post</a>
+        Credit to <a href="https://stackoverflow.com/questions/42937925/laravel-permission-denied-on-remote-mysql-server-aws-aurora" target="_blank" rel="noreferrer noopener">this StackOverflow post</a>
         for that solution.
       </p>
 
@@ -369,11 +369,11 @@ $ sudo setsebool -P httpd_use_nfs on</code>
 
         <p>
          All text on this site is released under the
-         <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
          license. Scripts are released under various free and open source
          <a href="/licenses" rel="jslicense">licenses</a> by their respective
          authors. The entire source code of the site can be seen on
-         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">GitHub</a>.
         </p>
       </section>
     </footer>

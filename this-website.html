@@ -108,16 +108,16 @@
         to do things and thought of more elements that would look cool. I also
         sometimes use the site to host pieces of projects for classes. To see
         the history of changes I've made to the site, check out the
-        <a href="https://github.com/jojonium/josephpetitti.com">git repository</a>.
+        <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">git repository</a>.
       </p>
 
       <p>
         The HTML and CSS is written entirely from scratch by myself, without any
         website-building tool or service. The only program I use is a simple
-        text editor (<a href="https://notepad-plus-plus.org">Notepad++</a> on
-        Windows and <a href="https://www.vim.org/">Vim</a> on GNU/Linux), and
+        text editor (<a href="https://notepad-plus-plus.org" target="_blank" rel="noreferrer noopener">Notepad++</a> on
+        Windows and <a href="https://www.vim.org/" target="_blank" rel="noreferrer noopener">Vim</a> on GNU/Linux), and
         Chomiums's developer tools. The site was originally hosted using 
-        <a href="https://pages.github.com">GitHub Pages</a>, but in July 2018 I
+        <a href="https://pages.github.com" target="_blank" rel="noreferrer noopener">GitHub Pages</a>, but in July 2018 I
         switched to self hosting it on a server I built and set up (see
         <a href="#self-hosting">below</a>).
       </p>
@@ -159,7 +159,7 @@
         I still use some here and there, for eye candy or simple games and
         projects. The visualizations on the <a href="projects">projects</a> and 
         <a href="other">other</a> pages were created using
-        <a href="http://seenjs.io">seen.js</a>, a JavaScript framework for
+        <a href="http://seenjs.io" target="_blank" rel="noreferrer noopener">seen.js</a>, a JavaScript framework for
         rendering 3D scenes into an SVG or HTML5 canvas.
       </p>
 
@@ -198,7 +198,7 @@
 
       <p>
         To make it load fast and scale well on different-sized screens, I made
-        the logo an <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>.
+        the logo an <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics" target="_blank" rel="noreferrer noopener">SVG</a>.
         Knowing nothing about graphic design, I painstakingly wrote the code for
         the SVG by hand, and it is reproduced in all its glory below:
       </p>
@@ -240,13 +240,13 @@
       </figure>
 
       <p>
-        First, I installed <a href="https://www.ubuntu.com/server">Ubuntu
+        First, I installed <a href="https://www.ubuntu.com/server" target="_blank" rel="noreferrer noopener">Ubuntu
         Server</a> 18.04 GNU/Linux on the server, and set up an SSH connection
         from my main desktop. From there, I installed
-        <a href="https://nginx.org">nginx</a> and used it to configure a reverse
+        <a href="https://nginx.org" target="_blank" rel="noreferrer noopener">nginx</a> and used it to configure a reverse
         proxy so I could have multiple servers with different domains running on
         the same machine. I acquired an SSL certificate from
-        <a href="https://letsencrypt.org">Let's Encrypt</a>, and set an nginx
+        <a href="https://letsencrypt.org" target="_blank" rel="noreferrer noopener">Let's Encrypt</a>, and set an nginx
         rule to rewrite all HTTP requests to HTTPS. With this and other security
         measures in place, I cloned the website from GitHub and changed my DNS
         records, and now I was hosting my very own piece of the world wide web.
@@ -282,7 +282,7 @@
 
       <p>
         The original site is preserved in a
-        <a href="https://github.com/jojonium/josephpetitti.com/tree/old-style">
+        <a href="https://github.com/jojonium/josephpetitti.com/tree/old-style" target="_blank" rel="noreferrer noopener">
         separate branch</a> for posterity, and is still live on the web
         <a href="old">here</a>.
       </p>
@@ -426,7 +426,7 @@ input[type=checkbox]:checked ~ nav {
 
       <p>
         For the background of the <a href="index">index</a> page I used
-        <a href="https://vincentgarreau.com/particles.js/">particles.js</a>, a
+        <a href="https://vincentgarreau.com/particles.js/" target="_blank" rel="noreferrer noopener">particles.js</a>, a
         lightweight, free JavaScript library for creating particle effects. It's
         configured with a simple JSON file and sits on top of a
         <code>::before</code> pseudo-element with a slightly lighter background
@@ -462,7 +462,7 @@ input[type=checkbox]:checked ~ nav {
       </p>
 
       <p>
-        I could have just used <a href="https://aws.amazon.com/">AWS</a> for
+        I could have just used <a href="https://aws.amazon.com/" target="_blank" rel="noreferrer noopener">AWS</a> for
         this task, but I wanted to set things up manually so I could learn the
         process. I also didn't want to have to rely on an external provider,
         whose prices could increase in the future. I purchased a used Dell
@@ -473,18 +473,18 @@ input[type=checkbox]:checked ~ nav {
       <p>
         This time around I had a lot more GNU/Linux experience, and felt more
         confident in my abilities. I chose 
-        <a href="https://www.centos.org/">CentOS</a> as the OS to run on bare
-        metal, and set up <a href="https://libvirt.org/">libvirt</a> with
-        <a href="https://www.qemu.org/">QEMU</a> for virtualization. For
+        <a href="https://www.centos.org/" target="_blank" rel="noreferrer noopener">CentOS</a> as the OS to run on bare
+        metal, and set up <a href="https://libvirt.org/" target="_blank" rel="noreferrer noopener">libvirt</a> with
+        <a href="https://www.qemu.org/" target="_blank" rel="noreferrer noopener">QEMU</a> for virtualization. For
         high-level VM management I used 
-        <a href="https://theforeman.org/">Foreman</a>, which allows me to easily
+        <a href="https://theforeman.org/" target="_blank" rel="noreferrer noopener">Foreman</a>, which allows me to easily
         provision and manage hosts on my network. With these tools, I can create
         a new virtual machine, have it PXE boot into an installer image, install
         a GNU/Linux operating system, update and install necessary packages,
         configure a network interface for my virtual and physical networks,
         automatically create entries for my internal DNS server, set up users
         and remote execution SSH keys, and register them with 
-        <a href="https://puppet.com/">Puppet</a>, all completely unattended.
+        <a href="https://puppet.com/" target="_blank" rel="noreferrer noopener">Puppet</a>, all completely unattended.
         Admittedly, it took a long time to get all of these services to work
         together nicely, but it was worth it in the end.
       </p>
@@ -494,8 +494,8 @@ input[type=checkbox]:checked ~ nav {
         as a reverse proxy and serves the static pages of this websites, while
         others provide other services, each neatly compartmentalized and
         separated. 
-        <a href="https://selinuxproject.org/page/Main_Page">SELinux</a> and 
-        <a href="https://firewalld.org/">firewalld</a> allow only what each
+        <a href="https://selinuxproject.org/page/Main_Page" target="_blank" rel="noreferrer noopener">SELinux</a> and 
+        <a href="https://firewalld.org/" target="_blank" rel="noreferrer noopener">firewalld</a> allow only what each
         server needs to function.
       </p>
 
@@ -529,7 +529,7 @@ input[type=checkbox]:checked ~ nav {
          license. Scripts are released under various free and open source
          <a href="/licenses" rel="jslicense">licenses</a> by their respective
          authors. The entire source code of the site can be seen on
-         <a href="https://github.com/jojonium/josephpetitti.com">GitHub</a>.
+         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">GitHub</a>.
         </p>
       </section>
 
