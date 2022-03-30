@@ -146,6 +146,10 @@ a {
   text-decoration-line: underline;
 }
 
+a.no-underline {
+  text-decoration-line: none;
+}
+
 a:hover {
   color: #40bcf4;
 }
