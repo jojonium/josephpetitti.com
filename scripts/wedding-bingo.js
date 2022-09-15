@@ -10,7 +10,12 @@ const entries = [
   'Someone throws up Sat/Sun night',
   'Looking at football during ceremony or reception',
   'Noise complaint',
-  'Late to ceremony'
+  'Someone arrives late to the ceremony',
+  'Minor sneaks a drink',
+  'New Jersey relative quotes Goodfellas',
+  'Mom cries',
+  'Shots with Mom',
+  'Uncomfortable Cream Team interaction'
 ];
 
 /**
