@@ -15,7 +15,19 @@ const entries = [
   'New Jersey relative quotes Goodfellas',
   'Mom cries',
   'Shots with Mom',
-  'Uncomfortable Cream Team interaction'
+  'Uncomfortable Cream Team interaction',
+  'Medical emergency',
+  'Ankit on demon time',
+  'Someone mispronounces "Reinke"',
+  'Toast exceeds ten minutes',
+  'Bobby stains something',
+  'Someone blacks out Sat/Sun',
+  'No one catches the bouquet',
+  'Spilled drink',
+  'Family member tells embarrassing story',
+  '>50% of attendees on the dance floor',
+  'Matt cries during best man speech',
+  'Someone trips'
 ];
 
 /**
