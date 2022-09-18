@@ -64,8 +64,9 @@ const readCookies = () => {
  * @param {string} checkedCookie
  */
 const writeCookies = (entryCookie, checkedCookie) => {
-  document.cookie = `entries=${entryCookie}; SameSite=Strict; Secure`;
-  document.cookie = `checked=${checkedCookie}; SameSite=Strict; Secure`;
+  const expires = (new Date(Date.now()+ 86400*1000*2)).toUTCString();
+  document.cookie = `entries=${entryCookie}; SameSite=Strict; expires=${expires}; Secure`;
+  document.cookie = `checked=${checkedCookie}; SameSite=Strict; expires=${expires}; Secure`;
 }
 
 
