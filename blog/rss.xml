@@ -348,5 +348,13 @@
 			<pubDate>Tue, 16 Aug 2022 17:05:16 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/i-watched-all-of-gundam</guid>
 		</item>
+
+		<item>
+			<title>Assembling jigsaw puzzles for Advent of Code</title>
+			<link>https://josephpetitti.com/blog/assembling-jigsaw-puzzles-for-advent-of-code</link>
+            <description>While waiting for this year's Advent of Code to start I've been going back to complete some of the challenges I never got around to finishing in previous years. One of these is Day 20, 2020.</description>
+			<pubDate>Wed, 02 Nov 2022 16:16:32 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/assembling-jigsaw-puzzles-for-advent-of-code</guid>
+		</item>
 	</channel>
 </rss>

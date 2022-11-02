@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Assembling jigsaw puzzles for Advent of Code</title>
+    <meta name="description" content="While waiting for this year's Advent of Code to start I've been going back to complete some of the challenges I never got around to finishing in previous years. One of these is Day 20, 2020." />
+    <meta property="og:title" content="Assembling jigsaw puzzles for Advent of Code" />
+    <meta property="og:description" content="While waiting for this year's Advent of Code to start I've been going back to complete some of the challenges I never got around to finishing in previous years. One of these is Day 20, 2020." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/puzzle-solved.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/assemling-jigsaw-puzzles-for-advent-of-code" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2022-11-02">November 2, 2022</span>
+
+      <h1 class="title">Assembling jigsaw puzzles for Advent of Code</h1>
+
+      <p>
+        <a href="https://adventofcode.com/" target="_blank" rel="noreferrer noopener">Advent of Code</a>
+        is an annual set of small programming challenges that are released every
+        December. Each day from December 1 to Christmas two challenges are
+        released, growing more difficult each day (kind of like an advent
+        calendar).
+      </p>
+      
+      <p>
+        I always enjoy participating in Advent of Code; it reminds me why I like
+        programming in the first place. Well-defined problems with definitive
+        answers that usually require some kind of out of the box thinking are
+        the best kind of algorithm problems. You get to actually use some of the
+        theory and techniques you learned in computer science class, and it's a
+        good way to practice with a new language (this year I'm going to try
+        using Haskell).
+      </p>
+
+      <p>
+        While waiting for this year's event to start I've been going back to
+        complete some of the challenges I never got around to finishing in
+        previous years. One of these is <a href="https://adventofcode.com/2020/day/20" target="_blank" rel="noreferrer noopener">Day 20, 2020</a>.
+      </p>
+      
+      <p>
+        The problem involves reassembling a series of tiles into a complete
+        image by matching up the edges of each tile. However, each tile is
+        rotated and flipped randomly, and trying every combination of rotations
+        and mirrors between every single tile seems like a daunting task.
+        Without any reference point to start from it's not clear how to go about
+        solving this problem, which is probably why it stumped me in 2020.
+      </p>
+
+      <p>
+        As with a lot of these challenges, there's a key insight in the
+        instructions that provides a path to start solving it:
+      </p>
+
+      <p class="quote block">
+        Each tile's image data includes a border that should line up exactly
+        with its adjacent tiles. All tiles have this border, and the border
+        lines up exactly when the tiles are both oriented correctly. Tiles at
+        the edge of the image also have this border, but the outermost edges
+        won't line up with any other tiles.
+      </p>
+
+      <p>
+        That last sentence is our clue. If a tile has a border that doesn't line
+        up with any rotated or flipped border of any other tile then we know
+        it's an edge piece. Even better, if a tile has two unique edges then we
+        know it's a corner piece.
+      </p>
+
+      <p>
+        Using this information we can sort the tiles into corners, edges, and
+        middle pieces, just like separating out all the flat edges when solving
+        a real jigsaw puzzle.
+      </p>
+
+      <p>
+        Take one of the corner pieces and rotate it until the two unique edges
+        are on the top and left and you've got a top-left corner. Now you have a
+        reference to start building the puzzle. You can fill in the edges by
+        trying each of the edge tiles you sorted out previously until they fit.
+        With the frame constructed, simply spiral inward with the middle pieces
+        until the whole puzzle is done.
+      </p>
+
+      <p>
+        This is a fun problem, and one that's easy to visualize, so I made a
+        simple visualization using the HTML canvas:
+      </p>
+
+      <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        <button id="start-button">Go</button>
+        <canvas id="puzzle-canvas" width="493" height="493" style="border: 1px solid #3066be"></canvas>
+        <script src="../scripts/aoc-puzzle.js"></script>
+      </div>
+
+      <p>
+        You can see my TypeScript implementation of the algorithm
+        <a href="../scripts/aoc-puzzle.ts">here</a>.
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
