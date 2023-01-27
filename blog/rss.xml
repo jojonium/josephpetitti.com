@@ -356,5 +356,13 @@
 			<pubDate>Wed, 02 Nov 2022 16:16:32 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/assembling-jigsaw-puzzles-for-advent-of-code</guid>
 		</item>
+
+		<item>
+			<title>Gunbuster references in Nadia</title>
+			<link>https://josephpetitti.com/blog/gunbuster-references-in-nadia</link>
+            <description>It's no secret that Studio Gainax likes to hide references to other anime in their shows, with varying degrees of subtlety. But perhaps the most interesting are the parallels between their first OVA series, Gunbuster, and their first TV series Fushigi no Umi no Nadia.</description>
+			<pubDate>Fri, 27 Jan 2023 16:27:12 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/gunbuster-references-in-nadia</guid>
+		</item>
 	</channel>
 </rss>
