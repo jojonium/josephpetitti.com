@@ -372,5 +372,13 @@
 			<pubDate>Tue, 01 Aug 2023 20:54:11 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/backpacking-the-southern-presidentials</guid>
 		</item>
+
+		<item>
+			<title>Solving Advent of Code the lazy way</title>
+			<link>https://josephpetitti.com/blog/solving-advent-of-code-the-lazy-way</link>
+            <description>Advent of Code is an annual set of programming puzzles that I've written about previously. I've participated in AoC for several years, but 2023 was only the second time I've completed a full year as it came out. All my solutions are written in Haskell, but I had to use some 'hacky' techniques to get some of the answers.</description>
+			<pubDate>Thu, 04 Jan 2024 16:19:25 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/solving-advent-of-code-the-lazy-way</guid>
+		</item>
 	</channel>
 </rss>

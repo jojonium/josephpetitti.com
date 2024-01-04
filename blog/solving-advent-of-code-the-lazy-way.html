@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Solving Advent of Code the lazy way</title>
+    <meta name="description" content="Advent of Code is an annual set of programming puzzles that I've written about previously. I've participated in AoC for several years, but 2023 was only the second time I've completed a full year as it came out. All my solutions are written in Haskell, but I had to use some 'hacky' techniques to get some of the answers." />
+    <meta property="og:title" content="Solving Advent of Code the lazy way" />
+    <meta property="og:description" content="Advent of Code is an annual set of programming puzzles that I've written about previously. I've participated in AoC for several years, but 2023 was only the second time I've completed a full year as it came out. All my solutions are written in Haskell, but I had to use some 'hacky' techniques to get some of the answers." />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/aoc-2023-day-25.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/solving-advent-of-code-the-lazy-way" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/images/favicon-96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="/images/favicon-192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+    <meta name="theme-color" content="#1f0053">
+
+    <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
+    <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
+    <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header class="article">
+      <a id="home-button" href="../index" title="Home">
+        Home
+      </a>
+
+      <a id="blog-index-button" href="../blog" title="Blog Index">
+        Blog Index
+      </a>
+    </header>
+
+  <!-- Main -->
+    <main id="main" class="blog">
+
+      <span class="date">Joseph Petitti &mdash; <time datetime="2024-01-04">January 4, 2024</span>
+
+      <h1 class="title">Solving Advent of Code the lazy way</h1>
+
+      <p>
+        <a target="_blank" rel="noreferrer noopener" href="https://adventofcode.com">
+        Advent of Code</a> is an annual set of programming puzzles that I've
+        <a href="assembling-jigsaw-puzzles-for-advent-of-code">written about previously</a>.
+        I've participated in AoC for several years, but 2023 was only the
+        second time I've completed a full year as it came out. <a target="_blank" rel="noreferrer noopener" href="https://github.com/jojonium/advent-of-code-2023">
+        All my solutions</a> are written in Haskell, but I had to use some
+        "hacky" techniques to get some of the answers.
+      </p>
+
+      <h2 id="day-21">Day 21</h2>
+      
+      <p>
+        <a target="_blank" rel="noreferrer noopener" href="https://adventofcode.com/2023/day/21">
+        This puzzle</a> involved counting the number of points reachable in
+        exactly <code>n</code> steps from some starting position in a 2D world
+        with obstacles. Part 1 is easy enough to brute force; with a 131-by-131
+        grid and <code>n=64</code> you can simply count ever possible 64-step
+        walk from the origin while eliminating duplicates.
+      </p>
+
+      <p>
+        But part 2 of the puzzle instead gives you an infinite world (the
+        original grid tiled infinitely in all directions) and an absurd
+        <code>n=26501365</code>. A key insight here is that the start position
+        <code>(65, 65)</code> and <code>26501365 % 131</code> is 65, so the map
+        of reachable locations forms a diamond centered on the start location
+        where the points are all in the center of one of the tiled grids.
+      </p>
+
+      <p>
+        I think the "correct" way to solve this is to figure out the 9
+        different ways a given tile might be filled, depending on whether it's
+        inside the diamond, at a point, or on an edge, manually calculate the
+        number of reachable points in that configuration, and multiply it by
+        the number of tiles that meet that condition. This is not what I did.
+      </p>
+
+      <p>
+        Instead, I realized that the number of tiles on the points of the
+        diamonds would always be constant 4. The number of tiles on the edges
+        would grow linearly with the size of the diamond. And the number of
+        tiles inside the diamond would grow quadratically. Therefore the
+        equation for the answer would look something like this:
+      </p>
+
+      <code class="block">f(n) = (a * n) ^ 2 + (b * n) + c</code>
+      
+      <p>
+        Where <code>a</code>, <code>a</code>, and <code>c</code> are constants.
+        Hey, that looks like a quadratic equation. So all I had to do was
+        manually solve for the first few values where <code>x % 131 == 65</code>
+        and do a quadratic fit:
+      </p>
+
+      <figure class="full-width">
+        <a href="images/quadratic-fit.png">
+          <img src="images/quadratic-fit.png" alt="Quadratic-fit of 3 points using WolframAlpha">
+        </a>
+      </figure>
+
+      <p>
+        The data is fit perfectly by a 2nd degree polynomial, so my intuition was
+        correct. Plugging <code>x = 26501365</code> into that equation yielded
+        the correct answer.
+      </p>
+
+      <h2 id="day-23">Day 23</h2>
+
+      <p>
+        <a target="_blank" rel="noreferrer noopener" href="https://adventofcode.com/2023/day/23">
+        Day 23</a> is simple to understand: just find the longest path through
+        a 2D maze. But unlike the shortest path, finding the longest path is
+        <a target="_blank" rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/NP-hardness">NP-hard</a>,
+        meaning there's probably no general polynomial-time solution.
+      </p>
+
+      <p>
+        Honestly I don't know what the "smart" way to solve this one is, I just
+        let my brute-force solution run for 12 hours and it eventually found
+        the right answer.
+      </p>
+
+      <h2 id="day-24">Day 24</h2>
+
+      <p>
+        I spent a long time thinking through part 2 of
+        <a target="_blank" rel="noreferrer noopener" href="https://adventofcode.com/2023/day/24">
+        this problem</a>. The gist is you have 300 hailstones with an initial
+        3D position and velocity vector. You need to find one position and
+        velocity you can throw a stone from to have it eventually collide with
+        every single hailstone.
+      </p>
+
+      <p>
+        After turning it over in my head a few times I ended up with a huge
+        system of non-linear equations.
+      </p>
+
+      <code class="block"># for each hailstone i with
+# initial position (hpx_i, hpy_i, hpz_i)
+# velocity (hvx_i, hvy_i, hvz_i)
+
+(hvx_i * t_i) + hpx_i = (vx * t_i) + px
+(hvy_i * t_i) + hpy_i = (vy * t_i) + py
+(hvz_i * t_i) + hpz_i = (vz * t_i) + pz</code>
+
+      <p>
+        Repeat this with a different time value <code>t_i</code> for all 300
+        different hailstones and you can theoretically solve for the stone's
+        initial position (px, py, pz) and velocity (vx, vy, vz).
+      </p>
+
+      <p>
+        I don't know enough linear algebra to solve that by hand, so I just
+        plugged the whole system of equations into
+        <a target="_blank" rel="noreferrer noopener" href="https://github.com/Z3Prover/z3">Z3 theorem solver</a>.
+        After a few minutes it spit out the right answer.
+      </p>
+
+      <p>
+        One optimizing insight is that you don't actually need all 300
+        hailstones, after the first 3 there's only one line that satisfies the
+        system so you only need to check for those 3.
+      </p>
+
+      <h2 id="day-25">Day 25</h2>
+
+      <p>
+        <a target="_blank" rel="noreferrer noopener" href="https://adventofcode.com/2023/day/25">
+        The final problem</a> gives you a complex graph and asks you to find 3
+        edges to remove in order to cut the graph into two disjoint subgraphs.
+      </p>
+
+      <p>
+        You could implement a complicated algorithm based on the
+        <a target="_blank" rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/Max-flow_min-cut_theorem">
+        max-flow min-cut theorem</a> to find the 3 edges to remove. But they
+        also become extremely obvious if you just visualize the graph. I
+        plugged the input into
+        <a target="_blank" rel="noreferrer noopener" href="https://graphviz.org/">
+        Graphviz</a> with <code>layout=neato</code> and got this lovely visualization:
+      </p>
+
+      <figure class="full-width">
+        <a href="images/aoc-2023-day-25.png">
+          <img src="images/aoc-2023-day-25.png" alt="Graphviz visualization of AoC 2023 day 25">
+        </a>
+      </figure>
+
+      <p>
+        Then I just remove those 3 edges and count up the size of each subgraph
+        for the answer.
+      </p>
+
+    </main>
+
+  <!-- Footer -->
+    <footer id="footer" class="article">
+      <section class="about">
+        <h2>About this website</h2>
+
+        <p>
+          I created this website as a personal project in my free time
+          to learn more about web design, CSS, HTML, and JavaScript.
+        </p>
+
+        <p>
+         All text on this site is released under the
+         <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer noopener">CC BY 3.0</a>
+         license. Scripts are released under various free and open source
+         <a href="/licenses" rel="jslicense">licenses</a> by their respective
+         authors. The entire source code of the site can be seen on
+         <a href="https://github.com/jojonium/josephpetitti.com" target="_blank" rel="noreferrer noopener">GitHub</a>.
+        </p>
+      </section>
+    </footer>
+  </body>
+</html>
