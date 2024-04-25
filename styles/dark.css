@@ -150,6 +150,10 @@ a.no-underline {
   text-decoration-line: none;
 }
 
+a.no-hover:hover {
+  color: #eee
+}
+
 a:hover {
   color: #40bcf4;
 }
