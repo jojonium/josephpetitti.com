@@ -8,14 +8,18 @@ const home = {
 };
 
 const doneCS = {
-  fillColor: "#8eabdb",
-  color: "#8eabdb",
+  fillColor: "#0F0",
+  color: "#0a0"
 };
 
 const toDoCS = {
-  fillColor: "#FF0",
-  color: "#333"
+  fillColor: "#777",
+  color: "#666"
 };
+
+const trailCS = {
+  color: "#2c2"
+}
 
 const adjustCircleStyle = (map, markersGroup) => {
   function scale(value, inputMin, inputMax, outputFrom, outputTo) {
@@ -47,35 +51,59 @@ window.addEventListener("load", () => {
   const mapDiv = document.createElement("div");
   mapDiv.style.height = "500px";
   mapDiv.style.width = "100%";
+  mapDiv.style.zIndex = "0";
   mapDiv.id = "mapDiv";
   mapDiv.innerHTML = '';
   fig.appendChild(mapDiv);
   container.appendChild(fig);
 
-  const myMap = L.map("mapDiv");
+  const bounds = new L.LatLngBounds();
+  const markersGroup = L.layerGroup();
+  const tracksGroup = L.layerGroup();
 
-  myMap.attributionControl.setPrefix(
-    '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
-  );
+  fetch("/assets/hiking.json")
+    .then(response => response.json())
+    .then(data => {
+      for (const {points, name} of data) {
+        L.polyline(points, trailCS)
+          .bindTooltip(name)
+          .on('mouseover', function() {
+            this.setStyle({ weight: 6, color: "blue" });
+          }).on('mouseout', function() {
+            this.setStyle({ weight: 3, ...trailCS });
+          })
+          .addTo(tracksGroup);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching tracks: ', error);
+    });
 
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+  const baseLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     minZoom: home.minZoom,
     maxZoom: home.maxZoom,
     attribution: '&copy; <a href="https://esri.com" target="_blank" rel="noopener noreferrer">Esri</a> and others'
-  }).addTo(myMap);
+  });
 
-  const bounds = new L.LatLngBounds();
-  const markersGroup = L.layerGroup();
   for (const {name, lat, lng, done} of mountains) {
-    const marker = L.circle([lat, lng], 800, done ? doneCS : toDoCS)
-      .addTo(myMap).bindTooltip(name)
-      .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`);
+    L.circle([lat, lng], 800, done ? doneCS : toDoCS)
+      .bindTooltip(name)
+      .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`)
+      .addTo(markersGroup);
     bounds.extend(L.latLng(lat, lng));
-    marker.addTo(markersGroup);
   }
-  myMap.fitBounds(bounds.pad(0.01));
+
+  const myMap = L.map("mapDiv", {
+    layers: [baseLayer, markersGroup, tracksGroup]
+  });
+  myMap.attributionControl.setPrefix(
+    '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
+  );
+  myMap.fitBounds(bounds);
   adjustCircleStyle(myMap, markersGroup);
   myMap.on('zoomend', () => { adjustCircleStyle(myMap, markersGroup) });
+
+  L.control.layers({"ESRI": baseLayer}, {"Summits": markersGroup, "Tracks": tracksGroup}).addTo(myMap);
 
   const doneCount = mountains.filter(({done}) => done).length;
   const figCaption = document.createElement("figcaption");
