@@ -17,17 +17,17 @@ const toDoCS = {
   color: "#666"
 };
 
-const trailCS = {
-  color: "#2c2"
-}
+const hikingCS = { color: "#2c2" };
 
-const adjustCircleStyle = (map, markersGroup) => {
+const paddlingCS = { color: "#66f" };
+
+const adjustCircleStyle = (map, summitsGroup) => {
   function scale(value, inputMin, inputMax, outputFrom, outputTo) {
     return ((outputTo - outputFrom) * (value - inputMin) / (inputMax - inputMin)) + outputFrom;
   }
 
   const newWeight = scale(map.getZoom(), home.minZoom, home.maxZoom, home.lineWidthFrom, home.lineWidthTo);
-  markersGroup.eachLayer((layer) => {
+  summitsGroup.eachLayer((layer) => {
     layer.setStyle({weight: newWeight});
   });
 }
@@ -58,21 +58,40 @@ window.addEventListener("load", () => {
   container.appendChild(fig);
 
   const bounds = new L.LatLngBounds();
-  const markersGroup = L.layerGroup();
-  const tracksGroup = L.layerGroup();
+  const summitsGroup = L.layerGroup();
+  const hikingTracks = L.layerGroup();
+  const paddlingTracks = L.layerGroup();
 
   fetch("/assets/hiking.json")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
-        L.polyline(points, trailCS)
+        L.polyline(points, hikingCS)
           .bindTooltip(name)
           .on('mouseover', function() {
             this.setStyle({ weight: 6, color: "blue" });
           }).on('mouseout', function() {
-            this.setStyle({ weight: 3, ...trailCS });
+            this.setStyle({ weight: 3, ...hikingCS });
           })
-          .addTo(tracksGroup);
+          .addTo(hikingTracks);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching hiking tracks: ', error);
+    });
+
+  fetch("/assets/paddling.json")
+    .then(response => response.json())
+    .then(data => {
+      for (const {points, name} of data) {
+        L.polyline(points, paddlingCS)
+          .bindTooltip(name)
+          .on('mouseover', function() {
+            this.setStyle({ weight: 6, color: "blue" });
+          }).on('mouseout', function() {
+            this.setStyle({ weight: 3, ...paddlingCS });
+          })
+          .addTo(paddlingTracks);
       }
     })
     .catch(error => {
@@ -89,21 +108,25 @@ window.addEventListener("load", () => {
     L.circle([lat, lng], 800, done ? doneCS : toDoCS)
       .bindTooltip(name)
       .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`)
-      .addTo(markersGroup);
+      .addTo(summitsGroup);
     bounds.extend(L.latLng(lat, lng));
   }
 
   const myMap = L.map("mapDiv", {
-    layers: [baseLayer, markersGroup, tracksGroup]
+    layers: [baseLayer, summitsGroup, hikingTracks, paddlingTracks]
   });
   myMap.attributionControl.setPrefix(
     '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
   );
   myMap.fitBounds(bounds);
-  adjustCircleStyle(myMap, markersGroup);
-  myMap.on('zoomend', () => { adjustCircleStyle(myMap, markersGroup) });
+  adjustCircleStyle(myMap, summitsGroup);
+  myMap.on('zoomend', () => { adjustCircleStyle(myMap, summitsGroup) });
 
-  L.control.layers({"ESRI": baseLayer}, {"Summits": markersGroup, "Tracks": tracksGroup}).addTo(myMap);
+  L.control.layers({"ESRI": baseLayer}, {
+    "Summits": summitsGroup,
+    "Hiking": hikingTracks,
+    "Paddling": paddlingTracks
+  }).addTo(myMap);
 
   const doneCount = mountains.filter(({done}) => done).length;
   const figCaption = document.createElement("figcaption");
