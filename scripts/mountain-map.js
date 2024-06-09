@@ -17,9 +17,9 @@ const toDoCS = {
   color: "#666"
 };
 
-const hikingCS = { color: "#2c2" };
+const hikingCS = {color: "#2c2"};
 
-const paddlingCS = { color: "#66f" };
+const paddlingCS = {color: "#66f"};
 
 const adjustCircleStyle = (map, summitsGroup) => {
   function scale(value, inputMin, inputMax, outputFrom, outputTo) {
@@ -68,10 +68,10 @@ window.addEventListener("load", () => {
       for (const {points, name} of data) {
         L.polyline(points, hikingCS)
           .bindTooltip(name)
-          .on('mouseover', function() {
-            this.setStyle({ weight: 6, color: "blue" });
-          }).on('mouseout', function() {
-            this.setStyle({ weight: 3, ...hikingCS });
+          .on('mouseover', function () {
+            this.setStyle({weight: 6, color: "blue"});
+          }).on('mouseout', function () {
+            this.setStyle({weight: 3, ...hikingCS});
           })
           .addTo(hikingTracks);
       }
@@ -86,10 +86,10 @@ window.addEventListener("load", () => {
       for (const {points, name} of data) {
         L.polyline(points, paddlingCS)
           .bindTooltip(name)
-          .on('mouseover', function() {
-            this.setStyle({ weight: 6, color: "blue" });
-          }).on('mouseout', function() {
-            this.setStyle({ weight: 3, ...paddlingCS });
+          .on('mouseover', function () {
+            this.setStyle({weight: 6, color: "blue"});
+          }).on('mouseout', function () {
+            this.setStyle({weight: 3, ...paddlingCS});
           })
           .addTo(paddlingTracks);
       }
@@ -120,7 +120,7 @@ window.addEventListener("load", () => {
   );
   myMap.fitBounds(bounds);
   adjustCircleStyle(myMap, summitsGroup);
-  myMap.on('zoomend', () => { adjustCircleStyle(myMap, summitsGroup) });
+  myMap.on('zoomend', () => {adjustCircleStyle(myMap, summitsGroup)});
 
   L.control.layers({"ESRI": baseLayer}, {
     "Summits": summitsGroup,
@@ -226,7 +226,7 @@ const mountains = [
   {name: "Macomb Mountain NY", lat: 44.0517, lng: -73.7802, done: false},
   {name: "Armstrong Mountain NY", lat: 44.1345, lng: -73.8498, done: false},
   {name: "Hough Peak NY", lat: 44.0695, lng: -73.7778, done: false},
-  {name: "Seward Mountain NY", lat: 44.1598, lng: -74.1993, done: false},
+  {name: "Seward Mountain NY", lat: 44.1598, lng: -74.1993, done: true},
   {name: "Mount Marshall NY", lat: 44.1276, lng: -74.0112, done: false},
   {name: "Allen Mountain NY", lat: 44.0708, lng: -73.9398, done: false},
   {name: "Big Slide Mountain NY", lat: 44.1822, lng: -73.8709, done: false},
@@ -235,14 +235,14 @@ const mountains = [
   {name: "Lower Wolf Jaw Mountain NY", lat: 44.1481, lng: -73.8331, done: false},
   {name: "Street Mountain NY", lat: 44.1794, lng: -74.027, done: true},
   {name: "Phelps Mountain NY", lat: 44.1569, lng: -73.9215, done: false},
-  {name: "Donaldson Mountain NY", lat: 44.154, lng: -74.2112, done: false},
-  {name: "Seymour Mountain NY", lat: 44.1577, lng: -74.1726, done: false},
+  {name: "Donaldson Mountain NY", lat: 44.154, lng: -74.2112, done: true},
+  {name: "Seymour Mountain NY", lat: 44.1577, lng: -74.1726, done: true},
   {name: "Sawteeth NY", lat: 44.1145, lng: -73.8503, done: false},
   {name: "Cascade Mountain NY", lat: 44.2186, lng: -73.8602, done: false},
   {name: "South Dix NY", lat: 44.0599, lng: -73.7744, done: false},
   {name: "Porter Mountain NY", lat: 44.2124, lng: -73.8539, done: false},
   {name: "Mount Colvin NY", lat: 44.0943, lng: -73.8346, done: false},
-  {name: "Mount Emmons NY", lat: 44.1437, lng: -74.214, done: false},
+  {name: "Mount Emmons NY", lat: 44.1437, lng: -74.214, done: true},
   {name: "Dial Mountain NY", lat: 44.1062, lng: -73.7966, done: false},
   {name: "Grace Peak NY", lat: 44.065, lng: -73.7572, done: false},
   {name: "Blake Peak NY", lat: 44.0813, lng: -73.845, done: false},
