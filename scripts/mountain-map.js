@@ -62,7 +62,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=1")
+  fetch("/assets/hiking.json?v=2")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -172,7 +172,7 @@ const mountains = [
   {name: "Mount Garfield NH", lat: 44.1872, lng: -71.6107, done: true},
   {name: "Mount Liberty NH", lat: 44.1158, lng: -71.6422, done: true},
   {name: "South Carter NH", lat: 44.2898, lng: -71.1762, done: true},
-  {name: "Wildcat Mountain NH", lat: 44.259, lng: -71.2015, done: false},
+  {name: "Wildcat Mountain NH", lat: 44.259, lng: -71.2015, done: true},
   {name: "North Hancock NH", lat: 44.0838, lng: -71.4938, done: true},
   {name: "South Kinsman NH", lat: 44.123, lng: -71.7366, done: true},
   {name: "Mount Field NH", lat: 44.1965, lng: -71.4332, done: true},
@@ -192,7 +192,7 @@ const mountains = [
   {name: "Mount Hale NH", lat: 44.2217, lng: -71.512, done: true},
   {name: "Mount Jackson NH", lat: 44.2032, lng: -71.3755, done: true},
   {name: "Mount Tom NH", lat: 44.2104, lng: -71.446, done: true},
-  {name: "Wildcat D NH", lat: 44.2495, lng: -71.2233, done: false},
+  {name: "Wildcat D NH", lat: 44.2495, lng: -71.2233, done: true},
   {name: "Mount Moriah NH", lat: 44.3403, lng: -71.1316, done: true},
   {name: "Mount Passaconaway NH", lat: 43.9548, lng: -71.381, done: true},
   {name: "Owl's Head MountainNH", lat: 44.1443, lng: -71.6051, done: true},
