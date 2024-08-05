@@ -7,12 +7,22 @@ const home = {
   lineWidthTo: 1.5
 };
 
-const doneCS = {
+const doneCS1 = {
   fillColor: "#0F0",
   color: "#0a0"
 };
 
-const toDoCS = {
+const toDoCS1 = {
+  fillColor: "#777",
+  color: "#666"
+};
+
+const doneCS2 = {
+  fillColor: "#00F",
+  color: "#00d"
+};
+
+const toDoCS2 = {
   fillColor: "#777",
   color: "#666"
 };
@@ -58,7 +68,8 @@ window.addEventListener("load", () => {
   container.appendChild(fig);
 
   const bounds = new L.LatLngBounds();
-  const summitsGroup = L.layerGroup();
+  const summits4kGroup = L.layerGroup();
+  const summits52WavGroup = L.layerGroup();
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
@@ -104,38 +115,51 @@ window.addEventListener("load", () => {
     attribution: '&copy; <a href="https://esri.com" target="_blank" rel="noopener noreferrer">Esri</a> and others'
   });
 
-  for (const {name, lat, lng, done} of mountains) {
-    L.circle([lat, lng], 800, done ? doneCS : toDoCS)
+  for (const {name, lat, lng, done} of fourKFooters) {
+    L.circle([lat, lng], 800, done ? doneCS1 : toDoCS1)
       .bindTooltip(name)
       .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`)
-      .addTo(summitsGroup);
+      .addTo(summits4kGroup);
+    bounds.extend(L.latLng(lat, lng));
+  }
+
+  for (const {name, lat, lng, done} of ftwav) {
+    L.circle([lat, lng], 800, done ? doneCS2 : toDoCS2)
+      .bindTooltip(name)
+      .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`)
+      .addTo(summits52WavGroup);
     bounds.extend(L.latLng(lat, lng));
   }
 
   const myMap = L.map("mapDiv", {
-    layers: [baseLayer, summitsGroup, hikingTracks, paddlingTracks]
+    layers: [baseLayer, summits4kGroup, summits52WavGroup, hikingTracks, paddlingTracks]
   });
   myMap.attributionControl.setPrefix(
     '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
   );
   myMap.fitBounds(bounds);
-  adjustCircleStyle(myMap, summitsGroup);
-  myMap.on('zoomend', () => {adjustCircleStyle(myMap, summitsGroup)});
+  adjustCircleStyle(myMap, summits4kGroup);
+  adjustCircleStyle(myMap, summits52WavGroup);
+  myMap.on('zoomend', () => {
+    adjustCircleStyle(myMap, summits4kGroup)
+    adjustCircleStyle(myMap, summits52WavGroup)
+  });
 
   L.control.layers({"ESRI": baseLayer}, {
-    "Summits": summitsGroup,
+    "4,000-footers": summits4kGroup,
+    "52 With a View": summits52WavGroup,
     "Hiking": hikingTracks,
     "Paddling": paddlingTracks
   }).addTo(myMap);
 
-  const doneCount = mountains.filter(({done}) => done).length;
+  const doneCount =fourKFooters.filter(({done}) => done).length;
   const figCaption = document.createElement("figcaption");
-  figCaption.innerText = `${doneCount} of the Northeast ${mountains.length} 4,000-footers completed`;
+  figCaption.innerText = `${doneCount} of the Northeast ${fourKFooters.length} 4,000-footers completed`;
   fig.appendChild(figCaption);
 });
 
 /** @type {{name: string, lat: number, lng: number}[], done: boolean} */
-const mountains = [
+const fourKFooters = [
   /* Maine */
   {name: "Mount Katahdin, Baxter Peak ME", lat: 45.9044, lng: -68.9213, done: false},
   {name: "Mount Katahdin, Hamlin Peak ME", lat: 45.9242, lng: -68.9276, done: false},
@@ -259,3 +283,62 @@ const mountains = [
   {name: "Mount Ellen VT", lat: 44.1604, lng: -72.9294, done: false},
   {name: "Mount Abraham VT", lat: 44.1204, lng: -72.9362, done: false}
 ];
+
+/** @type {{name: string, lat: number, lng: number}[], done: boolean} */
+const ftwav = [
+  {name: "Sandwich (Dome) Mountain NH", lat: 43.9001, lng: -71.4981, done: true},
+  {name: "Mount Starr King NH", lat: 44.4345, lng: -71.4329, done: true},
+  {name: "Mount Webster NH", lat: 44.1946, lng: -71.3885, done: true},
+  {name: "The Horn NH", lat: 44.5179, lng: -71.4002, done: false},
+  {name: "Shelburne Moriah Mountain NH", lat: 44.3532, lng: -71.0988, done: true},
+  {name: "Sugarloaf Mountain (Stratford) NH", lat: 44.7443, lng: -71.4678, done: false},
+  {name: "North Baldface NH", lat: 44.2429, lng: -71.0869, done: true},
+  {name: "Mount Success NH", lat: 44.4714, lng: -71.039, done: false},
+  {name: "South Baldface NH", lat: 44.2309, lng: -71.0779, done: true},
+  {name: "Mount Martha (Cherry Mountain) NH", lat: 44.3309, lng: -71.4992, done: true},
+  {name: "Jennings Peak NH", lat: 43.9111, lng: -71.5107, done: true},
+  {name: "Mount Chocorua NH", lat: 43.9543, lng: -71.2733, done: true},
+  {name: "Stairs Mountain NH", lat: 44.1551, lng: -71.3184, done: true},
+  {name: "Mount Avalon NH", lat: 44.2064, lng: -71.4268, done: true},
+  {name: "Mount Resolution NH", lat: 44.1475, lng: -71.314, done: true},
+  {name: "North Percy Peak NH", lat: 44.6631, lng: -71.4351, done: false},
+  {name: "Mount Magalloway NH", lat: 45.0635, lng: -71.1624, done: false},
+  {name: "Mount Tremont NH", lat: 44.0534, lng: -71.357, done: false},
+  {name: "Three Sisters, Middle Sister NH", lat: 43.9648, lng: -71.2702, done: false},
+  {name: "Mount Kearsarge North (Chatham) NH", lat: 44.1056, lng: -71.0942, done: false},
+  {name: "Smarts Mountain Fire Lookout Tower NH", lat: 43.8255, lng: -72.0381, done: false},
+  {name: "North Moat Mountain NH", lat: 44.0431, lng: -71.2146, done: false},
+  {name: "Mount Monadnock NH", lat: 42.8615, lng: -72.1081, done: false},
+  {name: "Imp Face NH", lat: 44.3211, lng: -71.1898, done: false},
+  {name: "Mount Cardigan NH", lat: 43.6496, lng: -71.9144, done: true},
+  {name: "Mount Crawford NH", lat: 44.1367, lng: -71.3324, done: true},
+  {name: "Mount Paugus, South Peak NH", lat: 43.9463, lng: -71.328, done: false},
+  {name: "North Doublehead NH", lat: 44.1677, lng: -71.1302, done: false},
+  {name: "Eagle Crag NH", lat: 44.2538, lng: -71.072, done: false},
+  {name: "Mount Parker NH", lat: 44.1234, lng: -71.2984, done: true},
+  {name: "Mount Shaw NH", lat: 43.7438, lng: -71.2745, done: true},
+  {name: "Rogers Ledge NH", lat: 44.5501, lng: -71.3619, done: false},
+  {name: "South Doublehead NH", lat: 44.1608, lng: -71.1306, done: false},
+  {name: "Eastman Mountain NH", lat: 44.2156, lng: -71.062, done: false},
+  {name: "Mount Kearsarge (South) NH", lat: 43.3834, lng: -71.8571, done: true},
+  {name: "Mount Cube (South Peak) NH", lat: 43.8857, lng: -72.0235, done: false},
+  {name: "Stinson Mountain NH", lat: 43.8348, lng: -71.779, done: false},
+  {name: "Mount Willard NH", lat: 44.204, lng: -71.4133, done: false},
+  {name: "Black Mountain (Benton) NH", lat: 44.0745, lng: -71.9224, done: true},
+  {name: "South Moat Mountain NH", lat: 44.0175, lng: -71.1935, done: true},
+  {name: "Dickey Mountain NH", lat: 43.923, lng: -71.5787, done: false},
+  {name: "Potash Mountain NH", lat: 43.9821, lng: -71.3909, done: false},
+  {name: "Table Mountain NH", lat: 44.0318, lng: -71.2625, done: false},
+  {name: "Blueberry Mountain (Benton) NH", lat: 44.0194, lng: -71.905, done: false},
+  {name: "Mount Israel NH", lat: 43.8456, lng: -71.4723, done: false},
+  {name: "Welch Mountain NH", lat: 43.919, lng: -71.576, done: false},
+  {name: "Mount Roberts NH", lat: 43.7565, lng: -71.3258, done: true},
+  {name: "Mount Hayes NH", lat: 44.4157, lng: -71.1603, done: false},
+  {name: "Mount Pemigewasset NH", lat: 44.0978, lng: -71.699, done: true},
+  {name: "Hedgehog Mountain (Albany) NH", lat: 43.9742, lng: -71.3672, done: false},
+  {name: "Middle Sugarloaf NH", lat: 44.2517, lng: -71.5176, done: false},
+  {name: "Pine Mountain (Gorham) NH", lat: 44.3659, lng: -71.2152, done: false},
+  {name: "Mount Morgan NH", lat: 43.8039, lng: -71.5662, done: true},
+  {name: "Mount Percival NH", lat: 43.8096, lng: -71.5571, done: true}
+];
+
