@@ -73,7 +73,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=6")
+  fetch("/assets/hiking.json?v=7")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -227,17 +227,17 @@ const fourKFooters = [
   {name: "Mount Tecumseh NH", lat: 43.9667, lng: -71.5565, done: true},
 
   /* New York */
-  {name: "Mount Marcy NY", lat: 44.1128, lng: -73.9237, done: false},
+  {name: "Mount Marcy NY", lat: 44.1128, lng: -73.9237, done: true},
   {name: "Algonquin Peak NY", lat: 44.1436, lng: -73.9867, done: false},
   {name: "Mount Haystack NY", lat: 44.1058, lng: -73.9004, done: false},
-  {name: "Mount Skylight NY", lat: 44.0994, lng: -73.9312, done: false},
+  {name: "Mount Skylight NY", lat: 44.0994, lng: -73.9312, done: true},
   {name: "Whiteface Mountain NY", lat: 44.3658, lng: -73.903, done: false},
   {name: "Dix Mountain NY", lat: 44.0823, lng: -73.7865, done: false},
-  {name: "Gray Peak NY", lat: 44.1113, lng: -73.9361, done: false},
+  {name: "Gray Peak NY", lat: 44.1113, lng: -73.9361, done: true},
   {name: "Iroquois Peak NY", lat: 44.1368, lng: -73.9981, done: false},
   {name: "Basin Mountain NY", lat: 44.1212, lng: -73.8865, done: false},
   {name: "Gothics NY", lat: 44.1278, lng: -73.8574, done: false},
-  {name: "Mount Colden NY", lat: 44.127, lng: -73.9595, done: false},
+  {name: "Mount Colden NY", lat: 44.127, lng: -73.9595, done: true},
   {name: "Giant Mountain NY", lat: 44.1612, lng: -73.7202, done: false},
   {name: "Nippletop NY", lat: 44.0891, lng: -73.8163, done: false},
   {name: "Santanoni Peak NY", lat: 44.0825, lng: -74.1309, done: false},
@@ -270,7 +270,7 @@ const fourKFooters = [
   {name: "Dial Mountain NY", lat: 44.1062, lng: -73.7966, done: false},
   {name: "Grace Peak NY", lat: 44.065, lng: -73.7572, done: false},
   {name: "Blake Peak NY", lat: 44.0813, lng: -73.845, done: false},
-  {name: "Cliff Mountain NY", lat: 44.1033, lng: -73.9751, done: false},
+  {name: "Cliff Mountain NY", lat: 44.1033, lng: -73.9751, done: true},
   {name: "Nye Mountain NY", lat: 44.1872, lng: -74.0238, done: true},
   {name: "Couchsachraga Peak NY", lat: 44.0961, lng: -74.1607, done: false},
   {name: "Slide Mountain NY", lat: 41.9986, lng: -74.3864, done: false},
