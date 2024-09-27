@@ -7,25 +7,29 @@ const home = {
   lineWidthTo: 1.5
 };
 
-const doneCS1 = {
-  fillColor: "#0F0",
-  color: "#0a0"
-};
+const doneIcon = L.icon({
+  iconUrl: '/images/marker-icon-green.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
 
-const toDoCS1 = {
-  fillColor: "#777",
-  color: "#666"
-};
+const toDoIcon = L.icon({
+  iconUrl: '/images/marker-icon-grey.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
 
-const doneCS2 = {
-  fillColor: "#00F",
-  color: "#00d"
-};
+const doneIcon2 = L.icon({
+  iconUrl: '/images/marker-icon-blue.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
 
-const toDoCS2 = {
-  fillColor: "#777",
-  color: "#666"
-};
+const toDoIcon2 = L.icon({
+  iconUrl: '/images/marker-icon-grey.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
 
 const hikingCS = {color: "#2c2"};
 
@@ -116,7 +120,7 @@ window.addEventListener("load", () => {
   });
 
   for (const {name, lat, lng, done} of fourKFooters) {
-    L.circle([lat, lng], 800, done ? doneCS1 : toDoCS1)
+    L.marker([lat, lng], {icon: done ? doneIcon : toDoIcon})
       .bindTooltip(name)
       .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`)
       .addTo(summits4kGroup);
@@ -124,7 +128,7 @@ window.addEventListener("load", () => {
   }
 
   for (const {name, lat, lng, done} of ftwav) {
-    L.circle([lat, lng], 800, done ? doneCS2 : toDoCS2)
+    L.marker([lat, lng], {icon: done ? doneIcon2 : toDoIcon2})
       .bindTooltip(name)
       .bindPopup(`<b>${name}</b>${done ? "<br>Completed" : ""}`)
       .addTo(summits52WavGroup);
@@ -138,12 +142,6 @@ window.addEventListener("load", () => {
     '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
   );
   myMap.fitBounds(bounds);
-  adjustCircleStyle(myMap, summits4kGroup);
-  adjustCircleStyle(myMap, summits52WavGroup);
-  myMap.on('zoomend', () => {
-    adjustCircleStyle(myMap, summits4kGroup)
-    adjustCircleStyle(myMap, summits52WavGroup)
-  });
 
   L.control.layers({"ESRI": baseLayer}, {
     "4,000-footers": summits4kGroup,
