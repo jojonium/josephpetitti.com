@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=8")
+  fetch("/assets/hiking.json?v=9")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -302,7 +302,7 @@ const ftwav = [
   {name: "North Percy Peak NH", lat: 44.6631, lng: -71.4351, done: false},
   {name: "Mount Magalloway NH", lat: 45.0635, lng: -71.1624, done: false},
   {name: "Mount Tremont NH", lat: 44.0534, lng: -71.357, done: false},
-  {name: "Three Sisters, Middle Sister NH", lat: 43.9648, lng: -71.2702, done: false},
+  {name: "Three Sisters, Middle Sister NH", lat: 43.9648, lng: -71.2702, done: true},
   {name: "Mount Kearsarge North (Chatham) NH", lat: 44.1056, lng: -71.0942, done: false},
   {name: "Smarts Mountain Fire Lookout Tower NH", lat: 43.8255, lng: -72.0381, done: false},
   {name: "North Moat Mountain NH", lat: 44.0431, lng: -71.2146, done: false},
