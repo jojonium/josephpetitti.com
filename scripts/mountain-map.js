@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=9")
+  fetch("/assets/hiking.json?v=10")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -304,7 +304,7 @@ const ftwav = [
   {name: "Mount Tremont NH", lat: 44.0534, lng: -71.357, done: false},
   {name: "Three Sisters, Middle Sister NH", lat: 43.9648, lng: -71.2702, done: true},
   {name: "Mount Kearsarge North (Chatham) NH", lat: 44.1056, lng: -71.0942, done: false},
-  {name: "Smarts Mountain Fire Lookout Tower NH", lat: 43.8255, lng: -72.0381, done: false},
+  {name: "Smarts Mountain NH", lat: 43.8255, lng: -72.0381, done: true},
   {name: "North Moat Mountain NH", lat: 44.0431, lng: -71.2146, done: false},
   {name: "Mount Monadnock NH", lat: 42.8615, lng: -72.1081, done: false},
   {name: "Imp Face NH", lat: 44.3211, lng: -71.1898, done: false},
@@ -319,7 +319,7 @@ const ftwav = [
   {name: "South Doublehead NH", lat: 44.1608, lng: -71.1306, done: false},
   {name: "Eastman Mountain NH", lat: 44.2156, lng: -71.062, done: false},
   {name: "Mount Kearsarge (South) NH", lat: 43.3834, lng: -71.8571, done: true},
-  {name: "Mount Cube (South Peak) NH", lat: 43.8857, lng: -72.0235, done: false},
+  {name: "Mount Cube (South Peak) NH", lat: 43.8857, lng: -72.0235, done: true},
   {name: "Stinson Mountain NH", lat: 43.8348, lng: -71.779, done: false},
   {name: "Mount Willard NH", lat: 44.204, lng: -71.4133, done: false},
   {name: "Black Mountain (Benton) NH", lat: 44.0745, lng: -71.9224, done: true},
