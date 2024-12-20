@@ -380,5 +380,13 @@
 			<pubDate>Thu, 04 Jan 2024 16:19:25 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/solving-advent-of-code-the-lazy-way</guid>
 		</item>
+
+		<item>
+			<title>2024 in review</title>
+			<link>https://josephpetitti.com/blog/2024-in-review</link>
+            <description>I look back on everything I did in 2024.</description>
+			<pubDate>Fri, 20 Dec 2024 16:49:15 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/2024-in-review</guid>
+		</item>
 	</channel>
 </rss>

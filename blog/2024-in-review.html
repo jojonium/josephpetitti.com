@@ -2,13 +2,13 @@
 <html lang="en-US">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Blog Template</title>
-    <meta name="description" content="If you're reading this it means I forgot to change the default description" />
+    <title>2024 in review</title>
+    <meta name="description" content="A look back on what I did in 2024" />
     <meta property="og:title" content="Blog Template" />
-    <meta property="og:description" content="If you're reading this it means I forgot to change the default description" />
-    <meta property="og:image" content="https://josephpetitti.com/blog/images/turtle-burger.jpg" />
+    <meta property="og:description" content="A look back on what I did in 2024" />
+    <meta property="og:image" content="https://josephpetitti.com/blog/images/2024-01.jpg" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://josephpetitti.com/blog/template" />
+    <meta property="og:url" content="https://josephpetitti.com/blog/2024-in-review" />
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="../webfonts/fonts.css" type="text/css">
     <link href="../styles/dark.css?v=1.0.6" rel="stylesheet" type="text/css">
     <link href="../styles/blog.css" rel="stylesheet" type="text/css">
+    <link href="../styles/leaflet.css?v=1.9.4" rel="stylesheet" type="text/css">
+
+    <script src="../scripts/leaflet.js?v=1.9.4" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="></script>
   </head>
   <body>
 
@@ -38,32 +41,37 @@
   <!-- Main -->
     <main id="main" class="blog">
 
-      <span class="date">Joseph Petitti &mdash; <time datetime="2019-04-20">April 20, 2019</span>
+      <span class="date">Joseph Petitti &mdash; <time datetime="2024-12-20">December 20, 2024</span>
 
-      <h1 class="title">Template for a generic blog post</h1>
-
-      <h2 id="sample-text">Sample Text</h2>
+      <h1 class="title">2024 in review</h1>
 
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum leo
-        ligula, placerat a aliquam et, pulvinar sit amet enim. Proin non mi quis
-        felis sodales gravida. Pellentesque habitant morbi tristique senectus et
-        netus et malesuada fames ac turpis egestas. In auctor vehicula eros
-        congue vestibulum. Nunc eu augue vel nisi fermentum pharetra id at
-        magna. Integer tristique lorem non ligula auctor, a faucibus felis
-        finibus. In scelerisque accumsan imperdiet. Sed efficitur, massa sit
-        amet dapibus viverra, lectus elit laoreet nisi, ut auctor massa velit eu
-        nibh. Curabitur vel iaculis ante. Vivamus porta dolor at ipsum tempor,
-        eget scelerisque nisi dapibus. Vivamus eu ultrices arcu, eu suscipit
-        felis. Phasellus quis odio libero. Curabitur at elit non dui aliquam
-        interdum. Etiam eu rutrum ligula.
+        As 2024 comes to a close, I look back on what I did this year. I spent
+        a lot of time hiking, probably more than any previous year. I got
+        seriously into winter hiking for the first time, and went on my first
+        winter backpacking trip. I finished the climbing all 48 New Hampshire
+        peaks higher than 4,000 feet in June. I climbed my first 4,000-footer
+        in Maine, and went back to the Adirondacks for the first time in 7
+        years. I also went on my first multi-day kayak trip.
+      </p>
+
+      <div id="map-container"></div>
+
+      <p>
+        In raw numbers, I hiked on 33 days, climbed 54 mountains, and spent 11
+        nights outdoors. My total distance hiked for the year came out to 267
+        miles with 84,000 feet of elevation gain.
+      </p>
+
+      <p>
+        Here's a highlight from each month of the year.
       </p>
 
       <figure class="full-width">
         <a href="images/2024-01.jpg">
           <img src="images/th_2024-01.jpg" alt="Carter Range, NH">
         </a>
-        <figcaption>Januray: Carter Range, NH</figcaption>
+        <figcaption>January: Carter Range, NH</figcaption>
       </figure>
 
       <figure class="full-width">
@@ -143,63 +151,6 @@
         <figcaption>December: Cannon Mountain, NH</figcaption>
       </figure>
 
-
-      <p>
-        Maecenas pellentesque mollis erat. Fusce sit amet libero ut enim
-        tincidunt consectetur. Praesent accumsan mi a ex mollis euismod. Nam
-        pretium finibus dolor at aliquam. Aliquam non sem ornare, porta turpis
-        nec, gravida lectus. Nam at ipsum ut erat pretium efficitur ut sit amet
-        erat. Nam non libero quam. In et venenatis augue, sed vulputate massa.
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae; Donec eleifend nec erat vel luctus. Mauris et leo et quam
-        pretium tempor. Quisque convallis orci et arcu molestie, et varius magna
-        gravida. Donec purus tellus, tempus eu efficitur ac, maximus quis
-        sapien. Proin convallis dignissim sem, vitae fringilla sapien convallis
-        euismod. Quisque vel nulla et elit hendrerit tristique. Donec tincidunt
-        convallis suscipit.
-      </p>
-
-      <p>
-        Nunc sed vestibulum tortor. Vivamus ac tempus nisl. Morbi sit amet
-        sapien turpis. Morbi est mauris, vestibulum nec tempus nec, blandit
-        tempor est. Sed faucibus ut nisi sed dictum. Vestibulum vitae libero
-        tellus. Praesent congue diam porttitor magna elementum, id eleifend
-        tortor pretium. Proin placerat nunc eget massa tempor, quis viverra nunc
-        tristique. Ut consectetur ex non sapien dictum tincidunt. Praesent et
-        euismod tortor. Curabitur et aliquet ipsum, sit amet porttitor nulla. Ut
-        eu massa non ante cursus pretium. Vestibulum tempus turpis volutpat leo
-        consequat volutpat. Suspendisse in aliquet mi. Nullam tristique at risus
-        at bibendum.
-      </p>
-
-      <p>
-        Vestibulum in ante malesuada, consectetur nunc id, lacinia mi. Phasellus
-        porttitor mi ipsum, id pellentesque tortor auctor sit amet. Maecenas vel
-        dolor non purus elementum volutpat. Orci varius natoque penatibus et
-        magnis dis parturient montes, nascetur ridiculus mus. Aliquam rutrum
-        eget dolor vitae bibendum. Fusce diam felis, tempus eget porta vitae,
-        finibus ut nunc. Sed quis nisl posuere, commodo velit vitae, pretium
-        lacus. Ut tempus dolor cursus arcu pulvinar rutrum. In vitae ipsum eu
-        nunc pharetra interdum. Vivamus nisi libero, pharetra quis nunc id,
-        hendrerit dapibus risus. Praesent tristique, justo sit amet convallis
-        rutrum, erat lorem pharetra lectus, at consequat nisi justo eget massa.
-        Quisque ultricies vulputate nisl, non cursus ipsum condimentum nec.
-      </p>
-
-      <p>
-        Duis semper dui a sapien facilisis aliquam. Vivamus ipsum massa,
-        venenatis eget blandit quis, dignissim vel libero. Quisque nunc felis,
-        tincidunt ut placerat non, luctus at orci. In hac habitasse platea
-        dictumst. Cras pulvinar arcu ac ante luctus pretium. Aenean porttitor
-        elementum luctus. In finibus ante a semper tristique. In viverra
-        pulvinar ligula eget sagittis. Suspendisse placerat tempus ipsum, et
-        ultrices dolor volutpat id. Sed vestibulum quis felis vel posuere. Ut
-        ornare tincidunt lectus, et molestie velit aliquet ac. Fusce sodales
-        justo at elit euismod, at dignissim nulla viverra. Fusce quis diam
-        pretium, vehicula justo nec, iaculis enim. Sed eget scelerisque nibh.
-        Sed quam turpis, posuere consequat congue ut, tristique id tellus.
-      </p>
-
     </main>
 
   <!-- Footer -->
@@ -223,4 +174,81 @@
       </section>
     </footer>
   </body>
+<script>
+
+const home = {
+  minZoom: 6,
+  maxZoom: 12,
+  lineWidthFrom: 8,
+  lineWidthTo: 1.5
+};
+
+const hikingCS = {color: "#2c2"};
+
+window.addEventListener("load", () => {
+  const container = document.getElementById("map-container");
+  if (!container) {
+    console.error("Couldn't get map container div");
+    return;
+  }
+
+  if (!L) {
+    console.error("Couldn't find Leaflet, is it loaded?");
+    return;
+  }
+
+  // Create figure to hold the map.
+  const fig = document.createElement("figure");
+  fig.classList.add("full-width");
+  fig.style.margin = 0;
+  const mapDiv = document.createElement("div");
+  mapDiv.style.height = "500px";
+  mapDiv.style.width = "100%";
+  mapDiv.style.zIndex = "0";
+  mapDiv.id = "mapDiv";
+  mapDiv.innerHTML = '';
+  fig.appendChild(mapDiv);
+  container.appendChild(fig);
+
+  const bounds = new L.LatLngBounds(L.latLng(45.9572, -68.9213), L.latLng(41.9986, -74.3864));
+  const hikingTracks = L.layerGroup();
+
+  fetch("/assets/2024-hiking.json")
+    .then(response => response.json())
+    .then(data => {
+      for (const {points, name} of data) {
+        L.polyline(points, hikingCS)
+          .bindTooltip(name)
+          .on('mouseover', function () {
+            this.setStyle({weight: 6, color: "blue"});
+          }).on('mouseout', function () {
+            this.setStyle({weight: 3, ...hikingCS});
+          })
+          .addTo(hikingTracks);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching hiking tracks: ', error);
+    });
+
+  const baseLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    minZoom: home.minZoom,
+    maxZoom: home.maxZoom,
+    attribution: '&copy; <a href="https://esri.com" target="_blank" rel="noopener noreferrer">Esri</a> and others'
+  });
+
+  const myMap = L.map("mapDiv", {
+    layers: [baseLayer, hikingTracks]
+  });
+  myMap.attributionControl.setPrefix(
+    '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
+  );
+  myMap.fitBounds(bounds);
+
+  const figCaption = document.createElement("figcaption");
+  figCaption.innerText = "A map of everywhere I hiked in 2024";
+  fig.appendChild(figCaption);
+});
+
+</script>
 </html>
