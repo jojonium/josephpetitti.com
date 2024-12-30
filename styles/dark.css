@@ -488,7 +488,7 @@ footer section ul.icons {
   font-size: 2.5em;
   list-style: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 1em 0;
   padding: 0;
 }
