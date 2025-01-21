@@ -1,4 +1,4 @@
-/* (C) 2024 Joseph Petitti | https://josephpetitti.com/license.txt */
+/* (C) 2024, 2025 Joseph Petitti | https://josephpetitti.com/license.txt */
 
 const home = {
   minZoom: 6,
@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=12")
+  fetch("/assets/hiking.json?v=13")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
