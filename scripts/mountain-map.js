@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=14")
+  fetch("/assets/hiking.json?v=15")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -136,7 +136,7 @@ window.addEventListener("load", () => {
   }
 
   const myMap = L.map("mapDiv", {
-    layers: [baseLayer, summits4kGroup, summits52WavGroup, hikingTracks, paddlingTracks]
+    layers: [baseLayer, summits4kGroup, hikingTracks, paddlingTracks]
   });
   myMap.attributionControl.setPrefix(
     '<a href="https://leafletjs.com" target="_blank" rel="noreferrer noopener" title="A JavaScript library for interactive maps">Leaflet</a>'
