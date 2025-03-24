@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=17")
+  fetch("/assets/hiking.json?v=18")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -150,7 +150,7 @@ window.addEventListener("load", () => {
     "Paddling": paddlingTracks
   }).addTo(myMap);
 
-  const doneCount =fourKFooters.filter(({done}) => done).length;
+  const doneCount = fourKFooters.filter(({done}) => done).length;
   const figCaption = document.createElement("figcaption");
   figCaption.innerText = `${doneCount} of the Northeast ${fourKFooters.length} 4,000-footers completed`;
   fig.appendChild(figCaption);
