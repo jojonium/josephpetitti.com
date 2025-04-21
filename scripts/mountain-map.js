@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=19")
+  fetch("/assets/hiking.json?v=20")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -237,7 +237,7 @@ const fourKFooters = [
   {name: "Gothics NY", lat: 44.1278, lng: -73.8574, done: false},
   {name: "Mount Colden NY", lat: 44.127, lng: -73.9595, done: true},
   {name: "Giant Mountain NY", lat: 44.1612, lng: -73.7202, done: false},
-  {name: "Nippletop NY", lat: 44.0891, lng: -73.8163, done: false},
+  {name: "Nippletop NY", lat: 44.0891, lng: -73.8163, done: true},
   {name: "Santanoni Peak NY", lat: 44.0825, lng: -74.1309, done: false},
   {name: "Mount Redfield NY", lat: 44.0953, lng: -73.9492, done: false},
   {name: "Wright Peak NY", lat: 44.1516, lng: -73.9795, done: false},
@@ -263,11 +263,11 @@ const fourKFooters = [
   {name: "Cascade Mountain NY", lat: 44.2186, lng: -73.8602, done: false},
   {name: "South Dix NY", lat: 44.0599, lng: -73.7744, done: false},
   {name: "Porter Mountain NY", lat: 44.2124, lng: -73.8539, done: false},
-  {name: "Mount Colvin NY", lat: 44.0943, lng: -73.8346, done: false},
+  {name: "Mount Colvin NY", lat: 44.0943, lng: -73.8346, done: true},
   {name: "Mount Emmons NY", lat: 44.1437, lng: -74.214, done: true},
-  {name: "Dial Mountain NY", lat: 44.1062, lng: -73.7966, done: false},
+  {name: "Dial Mountain NY", lat: 44.1062, lng: -73.7966, done: true},
   {name: "Grace Peak NY", lat: 44.065, lng: -73.7572, done: false},
-  {name: "Blake Peak NY", lat: 44.0813, lng: -73.845, done: false},
+  {name: "Blake Peak NY", lat: 44.0813, lng: -73.845, done: true},
   {name: "Cliff Mountain NY", lat: 44.1033, lng: -73.9751, done: true},
   {name: "Nye Mountain NY", lat: 44.1872, lng: -74.0238, done: true},
   {name: "Couchsachraga Peak NY", lat: 44.0961, lng: -74.1607, done: false},
