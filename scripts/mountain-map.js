@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=24")
+  fetch("/assets/hiking.json?v=25")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -260,9 +260,9 @@ const fourKFooters = [
   {name: "Donaldson Mountain NY", lat: 44.154, lng: -74.2112, done: true},
   {name: "Seymour Mountain NY", lat: 44.1577, lng: -74.1726, done: true},
   {name: "Sawteeth NY", lat: 44.1145, lng: -73.8503, done: false},
-  {name: "Cascade Mountain NY", lat: 44.2186, lng: -73.8602, done: false},
+  {name: "Cascade Mountain NY", lat: 44.2186, lng: -73.8602, done: true},
   {name: "South Dix NY", lat: 44.0599, lng: -73.7744, done: false},
-  {name: "Porter Mountain NY", lat: 44.2124, lng: -73.8539, done: false},
+  {name: "Porter Mountain NY", lat: 44.2124, lng: -73.8539, done: true},
   {name: "Mount Colvin NY", lat: 44.0943, lng: -73.8346, done: true},
   {name: "Mount Emmons NY", lat: 44.1437, lng: -74.214, done: true},
   {name: "Dial Mountain NY", lat: 44.1062, lng: -73.7966, done: true},
