@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=28")
+  fetch("/assets/hiking.json?v=29")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -287,7 +287,7 @@ const ftwav = [
   {name: "Sandwich (Dome) Mountain NH", lat: 43.9001, lng: -71.4981, done: true},
   {name: "Mount Starr King NH", lat: 44.4345, lng: -71.4329, done: true},
   {name: "Mount Webster NH", lat: 44.1946, lng: -71.3885, done: true},
-  {name: "The Horn NH", lat: 44.5179, lng: -71.4002, done: false},
+  {name: "The Horn NH", lat: 44.5179, lng: -71.4002, done: true},
   {name: "Shelburne Moriah Mountain NH", lat: 44.3532, lng: -71.0988, done: true},
   {name: "Sugarloaf Mountain (Stratford) NH", lat: 44.7443, lng: -71.4678, done: false},
   {name: "North Baldface NH", lat: 44.2429, lng: -71.0869, done: true},
@@ -315,7 +315,7 @@ const ftwav = [
   {name: "Eagle Crag NH", lat: 44.2538, lng: -71.072, done: false},
   {name: "Mount Parker NH", lat: 44.1234, lng: -71.2984, done: true},
   {name: "Mount Shaw NH", lat: 43.7438, lng: -71.2745, done: true},
-  {name: "Rogers Ledge NH", lat: 44.5501, lng: -71.3619, done: false},
+  {name: "Rogers Ledge NH", lat: 44.5501, lng: -71.3619, done: true},
   {name: "South Doublehead NH", lat: 44.1608, lng: -71.1306, done: false},
   {name: "Eastman Mountain NH", lat: 44.2156, lng: -71.062, done: false},
   {name: "Mount Kearsarge (South) NH", lat: 43.3834, lng: -71.8571, done: true},
