@@ -283,6 +283,7 @@ const fourKFooters = [
 ];
 
 /** @type {{name: string, lat: number, lng: number}[], done: boolean} */
+// Welch + Dickey and North + South Doublehead each count as a single entry
 const ftwav = [
   {name: "Sandwich (Dome) Mountain NH", lat: 43.9001, lng: -71.4981, done: true},
   {name: "Mount Starr King NH", lat: 44.4345, lng: -71.4329, done: true},
@@ -294,6 +295,7 @@ const ftwav = [
   {name: "Mount Success NH", lat: 44.4714, lng: -71.039, done: false},
   {name: "South Baldface NH", lat: 44.2309, lng: -71.0779, done: true},
   {name: "Mount Martha (Cherry Mountain) NH", lat: 44.3309, lng: -71.4992, done: true},
+  {name: "Owl's Head (Cherry Mountain) NH", lat: 44.338634, lng: -71.492304, done: true},
   {name: "Jennings Peak NH", lat: 43.9111, lng: -71.5107, done: true},
   {name: "Mount Chocorua NH", lat: 43.9543, lng: -71.2733, done: true},
   {name: "Stairs Mountain NH", lat: 44.1551, lng: -71.3184, done: true},
@@ -337,6 +339,14 @@ const ftwav = [
   {name: "Middle Sugarloaf NH", lat: 44.2517, lng: -71.5176, done: false},
   {name: "Pine Mountain (Gorham) NH", lat: 44.3659, lng: -71.2152, done: false},
   {name: "Mount Morgan NH", lat: 43.8039, lng: -71.5662, done: true},
-  {name: "Mount Percival NH", lat: 43.8096, lng: -71.5571, done: true}
+  {name: "Mount Percival NH", lat: 43.8096, lng: -71.5571, done: true},
+  {name: "Iron Mountain NH", lat: 44.1348, lng: -71.2392, done: false},
+  {name: "Bald Peak (Easton) NH", lat: 44.1478, lng: -71.7518, done: false},
+  {name: "Black Mountain - Middle Peak (Jackson) NH", lat: 44.19858, lng: -71.16859, done: false},
+  {name: "Carr Mountain NH", lat: 43.8848, lng: -71.8435, done: false},
+  {name: "Hibbard Mountain NH", lat: 43.9359, lng: -71.3712, done: false},
+  {name: "Mount Wolf NH", lat: 44.0759, lng: -71.7501, done: false},
+  {name: "Square Ledge (Albany) NH", lat: 43.9527, lng: -71.3628, done: false},
+  {name: "West Royce Mountain NH", lat: 44.3022, lng: -71.0182, done: false}
 ];
 
