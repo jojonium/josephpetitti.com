@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=32")
+  fetch("/assets/hiking.json?v=33")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -271,8 +271,8 @@ const fourKFooters = [
   {name: "Cliff Mountain NY", lat: 44.1033, lng: -73.9751, done: true},
   {name: "Nye Mountain NY", lat: 44.1872, lng: -74.0238, done: true},
   {name: "Couchsachraga Peak NY", lat: 44.0961, lng: -74.1607, done: false},
-  {name: "Slide Mountain NY", lat: 41.9986, lng: -74.3864, done: false},
-  {name: "Hunter Mountain NY", lat: 42.1779, lng: -74.2304, done: false},
+  {name: "Slide Mountain NY", lat: 41.9986, lng: -74.3864, done: true},
+  {name: "Hunter Mountain NY", lat: 42.1779, lng: -74.2304, done: true},
 
   /* Vermont */
   {name: "Mount Mansfield VT", lat: 44.5437, lng: -72.8143, done: false},
