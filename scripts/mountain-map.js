@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=40")
+  fetch("/assets/hiking.json?v=41")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
