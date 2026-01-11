@@ -404,5 +404,13 @@
 			<pubDate>Tue, 09 Sep 2025 20:02:00 GMT</pubDate>
 			<guid>https://josephpetitti.com/blog/backpacking-mount-isolation-in-the-rain</guid>
 		</item>
+
+		<item>
+			<title>2025 in review</title>
+			<link>https://josephpetitti.com/blog/2025-in-review</link>
+            <description>I look back on everything I did in 2025.</description>
+			<pubDate>Sun, 11 Jan 2026 16:59:06 GMT</pubDate>
+			<guid>https://josephpetitti.com/blog/2025-in-review</guid>
+		</item>
 	</channel>
 </rss>
