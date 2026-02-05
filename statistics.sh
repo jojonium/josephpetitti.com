@@ -28,11 +28,5 @@ addCommas()
 # get uptime in hours
 hours=$(addCommas $(awk '{print int($1/3600)}' /proc/uptime))
 
-# get films
-films=$(python3 './get-films.py')
-
 sed -i "s/<!--UPTIME-->[0-9]*<!--\/UPTIME-->/<!--UPTIME-->$hours<!--\/UPTIME-->/g" index.html
 
-if [[ $films =~ ^[\d,]+$ ]]; then
-	sed -i "s/<!--FILMS-->[0-9,]*<!--\/FILMS-->/<!--FILMS-->$films<!--\/FILMS-->/g" index.html
-fi
