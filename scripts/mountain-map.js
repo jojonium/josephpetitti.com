@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=49")
+  fetch("/assets/hiking.json?v=50")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -230,7 +230,7 @@ const fourKFooters = [
   {name: "Mount Haystack NY", lat: 44.1058, lng: -73.9004, done: false},
   {name: "Mount Skylight NY", lat: 44.0994, lng: -73.9312, done: true},
   {name: "Whiteface Mountain NY", lat: 44.3658, lng: -73.903, done: false},
-  {name: "Dix Mountain NY", lat: 44.0823, lng: -73.7865, done: false},
+  {name: "Dix Mountain NY", lat: 44.0823, lng: -73.7865, done: true},
   {name: "Gray Peak NY", lat: 44.1113, lng: -73.9361, done: true},
   {name: "Iroquois Peak NY", lat: 44.1368, lng: -73.9981, done: false},
   {name: "Basin Mountain NY", lat: 44.1212, lng: -73.8865, done: false},
@@ -245,9 +245,9 @@ const fourKFooters = [
   {name: "Panther Peak NY", lat: 44.0984, lng: -74.1322, done: false},
   {name: "Table Top Mountain NY", lat: 44.1403, lng: -73.9161, done: false},
   {name: "Rocky Peak Ridge (RPR) NY", lat: 44.1542, lng: -73.7054, done: false},
-  {name: "Macomb Mountain NY", lat: 44.0517, lng: -73.7802, done: false},
+  {name: "Macomb Mountain NY", lat: 44.0517, lng: -73.7802, done: true},
   {name: "Armstrong Mountain NY", lat: 44.1345, lng: -73.8498, done: false},
-  {name: "Hough Peak NY", lat: 44.0695, lng: -73.7778, done: false},
+  {name: "Hough Peak NY", lat: 44.0695, lng: -73.7778, done: true},
   {name: "Seward Mountain NY", lat: 44.1598, lng: -74.1993, done: true},
   {name: "Mount Marshall NY", lat: 44.1276, lng: -74.0112, done: false},
   {name: "Allen Mountain NY", lat: 44.0708, lng: -73.9398, done: false},
@@ -261,12 +261,12 @@ const fourKFooters = [
   {name: "Seymour Mountain NY", lat: 44.1577, lng: -74.1726, done: true},
   {name: "Sawteeth NY", lat: 44.1145, lng: -73.8503, done: false},
   {name: "Cascade Mountain NY", lat: 44.2186, lng: -73.8602, done: true},
-  {name: "South Dix NY", lat: 44.0599, lng: -73.7744, done: false},
+  {name: "South Dix NY", lat: 44.0599, lng: -73.7744, done: true},
   {name: "Porter Mountain NY", lat: 44.2124, lng: -73.8539, done: true},
   {name: "Mount Colvin NY", lat: 44.0943, lng: -73.8346, done: true},
   {name: "Mount Emmons NY", lat: 44.1437, lng: -74.214, done: true},
   {name: "Dial Mountain NY", lat: 44.1062, lng: -73.7966, done: true},
-  {name: "Grace Peak NY", lat: 44.065, lng: -73.7572, done: false},
+  {name: "Grace Peak NY", lat: 44.065, lng: -73.7572, done: true},
   {name: "Blake Peak NY", lat: 44.0813, lng: -73.845, done: true},
   {name: "Cliff Mountain NY", lat: 44.1033, lng: -73.9751, done: true},
   {name: "Nye Mountain NY", lat: 44.1872, lng: -74.0238, done: true},
