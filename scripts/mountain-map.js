@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=52")
+  fetch("/assets/hiking.json?v=53")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -344,9 +344,9 @@ const ftwav = [
   {name: "Bald Peak (Easton) NH", lat: 44.1478, lng: -71.7518, done: false},
   {name: "Black Mountain - Middle Peak (Jackson) NH", lat: 44.19858, lng: -71.16859, done: false},
   {name: "Carr Mountain NH", lat: 43.8848, lng: -71.8435, done: false},
-  {name: "Hibbard Mountain NH", lat: 43.9359, lng: -71.3712, done: false},
+  {name: "Hibbard Mountain NH", lat: 43.9359, lng: -71.3712, done: true},
   {name: "Mount Wolf NH", lat: 44.0759, lng: -71.7501, done: false},
-  {name: "Square Ledge (Albany) NH", lat: 43.9527, lng: -71.3628, done: false},
+  {name: "Square Ledge (Albany) NH", lat: 43.9527, lng: -71.3628, done: true},
   {name: "West Royce Mountain NH", lat: 44.3022, lng: -71.0182, done: false}
 ];
 
