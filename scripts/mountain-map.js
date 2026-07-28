@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=54")
+  fetch("/assets/hiking.json?v=55")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -312,7 +312,7 @@ const ftwav = [
   {name: "Imp Face NH", lat: 44.3211, lng: -71.1898, done: false},
   {name: "Mount Cardigan NH", lat: 43.6496, lng: -71.9144, done: true},
   {name: "Mount Crawford NH", lat: 44.1367, lng: -71.3324, done: true},
-  {name: "Mount Paugus, South Peak NH", lat: 43.9463, lng: -71.328, done: false},
+  {name: "Mount Paugus, South Peak NH", lat: 43.9463, lng: -71.328, done: true},
   {name: "North Doublehead NH", lat: 44.1677, lng: -71.1302, done: false},
   {name: "Eagle Crag NH", lat: 44.2538, lng: -71.072, done: false},
   {name: "Mount Parker NH", lat: 44.1234, lng: -71.2984, done: true},
