@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=57")
+  fetch("/assets/hiking.json?v=58")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -95,7 +95,7 @@ window.addEventListener("load", () => {
       console.error('Error fetching hiking tracks: ', error);
     });
 
-  fetch("/assets/paddling.json?v=2")
+  fetch("/assets/paddling.json?v=3")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
