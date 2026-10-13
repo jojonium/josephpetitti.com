@@ -77,7 +77,7 @@ window.addEventListener("load", () => {
   const hikingTracks = L.layerGroup();
   const paddlingTracks = L.layerGroup();
 
-  fetch("/assets/hiking.json?v=59")
+  fetch("/assets/hiking.json?v=60")
     .then(response => response.json())
     .then(data => {
       for (const {points, name} of data) {
@@ -276,7 +276,7 @@ const fourKFooters = [
 
   /* Vermont */
   {name: "Mount Mansfield VT", lat: 44.5437, lng: -72.8143, done: false},
-  {name: "Killington Peak VT", lat: 43.6045, lng: -72.8202, done: false},
+  {name: "Killington Peak VT", lat: 43.6045, lng: -72.8202, done: true},
   {name: "Camels Hump VT", lat: 44.3196, lng: -72.8863, done: false},
   {name: "Mount Ellen VT", lat: 44.1604, lng: -72.9294, done: false},
   {name: "Mount Abraham VT", lat: 44.1204, lng: -72.9362, done: false}
